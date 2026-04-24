@@ -6,38 +6,42 @@
 <title>Vampiro: a Máscara — Adaptação para Fate Core</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=UnifrakturCook:wght@700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Damion&family=Montserrat:wght@300;400;600;700&family=VT323&display=swap" rel="stylesheet">
+<!-- Supabase JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
-  --bg-deep: #0a0606;
-  --bg: #120a0a;
-  --bg-soft: #1a0e0e;
-  --bg-card: #1f1212;
-  --ink: #e8dcc8;
-  --ink-soft: #b8a68a;
-  --ink-dim: #7a6952;
-  --blood: #8b1a1a;
-  --blood-bright: #b82a2a;
-  --blood-dark: #5a0f0f;
-  --gold: #a88a5c;
-  --gold-bright: #d4b483;
-  --rule: #3a2424;
-  --shadow: 0 4px 20px rgba(0,0,0,0.6);
-  --shadow-deep: 0 10px 40px rgba(0,0,0,0.8);
+  --bg-deep: #090214; /* Deep purple night sky */
+  --bg: #15052e;
+  --bg-soft: #230847;
+  --bg-card: rgba(21, 5, 46, 0.85); /* Translucent navy */
+  --ink: #e0f2fe; /* Light blue tint */
+  --ink-soft: #bae6fd;
+  --ink-dim: #7dd3fc;
+  --blood: #ff00aa; /* Neon Pink */
+  --blood-bright: #ff4dff;
+  --blood-dark: #990066;
+  --gold: #00ffff; /* Neon Cyan */
+  --gold-bright: #a5f3fc;
+  --rule: #ff00aa; /* Pink dividers */
+  --shadow: 0 0 15px rgba(255, 0, 170, 0.4);
+  --shadow-deep: 0 0 30px rgba(0, 255, 255, 0.5);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:20px}
 body{
   background: var(--bg-deep);
-  background-image:
-    radial-gradient(ellipse at top, rgba(139,26,26,0.08), transparent 60%),
-    radial-gradient(ellipse at bottom, rgba(90,15,15,0.06), transparent 60%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3CfeColorMatrix values='0 0 0 0 0.05 0 0 0 0 0.02 0 0 0 0 0.02 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: 
+    linear-gradient(to bottom, #090214 0%, #15052e 50%, #230847 100%),
+    linear-gradient(90deg, rgba(0,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(rgba(0,255,255,0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
+  background-attachment: fixed;
   color: var(--ink);
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 20px;
-  line-height: 1.75;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
   min-height: 100vh;
 }
 
@@ -50,14 +54,15 @@ body{
 
 /* === SIDEBAR === */
 .sidebar{
-  background: linear-gradient(180deg, #0c0606 0%, #120808 100%);
-  border-right: 1px solid var(--rule);
+  background: rgba(21, 5, 46, 0.95);
+  backdrop-filter: blur(10px);
+  border-right: 2px solid var(--gold);
   padding: 28px 0 40px;
   position: sticky;
   top: 0;
   height: 100vh;
   overflow-y: auto;
-  box-shadow: inset -10px 0 30px rgba(0,0,0,0.4);
+  box-shadow: 5px 0 20px rgba(0, 255, 255, 0.2);
 }
 .sidebar::-webkit-scrollbar{width:6px}
 .sidebar::-webkit-scrollbar-track{background:var(--bg-deep)}
@@ -65,24 +70,30 @@ body{
 
 .brand{
   padding: 0 24px 20px;
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: 16px;
+  border-bottom: 2px solid var(--blood);
+  margin-bottom: 24px;
   text-align: center;
+  background: transparent;
+  padding-top: 20px;
 }
 .brand-title{
-  font-family: 'UnifrakturCook', serif;
-  font-size: 26px;
-  color: var(--blood-bright);
+  font-family: 'Damion', cursive;
+  font-size: 48px;
+  color: #fff;
   line-height: 1;
-  text-shadow: 0 0 20px rgba(184,42,42,0.4);
-  margin-bottom: 4px;
+  text-transform: none;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  text-shadow: 0 0 10px #fff, 0 0 20px var(--blood), 0 0 30px var(--blood), 0 0 40px var(--blood);
+  transform: skewX(-10deg);
 }
 .brand-sub{
-  font-family: 'IM Fell English', serif;
-  font-style: italic;
-  color: var(--ink-dim);
-  font-size: 14px;
-  letter-spacing: 0.5px;
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 0 5px var(--gold);
 }
 
 .search-box{
@@ -122,23 +133,28 @@ body{
 .nav-section:first-of-type .nav-section-title{border-top:none}
 .nav a{
   display: block;
-  padding: 7px 24px 7px 32px;
-  color: var(--ink-soft);
+  padding: 10px 24px 10px 32px;
+  color: var(--ink-dim);
   text-decoration: none;
-  font-size: 17px;
-  border-left: 2px solid transparent;
-  transition: all 0.15s;
-  position: relative;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 .nav a:hover{
-  color: var(--ink);
-  background: rgba(139,26,26,0.1);
+  background: rgba(255, 0, 170, 0.1);
+  color: var(--blood-bright);
   border-left-color: var(--blood);
+  text-shadow: 0 0 8px var(--blood);
+  padding-left: 38px;
 }
 .nav a.active{
-  color: var(--gold-bright);
-  background: rgba(139,26,26,0.15);
-  border-left-color: var(--blood-bright);
+  background: rgba(0, 255, 255, 0.1);
+  color: var(--gold);
+  border-left-color: var(--gold);
+  text-shadow: 0 0 8px var(--gold);
 }
 .nav a::before{
   content: "†";
@@ -158,65 +174,69 @@ body{
 
 /* === HEADINGS === */
 h1{
-  font-family: 'UnifrakturCook', serif;
-  font-size: 56px;
-  color: var(--blood-bright);
+  font-family: 'Damion', cursive;
+  font-size: 72px;
+  color: #fff;
   line-height: 1.1;
-  margin-bottom: 12px;
-  text-shadow: 0 0 30px rgba(184,42,42,0.3);
-  letter-spacing: -1px;
+  margin-bottom: 24px;
+  text-transform: none;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px #fff, 0 0 20px var(--blood), 0 0 40px var(--blood);
+  transform: skewX(-5deg);
 }
 h2{
-  font-family: 'IM Fell English', serif;
-  font-size: 38px;
-  color: var(--gold-bright);
-  margin: 50px 0 18px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--rule);
-  font-weight: 400;
-  position: relative;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 28px;
+  color: var(--gold);
+  margin: 60px 0 24px;
+  padding: 10px 0 10px 15px;
+  background: transparent;
+  border-left: 5px solid var(--blood);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  box-shadow: none;
+  text-shadow: 0 0 10px var(--gold);
 }
-h2::before{
-  content: "❦";
-  color: var(--blood);
-  margin-right: 12px;
-  font-size: 24px;
-  vertical-align: middle;
-}
+h2::before{ display: none; }
 h3{
-  font-family: 'IM Fell English', serif;
-  font-size: 26px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
   color: var(--blood-bright);
-  margin: 32px 0 12px;
+  margin: 40px 0 16px;
+  text-transform: uppercase;
   font-weight: 600;
-  font-style: italic;
+  letter-spacing: 2px;
+  text-shadow: 0 0 5px var(--blood);
 }
 h4{
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 20px;
-  color: var(--gold);
-  margin: 22px 0 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  color: var(--ink-soft);
+  margin: 28px 0 12px;
   font-weight: 600;
-  font-variant: small-caps;
+  text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .page-sub{
-  font-family: 'IM Fell English', serif;
+  font-family: 'Montserrat', sans-serif;
   font-style: italic;
   color: var(--ink-dim);
-  font-size: 18px;
+  font-size: 16px;
   margin-bottom: 50px;
   padding-bottom: 30px;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--bg-soft);
   position: relative;
+  letter-spacing: 1px;
 }
 .page-sub::after{
   content: "";
   display:block;
-  width: 60px;
-  height: 1px;
-  background: var(--blood);
+  width: 100px;
+  height: 2px;
+  background: var(--gold);
+  box-shadow: 0 0 10px var(--gold);
   margin: 20px auto 0;
   position: absolute;
   left: 0;
@@ -237,50 +257,54 @@ ol li::marker{color: var(--gold); font-weight: bold}
 /* === TABLES === */
 table{
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   margin: 20px 0;
   background: var(--bg-card);
   box-shadow: var(--shadow);
   border: 1px solid var(--rule);
+  border-radius: 8px;
+  overflow: hidden;
 }
 th{
-  background: linear-gradient(180deg, var(--blood-dark), #3a0a0a);
-  color: var(--gold-bright);
-  font-family: 'IM Fell English', serif;
-  font-variant: small-caps;
-  letter-spacing: 1px;
-  font-weight: 600;
+  background: rgba(255, 0, 170, 0.2);
+  color: var(--gold);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
   padding: 14px 16px;
   text-align: left;
-  border-bottom: 1px solid var(--blood);
-  font-size: 18px;
+  border-bottom: 2px solid var(--blood);
 }
 td{
   padding: 13px 16px;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid rgba(255, 0, 170, 0.2);
   vertical-align: top;
-  font-size: 18px;
+  font-size: 15px;
 }
 tr:last-child td{border-bottom:none}
-tr:hover td{background: rgba(139,26,26,0.06)}
+tr:hover td{background: rgba(0, 255, 255, 0.05)}
 
 /* === CALLOUTS === */
 .callout{
-  border-left: 3px solid var(--blood);
-  background: rgba(139,26,26,0.08);
-  padding: 14px 18px;
+  border-left: 4px solid var(--gold);
+  background: rgba(0, 255, 255, 0.05);
+  padding: 16px 20px;
   margin: 18px 0;
-  border-radius: 2px;
+  border-radius: 0 8px 8px 0;
   position: relative;
+  box-shadow: inset 20px 0 20px -20px var(--gold);
 }
 .callout-title{
-  font-family: 'IM Fell English', serif;
-  font-variant: small-caps;
-  letter-spacing: 1.5px;
-  color: var(--gold-bright);
-  font-weight: 600;
-  margin-bottom: 6px;
-  font-size: 17px;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-size: 14px;
 }
 .callout.tip{border-color: var(--gold); background: rgba(168,138,92,0.08)}
 .callout.tip .callout-title{color: var(--gold-bright)}
@@ -317,54 +341,57 @@ tr:hover td{background: rgba(139,26,26,0.06)}
 }
 .card{
   background: var(--bg-card);
-  border: 1px solid var(--rule);
-  padding: 18px 20px;
-  border-radius: 2px;
-  box-shadow: var(--shadow);
-  transition: transform 0.2s, border-color 0.2s;
+  border: 1px solid rgba(255, 0, 170, 0.5);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(255, 0, 170, 0.1);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
 }
 .card:hover{
+  transform: translateY(-5px);
   border-color: var(--blood);
-  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 0, 170, 0.3), inset 0 0 20px rgba(255, 0, 170, 0.2);
 }
 .card-title{
-  font-family: 'IM Fell English', serif;
-  color: var(--blood-bright);
-  font-size: 20px;
-  margin-bottom: 8px;
-  font-weight: 600;
+  font-family: 'Damion', cursive;
+  color: #fff;
+  font-size: 28px;
+  margin-bottom: 12px;
+  text-shadow: 0 0 8px var(--blood);
 }
-.card-body{font-size: 18px; color: var(--ink-soft); line-height: 1.65}
+.card-body{font-size: 15px; color: var(--ink); line-height: 1.6}
 
 /* === DISCIPLINE STYLE === */
 .discipline{
   background: var(--bg-card);
-  border: 1px solid var(--rule);
-  border-left: 3px solid var(--blood);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-left: 4px solid var(--gold);
   margin: 24px 0;
   padding: 22px 26px;
-  box-shadow: var(--shadow);
-  border-radius: 2px;
+  box-shadow: 0 5px 15px rgba(0, 255, 255, 0.1);
+  border-radius: 8px;
 }
 .discipline h3{
   margin-top: 0;
-  color: var(--blood-bright);
-  border-bottom: 1px solid var(--rule);
+  color: var(--gold);
+  border-bottom: 1px solid rgba(0, 255, 255, 0.2);
   padding-bottom: 8px;
   margin-bottom: 14px;
+  text-shadow: 0 0 5px var(--gold);
 }
 .discipline-passive{
   font-style: italic;
   color: var(--ink-soft);
-  background: rgba(168,138,92,0.06);
-  border-left: 2px solid var(--gold);
+  background: rgba(255, 0, 170, 0.05);
+  border-left: 2px solid var(--blood);
   padding: 13px 18px;
   margin: 10px 0 16px;
-  font-size: 18px;
+  font-size: 15px;
 }
 .level{
-  padding: 10px 0;
-  border-bottom: 1px dotted var(--rule);
+  padding: 12px 0;
+  border-bottom: 1px dashed rgba(255, 0, 170, 0.3);
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 14px;
@@ -372,21 +399,24 @@ tr:hover td{background: rgba(139,26,26,0.06)}
 }
 .level:last-child{border-bottom: none}
 .level-num{
-  font-family: 'UnifrakturCook', serif;
-  font-size: 26px;
-  color: var(--gold-bright);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--gold);
   min-width: 40px;
   text-align: center;
   line-height: 1;
   padding-top: 2px;
+  text-shadow: 0 0 5px var(--gold);
 }
-.level-num.elder{color: var(--blood-bright)}
+.level-num.elder{color: var(--blood); text-shadow: 0 0 5px var(--blood);}
 .level-name{
-  font-family: 'IM Fell English', serif;
-  font-weight: 600;
-  color: var(--gold-bright);
-  font-size: 19px;
-  font-style: italic;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: #fff;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 .level-elder-tag{
   display: inline-block;
@@ -505,19 +535,24 @@ mark{
   bottom: 30px;
   right: 30px;
   background: var(--blood-dark);
-  color: var(--gold-bright);
+  color: #fff;
   border: 1px solid var(--blood);
   width: 44px;
   height: 44px;
-  border-radius: 2px;
+  border-radius: 50%;
   cursor: pointer;
   font-size: 18px;
-  font-family: 'UnifrakturCook', serif;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
   display: none;
-  box-shadow: var(--shadow-deep);
-  transition: all 0.2s;
+  box-shadow: 0 0 15px rgba(255, 0, 170, 0.4);
+  transition: all 0.3s;
 }
-.back-top:hover{background: var(--blood); transform: translateY(-3px)}
+.back-top:hover{
+  background: var(--blood); 
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(255, 0, 170, 0.8);
+}
 .back-top.visible{display:block}
 
 /* Mobile menu */
@@ -540,14 +575,23 @@ mark{
     top: 16px;
     left: 16px;
     z-index: 101;
-    background: var(--blood-dark);
-    border: 1px solid var(--blood);
-    color: var(--gold-bright);
+    background: rgba(21, 5, 46, 0.9);
+    border: 1px solid var(--gold);
+    color: var(--gold);
     padding: 8px 14px;
-    border-radius: 2px;
-    font-family: 'IM Fell English', serif;
+    border-radius: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 2px;
     cursor: pointer;
-    box-shadow: var(--shadow);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+  }
+  .menu-toggle:hover {
+    background: var(--gold);
+    color: var(--bg-deep);
+    box-shadow: 0 0 20px var(--gold);
   }
   h1{font-size: 40px}
   h2{font-size: 28px}
@@ -578,20 +622,21 @@ mark{
 /* Source legend */
 .legend{
   background: var(--bg-card);
-  border: 1px solid var(--rule);
+  border: 1px solid rgba(0, 255, 255, 0.3);
   padding: 18px 22px;
   margin: 24px 0;
-  border-radius: 2px;
-  font-size: 17px;
+  border-radius: 8px;
+  font-size: 15px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
 }
 .legend-title{
-  font-family: 'IM Fell English', serif;
-  font-variant: small-caps;
-  letter-spacing: 1.5px;
-  color: var(--gold-bright);
-  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold);
+  font-weight: 700;
   margin-bottom: 10px;
-  font-size: 17px;
+  font-size: 14px;
 }
 .legend-item{margin: 6px 0}
 
@@ -599,28 +644,338 @@ mark{
 .quick-nav{
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 30px;
 }
 .quick-nav a{
+  background: rgba(255, 0, 170, 0.1);
+  border: 1px solid var(--blood);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  box-shadow: 0 0 10px rgba(255, 0, 170, 0.2);
+}
+.quick-nav a:hover{
+  background: var(--blood);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px var(--blood);
+}
+/* === TOP HEADER === */
+.top-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(10, 6, 6, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--blood-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+.top-header.hidden {
+  transform: translateY(-100%);
+}
+.top-nav {
+  display: flex;
+  gap: 20px;
+}
+.top-nav-item {
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 8px 20px;
+  background: transparent;
+  border-radius: 30px;
+  border: 1px solid transparent;
+}
+.top-nav-item:hover {
+  background: rgba(255, 0, 170, 0.1);
+  color: #fff;
+  border-color: var(--blood);
+  text-shadow: 0 0 8px var(--blood);
+  box-shadow: 0 0 10px rgba(255, 0, 170, 0.3), inset 0 0 10px rgba(255, 0, 170, 0.3);
+  transform: translateY(-2px);
+}
+.top-nav-item.active {
+  background: rgba(0, 255, 255, 0.1);
+  color: #fff;
+  border-color: var(--gold);
+  text-shadow: 0 0 8px var(--gold);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3), inset 0 0 10px rgba(0, 255, 255, 0.3);
+}
+.top-nav-item.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 2px;
+  background: var(--blood);
+  box-shadow: 0 0 10px var(--blood);
+}
+
+.btn-export {
+  position: absolute;
+  right: 24px;
+  background: rgba(255, 0, 170, 0.1);
+  border: 1px solid var(--blood);
+  color: #fff;
+  padding: 8px 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 30px;
+  text-shadow: 0 0 5px var(--blood);
+  box-shadow: 0 0 10px rgba(255, 0, 170, 0.2);
+}
+.btn-export:hover {
+  background: var(--blood);
+  color: #fff;
+  box-shadow: 0 0 20px var(--blood);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+  .btn-export {
+    right: 10px;
+    padding: 4px 8px;
+    font-size: 14px;
+  }
+  .top-nav { gap: 20px; }
+}
+
+
+/* Adjustments for top header */
+.app {
+  padding-top: 64px;
+}
+.sidebar {
+  top: 64px;
+  height: calc(100vh - 64px);
+}
+.menu-toggle {
+  top: 76px; /* Below header */
+}
+
+/* New Section Visibility */
+.main-section {
+  display: none;
+  min-height: calc(100vh - 64px);
+}
+.main-section.active {
+  display: block;
+}
+
+/* === CHARACTER CREATOR === */
+.char-creator-container {
+  max-width: 1000px;
+  margin: 100px auto;
+  padding: 40px;
   background: var(--bg-card);
   border: 1px solid var(--rule);
-  color: var(--ink-soft);
-  padding: 8px 16px;
-  border-radius: 2px;
-  text-decoration: none;
-  font-size: 16px;
-  font-family: 'IM Fell English', serif;
-  transition: all 0.15s;
+  box-shadow: var(--shadow-deep);
+  position: relative;
+  overflow: hidden;
 }
-.quick-nav a:hover{border-color: var(--blood); color: var(--gold-bright)}
+.char-creator-container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--blood), transparent);
+}
+.creator-steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+  position: relative;
+}
+.creator-steps::after {
+  content: "";
+  position: absolute;
+  top: 20px; left: 0; right: 0;
+  height: 1px;
+  background: var(--rule);
+  z-index: 1;
+}
+.step-dot {
+  width: 40px;
+  height: 40px;
+  background: var(--bg-deep);
+  border: 2px solid var(--rule);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: var(--ink-dim);
+  z-index: 2;
+  transition: all 0.3s;
+}
+.step-dot.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 15px var(--gold);
+  text-shadow: 0 0 5px var(--gold);
+}
+
+/* === BLiNKMOTiON (ASCII TERMINAL) === */
+.terminal-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 64px);
+  background: #000;
+  color: #00ff00;
+  font-family: 'VT323', monospace;
+  position: relative;
+  overflow: hidden;
+}
+.terminal-container::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+.terminal-box {
+  width: 100%;
+  max-width: 600px;
+  padding: 40px;
+  border: 2px solid #00ff00;
+  background: #050505;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+  position: relative;
+  z-index: 3;
+}
+.ascii-logo {
+  font-size: 12px;
+  line-height: 1;
+  white-space: pre;
+  margin-bottom: 30px;
+  text-align: left;
+  color: #00ff00;
+  text-shadow: 0 0 5px #00ff00;
+}
+.terminal-box h2 {
+  font-family: 'VT323', monospace;
+  color: #00ff00;
+  border: none;
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.terminal-box h2::before { display: none; }
+
+.terminal-prompt {
+  display: flex;
+  margin-bottom: 15px;
+  align-items: center;
+}
+.terminal-prompt::before {
+  content: "> ";
+  margin-right: 10px;
+}
+.terminal-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #004400;
+  color: #00ff00;
+  font-family: 'VT323', monospace;
+  font-size: 24px;
+  width: 100%;
+  outline: none;
+}
+.terminal-input:focus {
+  border-bottom-color: #00ff00;
+}
+.btn-terminal {
+  background: #00ff00;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  font-family: 'VT323', monospace;
+  font-size: 24px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.btn-terminal:hover {
+  background: #00cc00;
+  box-shadow: 0 0 15px #00ff00;
+}
+.terminal-footer {
+  margin-top: 30px;
+  font-size: 18px;
+  opacity: 0.7;
+}
+.terminal-footer a {
+  color: #00ff00;
+  text-decoration: underline;
+}
+
+/* CRT Flicker Animation */
+@keyframes flicker {
+  0% { opacity: 0.97; }
+  5% { opacity: 0.95; }
+  10% { opacity: 0.9; }
+  15% { opacity: 0.95; }
+  20% { opacity: 0.98; }
+  25% { opacity: 0.95; }
+  30% { opacity: 0.9; }
+  100% { opacity: 1; }
+}
+.terminal-box {
+  animation: flicker 0.15s infinite;
+}
 </style>
 </head>
 <body>
 
+<header class="top-header">
+  <nav class="top-nav">
+    <div class="top-nav-item active" onclick="switchMainSection('lore')">Geral</div>
+    <div class="top-nav-item" onclick="switchMainSection('social')">BLiNKMOTiON</div>
+    <div class="top-nav-item" onclick="switchMainSection('char-creator')">Criar Personagem</div>
+  </nav>
+  <button class="btn-export" onclick="downloadCharacterData()">Baixar Dados</button>
+</header>
+
 <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
 
-<div class="app">
+<div id="section-lore" class="main-section active">
+  <div class="app">
 
 <!-- ============ SIDEBAR ============ -->
 <aside class="sidebar" id="sidebar">
@@ -636,7 +991,8 @@ mark{
   <nav class="nav">
     <div class="nav-section">
       <div class="nav-section-title">Começo</div>
-      <a href="#inicio" data-page="inicio">Introdução</a>
+      <a href="#historia" data-page="historia">Crônicas de Miami</a>
+      <a href="#inicio" data-page="inicio">Introdução do Guia</a>
       <a href="#princípios" data-page="principios">Princípios da Adaptação</a>
       <a href="#como-usar" data-page="como-usar">Como Usar Este Guia</a>
     </div>
@@ -646,7 +1002,7 @@ mark{
       <a href="#criação" data-page="criacao">Criação de Personagem</a>
       <a href="#perícias" data-page="pericias">Perícias</a>
       <a href="#aspectos" data-page="aspectos">Aspectos</a>
-      <a href="#stunts" data-page="stunts">Stunts & Extras</a>
+      <a href="#stunts" data-page="stunts">Façanhas & Extras</a>
     </div>
 
     <div class="nav-section">
@@ -688,12 +1044,54 @@ mark{
 </aside>
 
 <!-- ============ MAIN CONTENT ============ -->
-<main class="main">
+<main class="main" id="main-content">
 
-<div class="no-results" id="noResults">Nenhum resultado encontrado. Tente outro termo.</div>
+<section id="page-historia" class="page active">
+  <h1 style="font-size: 50px;">MIAMI 1974</h1>
+  <p class="page-sub">A Noite em que o Mundo Morreu</p>
+
+  <div class="card" style="margin-top: 30px; border-left: 5px solid var(--blood);">
+    <div class="card-body" style="font-size: 20px; line-height: 1.8; color: #fff;">
+      <p>Faz dois anos desde a noite em que o mundo morreu para você e algo mais antigo, mais faminto, tomou o seu lugar.</p>
+      <p>Desde então, você pertence à noite.</p>
+      <p><strong>E agora, você pertence a ela.</strong></p>
+      <br>
+      <p>Arrancado(a) do que restava da sua vida, você foi levado(a) para Miami. Não como turista. Não como fugitivo. Mas como peça em um jogo que você mal compreende. Uma vampira da Camarilla lhe deu uma missão e deixou bem claro o preço do fracasso. É uma situação atípica e até você sabe, mas você está nela.</p>
+      <br>
+      <p style="color: var(--blood-bright); font-style: italic;">Morte… seria misericórdia.<br>
+      Há destinos piores reservados para quem decepciona os antigos.</p>
+      <br>
+      <p>Não há escolha. Nunca houve.<br>
+      Você faz… ou deixa de existir.</p>
+      <br>
+      <p>Para se mover entre os mortais sem levantar suspeitas, você foi forçado(a) a se unir a outros neonatos, jovens, instáveis, perigosos. Juntos, vocês vestem uma mentira conveniente: uma banda de garagem. Um disfarce frágil, mas suficiente para atravessar cidades, fazer contatos… e chegar até Miami sob o pretexto de um “contrato”.</p>
+      <br>
+      <p>Mas todos sabem que isso é só fachada. E Miami… não é apenas uma cidade.</p>
+      <br>
+      <p style="font-family: 'Damion'; font-size: 32px; color: var(--gold);">É 1974.</p>
+      <p>Calor sufocante, néon, cocaína, sangue, às vezes tudo misturado.</p>
+      <br>
+      <p>O Sabá reina nas sombras, brutal e descontrolado. Redes de narcotráfico se entrelaçam com horrores antigos. Os Giovanni negociam com os mortos. Cultos serpenteiam nos becos, sussurrando o nome de deuses esquecidos.</p>
+      <br>
+      <p>A cidade está prestes a explodir e você é arremessado como um palito de fósforo no meio.</p>
+      <br>
+      <p>A Camarilla luta para retomar o controle, mas cada noite que passa fortalece seus inimigos. E no meio desse tabuleiro encharcado de sangue e segredos… está você.</p>
+      <br>
+      <p>Ainda aprendendo o que significa ser um monstro.<br>
+      Ainda fingindo ser humano.<br>
+      Ainda tentando não perder o pouco que resta da sua alma.</p>
+      <br>
+      <p style="border-top: 1px solid var(--bg-soft); padding-top: 20px;">Se é que ainda resta algo. Em Miami você sente que finalmente está nascendo para a noite de forma definitiva. A pergunta é o quanto durará.</p>
+    </div>
+  </div>
+
+  <div class="quick-nav" style="margin-top: 40px;">
+    <a href="#inicio" data-goto="inicio">Seguir para o Guia →</a>
+  </div>
+</section>
 
 <!-- ========== PÁGINA: INÍCIO ========== -->
-<section class="page active" id="page-inicio" data-page="inicio">
+<section class="page" id="page-inicio" data-page="inicio">
   <h1>Vampiro: a Máscara</h1>
   <div class="page-sub">Um guia de adaptação para Fate Core — todas as regras, reunidas e em português</div>
 
@@ -820,7 +1218,7 @@ mark{
     <li><strong>Escreva o Aspecto Mortal</strong> — quem você era antes do Abraço</li>
     <li><strong>Preencha os outros 2 Aspectos</strong> — opcionais (pode deixar em branco para preencher em jogo)</li>
     <li><strong>Distribua Perícias</strong> na pirâmide conforme seu tipo de personagem</li>
-    <li><strong>Gaste Refresh em Disciplinas, Stunts e Extras</strong></li>
+    <li><strong>Gaste Recarga em Disciplinas, Façanhas e Extras</strong></li>
   </ol>
 
   <h2>Tipos de personagem</h2>
@@ -832,7 +1230,7 @@ mark{
         <th>Perícia máx.</th>
         <th>Pirâmide</th>
         <th>Disciplinas</th>
-        <th>Refresh</th>
+        <th>Recarga</th>
         <th>Estresse</th>
       </tr>
     </thead>
@@ -842,7 +1240,7 @@ mark{
         <td>+3</td>
         <td>Pirâmide +3</td>
         <td>Nenhuma</td>
-        <td>— (2 Stunts/Extras)</td>
+        <td>— (2 Façanhas/Extras)</td>
         <td>2 Físico / 2 Mental</td>
       </tr>
       <tr>
@@ -850,7 +1248,7 @@ mark{
         <td>+3</td>
         <td>Pirâmide +3</td>
         <td>Potência Básica grátis</td>
-        <td>— (2 Stunts/Extras)</td>
+        <td>— (2 Façanhas/Extras)</td>
         <td>3 Físico / 2 Mental</td>
       </tr>
       <tr>
@@ -885,23 +1283,76 @@ mark{
     <p>Você tem 1 perícia no nível máximo, 2 no nível abaixo, 3 abaixo, e assim por diante, formando uma pirâmide. Exemplo para Neonato (pirâmide +4): 1 perícia em +4, 2 em +3, 3 em +2, 4 em +1. Resto das perícias fica em +0 (Medíocre).</p>
   </div>
 
-  <h2>Gastando Refresh</h2>
+  <h2>Disciplinas iniciais — sim, você ganha de graça</h2>
+  <p class="src-tag src-original">Original (com esclarecimento meu)</p>
+
+  <div class="callout">
+    <div class="callout-title">A regra em uma frase</div>
+    <p>Um <strong>Neonato</strong> ganha <strong>3 níveis grátis</strong> de Disciplina, e esses 3 níveis <strong>devem ser gastos em Disciplinas do Clã</strong>. Ancião ganha 6 grátis, Antigo ganha 9 — mesma regra. Caitiff/Pander não têm Clã, então escolhem livremente.</p>
+  </div>
+
+  <h3>Como funcionam os "níveis grátis"</h3>
+  <p>Seu Clã tem <strong>três Disciplinas nativas</strong> (por exemplo Toreador = Auspícios, Celeridade, Presença). Os 3 níveis iniciais podem ser distribuídos <strong>entre as três nativas, como o jogador preferir</strong>. Três distribuições típicas:</p>
+  <ul>
+    <li><strong>Espalhado:</strong> 1 nível em cada nativa (tenho o Básico das três)</li>
+    <li><strong>Focado:</strong> 3 níveis em uma só (vou até o Avançado de uma Disciplina)</li>
+    <li><strong>Misto:</strong> 2 níveis em uma + 1 em outra (Intermediário em uma, Básico em outra)</li>
+  </ul>
+
+  <h3>Níveis além dos grátis — aí entra a Recarga</h3>
+  <p>Depois dos 3 níveis iniciais, qualquer Disciplina adicional — <strong>dentro ou fora do Clã</strong> — custa <strong>2 de recarga por nível</strong>. É aqui que a escolha pesa:</p>
+
+  <table>
+    <thead><tr><th>O que você quer</th><th>Pode pegar?</th><th>Custo</th></tr></thead>
+    <tbody>
+      <tr><td>Disciplina do meu Clã, até 3 níveis</td><td>Sim</td><td><strong>Grátis</strong> (vem do pacote do Neonato)</td></tr>
+      <tr><td>4º nível de Disciplina do meu Clã (Ancião)</td><td>Só se for Ancião+</td><td>2 de recarga (fora dos 3 grátis)</td></tr>
+      <tr><td>Disciplina <em>fora</em> do meu Clã</td><td>Sim, se o Narrador aprovar a justificativa na ficção</td><td>2 de recarga por nível</td></tr>
+      <tr><td>Disciplina exclusiva de outro Clã (Dementação fora de Malk., Vicissitude fora de Tzimisce, etc.)</td><td>Muito difícil — exige gancho narrativo forte</td><td>2 de recarga por nível + aspecto-problema associado</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    <div class="callout-title">Disciplinas exclusivas</div>
+    <p>Algumas Disciplinas são <strong>tão amarradas</strong> ao Clã que aprendê-las fora dele pede reviravolta narrativa (ter sido ghoul de um Tzimisce, ter roubado um livro de rituais, ter sido abraçado duas vezes). Na página de Disciplinas elas aparecem na aba "Por Clã (completo)" — veja lá as nativas de cada Clã e quais são exclusivas. Converse com o Narrador antes de gastar recarga em Disciplinas exclusivas.</p>
+  </div>
+
+  <h3>O que significa na prática para um Neonato (recarga 5)</h3>
+  <p>Você começa com <strong>3 níveis do Clã grátis + 5 de recarga para gastar</strong>. Algumas combinações comuns:</p>
+  <ul>
+    <li><strong>Vampiro equilibrado:</strong> 3 grátis do Clã + 1 nível fora (2 de recarga) + 3 façanhas = 0 de recarga livre. <em>Ruim</em> — você fica sem Pontos de Destino.</li>
+    <li><strong>Vampiro equilibrado consertado:</strong> 3 grátis do Clã + 1 nível fora (2 de recarga) + 2 façanhas = 1 de recarga livre. Esta é a versão jogável.</li>
+    <li><strong>Especialista em Disciplina:</strong> 3 grátis do Clã (concentrados em duas) + 1 nível extra do Clã (2 de recarga) + 1 façanha = 2 de recarga livre. 4 níveis totais, um deles forte.</li>
+    <li><strong>Polivalente social:</strong> 3 grátis do Clã (1 em cada nativa) + 3 façanhas = 2 de recarga livre. Menos poder bruto, mais recursos de cena.</li>
+    <li><strong>Caçador implacável:</strong> 3 grátis do Clã (todos na mesma, até Avançado) + Façanha Herd (1 de recarga) + 1 nível de Fortitude/Potência fora do Clã (2 de recarga) = 2 de recarga livre.</li>
+  </ul>
+
+  <div class="callout tip">
+    <div class="callout-title">Regra de bolso</div>
+    <p>Vampiro começa forte nesta adaptação — os 3 níveis grátis já bastam para fazer diferença. Se estiver em dúvida entre "mais Disciplina" e "mais Façanha/Extra", escolha Façanha. O personagem fica mais versátil, e Pontos de Destino são mais valiosos do que um +2 extra em uma rolagem específica.</p>
+  </div>
+
+  <h2>Gastando Recarga (resumo)</h2>
   <p class="src-tag src-original">Original</p>
   <ul>
-    <li><strong>Cada nível extra de Disciplina</strong> (dentro ou fora do Clã) custa <strong>2 refresh</strong></li>
-    <li><strong>Stunts</strong> custam <strong>1 refresh</strong> cada</li>
-    <li><strong>Extras</strong> têm custo variável (geralmente 1-2 refresh)</li>
-    <li>O Neonato pode chegar até <strong>5 níveis de Disciplinas</strong> no total com 1 refresh restante</li>
+    <li><strong>Cada nível extra de Disciplina</strong> (dentro ou fora do Clã, <em>além</em> dos grátis) custa <strong>2 de recarga</strong></li>
+    <li><strong>Façanhas</strong> custam <strong>1 de recarga</strong> cada</li>
+    <li><strong>Extras</strong> têm custo variável (geralmente 1-2 de recarga)</li>
   </ul>
 
   <div class="callout warn">
-    <div class="callout-title">Refresh mínimo</div>
-    <p>Um personagem deve terminar com pelo menos <strong>1 refresh</strong> para ter Pontos de Destino na sessão. Se gastar tudo, não tem pontos — e isso é punitivo demais no Fate.</p>
+    <div class="callout-title">Recarga mínima</div>
+    <p>Um personagem deve terminar com pelo menos <strong>1 de recarga</strong> para ter Pontos de Destino na sessão. Se gastar tudo, não tem pontos — e isso é punitivo demais no Fate.</p>
   </div>
 
   <h2>Caitiff e Pander</h2>
   <p class="src-tag src-original">Original</p>
-  <p>Esses clãs sem clã podem escolher seus 3 níveis iniciais de Disciplinas em <em>qualquer</em> Disciplina, desde que o Narrador aprove.</p>
+  <p>Clãs sem clã escolhem seus 3 níveis iniciais <strong>livremente</strong> entre qualquer Disciplina, com aprovação do Narrador. É uma vantagem real da liberdade — e uma das razões pelas quais Caitiff são olhados de lado pela Camarilla (flexíveis demais, imprevisíveis demais).</p>
+
+  <div class="callout">
+    <div class="callout-title">Variante opcional para Caitiff/Pander <span class="src-tag src-homebrew">Adaptação minha</span></div>
+    <p>Se quiser equilibrar a flexibilidade com uma desvantagem mecânica, considere: Caitiff/Pander podem escolher livremente, <em>mas</em> ganham um aspecto-problema obrigatório "Caitiff — todo Cainita suspeita de mim" que o Narrador pode compelir em qualquer contexto social da Camarilla. Fica forte nos poderes, fraco na política — exatamente como o lore descreve.</p>
+  </div>
 
   <h2>Exemplo de criação</h2>
   <div class="callout">
@@ -909,9 +1360,17 @@ mark{
     <p><strong>Conceito:</strong> "Toreador fascinada pela noite underground de São Paulo"</p>
     <p><strong>Problema:</strong> "Prisioneira da beleza fugidia" (Defeito Toreador)</p>
     <p><strong>Mortal:</strong> "Ex-DJ de clube eletrônico"</p>
-    <p><strong>Outro:</strong> "Conheço todas as festas que importam"</p>
-    <p><strong>Perícias:</strong> Carisma +4, Empatia +3, Expressão +3, Percepção +2, Manipulação +2, Fisiologia +2, Contatos +1, Pagão +1, Ruídos +1, Vontade +1</p>
-    <p><strong>Refresh 5:</strong> Presença Básica (2), Auspícios Básico (2), Stunt "Herd" (1) → restam 0. <em>Mau negócio</em>, refaço: Presença 1 e 2 (4 refresh), Stunt Herd (1) → fica com 0. Melhor ainda: Presença 1 (2), Auspícios 1 (2), Stunt Harmless (1) → 0. <strong>Regra prática: deixe 1 refresh livre.</strong> Versão final: Presença 1 (2), Auspícios 1 (2), sem stunts → 1 refresh restante.</p>
+    <p><strong>Outro 1:</strong> "Conheço todas as festas que importam"</p>
+    <p><strong>Outro 2:</strong> <em>(em branco, preencherá em jogo)</em></p>
+    <p><strong>Perícias (pirâmide +4):</strong> Carisma +4; Empatia +3, Expressão +3; Percepção +2, Manipulação +2, Fisiologia +2; Contatos +1, Ocultismo +1, Ruídos +1, Vontade +1</p>
+    <p><strong>Disciplinas grátis do Clã Toreador (3 níveis):</strong> Auspícios Básico (1) + Celeridade Básica (1) + Presença Básica (1) — ficou com o Básico das três nativas, perfil "espalhado".</p>
+    <p><strong>Recarga 5, gasto:</strong> Façanha "Herd" (1) + Façanha "Inofensivo" (1) + Extra "Ponto Quente" (1) + Extra "Retentor" (1) = 4 de recarga. <strong>Resta 1 de recarga livre</strong> para Pontos de Destino na sessão.</p>
+    <p><strong>Resultado:</strong> Ash sabe farejar sobrenatural, correr mais rápido que um olho pode seguir, e encantar qualquer um. Tem uma boate dela, um ghoul, uma rede de caça pela noite underground, e a cara de quem parece inofensiva demais para ser ameaça.</p>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-title">Variante "focada"</div>
+    <p>Se Ash preferisse ser <em>especialista em Presença</em>, trocaria a distribuição: 3 níveis grátis todos em Presença (Básico, Intermediário, Avançado). Ficaria devastadora socialmente mas sem Auspícios nem Celeridade — teria que comprar gastando recarga se quisesse.</p>
   </div>
 </section>
 
@@ -1060,13 +1519,13 @@ mark{
   </table>
 </section>
 
-<!-- ========== PÁGINA: STUNTS ========== -->
+<!-- ========== PÁGINA: FAÇANHAS ========== -->
 <section class="page" id="page-stunts" data-page="stunts">
-  <h1>Stunts &amp; Extras</h1>
+  <h1>Façanhas &amp; Extras</h1>
   <div class="page-sub">Talentos, Méritos de VtM e recursos de cenário adaptados</div>
 
   <p class="src-tag src-original">Original</p>
-  <p>Stunts custam 1 refresh. Extras (posses, retentores, havens) têm custos variáveis. Os stunts genéricos do <em>Fate Core</em> continuam válidos — estes aqui são <strong>específicos de Vampiro</strong>, adaptados dos Méritos do V20.</p>
+  <p>Façanhas custam 1 de recarga. Extras (posses, retentores, havens) têm custos variáveis. As façanhas genéricas do <em>Fate Core</em> continuam válidas — estas aqui são <strong>específicas de Vampiro</strong>, adaptadas dos Méritos do V20.</p>
 
   <div class="tabs" id="stunts-tabs">
     <button class="tab active" data-tab="general">Gerais</button>
@@ -1075,7 +1534,7 @@ mark{
   </div>
 
   <div class="tab-content active" id="tab-general">
-    <h3>Stunts Gerais</h3>
+    <h3>Façanhas Gerais</h3>
     <ul>
       <li><strong>Brilho da Saúde:</strong> Gaste 1 PD para parecer vivo por uma cena (pulsação, respiração, suor, função sexual).</li>
       <li><strong>Come Comida:</strong> Você consegue comer sem desconforto, embora depois precise vomitar em privado.</li>
@@ -1090,12 +1549,12 @@ mark{
       <li><strong>Poliglota:</strong> 3 línguas extras além da nativa e do inglês. Línguas antigas usam Conhecimento.</li>
       <li><strong>Sono Leve:</strong> +2 em rolagens para acordar ou permanecer acordado durante o dia (Percepção ou Vontade).</li>
       <li><strong>Precoce:</strong> No fim da sessão, pode trocar duas perícias em vez de uma.</li>
-      <li><strong>Inligável:</strong> Você não pode ser alvo de Laço de Sangue. <em>Tremere pagam 2 refresh por este stunt.</em> Sabbat ritualistas considerem bem.</li>
+      <li><strong>Inligável:</strong> Você não pode ser alvo de Laço de Sangue. <em>Tremere pagam 2 de recarga por esta façanha.</em> Sabbat ritualistas considerem bem.</li>
     </ul>
   </div>
 
   <div class="tab-content" id="tab-skill">
-    <h3>Stunts por Perícia</h3>
+    <h3>Façanhas por Perícia</h3>
     <h4>Contatos</h4>
     <ul>
       <li><strong>Harpia:</strong> Você é Harpia da Camarilla na cidade. +2 em Contatos com vampiros influentes.</li>
@@ -1135,7 +1594,7 @@ mark{
 
   <div class="tab-content" id="tab-background">
     <h3>Backgrounds como Extras</h3>
-    <p>Custo em parênteses; sem indicação = 1 refresh.</p>
+    <p>Custo em parênteses; sem indicação = 1 de recarga.</p>
     <ul>
       <li><strong>Veículo Blindado:</strong> Fechado, armadura 4 contra armas de fogo, 2 contra outras fontes.</li>
       <li><strong>Veículo Customizado:</strong> Racer, motoca, RV-haven, etc.</li>
@@ -1147,7 +1606,7 @@ mark{
       <li><strong>Refúgio:</strong> Haven melhor do que seus Recursos indicariam. +2 em Recursos para melhorar ou definir recursos dele.</li>
       <li><strong>Território de Caça:</strong> Território oficial na cidade. Manutenção é sua responsabilidade mas caça fica muito mais fácil. Primeira caça da noite no seu território: rerrola um dado.</li>
       <li><strong>Ponto Quente:</strong> Um bar, boate ou strip club é seu.</li>
-      <li><strong>Refúgio Compartilhado:</strong> <span class="src-tag src-homebrew">Adaptação minha</span> Múltiplos PJs rateiam o custo (1 refresh cada PJ envolvido, mínimo 2). Cada PJ contribui define uma característica do lugar. Benefícios e riscos são compartilhados — e se um quebra a Máscara no haven, todos sofrem.</li>
+      <li><strong>Refúgio Compartilhado:</strong> <span class="src-tag src-homebrew">Adaptação minha</span> Múltiplos PJs rateiam o custo (1 de recarga cada PJ envolvido, mínimo 2). Cada PJ contribui define uma característica do lugar. Benefícios e riscos são compartilhados — e se um quebra a Máscara no haven, todos sofrem.</li>
       <li><strong>Título:</strong> Pode usar Título em lugar de Contatos ou Carisma ao lidar com vampiros. Traz responsabilidades também.
         <ul>
           <li>(1) Harpia, Whip, Deputy, Líder de Matilha, Sacerdote de Matilha, Mão Negra</li>
@@ -1159,7 +1618,7 @@ mark{
     </ul>
     <div class="callout tip">
       <div class="callout-title">Regra alternativa para Títulos</div>
-      <p>Em vez dos custos escalonados, cada título custa 1 refresh fixo — porque cargos maiores atraem inimigos mais perigosos e cobram mais obrigações. Use a regra que fizer mais sentido para seu grupo.</p>
+      <p>Em vez dos custos escalonados, cada título custa 1 de recarga fixa — porque cargos maiores atraem inimigos mais perigosos e cobram mais obrigações. Use a regra que fizer mais sentido para seu grupo.</p>
     </div>
   </div>
 </section>
@@ -1167,11 +1626,11 @@ mark{
 <!-- ========== PÁGINA: DISCIPLINAS ========== -->
 <section class="page" id="page-disciplinas" data-page="disciplinas">
   <h1>Disciplinas</h1>
-  <div class="page-sub">Os poderes do sangue — cada nível é um Extra de 2 refresh</div>
+  <div class="page-sub">Os poderes do sangue — cada nível é um Extra de 2 de recarga</div>
 
   <div class="callout">
     <div class="callout-title">Como funcionam</div>
-    <p>Cada <strong>Disciplina</strong> tem 4 níveis. Cada nível é um Extra separado que custa <strong>2 refresh</strong>. O nível 4 é <em>exclusivo de Anciões</em> — Neonatos não têm acesso. Muitas Disciplinas têm um <em>efeito passivo</em> sempre ativo, descrito no topo.</p>
+    <p>Cada <strong>Disciplina</strong> tem 4 níveis. Cada nível é um Extra separado que custa <strong>2 de recarga</strong>. O nível 4 é <em>exclusivo de Anciões</em> — Neonatos não têm acesso. Muitas Disciplinas têm um <em>efeito passivo</em> sempre ativo, descrito no topo.</p>
   </div>
 
   <div class="callout homebrew">
@@ -1184,7 +1643,7 @@ mark{
     <button class="tab" data-tab="mental">Mentais</button>
     <button class="tab" data-tab="social">Sociais</button>
     <button class="tab" data-tab="supernatural">Sobrenaturais</button>
-    <button class="tab" data-tab="unique">Exclusivas de Clã</button>
+    <button class="tab" data-tab="unique">Por Clã (completo)</button>
   </div>
 
   <!-- FÍSICAS -->
@@ -1368,23 +1827,93 @@ mark{
 
   <!-- EXCLUSIVAS DE CLÃ -->
   <div class="tab-content" id="tab-unique">
-    <p>Disciplinas restritas a clãs específicos. Quem tem acesso fora do clã em geral paga custo dobrado ou precisa de bênção/permissão narrativa.</p>
+    <h3>Disciplinas nativas de cada Clã</h3>
+    <p>Esta é a referência para <strong>escolher seus 3 níveis iniciais</strong>. Cada Clã tem três Disciplinas nativas, e você distribui os 3 níveis grátis entre elas (1/1/1, 2/1/0 ou 3/0/0). Disciplinas fora do Clã exigem gastar recarga (2 por nível) e aprovação do Narrador.</p>
+
+    <h4>Camarilla</h4>
     <table>
-      <thead><tr><th>Disciplina</th><th>Clã</th><th>Ver aba</th></tr></thead>
+      <thead><tr><th>Clã</th><th>Disciplinas nativas</th><th>Defeito do Clã</th></tr></thead>
       <tbody>
-        <tr><td>Quimerismo</td><td>Ravnos</td><td>Sobrenaturais</td></tr>
-        <tr><td>Dementação</td><td>Malkaviano</td><td>Mentais</td></tr>
-        <tr><td>Obtenebração</td><td>Lasombra</td><td>Sobrenaturais</td></tr>
-        <tr><td>Proteu</td><td>Gangrel</td><td>Sobrenaturais</td></tr>
-        <tr><td>Quietus</td><td>Assamita</td><td>Sobrenaturais</td></tr>
-        <tr><td>Serpentis</td><td>Followers of Set</td><td>Sobrenaturais</td></tr>
-        <tr><td>Temporis</td><td>True Brujah</td><td>Sobrenaturais</td></tr>
-        <tr><td>Vicissitude</td><td>Tzimisce</td><td>Sobrenaturais</td></tr>
-        <tr><td>Visceratika</td><td>Gárgulas</td><td>Físicas</td></tr>
-        <tr><td>Taumaturgia</td><td>Tremere</td><td>Página dedicada</td></tr>
-        <tr><td>Necromancia</td><td>Giovanni / Sabbat</td><td>Página dedicada</td></tr>
+        <tr><td><strong>Brujah</strong></td><td>Celeridade, Potência, Presença</td><td>Tendência ao frenesi de Ira (facilmente provocado)</td></tr>
+        <tr><td><strong>Gangrel</strong></td><td>Animalismo, Fortitude, Proteu</td><td>A cada frenesi, ganha uma característica animal permanente</td></tr>
+        <tr><td><strong>Malkaviano</strong></td><td>Auspícios, Dementação, Ofuscação</td><td>Todos sofrem de perturbação mental incurável</td></tr>
+        <tr><td><strong>Nosferatu</strong></td><td>Animalismo, Ofuscação, Potência</td><td>Aparência monstruosa inocultável; autom. quebra Máscara em público</td></tr>
+        <tr><td><strong>Toreador</strong></td><td>Auspícios, Celeridade, Presença</td><td>Presos pela beleza — difícil desviar o olhar de algo belo</td></tr>
+        <tr><td><strong>Tremere</strong></td><td>Auspícios, Dominação, Taumaturgia</td><td>Ligados pelo sangue à hierarquia Tremere (Laço triplo com o Conselho)</td></tr>
+        <tr><td><strong>Ventrue</strong></td><td>Dominação, Fortitude, Presença</td><td>Dieta restrita — só bebe de um tipo muito específico de vítima</td></tr>
       </tbody>
     </table>
+
+    <h4>Sabbat</h4>
+    <table>
+      <thead><tr><th>Clã</th><th>Disciplinas nativas</th><th>Defeito do Clã</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Lasombra</strong></td><td>Dominação, Obtenebração, Potência</td><td>Não possui reflexo; dificulta fotos, espelhos, vigilância</td></tr>
+        <tr><td><strong>Tzimisce</strong></td><td>Animalismo, Auspícios, Vicissitude</td><td>Precisa dormir com terra da sua pátria abaixo do corpo</td></tr>
+      </tbody>
+    </table>
+    <p><em>Muitos Sabbat também são de clãs antirribalhistas (Brujah Antitribu, Toreador Antitribu, etc.): usam as mesmas Disciplinas do clã-mãe mas com Humanidade substituída por outro Caminho.</em></p>
+
+    <h4>Independentes</h4>
+    <table>
+      <thead><tr><th>Clã</th><th>Disciplinas nativas</th><th>Defeito do Clã</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Assamita</strong></td><td>Celeridade, Ofuscação, Quietus</td><td>Obsessão pelo sangue Kindred (compulsão de diablerie)</td></tr>
+        <tr><td><strong>Followers of Set</strong></td><td>Ofuscação, Presença, Serpentis</td><td>Vulnerabilidade a luz intensa, mesmo não-solar</td></tr>
+        <tr><td><strong>Giovanni</strong></td><td>Dominação, Potência, Necromancia</td><td>Mordida monstruosa que causa dano extra e não adormece</td></tr>
+        <tr><td><strong>Ravnos</strong></td><td>Animalismo, Ofuscação, Quimerismo</td><td>Cada Ravnos tem um vício/crime obrigatório ligado ao seu sangue</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Clãs sem clã</h4>
+    <table>
+      <thead><tr><th>Clã</th><th>Disciplinas nativas</th><th>Defeito</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Caitiff</strong></td><td>Escolha <em>qualquer</em> 3 níveis iniciais</td><td>Desprezado pela Camarilla; suspeito por toda sociedade Kindred</td></tr>
+        <tr><td><strong>Pander</strong></td><td>Escolha <em>qualquer</em> 3 níveis iniciais</td><td>Equivalente Sabbat do Caitiff; respeitado internamente mas suspeito fora</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Linhagens (Bloodlines) comuns</h4>
+    <table>
+      <thead><tr><th>Linhagem</th><th>Clã-mãe</th><th>Disciplinas nativas</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Gárgulas</strong></td><td>Criada pelos Tremere</td><td>Fortitude, Potência, Visceratika</td></tr>
+        <tr><td><strong>Salubri</strong></td><td>Clã extinto/caçado</td><td>Auspícios, Fortitude, Valeren (cura)</td></tr>
+        <tr><td><strong>True Brujah</strong></td><td>Ramo antigo</td><td>Potência, Presença, Temporis</td></tr>
+        <tr><td><strong>Daughters of Cacophony</strong></td><td>Linhagem independente</td><td>Fortitude, Melpominee (canto), Presença</td></tr>
+        <tr><td><strong>Samedi</strong></td><td>Linhagem caribenha</td><td>Fortitude, Obeah (necromancia variante), Thanatosis</td></tr>
+        <tr><td><strong>Kiasyd</strong></td><td>Ramo Lasombra</td><td>Dominação, Mytherceria, Obtenebração</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <div class="callout-title">Linhagens com Disciplinas raras</div>
+      <p>Valeren, Melpominee, Obeah, Thanatosis e Mytherceria não aparecem na página de Disciplinas deste guia — são obscuras demais. Se quiser jogar uma linhagem, combine com o Narrador para adaptar ou use uma Disciplina próxima (Valeren ≈ Auspícios + habilidade de cura; Mytherceria ≈ Obtenebração com sabor feérico; etc.).</p>
+    </div>
+
+    <h3>Quais Disciplinas são "exclusivas" de um Clã?</h3>
+    <p>Estas só aparecem em <em>uma</em> linhagem e são muito difíceis de aprender fora dela (exigem diabolerie, roubo de tomos ou gancho narrativo forte):</p>
+    <table>
+      <thead><tr><th>Disciplina</th><th>Clã único</th></tr></thead>
+      <tbody>
+        <tr><td>Dementação</td><td>Malkaviano</td></tr>
+        <tr><td>Obtenebração</td><td>Lasombra</td></tr>
+        <tr><td>Proteu</td><td>Gangrel</td></tr>
+        <tr><td>Quietus</td><td>Assamita</td></tr>
+        <tr><td>Quimerismo</td><td>Ravnos</td></tr>
+        <tr><td>Serpentis</td><td>Followers of Set</td></tr>
+        <tr><td>Taumaturgia</td><td>Tremere</td></tr>
+        <tr><td>Necromancia</td><td>Giovanni (e alguns Sabbat)</td></tr>
+        <tr><td>Temporis</td><td>True Brujah</td></tr>
+        <tr><td>Vicissitude</td><td>Tzimisce</td></tr>
+        <tr><td>Visceratika</td><td>Gárgulas</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Quais Disciplinas qualquer um pode aprender?</h3>
+    <p>Estas são as Disciplinas "comuns" — aparecem em múltiplos Clãs e são mais fáceis de justificar aprender fora do Clã com um bom conceito:</p>
+    <p><strong>Animalismo, Auspícios, Celeridade, Dominação, Fortitude, Ofuscação, Potência, Presença.</strong></p>
   </div>
 </section>
 
@@ -1395,7 +1924,7 @@ mark{
 
   <div class="callout">
     <div class="callout-title">Regra base</div>
-    <p>Taumaturgia funciona em <strong>caminhos</strong>. Cada personagem escolhe um caminho primário e pode aprender outros. Cada nível de caminho é um Extra de 2 refresh (como uma Disciplina normal). Além disso, para cada nível de Taumaturgia, o personagem <strong>recebe um ritual de mesmo nível</strong> — rituais adicionais custam refresh.</p>
+    <p>Taumaturgia funciona em <strong>caminhos</strong>. Cada personagem escolhe um caminho primário e pode aprender outros. Cada nível de caminho é um Extra de 2 de recarga (como uma Disciplina normal). Além disso, para cada nível de Taumaturgia, o personagem <strong>recebe um ritual de mesmo nível</strong> — rituais adicionais custam recarga.</p>
   </div>
 
   <div class="tabs" id="thaum-tabs">
@@ -1449,7 +1978,7 @@ mark{
 
   <div class="tab-content" id="tab-rituals">
     <h3>Rituais de Taumaturgia <span class="src-tag src-original">Original</span></h3>
-    <p>Rituais são magias preparadas. Você recebe 1 ritual grátis por nível de Taumaturgia em um caminho. Rituais adicionais custam refresh (1 por ritual, ou um Extra coletivo "Biblioteca de Rituais" por 2 refresh dando 5 rituais).</p>
+    <p>Rituais são magias preparadas. Você recebe 1 ritual grátis por nível de Taumaturgia em um caminho. Rituais adicionais custam recarga (1 por ritual, ou um Extra coletivo "Biblioteca de Rituais" por 2 de recarga dando 5 rituais).</p>
 
     <h4>Básicos</h4>
     <ul>
@@ -1555,7 +2084,7 @@ mark{
 
   <h2>Rituais de Necromancia</h2>
   <p class="src-tag src-original">Original</p>
-  <p>O autor notou que estes rituais são deliberadamente deixados sem mecânica rígida. Trate como rituais de Taumaturgia — 1 grátis por nível + compra por refresh.</p>
+  <p>O autor notou que estes rituais são deliberadamente deixados sem mecânica rígida. Trate como rituais de Taumaturgia — 1 grátis por nível + compra gastando recarga.</p>
 
   <div class="callout tip">
     <div class="callout-title">Dica de Narrador</div>
@@ -1614,7 +2143,7 @@ mark{
       <tr><td>Dominação</td><td>Percepção ou Empatia</td><td>Manipulação via Dominate</td></tr>
       <tr><td>Sedução</td><td>Empatia (achar vítima)</td><td>Carisma</td></tr>
       <tr><td>Predador do submundo</td><td>Ruídos</td><td>Lutar</td></tr>
-      <tr><td>Social (com Stunt Herd)</td><td>Contatos (1×/noite)</td><td>—</td></tr>
+      <tr><td>Social (com Façanha Herd)</td><td>Contatos (1×/noite)</td><td>—</td></tr>
     </tbody>
   </table>
 
@@ -1935,7 +2464,7 @@ mark{
       <tr><td>Curar estresse físico</td><td>Agrava Fome 1 nível</td><td>Limpa todas as caixas de estresse físico</td></tr>
       <tr><td>Tratar consequência física leve</td><td>Agrava Fome 1 nível</td><td>Marca consequência leve como tratada</td></tr>
       <tr><td>Tratar consequência física moderada</td><td>Agrava Fome 2 níveis</td><td>Marca consequência moderada como tratada</td></tr>
-      <tr><td>Aparência humana (Blush of Life)</td><td>Agrava Fome 1 nível</td><td>Parece vivo por uma cena (se não tiver o stunt grátis)</td></tr>
+      <tr><td>Aparência humana (Blush of Life)</td><td>Agrava Fome 1 nível</td><td>Parece vivo por uma cena (se não tiver o façanha grátis)</td></tr>
       <tr><td>Ativar Disciplina intermediária</td><td>Agrava Fome 1 nível</td><td>Algumas Disciplinas cobram Fome em vez de PD</td></tr>
     </tbody>
   </table>
@@ -2174,7 +2703,7 @@ mark{
   <h2>Outras conquistas <span class="src-tag src-homebrew">Adaptação minha</span></h2>
   <p>Em crônicas longas, podem acontecer Marcos maiores, adicionando mais opções:</p>
   <ul>
-    <li><strong>Marco Significativo</strong> (fim de arco): ganhar +1 refresh <em>ou</em> trocar um Stunt</li>
+    <li><strong>Marco Significativo</strong> (fim de arco): ganhar +1 de recarga <em>ou</em> trocar uma Façanha</li>
     <li><strong>Marco Maior</strong> (fim de crônica): avançar para nível superior (Neonato → Ancião, por exemplo) se a ficção justificar, redefinir aspectos pesadamente</li>
   </ul>
 </section>
@@ -2213,7 +2742,7 @@ mark{
   </div>
 
   <h2>Ritae Sabbat</h2>
-  <p>Funcionam como rituais necromânticos ou taumatúrgicos. Sacerdotes de matilha do Sabbat devem gastar <strong>1 refresh</strong> para um Extra representando seu conhecimento dos Ritae básicos.</p>
+  <p>Funcionam como rituais necromânticos ou taumatúrgicos. Sacerdotes de matilha do Sabbat devem gastar <strong>1 de recarga</strong> para um Extra representando seu conhecimento dos Ritae básicos.</p>
 
   <h3>Lista breve de Ritae <span class="src-tag src-homebrew">Adaptação minha</span></h3>
   <ul>
@@ -2291,7 +2820,7 @@ mark{
 
   <div class="callout warn">
     <div class="callout-title">Importante: Geração modula, não substitui</div>
-    <p>O tipo de personagem (Mortal, Ghoul, Neonato, Ancião, Antigo) ainda determina <strong>refresh, estresse e construção inicial</strong>. A Geração só impõe os <strong>tetos máximos</strong>: um Ancião da 9ª construído como "Ancião" tem refresh 3 e pirâmide +5, mas um Ancião da 7ª construído como "Antigo" pode ir até pirâmide +6. Use a categoria de tipo para o ponto de partida; a Geração para o teto.</p>
+    <p>O tipo de personagem (Mortal, Ghoul, Neonato, Ancião, Antigo) ainda determina <strong>recarga, estresse e construção inicial</strong>. A Geração só impõe os <strong>tetos máximos</strong>: um Ancião da 9ª construído como "Ancião" tem 3 de recarga e pirâmide +5, mas um Ancião da 7ª construído como "Antigo" pode ir até pirâmide +6. Use a categoria de tipo para o ponto de partida; a Geração para o teto.</p>
   </div>
 
   <h2>O bônus de Geração baixa em testes opostos</h2>
@@ -2360,9 +2889,9 @@ mark{
     <thead><tr><th>Tipo mecânico</th><th>Geração típica</th><th>Observação</th></tr></thead>
     <tbody>
       <tr><td>Mortal / Ghoul</td><td>—</td><td>Ghoul opera sob a Geração do domitor para limites de Disciplinas aprendidas</td></tr>
-      <tr><td>Neonato (refresh 5)</td><td>13ª – 11ª</td><td>Padrão. 13ª pega "Sangue Fraco" como aspecto-problema</td></tr>
-      <tr><td>Ancião (refresh 3)</td><td>10ª – 8ª</td><td>Primogens, Bispos, Whips antigos</td></tr>
-      <tr><td>Antigo (refresh 1)</td><td>7ª – 5ª</td><td>Príncipes seculares, Justicars, raríssimos Matusaléns "ativos"</td></tr>
+      <tr><td>Neonato (recarga 5)</td><td>13ª – 11ª</td><td>Padrão. 13ª pega "Sangue Fraco" como aspecto-problema</td></tr>
+      <tr><td>Ancião (recarga 3)</td><td>10ª – 8ª</td><td>Primogens, Bispos, Whips antigos</td></tr>
+      <tr><td>Antigo (recarga 1)</td><td>7ª – 5ª</td><td>Príncipes seculares, Justicars, raríssimos Matusaléns "ativos"</td></tr>
       <tr><td>Antediluviano</td><td>3ª</td><td>Apenas NPCs míticos. A mesa não joga com isto</td></tr>
     </tbody>
   </table>
@@ -2373,7 +2902,7 @@ mark{
   <ul>
     <li>Aspecto-problema: <strong>"Sangue Fraco"</strong> (Narrador pode compelir para falhar gastos de sangue, sentir fome mais rápido, etc.)</li>
     <li>Não pode aprender Disciplinas avançadas (3+) sem ritual ou diabolerie</li>
-    <li>Em compensação: <strong>refresh +1</strong> (6 em vez de 5) — porque a maldição ainda lhes deixou alguma sorte</li>
+    <li>Em compensação: <strong>recarga +1</strong> (6 em vez de 5) — porque a maldição ainda lhes deixou alguma sorte</li>
   </ul>
 
   <h2>Como descobrir a Geração de alguém</h2>
@@ -2480,7 +3009,7 @@ mark{
     <li><strong>Em rolagens críticas.</strong> Caça que vai impactar a Fome a noite toda. Conflito político decisivo.</li>
     <li><strong>Para declarar fato narrativo.</strong> "Conheço esse bartender. Já o ajudei numa fria." — 1 PD bem investido.</li>
     <li><strong>Para resistir a um compel.</strong> Quando aceitar a complicação atrapalharia <em>demais</em> a sessão.</li>
-    <li><strong>Não acumule.</strong> No fim da sessão, PDs não usados acima do refresh inicial são perdidos.</li>
+    <li><strong>Não acumule.</strong> No fim da sessão, PDs não usados acima da recarga inicial são perdidos.</li>
   </ul>
 
   <h2>Aceitar compels</h2>
@@ -2537,7 +3066,7 @@ mark{
 
   <h2>Tipos de personagem (resumo)</h2>
   <table>
-    <thead><tr><th>Tipo</th><th>Perícia máx</th><th>Disc.</th><th>Refresh</th><th>Estresse</th></tr></thead>
+    <thead><tr><th>Tipo</th><th>Perícia máx</th><th>Disc.</th><th>Recarga</th><th>Estresse</th></tr></thead>
     <tbody>
       <tr><td>Mortal</td><td>+3</td><td>0</td><td>—</td><td>2/2</td></tr>
       <tr><td>Ghoul</td><td>+3</td><td>Potência 1 grátis</td><td>—</td><td>3/2</td></tr>
@@ -2572,11 +3101,11 @@ mark{
     </tbody>
   </table>
 
-  <h2>Custos de Refresh</h2>
+  <h2>Custos de Recarga</h2>
   <table>
     <thead><tr><th>Item</th><th>Custo</th></tr></thead>
     <tbody>
-      <tr><td>Stunt</td><td>1</td></tr>
+      <tr><td>Façanha</td><td>1</td></tr>
       <tr><td>Nível de Disciplina</td><td>2</td></tr>
       <tr><td>Extra (Background típico)</td><td>1-2</td></tr>
       <tr><td>Refúgio Compartilhado</td><td>1 por PJ envolvido</td></tr>
@@ -2641,7 +3170,33 @@ mark{
     <p>Em qualquer teste oposto entre vampiros, o de geração mais baixa ganha <strong>+1 por degrau</strong>, máximo <strong>+3</strong>. <em>Dominação não funciona contra geração inferior.</em> Ver <a href="#" data-goto="geracoes">Gerações</a>.</p>
   </div>
 
+  <h2>Tabela rápida: Clãs e suas 3 Disciplinas nativas</h2>
+  <p><em>Use esta na hora de montar personagem — são as 3 Disciplinas entre as quais você distribui os níveis grátis.</em></p>
+  <table>
+    <thead><tr><th>Clã</th><th>Nativas</th><th>Seita</th></tr></thead>
+    <tbody>
+      <tr><td>Brujah</td><td>Celeridade · Potência · Presença</td><td>Camarilla</td></tr>
+      <tr><td>Gangrel</td><td>Animalismo · Fortitude · Proteu</td><td>Camarilla</td></tr>
+      <tr><td>Malkaviano</td><td>Auspícios · Dementação · Ofuscação</td><td>Camarilla</td></tr>
+      <tr><td>Nosferatu</td><td>Animalismo · Ofuscação · Potência</td><td>Camarilla</td></tr>
+      <tr><td>Toreador</td><td>Auspícios · Celeridade · Presença</td><td>Camarilla</td></tr>
+      <tr><td>Tremere</td><td>Auspícios · Dominação · Taumaturgia</td><td>Camarilla</td></tr>
+      <tr><td>Ventrue</td><td>Dominação · Fortitude · Presença</td><td>Camarilla</td></tr>
+      <tr><td>Lasombra</td><td>Dominação · Obtenebração · Potência</td><td>Sabbat</td></tr>
+      <tr><td>Tzimisce</td><td>Animalismo · Auspícios · Vicissitude</td><td>Sabbat</td></tr>
+      <tr><td>Assamita</td><td>Celeridade · Ofuscação · Quietus</td><td>Independente</td></tr>
+      <tr><td>Followers of Set</td><td>Ofuscação · Presença · Serpentis</td><td>Independente</td></tr>
+      <tr><td>Giovanni</td><td>Dominação · Potência · Necromancia</td><td>Independente</td></tr>
+      <tr><td>Ravnos</td><td>Animalismo · Ofuscação · Quimerismo</td><td>Independente</td></tr>
+      <tr><td>Gárgulas</td><td>Fortitude · Potência · Visceratika</td><td>Linhagem</td></tr>
+      <tr><td>Salubri</td><td>Auspícios · Fortitude · Valeren</td><td>Linhagem (caçada)</td></tr>
+      <tr><td>True Brujah</td><td>Potência · Presença · Temporis</td><td>Linhagem</td></tr>
+      <tr><td>Caitiff / Pander</td><td><em>Qualquer — 3 níveis livres</em></td><td>Sem clã</td></tr>
+    </tbody>
+  </table>
+
   <h2>Tabela rápida: Disciplinas e seus clãs</h2>
+  <p><em>Inversa da tabela acima — útil quando você quer saber "quem tem Ofuscação?".</em></p>
   <table>
     <thead><tr><th>Disciplina</th><th>Clã</th></tr></thead>
     <tbody>
@@ -2682,12 +3237,171 @@ mark{
   </div>
 </section>
 
-</main>
+  </div>
+</div>
+
+<!-- ============ SEÇÃO: CRIAR PERSONAGEM ============ -->
+<div id="section-char-creator" class="main-section">
+  <div class="char-creator-container">
+    <h1 style="text-align: center;">Desperte seu Sangue</h1>
+    <div class="page-sub" style="text-align: center;">Inicie sua jornada nas sombras da noite</div>
+    
+    <div class="creator-steps">
+      <div class="step-dot active">I</div>
+      <div class="step-dot">II</div>
+      <div class="step-dot">III</div>
+      <div class="step-dot">IV</div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card" style="text-align: center; border-color: var(--gold);">
+        <div class="card-title">Conceito</div>
+        <p>Quem era você antes do abraço?</p>
+        <input type="text" id="char-concept" class="form-control" placeholder="Ex: Detetive Amargurado" oninput="saveDraft()">
+      </div>
+      <div class="card" style="text-align: center;">
+        <div class="card-title">Clã</div>
+        <p>Qual linhagem corre em suas veias?</p>
+        <select id="char-clan" class="form-control" onchange="saveDraft()">
+          <option>Ventrue</option>
+          <option>Toreador</option>
+          <option>Brujah</option>
+          <option>Tremere</option>
+          <option>Nosferatu</option>
+          <option>Gangrel</option>
+          <option>Malkaviano</option>
+        </select>
+      </div>
+    </div>
+    
+    <button class="btn-blood" onclick="saveCharacter()" style="max-width: 200px; margin: 40px auto 0; display: block;">Salvar Personagem</button>
+  </div>
+</div>
+  </div>
+</div>
+
+<!-- ============ SEÇÃO: BLiNKMOTiON ============ -->
+<div id="section-social" class="main-section">
+  <div class="terminal-container">
+    <div class="terminal-box">
+      <div class="ascii-logo">
+ ██████╗ ██╗     ██╗███╗   ██╗██╗  ██╗███╗   ███╗ ██████╗ ████████╗██╗ ██████╗ ███╗   ██╗
+ ██╔══██╗██║     ██║████╗  ██║██║ ██╔╝████╗ ████║██╔═══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
+ ██████╔╝██║     ██║██╔██╗ ██║█████╔╝ ██╔████╔██║██║   ██║   ██║   ██║██║   ██║██╔██╗ ██║
+ ██╔══██╗██║     ██║██║╚██╗██║██╔═██╗ ██║╚██╔╝██║██║   ██║   ██║   ██║██║   ██║██║╚██╗██║
+ ██████╔╝███████╗██║██║ ╚████║██║  ██╗██║ ╚═╝ ██║╚██████╔╝   ██║   ██║╚██████╔╝██║ ╚████║
+ ╚══════╝╚══════╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝    ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+      </div>
+      <h2>01000001 01100011 01100101 01110011 01110011 01101111 01110010 01101001 01100001</h2>
+      
+      <div class="terminal-prompt">
+        <input type="text" class="terminal-input" placeholder="01010101 01010011 01010101 01000001 01010010 01001001 01001111">
+      </div>
+      <div class="terminal-prompt">
+        <input type="password" class="terminal-input" placeholder="01010011 01000101 01001110 01001000 01000001">
+      </div>
+      
+      <button class="btn-terminal">conectar</button>
+      
+      <div class="terminal-footer">
+        01010011 01010100 01000001 01010100 01010101 01010011: 01101111 01101011<br>
+        01001100 01001111 01000011 01000001 01001100: 00111111 00111111 00111111<br>
+      </div>
+    </div>
+  </div>
 </div>
 
 <button class="back-top" id="backTop" onclick="scrollToTop()" title="Voltar ao topo">▲</button>
 
 <script>
+// ============ NAVEGAÇÃO PRINCIPAL (TOP MENU) ============
+function switchMainSection(sectionId) {
+  // Hide all sections
+  document.querySelectorAll('.main-section').forEach(s => s.classList.remove('active'));
+  // Show target section
+  const target = document.getElementById('section-' + sectionId);
+  if (target) target.classList.add('active');
+  
+  // Update nav items
+  document.querySelectorAll('.top-nav-item').forEach(item => {
+    item.classList.remove('active');
+    if (item.getAttribute('onclick').includes(sectionId)) {
+      item.classList.add('active');
+    }
+  });
+
+  // Handle menu toggle visibility
+  const menuToggle = document.querySelector('.menu-toggle');
+  if (sectionId === 'lore') {
+    // Only show if mobile
+    if (window.innerWidth <= 900) {
+      menuToggle.style.display = 'block';
+    } else {
+      menuToggle.style.display = 'none';
+    }
+  } else {
+    menuToggle.style.display = 'none';
+  }
+
+  scrollToTop();
+}
+
+// ============ PERSISTÊNCIA DE PERSONAGENS ============
+function saveCharacter() {
+  const concept = document.getElementById('char-concept').value;
+  const clan = document.getElementById('char-clan').value;
+  
+  if (!concept) {
+    alert('Por favor, defina um conceito para seu personagem.');
+    return;
+  }
+
+  const newChar = {
+    id: Date.now(),
+    concept: concept,
+    clan: clan,
+    createdAt: new Date().toISOString()
+  };
+
+  const savedChars = JSON.parse(localStorage.getItem('vampiro_chars') || '[]');
+  savedChars.push(newChar);
+  localStorage.setItem('vampiro_chars', JSON.stringify(savedChars));
+
+  alert('Personagem salvo com sucesso!');
+  document.getElementById('char-concept').value = '';
+  localStorage.removeItem('char_draft');
+}
+
+function saveDraft() {
+  const draft = {
+    concept: document.getElementById('char-concept').value,
+    clan: document.getElementById('char-clan').value
+  };
+  localStorage.setItem('char_draft', JSON.stringify(draft));
+}
+
+function loadDraft() {
+  const draftRaw = localStorage.getItem('char_draft');
+  if (draftRaw) {
+    const draft = JSON.parse(draftRaw);
+    document.getElementById('char-concept').value = draft.concept || '';
+    document.getElementById('char-clan').value = draft.clan || 'Ventrue';
+  }
+}
+
+
+function downloadCharacterData() {
+  const savedChars = localStorage.getItem('vampiro_chars') || '[]';
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(savedChars);
+  const downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.setAttribute("href", dataStr);
+  downloadAnchorNode.setAttribute("download", "personagens_vampiro.json");
+  document.body.appendChild(downloadAnchorNode);
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
+}
+
+
 // ============ NAVEGAÇÃO ENTRE PÁGINAS ============
 function showPage(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -2706,6 +3420,14 @@ function showPage(pageId) {
     doSearch('');
   }
 }
+
+function focusSearch() {
+  switchMainSection('lore');
+  setTimeout(() => {
+    document.getElementById('search').focus();
+  }, 100);
+}
+
 
 document.querySelectorAll('.nav a, [data-goto]').forEach(el => {
   el.addEventListener('click', function(e) {
@@ -2748,6 +3470,12 @@ function performSearch(termRaw) {
     parent.replaceChild(document.createTextNode(m.textContent), m);
     parent.normalize();
   });
+
+  if (term !== '') {
+    if (!document.getElementById('section-lore').classList.contains('active')) {
+      switchMainSection('lore');
+    }
+  }
 
   if (term === '') {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('hidden-by-search'));
@@ -2823,10 +3551,30 @@ function highlightTextInElement(element, term) {
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+// ============ SCROLL EVENTS (Back to top & Header Hide) ============
+let lastScrollY = window.scrollY;
 window.addEventListener('scroll', () => {
+  const currentScrollY = window.scrollY;
+  
+  // Back to top button
   const btn = document.getElementById('backTop');
-  if (window.scrollY > 400) btn.classList.add('visible');
+  if (currentScrollY > 400) btn.classList.add('visible');
   else btn.classList.remove('visible');
+  
+  // Auto-hide top header
+  const header = document.querySelector('.top-header');
+  if (header) {
+    if (currentScrollY > 100 && currentScrollY > lastScrollY) {
+      // Scroll down
+      header.classList.add('hidden');
+    } else {
+      // Scroll up or near top
+      header.classList.remove('hidden');
+    }
+  }
+  
+  lastScrollY = currentScrollY;
 });
 
 // ============ MENU MOBILE ============
@@ -2839,6 +3587,7 @@ window.addEventListener('load', () => {
   const hash = window.location.hash.replace('#', '');
   // mapa de hash para data-page
   const map = {
+    'historia': 'historia',
     'inicio': 'inicio', 'princípios': 'principios', 'principios': 'principios',
     'como-usar': 'como-usar', 'criação': 'criacao', 'criacao': 'criacao',
     'perícias': 'pericias', 'pericias': 'pericias', 'aspectos': 'aspectos',
@@ -2859,15 +3608,28 @@ window.addEventListener('load', () => {
     const link = document.querySelector('.nav a[data-page="inicio"]');
     if (link) link.classList.add('active');
   }
+  loadDraft();
 });
 
 // Ctrl+K abre busca
 document.addEventListener('keydown', (e) => {
   if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
     e.preventDefault();
-    document.getElementById('search').focus();
+    focusSearch();
   }
 });
+
+// ============ SUPABASE CONNECTION ============
+// NOTA: 'Px7RZwjEGnwh6gRD' parece ser a senha do banco de dados (database password).
+// Para o frontend (HTML/JS), normalmente usamos a chave pública anônima (anon key).
+// Substitua o segundo parâmetro pela sua 'anon key' do Supabase para garantir o funcionamento.
+const supabaseUrl = 'https://srajipjjlhevdniujwod.supabase.co';
+const supabaseKey = 'Px7RZwjEGnwh6gRD'; // <-- Troque pela sua ANON KEY
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+console.log("Supabase Client Inicializado:", supabase);
+
+// ============ INICIALIZAÇÃO DA PÁGINA ============
 </script>
 
 </body>
