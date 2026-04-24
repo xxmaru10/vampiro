@@ -3663,14 +3663,15 @@ mark{
       </div>
       <h2>01000001 01100011 01100101 01110011 01110011 01101111 01110010 01101001 01100001</h2>
       
-      <div class="terminal-prompt">
-        <input type="text" class="terminal-input" placeholder="01010101 01010011 01010101 01000001 01010010 01001001 01001111">
-      </div>
-      <div class="terminal-prompt">
-        <input type="password" class="terminal-input" placeholder="01010011 01000101 01001110 01001000 01000001">
-      </div>
-      
-      <button class="btn-terminal">conectar</button>
+      <form onsubmit="event.preventDefault(); return false;">
+        <div class="terminal-prompt">
+          <input type="text" class="terminal-input" placeholder="01010101 01010011 01010101 01000001 01010010 01001001 01001111">
+        </div>
+        <div class="terminal-prompt">
+          <input type="password" class="terminal-input" placeholder="01010011 01000101 01001110 01001000 01000001">
+        </div>
+        <button type="submit" class="btn-terminal">conectar</button>
+      </form>
       
       <div class="terminal-footer">
         01010011 01010100 01000001 01010100 01010101 01010011: 01101111 01101011<br>
@@ -4311,18 +4312,67 @@ function ccRestoreForm() {
   if(ccState.skills && Object.keys(ccState.skills).length){ ccRecalcPyramid(); ccRenderSkillsGrid(); }
 }
 
+function ccCompressImage(file, callback) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      let width = img.width;
+      let height = img.height;
+      const maxSide = 500;
+      
+      if (width > height) {
+        if (width > maxSide) {
+          height *= maxSide / width;
+          width = maxSide;
+        }
+      } else {
+        if (height > maxSide) {
+          width *= maxSide / height;
+          height = maxSide;
+        }
+      }
+      
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+      
+      // Compress to JPEG with 0.7 quality to save significant space
+      callback(canvas.toDataURL('image/jpeg', 0.7));
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
 function ccLoadPhoto(input) {
   if(!input.files[0]) return;
-  const r=new FileReader();
-  r.onload=e=>{ ccState.photo=e.target.result; const p=document.getElementById('cc-photo-preview'); p.src=e.target.result; p.style.display='block'; document.getElementById('cc-photo-placeholder').style.display='none'; ccSave(); };
-  r.readAsDataURL(input.files[0]);
+  ccCompressImage(input.files[0], (compressedData) => {
+    ccState.photo = compressedData;
+    const p = document.getElementById('cc-photo-preview');
+    if (p) {
+      p.src = compressedData;
+      p.style.display = 'block';
+      document.getElementById('cc-photo-placeholder').style.display = 'none';
+    }
+    ccSave();
+  });
 }
 
 function ccLoadCreatorPhoto(input) {
   if(!input.files[0]) return;
-  const r=new FileReader();
-  r.onload=e=>{ ccState.creatorPhoto=e.target.result; const p=document.getElementById('cc-creator-photo-preview'); p.src=e.target.result; p.style.display='block'; document.getElementById('cc-creator-photo-ph').style.display='none'; ccSave(); };
-  r.readAsDataURL(input.files[0]);
+  ccCompressImage(input.files[0], (compressedData) => {
+    ccState.creatorPhoto = compressedData;
+    const p = document.getElementById('cc-creator-photo-preview');
+    if (p) {
+      p.src = compressedData;
+      p.style.display = 'block';
+      document.getElementById('cc-creator-photo-ph').style.display = 'none';
+    }
+    ccSave();
+  });
 }
 
 function ccUpdateClan(autoSelectCreator=true) {
