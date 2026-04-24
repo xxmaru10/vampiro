@@ -1064,23 +1064,26 @@ mark{
 .cc-archive-shell { margin: 0 0 34px; padding: 22px; border: 1px solid rgba(0,255,255,0.18); background: linear-gradient(180deg, rgba(21,5,46,0.82), rgba(10,2,22,0.92)); box-shadow: 0 0 20px rgba(0,255,255,0.08); }
 .cc-archive-kicker { color: var(--gold); font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; }
 .cc-archive-copy { color: var(--ink-soft); font-size: 13px; line-height: 1.7; margin-bottom: 18px; }
-.cc-archive-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
-.cc-archive-card { max-width: 220px; background: rgba(21,5,46,0.65); border: 1px solid rgba(255,0,170,0.2); padding: 10px; color: var(--ink); text-align: left; cursor: pointer; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
-.cc-archive-card:hover { border-color: var(--blood); transform: translateY(-2px); box-shadow: 0 0 18px rgba(255,0,170,0.18); }
-.cc-archive-card.active { border-color: var(--gold); box-shadow: 0 0 20px rgba(0,255,255,0.2); }
-.cc-archive-thumb { width: 100%; aspect-ratio: 4 / 5; margin-bottom: 10px; background: rgba(7,2,18,0.9); border: 1px solid rgba(255,0,170,0.16); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
-.cc-archive-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.cc-archive-thumb-fallback { color: var(--ink-soft); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
-.cc-archive-name { color: var(--gold); font-size: 13px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px; }
-.cc-archive-clan { color: var(--blood); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
-.cc-archive-tag { display: inline-flex; align-items: center; margin-top: 8px; padding: 4px 8px; border: 1px solid rgba(0,255,255,0.22); color: var(--ink-soft); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; background: rgba(0,255,255,0.06); }
-.cc-archive-empty { display: none; padding: 16px 18px; border: 1px dashed rgba(255,0,170,0.24); color: var(--ink-soft); font-size: 12px; line-height: 1.7; }
-.cc-archive-detail { display: none; grid-template-columns: 160px 1fr; gap: 18px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,0,170,0.14); }
-.cc-archive-detail-photo { width: 100%; aspect-ratio: 4 / 5; border: 1px solid rgba(255,0,170,0.18); background: rgba(7,2,18,0.9); overflow: hidden; display: flex; align-items: center; justify-content: center; }
-.cc-archive-detail-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.cc-archive-detail-title { color: #fff; font-size: 24px; margin: 0 0 6px; font-family: 'Cinzel Decorative', serif; }
-.cc-archive-detail-clan { color: var(--blood); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
-.cc-archive-detail-lore { color: var(--ink-soft); font-size: 13px; line-height: 1.8; }
+.cc-archive-grid { display: flex; flex-direction: column; gap: 10px; }
+.cc-tree-item { position: relative; }
+.cc-tree-node { display: flex; align-items: center; justify-content: space-between; background: rgba(21,5,46,0.6); border: 1px solid rgba(255,0,170,0.3); padding: 12px 20px; cursor: pointer; transition: all 0.2s; border-radius: 4px; }
+.cc-tree-node:hover { border-color: var(--gold); box-shadow: 0 0 12px rgba(0,255,255,0.2); transform: translateX(5px); }
+.cc-tree-node.active { border-color: var(--gold); background: rgba(0,255,255,0.05); }
+.cc-tree-info { display: flex; flex-direction: column; }
+.cc-tree-name { color: #fff; font-size: 15px; font-weight: 700; font-family: 'Cinzel Decorative', serif; }
+.cc-tree-clan { color: var(--blood); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
+.cc-tree-children { margin-left: 40px; margin-top: 10px; padding-left: 20px; border-left: 1px dashed var(--gold); display: flex; flex-direction: column; gap: 8px; position: relative; }
+.cc-tree-children::before { content: ''; position: absolute; left: 0; top: 0; width: 15px; height: 1px; background: var(--gold); }
+
+.cc-archive-detail { display: none; margin-top: 30px; padding: 25px; border: 1px solid var(--gold); background: rgba(10,2,22,0.95); position: relative; animation: slideUp 0.3s ease; grid-template-columns: 200px 1fr; gap: 30px; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.cc-detail-close { position: absolute; top: 15px; right: 20px; background: transparent; border: none; color: var(--gold); font-size: 24px; cursor: pointer; font-weight: bold; transition: color 0.2s; z-index: 10; }
+.cc-detail-close:hover { color: var(--blood); }
+.cc-archive-detail-photo { width: 100%; aspect-ratio: 4 / 5; border: 1px solid var(--blood); overflow: hidden; }
+.cc-archive-detail-photo img { width: 100%; height: 100%; object-fit: cover; }
+.cc-archive-detail-title { color: var(--gold); font-size: 28px; font-family: 'Cinzel Decorative', serif; margin-bottom: 8px; }
+.cc-archive-detail-clan { color: var(--blood); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; }
+.cc-archive-detail-lore { color: var(--ink-soft); font-size: 14px; line-height: 1.8; }
 .cc-creator-match { display: none; grid-template-columns: 88px 1fr; gap: 14px; align-items: start; margin-bottom: 18px; padding: 14px; border: 1px solid rgba(0,255,255,0.2); background: rgba(0,255,255,0.05); }
 .cc-creator-match.visible { display: grid; }
 .cc-creator-match-photo { width: 88px; aspect-ratio: 4 / 5; border: 1px solid rgba(0,255,255,0.18); background: rgba(7,2,18,0.9); display: flex; align-items: center; justify-content: center; overflow: hidden; }
@@ -4127,75 +4130,73 @@ function ccArchiveThumbMarkup(photo, label) {
 function ccRenderArchive() {
   const grid = document.getElementById('cc-archive-grid');
   const empty = document.getElementById('cc-archive-empty');
-  const detail = document.getElementById('cc-archive-detail');
-  if (!grid || !empty || !detail) return;
+  if (!grid || !empty) return;
 
   if (!ccArchive.length) {
     grid.innerHTML = '';
-    detail.innerHTML = '';
-    detail.style.display = 'none';
     empty.style.display = 'block';
     return;
   }
-
   empty.style.display = 'none';
-  if (!ccSelectedArchiveId || !ccFindArchiveRecordById(ccSelectedArchiveId)) {
-    ccSelectedArchiveId = ccArchive[0].id;
+
+  // Identify roots (characters without an archive parent)
+  const roots = ccArchive.filter(entry => {
+    if (!entry.creatorSourceId) return true;
+    return !ccArchive.some(p => String(p.id) === String(entry.creatorSourceId));
+  });
+
+  function renderTree(entries, level = 0) {
+    return entries.map(entry => {
+      const children = ccArchive.filter(c => String(c.creatorSourceId) === String(entry.id));
+      const isActive = String(entry.id) === String(ccSelectedArchiveId);
+      return `
+        <div class="cc-tree-item">
+          <div class="cc-tree-node ${isActive ? 'active' : ''}" onclick="ccSelectArchiveCharacter('${String(entry.id)}')">
+            <div class="cc-tree-info">
+              <span class="cc-tree-name">${ccEscapeHtml(entry.name || 'Vampiro')}</span>
+              <span class="cc-tree-clan">${ccEscapeHtml(entry.clan || 'Sem Cla')}</span>
+            </div>
+            <div style="font-size:10px;opacity:0.5">${children.length ? children.length + ' Descendentes' : ''}</div>
+          </div>
+          ${children.length ? `<div class="cc-tree-children">${renderTree(children, level + 1)}</div>` : ''}
+        </div>
+      `;
+    }).join('');
   }
 
-    grid.innerHTML = ccArchive.map(entry => {
-    const isActive = String(entry.id) === String(ccSelectedArchiveId);
-    const hasCreator = ccHasArchiveCreator(entry);
-    return `<button type="button" class="cc-archive-card ${isActive ? 'active' : ''}" onclick="ccSelectArchiveCharacter('${String(entry.id)}')">
-      <div class="cc-archive-thumb">
-        ${ccArchiveThumbMarkup(entry.photo, entry.name || 'Vampiro salvo')}
-        ${hasCreator ? '<div style="position:absolute;bottom:5px;right:5px;width:12px;height:12px;background:var(--gold);border-radius:50%;box-shadow:0 0 8px var(--gold)" title="Vínculo de Sangue"></div>' : ''}
-      </div>
-      <div class="cc-archive-name">${ccEscapeHtml(entry.name || 'Sem nome')}</div>
-      <div class="cc-archive-clan">${ccEscapeHtml(entry.clan || 'Sem cla')}</div>
-      ${hasCreator ? '<div class="cc-archive-tag blood-bond">Linhagem Ativa</div>' : ''}
-    </button>`;
-  }).join('');
+  grid.innerHTML = renderTree(roots);
+}
 
-  const active = ccFindArchiveRecordById(ccSelectedArchiveId) || ccArchive[0];
-  const lore = active.lore ? ccFormatHtml(active.lore) : 'Sem lore registrada para este vampiro ainda.';
+function ccSelectArchiveCharacter(id) {
+  ccSelectedArchiveId = id;
+  const entry = ccFindArchiveRecordById(id);
+  if (!entry) return;
+
+  const detail = document.getElementById('cc-archive-detail');
+  if (!detail) return;
+
   detail.style.display = 'grid';
-  
-  const charPhoto = `<div class="cc-archive-detail-photo">${ccArchiveThumbMarkup(active.photo, active.name || 'Vampiro')}</div>`;
-  const creatorPhoto = (active.creator && active.creator.photo) 
-    ? `<div class="cc-archive-detail-photo">${ccArchiveThumbMarkup(active.creator.photo, active.creator.name || 'Criador')}</div>`
-    : '';
+  detail.innerHTML = `
+    <button class="cc-detail-close" onclick="ccCloseDetail()">×</button>
+    <div class="cc-archive-detail-photo">
+      ${ccArchiveThumbMarkup(entry.photo, entry.name)}
+    </div>
+    <div>
+      <div class="cc-archive-detail-title">${ccEscapeHtml(entry.name || 'Sem Nome')}</div>
+      <div class="cc-archive-detail-clan">${ccEscapeHtml(entry.clan || 'Sem Cla')}</div>
+      <div class="cc-archive-detail-lore">${entry.lore ? ccFormatHtml(entry.lore) : 'Sem lore registrada.'}</div>
+    </div>
+  `;
+  ccRenderArchive();
+  detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
-  if (creatorPhoto) {
-    detail.innerHTML = `
-      <div class="cc-genealogy-container">
-        <div class="cc-genealogy-node">${creatorPhoto}</div>
-        <div class="cc-genealogy-line"></div>
-        <div class="cc-genealogy-node">${charPhoto}</div>
-      </div>
-      <div>
-        <div class="cc-label" style="margin-bottom:5px;color:var(--gold)">Descendente</div>
-        <div class="cc-archive-detail-title">${ccEscapeHtml(active.name || 'Sem nome')}</div>
-        <div class="cc-archive-detail-clan">${ccEscapeHtml(active.clan || 'Sem cla')}</div>
-        <div class="cc-archive-detail-lore">${lore}</div>
-        
-        <div style="margin-top:40px;padding-top:20px;border-top:1px dashed rgba(0,255,255,0.2)">
-          <div class="cc-label" style="margin-bottom:5px;color:var(--blood)">Criador (Ascendente)</div>
-          <div style="color:#fff;font-family:'Cinzel Decorative',serif;font-size:20px">${ccEscapeHtml(active.creator.name || 'Desconhecido')}</div>
-          <div style="color:var(--blood);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">${ccEscapeHtml(active.clan)}</div>
-          <p style="font-size:13px;color:var(--ink-soft);line-height:1.7">${ccFormatHtml(active.creator.lore)}</p>
-        </div>
-      </div>
-    `;
-  } else {
-    detail.innerHTML = `
-      <div class="cc-archive-detail-photo">${charPhoto}</div>
-      <div>
-        <div class="cc-archive-detail-title">${ccEscapeHtml(active.name || 'Sem nome')}</div>
-        <div class="cc-archive-detail-clan">${ccEscapeHtml(active.clan || 'Sem cla')}</div>
-        <div class="cc-archive-detail-lore">${lore}</div>
-      </div>
-    `;
+function ccCloseDetail() {
+  const detail = document.getElementById('cc-archive-detail');
+  if (detail) {
+    detail.style.display = 'none';
+    ccSelectedArchiveId = null;
+    ccRenderArchive();
   }
 }
 
