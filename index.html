@@ -987,9 +987,9 @@ mark{
 .cc-image-upload { position: relative; width: 150px; height: 190px; border: 2px dashed var(--blood-dark); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: border-color 0.3s; overflow: hidden; background: rgba(21,5,46,0.5); }
 .cc-image-upload:hover { border-color: var(--blood); }
 .cc-image-upload input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-.cc-image-preview { position: absolute; inset: 0; object-fit: cover; width: 100%; height: 100%; border-radius: 6px; }
-.cc-image-placeholder { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--ink-soft); font-size: 11px; text-align: center; padding: 14px; font-family: 'Montserrat', sans-serif; }
-.cc-image-icon { font-size: 28px; }
+.cc-image-preview { position: absolute; inset: 0; object-fit: cover; width: 100%; height: 100%; border-radius: 6px; pointer-events: none; }
+.cc-image-placeholder { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--ink-soft); font-size: 11px; text-align: center; padding: 14px; font-family: 'Montserrat', sans-serif; pointer-events: none; }
+.cc-image-icon { font-size: 28px; pointer-events: none; }
 .cc-step1-grid { display: grid; grid-template-columns: 170px 1fr; gap: 28px; align-items: start; margin-bottom: 28px; }
 @media (max-width: 580px) { .cc-step1-grid { grid-template-columns: 1fr; } .cc-image-upload { width: 120px; height: 155px; margin: 0 auto; } }
 .cc-clan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 20px; }
@@ -4139,32 +4139,68 @@ function ccRenderArchive() {
   }
   empty.style.display = 'none';
 
-  // Identify roots (characters without an archive parent)
-  const roots = ccArchive.filter(entry => {
-    if (!entry.creatorSourceId) return true;
-    return !ccArchive.some(p => String(p.id) === String(entry.creatorSourceId));
+  // Group by creator name
+  const treeData = {};
+  const orphans = [];
+
+  ccArchive.forEach(entry => {
+    const creatorName = (entry.creator && entry.creator.name) ? entry.creator.name : null;
+    if (creatorName) {
+      if (!treeData[creatorName]) treeData[creatorName] = { name: creatorName, clan: entry.clan, children: [] };
+      treeData[creatorName].children.push(entry);
+    } else {
+      orphans.push(entry);
+    }
   });
 
-  function renderTree(entries, level = 0) {
-    return entries.map(entry => {
-      const children = ccArchive.filter(c => String(c.creatorSourceId) === String(entry.id));
-      const isActive = String(entry.id) === String(ccSelectedArchiveId);
+  let html = '';
+
+  // Render grouped creators
+  for (const creatorKey in treeData) {
+    const group = treeData[creatorKey];
+    html += `
+      <div class="cc-tree-item">
+        <div class="cc-tree-node" style="border-color:var(--gold);opacity:0.9;cursor:default">
+          <div class="cc-tree-info">
+            <span class="cc-tree-name" style="color:var(--gold)">${ccEscapeHtml(group.name)}</span>
+            <span class="cc-tree-clan" style="color:var(--gold);font-size:9px">Ancestral / Criador</span>
+          </div>
+        </div>
+        <div class="cc-tree-children">
+          ${group.children.map(child => {
+            const isActive = String(child.id) === String(ccSelectedArchiveId);
+            return `
+              <div class="cc-tree-node ${isActive ? 'active' : ''}" onclick="ccSelectArchiveCharacter('${String(child.id)}')">
+                <div class="cc-tree-info">
+                  <span class="cc-tree-name">${ccEscapeHtml(child.name || 'Vampiro')}</span>
+                  <span class="cc-tree-clan">${ccEscapeHtml(child.clan || 'Sem Cla')}</span>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  // Render orphans
+  if (orphans.length) {
+    html += orphans.map(child => {
+      const isActive = String(child.id) === String(ccSelectedArchiveId);
       return `
         <div class="cc-tree-item">
-          <div class="cc-tree-node ${isActive ? 'active' : ''}" onclick="ccSelectArchiveCharacter('${String(entry.id)}')">
+          <div class="cc-tree-node ${isActive ? 'active' : ''}" onclick="ccSelectArchiveCharacter('${String(child.id)}')">
             <div class="cc-tree-info">
-              <span class="cc-tree-name">${ccEscapeHtml(entry.name || 'Vampiro')}</span>
-              <span class="cc-tree-clan">${ccEscapeHtml(entry.clan || 'Sem Cla')}</span>
+              <span class="cc-tree-name">${ccEscapeHtml(child.name || 'Vampiro')}</span>
+              <span class="cc-tree-clan">${ccEscapeHtml(child.clan || 'Sem Cla')}</span>
             </div>
-            <div style="font-size:10px;opacity:0.5">${children.length ? children.length + ' Descendentes' : ''}</div>
           </div>
-          ${children.length ? `<div class="cc-tree-children">${renderTree(children, level + 1)}</div>` : ''}
         </div>
       `;
     }).join('');
   }
 
-  grid.innerHTML = renderTree(roots);
+  grid.innerHTML = html;
 }
 
 function ccSelectArchiveCharacter(id) {
