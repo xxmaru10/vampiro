@@ -4259,9 +4259,18 @@ window.addEventListener('load', () => { ccInit(); });
 // Substitua o segundo parâmetro pela sua 'anon key' do Supabase para garantir o funcionamento.
 const supabaseUrl = 'https://srajipjjlhevdniujwod.supabase.co';
 const supabaseKey = 'Px7RZwjEGnwh6gRD'; // <-- Troque pela sua ANON KEY
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+let supabaseClient = null;
 
-console.log("Supabase Client Inicializado:", supabase);
+if (window.supabase && typeof window.supabase.createClient === 'function') {
+  try {
+    supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+    console.log("Supabase client inicializado:", supabaseClient);
+  } catch (error) {
+    console.warn("Falha ao inicializar o cliente Supabase:", error);
+  }
+} else {
+  console.warn("Supabase JS nÃ£o foi carregado; seguindo sem integraÃ§Ã£o remota.");
+}
 
 // ============ INICIALIZAÇÃO DA PÁGINA ============
 </script>
