@@ -1088,11 +1088,18 @@ mark{
 .cc-creator-match-title { color: var(--gold); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
 .cc-creator-match-name { color: #fff; font-size: 19px; font-family: 'Cinzel Decorative', serif; margin-bottom: 4px; }
 .cc-creator-match-copy { color: var(--ink-soft); font-size: 12px; line-height: 1.7; }
+/* Genealogy Connectors */
+.cc-genealogy-container { display: flex; flex-direction: column; align-items: flex-start; gap: 0; }
+.cc-genealogy-node { position: relative; display: flex; align-items: flex-start; gap: 20px; }
+.cc-genealogy-line { width: 3px; height: 40px; background: var(--gold); margin-left: 78px; box-shadow: 0 0 10px var(--gold); position: relative; z-index: 1; }
+.cc-genealogy-line::after { content: '▼'; position: absolute; bottom: -8px; left: -6px; font-size: 14px; color: var(--gold); text-shadow: 0 0 5px var(--gold); }
+.cc-archive-tag.blood-bond { border-color: var(--gold); color: var(--gold); background: rgba(0,255,255,0.1); font-weight: 700; }
 @media (max-width: 720px) {
   .cc-archive-detail { grid-template-columns: 1fr; }
   .cc-archive-detail-photo { max-width: 180px; }
   .cc-creator-match { grid-template-columns: 1fr; }
   .cc-creator-match-photo { width: 110px; }
+  .cc-genealogy-line { margin-left: 88px; }
 }
 </style>
 </head>
@@ -4136,13 +4143,17 @@ function ccRenderArchive() {
     ccSelectedArchiveId = ccArchive[0].id;
   }
 
-  grid.innerHTML = ccArchive.map(entry => {
+    grid.innerHTML = ccArchive.map(entry => {
     const isActive = String(entry.id) === String(ccSelectedArchiveId);
+    const hasCreator = ccHasArchiveCreator(entry);
     return `<button type="button" class="cc-archive-card ${isActive ? 'active' : ''}" onclick="ccSelectArchiveCharacter('${String(entry.id)}')">
-      <div class="cc-archive-thumb">${ccArchiveThumbMarkup(entry.photo, entry.name || 'Vampiro salvo')}</div>
+      <div class="cc-archive-thumb">
+        ${ccArchiveThumbMarkup(entry.photo, entry.name || 'Vampiro salvo')}
+        ${hasCreator ? '<div style="position:absolute;bottom:5px;right:5px;width:12px;height:12px;background:var(--gold);border-radius:50%;box-shadow:0 0 8px var(--gold)" title="Vínculo de Sangue"></div>' : ''}
+      </div>
       <div class="cc-archive-name">${ccEscapeHtml(entry.name || 'Sem nome')}</div>
       <div class="cc-archive-clan">${ccEscapeHtml(entry.clan || 'Sem cla')}</div>
-      ${ccHasArchiveCreator(entry) ? '<div class="cc-archive-tag">Criador salvo</div>' : ''}
+      ${hasCreator ? '<div class="cc-archive-tag blood-bond">Linhagem Ativa</div>' : ''}
     </button>`;
   }).join('');
 
@@ -4150,26 +4161,42 @@ function ccRenderArchive() {
   const lore = active.lore ? ccFormatHtml(active.lore) : 'Sem lore registrada para este vampiro ainda.';
   detail.style.display = 'grid';
   
-  let photosHtml = `<div class="cc-archive-detail-photo">${ccArchiveThumbMarkup(active.photo, active.name || 'Vampiro')}</div>`;
-  if (active.creator && active.creator.photo) {
-    photosHtml += `<div class="cc-archive-detail-photo" style="margin-top:10px">${ccArchiveThumbMarkup(active.creator.photo, active.creator.name || 'Criador')}</div>`;
-  }
+  const charPhoto = `<div class="cc-archive-detail-photo">${ccArchiveThumbMarkup(active.photo, active.name || 'Vampiro')}</div>`;
+  const creatorPhoto = (active.creator && active.creator.photo) 
+    ? `<div class="cc-archive-detail-photo">${ccArchiveThumbMarkup(active.creator.photo, active.creator.name || 'Criador')}</div>`
+    : '';
 
-  detail.innerHTML = `
-    <div style="display:flex;flex-direction:column;gap:10px">${photosHtml}</div>
-    <div>
-      <div class="cc-archive-detail-title">${ccEscapeHtml(active.name || 'Sem nome')}</div>
-      <div class="cc-archive-detail-clan">${ccEscapeHtml(active.clan || 'Sem cla')}</div>
-      <div class="cc-archive-detail-lore">${lore}</div>
-      ${active.creator && active.creator.name ? `
-        <div style="margin-top:20px;padding-top:15px;border-top:1px solid rgba(0,255,255,0.1)">
-          <div class="cc-label" style="font-size:9px">Criador Vinculado</div>
-          <div style="color:var(--gold);font-family:'Cinzel Decorative',serif;font-size:16px">${ccEscapeHtml(active.creator.name)}</div>
-          <p style="font-size:12px;color:var(--ink-soft);margin-top:5px">${ccFormatHtml(active.creator.lore)}</p>
+  if (creatorPhoto) {
+    detail.innerHTML = `
+      <div class="cc-genealogy-container">
+        <div class="cc-genealogy-node">${creatorPhoto}</div>
+        <div class="cc-genealogy-line"></div>
+        <div class="cc-genealogy-node">${charPhoto}</div>
+      </div>
+      <div>
+        <div class="cc-label" style="margin-bottom:5px;color:var(--gold)">Descendente</div>
+        <div class="cc-archive-detail-title">${ccEscapeHtml(active.name || 'Sem nome')}</div>
+        <div class="cc-archive-detail-clan">${ccEscapeHtml(active.clan || 'Sem cla')}</div>
+        <div class="cc-archive-detail-lore">${lore}</div>
+        
+        <div style="margin-top:40px;padding-top:20px;border-top:1px dashed rgba(0,255,255,0.2)">
+          <div class="cc-label" style="margin-bottom:5px;color:var(--blood)">Criador (Ascendente)</div>
+          <div style="color:#fff;font-family:'Cinzel Decorative',serif;font-size:20px">${ccEscapeHtml(active.creator.name || 'Desconhecido')}</div>
+          <div style="color:var(--blood);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">${ccEscapeHtml(active.clan)}</div>
+          <p style="font-size:13px;color:var(--ink-soft);line-height:1.7">${ccFormatHtml(active.creator.lore)}</p>
         </div>
-      ` : ''}
-    </div>
-  `;
+      </div>
+    `;
+  } else {
+    detail.innerHTML = `
+      <div class="cc-archive-detail-photo">${charPhoto}</div>
+      <div>
+        <div class="cc-archive-detail-title">${ccEscapeHtml(active.name || 'Sem nome')}</div>
+        <div class="cc-archive-detail-clan">${ccEscapeHtml(active.clan || 'Sem cla')}</div>
+        <div class="cc-archive-detail-lore">${lore}</div>
+      </div>
+    `;
+  }
 }
 
 function ccSelectArchiveCharacter(id) {
