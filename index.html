@@ -4096,6 +4096,10 @@ function ccRescueCharacter() {
   URL.revokeObjectURL(url);
 }
 
+function ccFindArchiveRecordById(id) {
+  return ccArchive.find(entry => String(entry.id) === String(id)) || null;
+}
+
 function ccHasArchiveCreator(entry) {
   if (!entry || !entry.creator) return false;
   return !!(entry.creator.photo || entry.creator.name || entry.creator.lore || entry.creator.personality);
@@ -4752,12 +4756,16 @@ const _origSwitch = typeof switchMainSection === 'function' ? switchMainSection 
 window.addEventListener('load', () => { ccInit(); });
 
 // ============ SUPABASE CONNECTION ============
-// NOTA: 'Px7RZwjEGnwh6gRD' parece ser a senha do banco de dados (database password).
-// Para o frontend (HTML/JS), normalmente usamos a chave pública anônima (anon key).
-// Substitua o segundo parâmetro pela sua 'anon key' do Supabase para garantir o funcionamento.
+// ATENÇÃO: A chave 'Px7RZwjEGnwh6gRD' parece ser a SENHA do banco de dados.
+// Para o site funcionar, você precisa da "ANON PUBLIC KEY".
+// No painel do Supabase, vá em: Settings -> API -> Project API Keys -> "anon" (public).
 const supabaseUrl = 'https://srajipjjlhevdniujwod.supabase.co';
-const supabaseKey = 'Px7RZwjEGnwh6gRD'; // <-- Troque pela sua ANON KEY
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNyYWppcGpqbGhldmRuaXVqd29kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNTQ1NDEsImV4cCI6MjA5MjYzMDU0MX0.0ctiXFH_dlEUvbPoIAx9Zlst13IOmdL0WP13CUjtgHs';
+
 let supabaseClient = null;
+if (supabaseKey.length < 50) {
+  console.warn("Supabase: A chave configurada parece ser curta demais (provavelmente a senha do DB). Use a 'anon public key'.");
+}
 
 if (window.supabase && typeof window.supabase.createClient === 'function') {
   try {
