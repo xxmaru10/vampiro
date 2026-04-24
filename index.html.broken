@@ -1,12 +1,12 @@
-�<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vampiro: a Máscara — Adaptação para Fate Core</title>
+<title>Vampiro: a Máscara � Adaptação para Fate Core</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Damion&family=Montserrat:wght@300;400;600;700&family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Damion&family=Montserrat:wght@300;400;600;700&family=VT323&display=swap" rel="stylesheet">
 <!-- Supabase JS -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -15,6 +15,7 @@
   --bg: #15052e;
   --bg-soft: #230847;
   --bg-card: rgba(21, 5, 46, 0.85); /* Translucent navy */
+  --font-ui: 'Chakra Petch', sans-serif;
   --ink: #e0f2fe; /* Light blue tint */
   --ink-soft: #bae6fd;
   --ink-dim: #7dd3fc;
@@ -39,9 +40,10 @@ body{
   background-size: 100% 100%, 40px 40px, 40px 40px;
   background-attachment: fixed;
   color: var(--ink);
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-ui);
   font-size: 16px;
   line-height: 1.6;
+  letter-spacing: 0.01em;
   min-height: 100vh;
 }
 
@@ -157,7 +159,7 @@ body{
   text-shadow: 0 0 8px var(--gold);
 }
 .nav a::before{
-  content: "†";
+  content: "⬠";
   position: absolute;
   left: 18px;
   opacity: 0;
@@ -1094,6 +1096,23 @@ mark{
   .cc-creator-match { grid-template-columns: 1fr; }
   .cc-creator-match-photo { width: 110px; }
 }
+
+/* === TYPOGRAPHY TUNE === */
+h2, h3, h4, p, li, td, th, button, input, textarea, select,
+.brand-sub, .nav-section-title, .nav a, .search-input, .page-sub,
+.legend-title, .legend-item, .callout-title, .card-title, .card-body,
+.top-nav-item, .btn-export, .menu-toggle, .cc-subtitle, .cc-step-label,
+.cc-label, .cc-input, .cc-image-placeholder, .cc-clan-tag, .cc-skill-counter,
+.cc-skill-name, .cc-skill-val, .cc-destiny-label, .cc-extra-disc-header h5,
+.cc-add-btn, .cc-btn-prev, .cc-btn-next, .cc-section-title, .cc-error,
+#cc-difficulty-hint {
+  font-family: var(--font-ui);
+}
+
+.nav a, .top-nav-item, .cc-label, .cc-step-label, .cc-section-title,
+.cc-subtitle, .brand-sub, .nav-section-title {
+  letter-spacing: 0.08em;
+}
 </style>
 </head>
 <body>
@@ -1107,7 +1126,7 @@ mark{
   <button class="btn-export" onclick="downloadCharacterData()">Baixar Dados</button>
 </header>
 
-<button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+<button class="menu-toggle" onclick="toggleMenu()">�ܰ Menu</button>
 
 <div id="section-lore" class="main-section active">
   <div class="app">
@@ -1191,26 +1210,26 @@ mark{
       <p>Desde então, você pertence à noite.</p>
       <p><strong>E agora, você pertence a ela.</strong></p>
       <br>
-      <p>Arrancado(a) do que restava da sua vida, você foi levado(a) para Miami. Não como turista. Não como fugitivo. Mas como peça em um jogo que você mal compreende. Uma vampira da Camarilla lhe deu uma missão e deixou bem claro o preço do fracasso. É uma situação atípica e até você sabe, mas você está nela.</p>
+      <p>Arrancado(a) do que restava da sua vida, você foi levado(a) para Miami. Não como turista. Não como fugitivo. Mas como peça em um jogo que você mal compreende. Uma vampira da Camarilla lhe deu uma missão e deixou bem claro o preço do fracasso. �0 uma situação atípica e até você sabe, mas você está nela.</p>
       <br>
-      <p style="color: var(--blood-bright); font-style: italic;">Morte… seria misericórdia.<br>
+      <p style="color: var(--blood-bright); font-style: italic;">Morte⬦ seria misericórdia.<br>
       Há destinos piores reservados para quem decepciona os antigos.</p>
       <br>
       <p>Não há escolha. Nunca houve.<br>
-      Você faz… ou deixa de existir.</p>
+      Você faz⬦ ou deixa de existir.</p>
       <br>
-      <p>Para se mover entre os mortais sem levantar suspeitas, você foi forçado(a) a se unir a outros neonatos, jovens, instáveis, perigosos. Juntos, vocês vestem uma mentira conveniente: uma banda de garagem. Um disfarce frágil, mas suficiente para atravessar cidades, fazer contatos… e chegar até Miami sob o pretexto de um “contrato”.</p>
+      <p>Para se mover entre os mortais sem levantar suspeitas, você foi forçado(a) a se unir a outros neonatos, jovens, instáveis, perigosos. Juntos, vocês vestem uma mentira conveniente: uma banda de garagem. Um disfarce frágil, mas suficiente para atravessar cidades, fazer contatos⬦ e chegar até Miami sob o pretexto de um �Scontrato⬝.</p>
       <br>
-      <p>Mas todos sabem que isso é só fachada. E Miami… não é apenas uma cidade.</p>
+      <p>Mas todos sabem que isso é só fachada. E Miami⬦ não é apenas uma cidade.</p>
       <br>
-      <p style="font-family: 'Damion'; font-size: 32px; color: var(--gold);">É 1974.</p>
+      <p style="font-family: 'Damion'; font-size: 32px; color: var(--gold);">�0 1974.</p>
       <p>Calor sufocante, néon, cocaína, sangue, às vezes tudo misturado.</p>
       <br>
       <p>O Sabá reina nas sombras, brutal e descontrolado. Redes de narcotráfico se entrelaçam com horrores antigos. Os Giovanni negociam com os mortos. Cultos serpenteiam nos becos, sussurrando o nome de deuses esquecidos.</p>
       <br>
       <p>A cidade está prestes a explodir e você é arremessado como um palito de fósforo no meio.</p>
       <br>
-      <p>A Camarilla luta para retomar o controle, mas cada noite que passa fortalece seus inimigos. E no meio desse tabuleiro encharcado de sangue e segredos… está você.</p>
+      <p>A Camarilla luta para retomar o controle, mas cada noite que passa fortalece seus inimigos. E no meio desse tabuleiro encharcado de sangue e segredos⬦ está você.</p>
       <br>
       <p>Ainda aprendendo o que significa ser um monstro.<br>
       Ainda fingindo ser humano.<br>
@@ -1221,14 +1240,14 @@ mark{
   </div>
 
   <div class="quick-nav" style="margin-top: 40px;">
-    <a href="#inicio" data-goto="inicio">Seguir para o Guia →</a>
+    <a href="#inicio" data-goto="inicio">Seguir para o Guia � </a>
   </div>
 </section>
 
 <!-- ========== PÁGINA: INÍCIO ========== -->
 <section class="page" id="page-inicio" data-page="inicio">
   <h1>Vampiro: a Máscara</h1>
-  <div class="page-sub">Um guia de adaptação para Fate Core — todas as regras, reunidas e em português</div>
+  <div class="page-sub">Um guia de adaptação para Fate Core � todas as regras, reunidas e em português</div>
 
   <div class="quick-nav">
     <a href="#" data-goto="criacao">Criação de Personagem</a>
@@ -1240,23 +1259,23 @@ mark{
   <p>Bem-vindo(a) ao guia completo de <em>Vampiro: a Máscara</em> adaptado para <em>Fate Core</em>. Este documento reúne, organiza e traduz as regras de uma adaptação originalmente publicada em série de posts em blog, com todas as lacunas preenchidas para que você possa jogar uma crônica completa sem precisar recorrer a outras fontes.</p>
 
   <h2 id="o-que-e">O que este sistema é</h2>
-  <p>É Vampiro: a Máscara com o motor narrativo do Fate Core. O resultado pende um pouco para <em>"super-heróis com presas"</em> — e tudo bem. Combate é mais rápido, conflitos sociais são dramáticos, a Fome é constante e presente, e a Máscara é uma lâmina pendurada sobre cada cena pública.</p>
+  <p>�0 Vampiro: a Máscara com o motor narrativo do Fate Core. O resultado pende um pouco para <em>"super-heróis com presas"</em> � e tudo bem. Combate é mais rápido, conflitos sociais são dramáticos, a Fome é constante e presente, e a Máscara é uma lâmina pendurada sobre cada cena pública.</p>
 
   <h2 id="fontes">Origem das regras</h2>
   <div class="legend">
     <div class="legend-title">Marcação de fonte usada em todo o guia</div>
-    <div class="legend-item"><span class="src-tag src-original">Original</span> — veio da adaptação original (cinco posts de blog)</div>
-    <div class="legend-item"><span class="src-tag src-homebrew">Adaptação minha</span> — preenchi lacunas que o autor deixou em aberto ou não cobriu</div>
-    <div class="legend-item"><span class="src-tag src-incomplete">Parcial</span> — autor esboçou mas não terminou; complementei</div>
+    <div class="legend-item"><span class="src-tag src-original">Original</span> � veio da adaptação original (cinco posts de blog)</div>
+    <div class="legend-item"><span class="src-tag src-homebrew">Adaptação minha</span> � preenchi lacunas que o autor deixou em aberto ou não cobriu</div>
+    <div class="legend-item"><span class="src-tag src-incomplete">Parcial</span> � autor esboçou mas não terminou; complementei</div>
   </div>
   <p>Tudo que você vê etiquetado como <strong>Adaptação minha</strong> pode ser descartado, substituído ou modificado sem afetar o restante do sistema. São recomendações minhas, baseadas no espírito do livro original de VtM e nas convenções do Fate Core.</p>
 
   <h2 id="pre-requisitos">O que você precisa ter em mãos</h2>
   <ul>
-    <li>O <strong>Fate Core</strong> (ou Fate Condensed) — o motor de resolução básico é o padrão</li>
+    <li>O <strong>Fate Core</strong> (ou Fate Condensed) � o motor de resolução básico é o padrão</li>
     <li>Um livro de <strong>Vampiro: a Máscara V20</strong> (ou V5) para consultar lore, clãs e sabor</li>
     <li>Este guia, para todas as regras adaptadas</li>
-    <li>Dados Fate (4 dados de seis lados com faces +, 0, − — ou d6 convertidos)</li>
+    <li>Dados Fate (4 dados de seis lados com faces +, 0, �� � ou d6 convertidos)</li>
   </ul>
 
   <div class="callout">
@@ -1275,7 +1294,7 @@ mark{
   <ol>
     <li><strong>Jogar online com amigos.</strong> Online pede regras mais ágeis do que o d10 tradicional.</li>
     <li><strong>Manter a tensão nas cenas de conflito.</strong> As regras antigas de VtM ficam lentas justamente onde deveriam ficar intensas.</li>
-    <li><strong>Colocar Fome e Caça no centro.</strong> Não é tema de fundo — é a primeira coisa que o Narrador fala toda sessão.</li>
+    <li><strong>Colocar Fome e Caça no centro.</strong> Não é tema de fundo � é a primeira coisa que o Narrador fala toda sessão.</li>
     <li><strong>Modelar Disciplinas como Extras.</strong> Inspiração direta do <em>Venture City</em> (cenário de super-heróis para Fate Core).</li>
     <li><strong>"Super-heróis com presas" é aceitável.</strong> O sistema deixa vampiros mais poderosos que no VtM clássico, e isso é uma escolha consciente.</li>
   </ol>
@@ -1286,10 +1305,10 @@ mark{
     <tbody>
       <tr><td>Sistema de dados</td><td>Pool de d10s contra dificuldade</td><td>4dF + perícia contra obstáculo</td></tr>
       <tr><td>Níveis de Disciplina</td><td>5 pontos</td><td>4 níveis (o 4º só para anciões)</td></tr>
-      <tr><td>Níveis 1-3 aqui equivalem a</td><td>—</td><td>Aprox. pontos 1 a 5 do VtM</td></tr>
+      <tr><td>Níveis 1-3 aqui equivalem a</td><td>�</td><td>Aprox. pontos 1 a 5 do VtM</td></tr>
       <tr><td>Fome</td><td>Pool de Sangue</td><td>Condição narrativa que escala</td></tr>
       <tr><td>Atributos</td><td>9 atributos + habilidades</td><td>20 perícias customizadas</td></tr>
-      <tr><td>Poder inicial</td><td>Neonato padrão</td><td>Neonato ≈ Ancilla do VtM</td></tr>
+      <tr><td>Poder inicial</td><td>Neonato padrão</td><td>Neonato �0� Ancilla do VtM</td></tr>
     </tbody>
   </table>
 
@@ -1298,7 +1317,7 @@ mark{
   <div class="card-grid">
     <div class="card">
       <div class="card-title">Fome sempre presente</div>
-      <div class="card-body">Cada noite começa com "Você acorda com fome". Não é uma ameaça — é um fato. Repita até virar mantra.</div>
+      <div class="card-body">Cada noite começa com "Você acorda com fome". Não é uma ameaça � é um fato. Repita até virar mantra.</div>
     </div>
     <div class="card">
       <div class="card-title">Conflitos curtos e intensos</div>
@@ -1306,7 +1325,7 @@ mark{
     </div>
     <div class="card">
       <div class="card-title">Aspectos pesam</div>
-      <div class="card-body">Clã, Trilha, Laços, Máscara — todos são aspectos invocáveis e compeláveis. Use-os.</div>
+      <div class="card-body">Clã, Trilha, Laços, Máscara � todos são aspectos invocáveis e compeláveis. Use-os.</div>
     </div>
   </div>
 </section>
@@ -1318,10 +1337,10 @@ mark{
 
   <h2>Navegação</h2>
   <ul>
-    <li><strong>Barra lateral</strong> — clique em qualquer tópico para abrir a página</li>
-    <li><strong>Busca</strong> — digite qualquer termo no campo de busca do topo da lateral. Ele filtra todas as páginas em tempo real</li>
-    <li><strong>Links internos</strong> — onde uma regra depende de outra, há atalhos clicáveis</li>
-    <li><strong>Tabelas e cards</strong> — informação visual compacta para consulta na mesa</li>
+    <li><strong>Barra lateral</strong> � clique em qualquer tópico para abrir a página</li>
+    <li><strong>Busca</strong> � digite qualquer termo no campo de busca do topo da lateral. Ele filtra todas as páginas em tempo real</li>
+    <li><strong>Links internos</strong> � onde uma regra depende de outra, há atalhos clicáveis</li>
+    <li><strong>Tabelas e cards</strong> � informação visual compacta para consulta na mesa</li>
   </ul>
 
   <h2>Fluxo recomendado para aprender</h2>
@@ -1336,22 +1355,22 @@ mark{
   <h2>Fluxo recomendado para consulta de mesa</h2>
   <div class="callout tip">
     <div class="callout-title">Atalhos de mesa</div>
-    <p>Mantenha o guia aberto em <strong>Referência Rápida</strong> durante a sessão. Use Ctrl+F no navegador <em>ou</em> o campo de busca do guia — ambos funcionam.</p>
+    <p>Mantenha o guia aberto em <strong>Referência Rápida</strong> durante a sessão. Use Ctrl+F no navegador <em>ou</em> o campo de busca do guia � ambos funcionam.</p>
   </div>
 </section>
 
-<!-- ========== PÁGINA: CRIAÇÃO ========== -->
+<!-- ========== PÁGINA: CRIA�!ÒO ========== -->
 <section class="page" id="page-criacao" data-page="criacao">
   <h1>Criação de Personagem</h1>
   <div class="page-sub">Do conceito à ficha pronta em sete passos</div>
 
   <h2>Passo a passo</h2>
   <ol>
-    <li><strong>Escolha o Clã</strong> — define as Disciplinas nativas e o tom do personagem</li>
-    <li><strong>Escreva o Conceito Principal</strong> — o aspecto mais importante; deve incluir o clã</li>
-    <li><strong>Escolha o Aspecto-Problema</strong> — o Defeito do clã ou algo pessoal</li>
-    <li><strong>Escreva o Aspecto Mortal</strong> — quem você era antes do Abraço</li>
-    <li><strong>Preencha os outros 2 Aspectos</strong> — opcionais (pode deixar em branco para preencher em jogo)</li>
+    <li><strong>Escolha o Clã</strong> � define as Disciplinas nativas e o tom do personagem</li>
+    <li><strong>Escreva o Conceito Principal</strong> � o aspecto mais importante; deve incluir o clã</li>
+    <li><strong>Escolha o Aspecto-Problema</strong> � o Defeito do clã ou algo pessoal</li>
+    <li><strong>Escreva o Aspecto Mortal</strong> � quem você era antes do Abraço</li>
+    <li><strong>Preencha os outros 2 Aspectos</strong> � opcionais (pode deixar em branco para preencher em jogo)</li>
     <li><strong>Distribua Perícias</strong> na pirâmide conforme seu tipo de personagem</li>
     <li><strong>Gaste Recarga em Disciplinas, Façanhas e Extras</strong></li>
   </ol>
@@ -1375,7 +1394,7 @@ mark{
         <td>+3</td>
         <td>Pirâmide +3</td>
         <td>Nenhuma</td>
-        <td>— (2 Façanhas/Extras)</td>
+        <td>� (2 Façanhas/Extras)</td>
         <td>2 Físico / 2 Mental</td>
       </tr>
       <tr>
@@ -1383,7 +1402,7 @@ mark{
         <td>+3</td>
         <td>Pirâmide +3</td>
         <td>Potência Básica grátis</td>
-        <td>— (2 Façanhas/Extras)</td>
+        <td>� (2 Façanhas/Extras)</td>
         <td>3 Físico / 2 Mental</td>
       </tr>
       <tr>
@@ -1418,12 +1437,12 @@ mark{
     <p>Você tem 1 perícia no nível máximo, 2 no nível abaixo, 3 abaixo, e assim por diante, formando uma pirâmide. Exemplo para Neonato (pirâmide +4): 1 perícia em +4, 2 em +3, 3 em +2, 4 em +1. Resto das perícias fica em +0 (Medíocre).</p>
   </div>
 
-  <h2>Disciplinas iniciais — sim, você ganha de graça</h2>
+  <h2>Disciplinas iniciais � sim, você ganha de graça</h2>
   <p class="src-tag src-original">Original (com esclarecimento meu)</p>
 
   <div class="callout">
     <div class="callout-title">A regra em uma frase</div>
-    <p>Um <strong>Neonato</strong> ganha <strong>3 níveis grátis</strong> de Disciplina, e esses 3 níveis <strong>devem ser gastos em Disciplinas do Clã</strong>. Ancião ganha 6 grátis, Antigo ganha 9 — mesma regra. Caitiff/Pander não têm Clã, então escolhem livremente.</p>
+    <p>Um <strong>Neonato</strong> ganha <strong>3 níveis grátis</strong> de Disciplina, e esses 3 níveis <strong>devem ser gastos em Disciplinas do Clã</strong>. Ancião ganha 6 grátis, Antigo ganha 9 � mesma regra. Caitiff/Pander não têm Clã, então escolhem livremente.</p>
   </div>
 
   <h3>Como funcionam os "níveis grátis"</h3>
@@ -1434,8 +1453,8 @@ mark{
     <li><strong>Misto:</strong> 2 níveis em uma + 1 em outra (Intermediário em uma, Básico em outra)</li>
   </ul>
 
-  <h3>Níveis além dos grátis — aí entra a Recarga</h3>
-  <p>Depois dos 3 níveis iniciais, qualquer Disciplina adicional — <strong>dentro ou fora do Clã</strong> — custa <strong>2 de recarga por nível</strong>. É aqui que a escolha pesa:</p>
+  <h3>Níveis além dos grátis � aí entra a Recarga</h3>
+  <p>Depois dos 3 níveis iniciais, qualquer Disciplina adicional � <strong>dentro ou fora do Clã</strong> � custa <strong>2 de recarga por nível</strong>. �0 aqui que a escolha pesa:</p>
 
   <table>
     <thead><tr><th>O que você quer</th><th>Pode pegar?</th><th>Custo</th></tr></thead>
@@ -1443,19 +1462,19 @@ mark{
       <tr><td>Disciplina do meu Clã, até 3 níveis</td><td>Sim</td><td><strong>Grátis</strong> (vem do pacote do Neonato)</td></tr>
       <tr><td>4º nível de Disciplina do meu Clã (Ancião)</td><td>Só se for Ancião+</td><td>2 de recarga (fora dos 3 grátis)</td></tr>
       <tr><td>Disciplina <em>fora</em> do meu Clã</td><td>Sim, se o Narrador aprovar a justificativa na ficção</td><td>2 de recarga por nível</td></tr>
-      <tr><td>Disciplina exclusiva de outro Clã (Dementação fora de Malk., Vicissitude fora de Tzimisce, etc.)</td><td>Muito difícil — exige gancho narrativo forte</td><td>2 de recarga por nível + aspecto-problema associado</td></tr>
+      <tr><td>Disciplina exclusiva de outro Clã (Dementação fora de Malk., Vicissitude fora de Tzimisce, etc.)</td><td>Muito difícil � exige gancho narrativo forte</td><td>2 de recarga por nível + aspecto-problema associado</td></tr>
     </tbody>
   </table>
 
   <div class="callout warn">
     <div class="callout-title">Disciplinas exclusivas</div>
-    <p>Algumas Disciplinas são <strong>tão amarradas</strong> ao Clã que aprendê-las fora dele pede reviravolta narrativa (ter sido ghoul de um Tzimisce, ter roubado um livro de rituais, ter sido abraçado duas vezes). Na página de Disciplinas elas aparecem na aba "Por Clã (completo)" — veja lá as nativas de cada Clã e quais são exclusivas. Converse com o Narrador antes de gastar recarga em Disciplinas exclusivas.</p>
+    <p>Algumas Disciplinas são <strong>tão amarradas</strong> ao Clã que aprendê-las fora dele pede reviravolta narrativa (ter sido ghoul de um Tzimisce, ter roubado um livro de rituais, ter sido abraçado duas vezes). Na página de Disciplinas elas aparecem na aba "Por Clã (completo)" � veja lá as nativas de cada Clã e quais são exclusivas. Converse com o Narrador antes de gastar recarga em Disciplinas exclusivas.</p>
   </div>
 
   <h3>O que significa na prática para um Neonato (recarga 5)</h3>
   <p>Você começa com <strong>3 níveis do Clã grátis + 5 de recarga para gastar</strong>. Algumas combinações comuns:</p>
   <ul>
-    <li><strong>Vampiro equilibrado:</strong> 3 grátis do Clã + 1 nível fora (2 de recarga) + 3 façanhas = 0 de recarga livre. <em>Ruim</em> — você fica sem Pontos de Destino.</li>
+    <li><strong>Vampiro equilibrado:</strong> 3 grátis do Clã + 1 nível fora (2 de recarga) + 3 façanhas = 0 de recarga livre. <em>Ruim</em> � você fica sem Pontos de Destino.</li>
     <li><strong>Vampiro equilibrado consertado:</strong> 3 grátis do Clã + 1 nível fora (2 de recarga) + 2 façanhas = 1 de recarga livre. Esta é a versão jogável.</li>
     <li><strong>Especialista em Disciplina:</strong> 3 grátis do Clã (concentrados em duas) + 1 nível extra do Clã (2 de recarga) + 1 façanha = 2 de recarga livre. 4 níveis totais, um deles forte.</li>
     <li><strong>Polivalente social:</strong> 3 grátis do Clã (1 em cada nativa) + 3 façanhas = 2 de recarga livre. Menos poder bruto, mais recursos de cena.</li>
@@ -1464,7 +1483,7 @@ mark{
 
   <div class="callout tip">
     <div class="callout-title">Regra de bolso</div>
-    <p>Vampiro começa forte nesta adaptação — os 3 níveis grátis já bastam para fazer diferença. Se estiver em dúvida entre "mais Disciplina" e "mais Façanha/Extra", escolha Façanha. O personagem fica mais versátil, e Pontos de Destino são mais valiosos do que um +2 extra em uma rolagem específica.</p>
+    <p>Vampiro começa forte nesta adaptação � os 3 níveis grátis já bastam para fazer diferença. Se estiver em dúvida entre "mais Disciplina" e "mais Façanha/Extra", escolha Façanha. O personagem fica mais versátil, e Pontos de Destino são mais valiosos do que um +2 extra em uma rolagem específica.</p>
   </div>
 
   <h2>Gastando Recarga (resumo)</h2>
@@ -1477,16 +1496,16 @@ mark{
 
   <div class="callout warn">
     <div class="callout-title">Recarga mínima</div>
-    <p>Um personagem deve terminar com pelo menos <strong>1 de recarga</strong> para ter Pontos de Destino na sessão. Se gastar tudo, não tem pontos — e isso é punitivo demais no Fate.</p>
+    <p>Um personagem deve terminar com pelo menos <strong>1 de recarga</strong> para ter Pontos de Destino na sessão. Se gastar tudo, não tem pontos � e isso é punitivo demais no Fate.</p>
   </div>
 
   <h2>Caitiff e Pander</h2>
   <p class="src-tag src-original">Original</p>
-  <p>Clãs sem clã escolhem seus 3 níveis iniciais <strong>livremente</strong> entre qualquer Disciplina, com aprovação do Narrador. É uma vantagem real da liberdade — e uma das razões pelas quais Caitiff são olhados de lado pela Camarilla (flexíveis demais, imprevisíveis demais).</p>
+  <p>Clãs sem clã escolhem seus 3 níveis iniciais <strong>livremente</strong> entre qualquer Disciplina, com aprovação do Narrador. �0 uma vantagem real da liberdade � e uma das razões pelas quais Caitiff são olhados de lado pela Camarilla (flexíveis demais, imprevisíveis demais).</p>
 
   <div class="callout">
     <div class="callout-title">Variante opcional para Caitiff/Pander <span class="src-tag src-homebrew">Adaptação minha</span></div>
-    <p>Se quiser equilibrar a flexibilidade com uma desvantagem mecânica, considere: Caitiff/Pander podem escolher livremente, <em>mas</em> ganham um aspecto-problema obrigatório "Caitiff — todo Cainita suspeita de mim" que o Narrador pode compelir em qualquer contexto social da Camarilla. Fica forte nos poderes, fraco na política — exatamente como o lore descreve.</p>
+    <p>Se quiser equilibrar a flexibilidade com uma desvantagem mecânica, considere: Caitiff/Pander podem escolher livremente, <em>mas</em> ganham um aspecto-problema obrigatório "Caitiff � todo Cainita suspeita de mim" que o Narrador pode compelir em qualquer contexto social da Camarilla. Fica forte nos poderes, fraco na política � exatamente como o lore descreve.</p>
   </div>
 
   <h2>Exemplo de criação</h2>
@@ -1498,14 +1517,14 @@ mark{
     <p><strong>Outro 1:</strong> "Conheço todas as festas que importam"</p>
     <p><strong>Outro 2:</strong> <em>(em branco, preencherá em jogo)</em></p>
     <p><strong>Perícias (pirâmide +4):</strong> Carisma +4; Empatia +3, Expressão +3; Percepção +2, Manipulação +2, Fisiologia +2; Contatos +1, Ocultismo +1, Ruídos +1, Vontade +1</p>
-    <p><strong>Disciplinas grátis do Clã Toreador (3 níveis):</strong> Auspícios Básico (1) + Celeridade Básica (1) + Presença Básica (1) — ficou com o Básico das três nativas, perfil "espalhado".</p>
+    <p><strong>Disciplinas grátis do Clã Toreador (3 níveis):</strong> Auspícios Básico (1) + Celeridade Básica (1) + Presença Básica (1) � ficou com o Básico das três nativas, perfil "espalhado".</p>
     <p><strong>Recarga 5, gasto:</strong> Façanha "Herd" (1) + Façanha "Inofensivo" (1) + Extra "Ponto Quente" (1) + Extra "Retentor" (1) = 4 de recarga. <strong>Resta 1 de recarga livre</strong> para Pontos de Destino na sessão.</p>
     <p><strong>Resultado:</strong> Ash sabe farejar sobrenatural, correr mais rápido que um olho pode seguir, e encantar qualquer um. Tem uma boate dela, um ghoul, uma rede de caça pela noite underground, e a cara de quem parece inofensiva demais para ser ameaça.</p>
   </div>
 
   <div class="callout tip">
     <div class="callout-title">Variante "focada"</div>
-    <p>Se Ash preferisse ser <em>especialista em Presença</em>, trocaria a distribuição: 3 níveis grátis todos em Presença (Básico, Intermediário, Avançado). Ficaria devastadora socialmente mas sem Auspícios nem Celeridade — teria que comprar gastando recarga se quisesse.</p>
+    <p>Se Ash preferisse ser <em>especialista em Presença</em>, trocaria a distribuição: 3 níveis grátis todos em Presença (Básico, Intermediário, Avançado). Ficaria devastadora socialmente mas sem Auspícios nem Celeridade � teria que comprar gastando recarga se quisesse.</p>
   </div>
 </section>
 
@@ -1551,10 +1570,10 @@ mark{
       <tr><td>+0</td><td>Medíocre</td><td>Sem treinamento</td></tr>
       <tr><td>+1</td><td>Razoável</td><td>Treinamento básico</td></tr>
       <tr><td>+2</td><td>Bom</td><td>Competente</td></tr>
-      <tr><td>+3</td><td>Ótimo</td><td>Profissional</td></tr>
+      <tr><td>+3</td><td>�timo</td><td>Profissional</td></tr>
       <tr><td>+4</td><td>Excelente</td><td>Expert</td></tr>
       <tr><td>+5</td><td>Fantástico</td><td>Mestre</td></tr>
-      <tr><td>+6</td><td>Épico</td><td>Lenda viva (morta)</td></tr>
+      <tr><td>+6</td><td>�0pico</td><td>Lenda viva (morta)</td></tr>
     </tbody>
   </table>
 
@@ -1565,7 +1584,7 @@ mark{
       <tr><td>+0</td><td>Trivial</td></tr>
       <tr><td>+2</td><td>Razoável (Fome leve; caça normal)</td></tr>
       <tr><td>+4</td><td>Boa (Fome moderada)</td></tr>
-      <tr><td>+6</td><td>Ótima (Fome severa; violar a Máscara)</td></tr>
+      <tr><td>+6</td><td>�tima (Fome severa; violar a Máscara)</td></tr>
       <tr><td>+8</td><td>Lendária (feitos sobre-humanos)</td></tr>
     </tbody>
   </table>
@@ -1654,13 +1673,13 @@ mark{
   </table>
 </section>
 
-<!-- ========== PÁGINA: FAÇANHAS ========== -->
+<!-- ========== PÁGINA: FA�!ANHAS ========== -->
 <section class="page" id="page-stunts" data-page="stunts">
   <h1>Façanhas &amp; Extras</h1>
   <div class="page-sub">Talentos, Méritos de VtM e recursos de cenário adaptados</div>
 
   <p class="src-tag src-original">Original</p>
-  <p>Façanhas custam 1 de recarga. Extras (posses, retentores, havens) têm custos variáveis. As façanhas genéricas do <em>Fate Core</em> continuam válidas — estas aqui são <strong>específicas de Vampiro</strong>, adaptadas dos Méritos do V20.</p>
+  <p>Façanhas custam 1 de recarga. Extras (posses, retentores, havens) têm custos variáveis. As façanhas genéricas do <em>Fate Core</em> continuam válidas � estas aqui são <strong>específicas de Vampiro</strong>, adaptadas dos Méritos do V20.</p>
 
   <div class="tabs" id="stunts-tabs">
     <button class="tab active" data-tab="general">Gerais</button>
@@ -1677,7 +1696,7 @@ mark{
       <li><strong>Ouvido do Ancião:</strong> Você tem acesso a um Ancião influente na cidade (Príncipe, Primogen, Bispo). Ele te atende se pedir.</li>
       <li><strong>Amigo do Subterrâneo:</strong> Não é Nosferatu, mas tem respeito deles. Pode usar esgotos e sistemas similares sem interferir.</li>
       <li><strong>Inofensivo:</strong> +2 em rolagens de Carisma para convencer que você não representa ameaça.</li>
-      <li><strong>Toque Curador:</strong> Não precisa lamber ferimentos das presas para fechá-los — um toque basta.</li>
+      <li><strong>Toque Curador:</strong> Não precisa lamber ferimentos das presas para fechá-los � um toque basta.</li>
       <li><strong>Rebanho:</strong> Escolha Contatos. Você pode caçar socialmente usando Contatos em vez de Empatia + Manipulação, uma vez por noite (2ª vez: 1 PD).</li>
       <li><strong>Humano:</strong> Ganha 1 caixa extra de estresse mental, mas <em>não pode</em> ignorar consequência entrando em frenesi.</li>
       <li><strong>Inofensivo a Animais:</strong> Animais não reagem negativamente a você.</li>
@@ -1707,7 +1726,7 @@ mark{
 
     <h4>Ocultismo</h4>
     <ul>
-      <li><strong>Habilidade Oracular:</strong> Uma vez por sessão, role Ocultismo para adicionar um aspecto relacionado a destino/presságio. Pode usar mais vezes gastando PDs. Sempre tem um invoke gratuito — mas o aspecto pode não se realizar como você imagina…</li>
+      <li><strong>Habilidade Oracular:</strong> Uma vez por sessão, role Ocultismo para adicionar um aspecto relacionado a destino/presságio. Pode usar mais vezes gastando PDs. Sempre tem um invoke gratuito � mas o aspecto pode não se realizar como você imagina⬦</li>
       <li><strong>Estudioso dos Inimigos:</strong> Escolha uma facção oposta (Garou, Sabbat, Caçadores, etc.). +2 em Ocultismo sobre eles.</li>
     </ul>
 
@@ -1741,7 +1760,7 @@ mark{
       <li><strong>Refúgio:</strong> Haven melhor do que seus Recursos indicariam. +2 em Recursos para melhorar ou definir recursos dele.</li>
       <li><strong>Território de Caça:</strong> Território oficial na cidade. Manutenção é sua responsabilidade mas caça fica muito mais fácil. Primeira caça da noite no seu território: rerrola um dado.</li>
       <li><strong>Ponto Quente:</strong> Um bar, boate ou strip club é seu.</li>
-      <li><strong>Refúgio Compartilhado:</strong> <span class="src-tag src-homebrew">Adaptação minha</span> Múltiplos PJs rateiam o custo (1 de recarga cada PJ envolvido, mínimo 2). Cada PJ contribui define uma característica do lugar. Benefícios e riscos são compartilhados — e se um quebra a Máscara no haven, todos sofrem.</li>
+      <li><strong>Refúgio Compartilhado:</strong> <span class="src-tag src-homebrew">Adaptação minha</span> Múltiplos PJs rateiam o custo (1 de recarga cada PJ envolvido, mínimo 2). Cada PJ contribui define uma característica do lugar. Benefícios e riscos são compartilhados � e se um quebra a Máscara no haven, todos sofrem.</li>
       <li><strong>Título:</strong> Pode usar Título em lugar de Contatos ou Carisma ao lidar com vampiros. Traz responsabilidades também.
         <ul>
           <li>(1) Harpia, Whip, Deputy, Líder de Matilha, Sacerdote de Matilha, Mão Negra</li>
@@ -1753,7 +1772,7 @@ mark{
     </ul>
     <div class="callout tip">
       <div class="callout-title">Regra alternativa para Títulos</div>
-      <p>Em vez dos custos escalonados, cada título custa 1 de recarga fixa — porque cargos maiores atraem inimigos mais perigosos e cobram mais obrigações. Use a regra que fizer mais sentido para seu grupo.</p>
+      <p>Em vez dos custos escalonados, cada título custa 1 de recarga fixa � porque cargos maiores atraem inimigos mais perigosos e cobram mais obrigações. Use a regra que fizer mais sentido para seu grupo.</p>
     </div>
   </div>
 </section>
@@ -1761,11 +1780,11 @@ mark{
 <!-- ========== PÁGINA: DISCIPLINAS ========== -->
 <section class="page" id="page-disciplinas" data-page="disciplinas">
   <h1>Disciplinas</h1>
-  <div class="page-sub">Os poderes do sangue — cada nível é um Extra de 2 de recarga</div>
+  <div class="page-sub">Os poderes do sangue � cada nível é um Extra de 2 de recarga</div>
 
   <div class="callout">
     <div class="callout-title">Como funcionam</div>
-    <p>Cada <strong>Disciplina</strong> tem 4 níveis. Cada nível é um Extra separado que custa <strong>2 de recarga</strong>. O nível 4 é <em>exclusivo de Anciões</em> — Neonatos não têm acesso. Muitas Disciplinas têm um <em>efeito passivo</em> sempre ativo, descrito no topo.</p>
+    <p>Cada <strong>Disciplina</strong> tem 4 níveis. Cada nível é um Extra separado que custa <strong>2 de recarga</strong>. O nível 4 é <em>exclusivo de Anciões</em> � Neonatos não têm acesso. Muitas Disciplinas têm um <em>efeito passivo</em> sempre ativo, descrito no topo.</p>
   </div>
 
   <div class="callout homebrew">
@@ -1825,24 +1844,24 @@ mark{
     <div class="discipline">
       <h3>Auspícios <span class="src-tag src-homebrew">Adaptação minha</span></h3>
       <div class="discipline-passive">Passivo: +1 em Percepção sempre ativo. Você percebe o sobrenatural ao redor de maneira intuitiva, mesmo quando não sabe identificar o quê.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Sentidos Intensificados:</span> Gaste 1 PD para ganhar +4 em Percepção numa cena — pode ouvir batidas de coração a zonas de distância, ler cartas de cabeça para baixo, sentir feromônios, etc. Você pode ser sobrecarregado: em ambientes ruidosos/intensos, aceite uma Compulsão grátis para um problema sensorial.</div></div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Sentidos Intensificados:</span> Gaste 1 PD para ganhar +4 em Percepção numa cena � pode ouvir batidas de coração a zonas de distância, ler cartas de cabeça para baixo, sentir feromônios, etc. Você pode ser sobrecarregado: em ambientes ruidosos/intensos, aceite uma Compulsão grátis para um problema sensorial.</div></div>
       <div class="level"><div class="level-num">2</div><div><span class="level-name">Sintonia da Aura:</span> Role Empatia contra a Vontade do alvo para ler sua aura. Cada sucesso revela uma coisa: emoção dominante, se é sobrenatural (e qual tipo), se há Laço de Sangue, e semelhantes. Um sucesso com estilo revela até um aspecto escondido do alvo.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Toque do Espírito:</span> Tocando um objeto, role Ocultismo para "ler" eventos passados ligados a ele. Cada sucesso revela uma cena. Consequências emocionais podem ser transferidas para você — Narrador pode impor consequência mental leve se a cena foi traumática.</div></div>
-      <div class="level"><div class="level-num">4</div><div><span class="level-name">Presciência<span class="level-elder-tag">Ancião</span></span> Uma vez por sessão, declare que você "sabia que isso ia acontecer" e adicione um aspecto de cena relacionado a um evento iminente. Ganha um invoke gratuito. Alternativamente, gaste 1 PD e role Ocultismo para prever as 5 ações mais prováveis de um alvo na próxima cena — ganhe +2 em defesas contra ele.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Toque do Espírito:</span> Tocando um objeto, role Ocultismo para "ler" eventos passados ligados a ele. Cada sucesso revela uma cena. Consequências emocionais podem ser transferidas para você � Narrador pode impor consequência mental leve se a cena foi traumática.</div></div>
+      <div class="level"><div class="level-num">4</div><div><span class="level-name">Presciência<span class="level-elder-tag">Ancião</span></span> Uma vez por sessão, declare que você "sabia que isso ia acontecer" e adicione um aspecto de cena relacionado a um evento iminente. Ganha um invoke gratuito. Alternativamente, gaste 1 PD e role Ocultismo para prever as 5 ações mais prováveis de um alvo na próxima cena � ganhe +2 em defesas contra ele.</div></div>
     </div>
 
     <div class="discipline">
       <h3>Dementação <span class="src-tag src-incomplete">Parcial</span></h3>
       <div class="discipline-passive">Passivo: Personagens com Dementação podem contar com "falhar para frente" em rolagens mentais/sociais, à custa de agravar temporariamente suas derangements (perturbações).</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">A Assombração:</span> Role Manipulação +2 contra a Vontade da vítima para causar estresse mental — manifesta-se como alucinações durante uma cena.</div></div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">A Assombração:</span> Role Manipulação +2 contra a Vontade da vítima para causar estresse mental � manifesta-se como alucinações durante uma cena.</div></div>
       <div class="level"><div class="level-num">2</div><div><span class="level-name">Olhos do Caos:</span> Role Ocultismo para entender qualquer sistema complexo, substituindo Investigar ou mesmo Empatia/Conhecimento a critério do Narrador.</div></div>
       <div class="level"><div class="level-num">3</div><div><span class="level-name">Insanidade Total:</span> Role Vontade contra Vontade para atacar mentalmente todos na sua zona.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Flagelo Pessoal<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 1 PD. Role Manipulação +2 contra a Vontade da vítima. Se bem-sucedido, implante uma perturbação persistente — o alvo recebe um aspecto permanente de insanidade ("Convencido de que está sendo observado", "Ouve a voz do sire morto", etc.) que você pode invocar e o Narrador pode compelir livremente. Dura até ser curado com tratamento psiquiátrico prolongado ou Dominação de mesmo nível.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Flagelo Pessoal<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 1 PD. Role Manipulação +2 contra a Vontade da vítima. Se bem-sucedido, implante uma perturbação persistente � o alvo recebe um aspecto permanente de insanidade ("Convencido de que está sendo observado", "Ouve a voz do sire morto", etc.) que você pode invocar e o Narrador pode compelir livremente. Dura até ser curado com tratamento psiquiátrico prolongado ou Dominação de mesmo nível.</div></div>
     </div>
 
     <div class="discipline">
       <h3>Dominação <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: Dominação permite criar vantagem através de condicionamento. Exige ao menos uma cena de ameaças e abuso. A vantagem é "Condicionado a X" — X deve ser algo específico, não apenas "obedecer".</div>
+      <div class="discipline-passive">Passivo: Dominação permite criar vantagem através de condicionamento. Exige ao menos uma cena de ameaças e abuso. A vantagem é "Condicionado a X" � X deve ser algo específico, não apenas "obedecer".</div>
       <div class="level"><div class="level-num">1</div><div><span class="level-name">Comando:</span> Role Manipulação +2 contra a Vontade para um comando único e curto. Se a vítima resiste, toma estresse mental. Comandos que impliquem dano pessoal ou violação moral dão +2 na resistência. Comandos suicidas <em>falham automaticamente</em>.</div></div>
       <div class="level"><div class="level-num">2</div><div><span class="level-name">Mente Esquecida:</span> Role Carisma contra Vontade para reescrever memórias da vítima, começando pela cena mais recente e indo mais longe com maiores graus de sucesso.</div></div>
       <div class="level"><div class="level-num">3</div><div><span class="level-name">Possessão:</span> Role Manipulação contra Vontade para assumir o corpo de um mortal.</div></div>
@@ -1854,7 +1873,7 @@ mark{
   <div class="tab-content" id="tab-social">
     <div class="discipline">
       <h3>Presença <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: "Assombrosidade" — +2 em Carisma quando se dirige a uma multidão.</div>
+      <div class="discipline-passive">Passivo: "Assombrosidade" � +2 em Carisma quando se dirige a uma multidão.</div>
       <div class="level"><div class="level-num">1</div><div><span class="level-name">Olhar Aterrorizante:</span> Revela sua natureza vampírica por um instante. Role Manipulação +2 contra Vontade. Sucesso: a vítima deve fugir da sua presença ou sofrer estresse mental.</div></div>
       <div class="level"><div class="level-num">2</div><div><span class="level-name">Encantamento:</span> Gaste 1 PD e role Carisma +2 contra Vontade. Vítima te vê como amiga próxima e aliada durante a duração:
         <ul>
@@ -1871,7 +1890,7 @@ mark{
     <div class="discipline">
       <h3>Animalismo <span class="src-tag src-incomplete">Parcial</span> <span class="src-tag src-homebrew">Preenchi níveis 1-3</span></h3>
       <div class="discipline-passive">Passivo: Animais reagem à sua presença com cautela natural mas não hostilidade. Você pode se aproximar de qualquer besta sem assustá-la.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Acalmar a Besta <span class="src-tag src-homebrew">Adaptação minha</span>:</span> Role Carisma ou Empatia contra Vontade para comunicar-se com um animal e dar-lhe uma ordem simples. Sucesso com estilo permite perguntas básicas — o que ele viu, cheirou, ouviu.</div></div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Acalmar a Besta <span class="src-tag src-homebrew">Adaptação minha</span>:</span> Role Carisma ou Empatia contra Vontade para comunicar-se com um animal e dar-lhe uma ordem simples. Sucesso com estilo permite perguntas básicas � o que ele viu, cheirou, ouviu.</div></div>
       <div class="level"><div class="level-num">2</div><div><span class="level-name">Ira Voraz <span class="src-tag src-homebrew">Adaptação minha</span>:</span> Gaste 1 PD. Role Manipulação para despertar a fúria de um animal (ou vampiro em frenesi), direcionando-a a um alvo específico. Contra vampiros, é Vontade contra Vontade; uma falha simples atrasa o frenesi para mais tarde naquela noite.</div></div>
       <div class="level"><div class="level-num">3</div><div><span class="level-name">Partilha do Espírito <span class="src-tag src-homebrew">Adaptação minha</span>:</span> Gaste 1 PD e role Ocultismo contra +2. Sua mente entra no corpo de um animal próximo, abandonando seu próprio corpo, que fica em torpor. Você age através do animal com seus sentidos e movimentos, mas usa sua Mente/Vontade para escolhas. Sair a qualquer momento.</div></div>
       <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Reflexo Espelhado<span class="level-elder-tag">Ancião</span></span> Use Empatia em lugar de Atletismo <em>ou</em> de Lutar (escolha) para defesa em combate. Você lê o oponente como um predador lê sua presa.</div></div>
@@ -1881,7 +1900,7 @@ mark{
       <h3>Quimerismo <span class="src-tag src-original">Original</span></h3>
       <div class="discipline-passive">Passivo: Você pode criar pequenas ilusões incidentais à vontade, apenas como cor narrativa.</div>
       <div class="level"><div class="level-num">1</div><div><span class="level-name">Fata Morgana:</span> Role Expressão para criar uma ilusão em uma cena. Quem interagir diretamente deve rolar Vontade contra sua Manipulação para ver através.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Permanência:</span> Gaste 1 PD para a ilusão persistir mesmo depois que você sair da zona — a ilusão permanece naquela zona.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Permanência:</span> Gaste 1 PD para a ilusão persistir mesmo depois que você sair da zona � a ilusão permanece naquela zona.</div></div>
       <div class="level"><div class="level-num">3</div><div><span class="level-name">Realidade Horrenda:</span> Role Carisma para causar estresse físico contra uma vítima através da ilusão. Custa 1 PD a não ser que já tenha gasto em Permanência. Defesa com Atletismo, Fisiologia ou Vontade (o maior).</div></div>
       <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Pesadelo Compartilhado<span class="level-elder-tag">Ancião</span></span> Realidade Horrenda afeta todos em uma zona.</div></div>
     </div>
@@ -1892,12 +1911,12 @@ mark{
       <div class="level"><div class="level-num">1</div><div><span class="level-name">Presença Oculta:</span> Pode ficar invisível se não observado. Role Furtividade contra Percepção para interagir com o ambiente e continuar invisível.</div></div>
       <div class="level"><div class="level-num">2</div><div><span class="level-name">Máscara de Mil Faces:</span> Role Manipulação contra Empatia para se disfarçar como outra pessoa.</div></div>
       <div class="level"><div class="level-num">3</div><div><span class="level-name">Encobrir a Reunião:</span> Estende seus poderes para um aliado por grau de sucesso (1 aliado por +1). Custa 1 PD.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Amigo Antigo<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 1 PD e role Manipulação contra Vontade. Quem te observar começa a vê-lo como alguém familiar e de confiança — um velho amigo, um parente, até um reflexo. Efeito dura a cena. Se você agir agressivamente, o alvo rola Vontade contra sua Manipulação para ver através, com +2 se a agressão foi contra ele. Diferente de Presença Oculta, você <em>é visto</em> — apenas não é identificado como ameaça.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Amigo Antigo<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 1 PD e role Manipulação contra Vontade. Quem te observar começa a vê-lo como alguém familiar e de confiança � um velho amigo, um parente, até um reflexo. Efeito dura a cena. Se você agir agressivamente, o alvo rola Vontade contra sua Manipulação para ver através, com +2 se a agressão foi contra ele. Diferente de Presença Oculta, você <em>é visto</em> � apenas não é identificado como ameaça.</div></div>
     </div>
 
     <div class="discipline">
       <h3>Obtenebração <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: "Jogo de Sombras" — pode usar Ocultismo para criar vantagens relacionadas a manipulação de sombras.</div>
+      <div class="discipline-passive">Passivo: "Jogo de Sombras" � pode usar Ocultismo para criar vantagens relacionadas a manipulação de sombras.</div>
       <div class="level"><div class="level-num">1</div><div><span class="level-name">Véu da Noite:</span> Gaste 1 PD para invocar uma nuvem de escuridão contorcida: barreira +4 contra Percepção dentro e através da zona. <em>OU</em> a zona ganha os aspectos "Escuridão" e "Sufocante", com um invoke grátis em cada.</div></div>
       <div class="level"><div class="level-num">2</div><div><span class="level-name">Braços do Abismo:</span> Role Vontade contra +1 para convocar tentáculos de sombra. Cada boost, um tentáculo extra. Cada tentáculo: Fisiologia +3, Lutar +2, 3 caixas físicas.</div></div>
       <div class="level"><div class="level-num">3</div><div><span class="level-name">Forma Tenebrosa:</span> Gaste 1 PD para se tornar um monstro-sombra-tentacular por uma cena. Pode usar Ocultismo +2 em lugar de Lutar. Tentáculos causam dano 2. Sucesso com estilo: ataque extra. +2 em Carisma para aterrorizar.</div></div>
@@ -1906,8 +1925,8 @@ mark{
 
     <div class="discipline">
       <h3>Proteu <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: A qualquer momento, pode ativar "Olhos da Besta" — seus olhos brilham vermelho-laranja e você elimina penalidades/obstáculos por escuridão. Proteu também dificulta que Garou farejem a mácula do Wyrm em você.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Garras Ferais:</span> Ataques desarmados ganham +2 de dano que <em>não pode ser resistido com Fisiologia</em> a menos que a vítima tenha Fortitude. (Note: autor original diz que "não há regras de dano agravado" aqui — ver <a href="#" data-goto="dano-agravado">Dano Agravado</a> para minha adaptação.)</div></div>
+      <div class="discipline-passive">Passivo: A qualquer momento, pode ativar "Olhos da Besta" � seus olhos brilham vermelho-laranja e você elimina penalidades/obstáculos por escuridão. Proteu também dificulta que Garou farejem a mácula do Wyrm em você.</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Garras Ferais:</span> Ataques desarmados ganham +2 de dano que <em>não pode ser resistido com Fisiologia</em> a menos que a vítima tenha Fortitude. (Note: autor original diz que "não há regras de dano agravado" aqui � ver <a href="#" data-goto="dano-agravado">Dano Agravado</a> para minha adaptação.)</div></div>
       <div class="level"><div class="level-num">2</div><div><span class="level-name">Fundir-se à Terra:</span> Gaste 1 PD. Você mergulha em qualquer pedaço de terra e dorme ali pela noite.</div></div>
       <div class="level"><div class="level-num">3</div><div><span class="level-name">Forma da Besta:</span> Transforme-se em lobo ou morcego. Morcego: voa, +2 em Atletismo para voar e +2 em Percepção (audição). Lobo: +2 em Atletismo para correr, +2 em Lutar mordendo, mordida +2 dano (não cumulativo com Garras Ferais).</div></div>
       <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Controle da Terra<span class="level-elder-tag">Ancião</span></span> Após Fundir-se à Terra, pode nadar pelo solo à velocidade semelhante à de natação em água. Metal, água e concreto te impedem.</div></div>
@@ -1917,14 +1936,14 @@ mark{
       <h3>Quietus <span class="src-tag src-original">Original</span></h3>
       <div class="discipline-passive">Passivo: Gaste 1 PD para adicionar "Silêncio da Morte" como aspecto de cena. Também concede um invoke grátis.</div>
       <div class="level"><div class="level-num">1</div><div><span class="level-name">Toque do Escorpião:</span> Aceite 1 estresse físico (cura no fim da cena) para aumentar o dano de qualquer arma cortante em +2 pela cena.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Chamado de Dagon:</span> Por uma cena após tocar a vítima, gaste 1 PD para iniciar ataques contra ela. Role Vontade contra Fisiologia — vítima se afoga no próprio sangue.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Chamado de Dagon:</span> Por uma cena após tocar a vítima, gaste 1 PD para iniciar ataques contra ela. Role Vontade contra Fisiologia � vítima se afoga no próprio sangue.</div></div>
       <div class="level"><div class="level-num">3</div><div><span class="level-name">Sabor da Morte:</span> Use Atirar para cuspir sangue cáustico até uma zona de distância. Dano 4.</div></div>
       <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Envenenar o Poço da Vida<span class="level-elder-tag">Ancião</span></span> Gaste 1 PD para envenenar o sangue de um mortal. Qualquer vampiro que beber dele sofre 6 de estresse físico, que pode ser absorvido por uma consequência "Envenenado".</div></div>
     </div>
 
     <div class="discipline">
       <h3>Serpentis <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: "Língua da Áspide" — pode estender sua língua bifurcada até ~45 cm, usando-a como arma de +1 dano ou para beber sangue como se fosse uma presa.</div>
+      <div class="discipline-passive">Passivo: "Língua da Áspide" � pode estender sua língua bifurcada até ~45 cm, usando-a como arma de +1 dano ou para beber sangue como se fosse uma presa.</div>
       <div class="level"><div class="level-num">1</div><div><span class="level-name">Olhos da Serpente:</span> Pode paralisar temporariamente qualquer mortal que encontre seu olhar. Se ameaçado ou atacado, o mortal rola Vontade contra seu Carisma para se soltar, +2 se sofrer estresse físico ou mental.</div></div>
       <div class="level"><div class="level-num">2</div><div><span class="level-name">Forma da Serpente:</span> Sua pele concede armadura 1 contra estresse físico. Mordida +2 de dano e venenosa fatal para mortais. Pode passar por qualquer abertura em que a cabeça caiba.</div></div>
       <div class="level"><div class="level-num">3</div><div><span class="level-name">Coração das Trevas:</span> Remova seu coração e esconda-o num vaso canópico. Concede armadura 2 contra estresse mental, imunidade a estaca e uma <em>baita</em> vulnerabilidade.</div></div>
@@ -1937,7 +1956,7 @@ mark{
       <div class="level"><div class="level-num">1</div><div><span class="level-name">Contemplação Recorrente:</span> Role Manipulação contra Vontade da vítima em linha de visão. Sucesso: ela vive uma recorrência mental, experimentando os mesmos poucos minutos de novo e de novo, até a cena acabar ou algo dramático interromper.</div></div>
       <div class="level"><div class="level-num">2</div><div><span class="level-name">Momento de Chumbo:</span> Gaste 1 PD e role Ocultismo contra Vontade para congelar um alvo vivo (objetos muito mais fácil). Uma rodada por grau de sucesso.</div></div>
       <div class="level"><div class="level-num">3</div><div><span class="level-name">Dons de Cloto:</span> Gaste 1 PD e role Ocultismo contra +0. Ganhe uma ação extra neste turno, mais uma por boost. Na próxima rodada, gaste outro PD para repetir o mesmo número de ações bônus.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Fenda no Tempo<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 2 PD. Você "volta" 1 rodada no tempo — desfaz as ações feitas contra você na rodada anterior, mas mantém qualquer descoberta/informação. Alternativamente, gaste 2 PD no início de uma cena para saber exatamente quem estará lá e em que estado — o Narrador compartilha um aspecto de situação e uma dificuldade, e você já pode se preparar.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Fenda no Tempo<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 2 PD. Você "volta" 1 rodada no tempo � desfaz as ações feitas contra você na rodada anterior, mas mantém qualquer descoberta/informação. Alternativamente, gaste 2 PD no início de uma cena para saber exatamente quem estará lá e em que estado � o Narrador compartilha um aspecto de situação e uma dificuldade, e você já pode se preparar.</div></div>
     </div>
 
     <div class="discipline">
@@ -1951,16 +1970,16 @@ mark{
 
     <div class="discipline">
       <h3>Necromancia <span class="src-tag src-original">Original</span></h3>
-      <p><em>Ver <a href="#" data-goto="necromancia">página dedicada</a> — cada caminho tem seus próprios níveis.</em></p>
+      <p><em>Ver <a href="#" data-goto="necromancia">página dedicada</a> � cada caminho tem seus próprios níveis.</em></p>
     </div>
 
     <div class="discipline">
       <h3>Taumaturgia <span class="src-tag src-original">Original</span></h3>
-      <p><em>Ver <a href="#" data-goto="taumaturgia">página dedicada</a> — cada caminho tem seus próprios níveis, mais os rituais.</em></p>
+      <p><em>Ver <a href="#" data-goto="taumaturgia">página dedicada</a> � cada caminho tem seus próprios níveis, mais os rituais.</em></p>
     </div>
   </div>
 
-  <!-- EXCLUSIVAS DE CLÃ -->
+  <!-- EXCLUSIVAS DE CLÒ -->
   <div class="tab-content" id="tab-unique">
     <h3>Disciplinas nativas de cada Clã</h3>
     <p>Esta é a referência para <strong>escolher seus 3 níveis iniciais</strong>. Cada Clã tem três Disciplinas nativas, e você distribui os 3 níveis grátis entre elas (1/1/1, 2/1/0 ou 3/0/0). Disciplinas fora do Clã exigem gastar recarga (2 por nível) e aprovação do Narrador.</p>
@@ -1973,9 +1992,9 @@ mark{
         <tr><td><strong>Gangrel</strong></td><td>Animalismo, Fortitude, Proteu</td><td>A cada frenesi, ganha uma característica animal permanente</td></tr>
         <tr><td><strong>Malkaviano</strong></td><td>Auspícios, Dementação, Ofuscação</td><td>Todos sofrem de perturbação mental incurável</td></tr>
         <tr><td><strong>Nosferatu</strong></td><td>Animalismo, Ofuscação, Potência</td><td>Aparência monstruosa inocultável; autom. quebra Máscara em público</td></tr>
-        <tr><td><strong>Toreador</strong></td><td>Auspícios, Celeridade, Presença</td><td>Presos pela beleza — difícil desviar o olhar de algo belo</td></tr>
+        <tr><td><strong>Toreador</strong></td><td>Auspícios, Celeridade, Presença</td><td>Presos pela beleza � difícil desviar o olhar de algo belo</td></tr>
         <tr><td><strong>Tremere</strong></td><td>Auspícios, Dominação, Taumaturgia</td><td>Ligados pelo sangue à hierarquia Tremere (Laço triplo com o Conselho)</td></tr>
-        <tr><td><strong>Ventrue</strong></td><td>Dominação, Fortitude, Presença</td><td>Dieta restrita — só bebe de um tipo muito específico de vítima</td></tr>
+        <tr><td><strong>Ventrue</strong></td><td>Dominação, Fortitude, Presença</td><td>Dieta restrita � só bebe de um tipo muito específico de vítima</td></tr>
       </tbody>
     </table>
 
@@ -2024,7 +2043,7 @@ mark{
 
     <div class="callout warn">
       <div class="callout-title">Linhagens com Disciplinas raras</div>
-      <p>Valeren, Melpominee, Obeah, Thanatosis e Mytherceria não aparecem na página de Disciplinas deste guia — são obscuras demais. Se quiser jogar uma linhagem, combine com o Narrador para adaptar ou use uma Disciplina próxima (Valeren ≈ Auspícios + habilidade de cura; Mytherceria ≈ Obtenebração com sabor feérico; etc.).</p>
+      <p>Valeren, Melpominee, Obeah, Thanatosis e Mytherceria não aparecem na página de Disciplinas deste guia � são obscuras demais. Se quiser jogar uma linhagem, combine com o Narrador para adaptar ou use uma Disciplina próxima (Valeren �0� Auspícios + habilidade de cura; Mytherceria �0� Obtenebração com sabor feérico; etc.).</p>
     </div>
 
     <h3>Quais Disciplinas são "exclusivas" de um Clã?</h3>
@@ -2047,7 +2066,7 @@ mark{
     </table>
 
     <h3>Quais Disciplinas qualquer um pode aprender?</h3>
-    <p>Estas são as Disciplinas "comuns" — aparecem em múltiplos Clãs e são mais fáceis de justificar aprender fora do Clã com um bom conceito:</p>
+    <p>Estas são as Disciplinas "comuns" � aparecem em múltiplos Clãs e são mais fáceis de justificar aprender fora do Clã com um bom conceito:</p>
     <p><strong>Animalismo, Auspícios, Celeridade, Dominação, Fortitude, Ofuscação, Potência, Presença.</strong></p>
   </div>
 </section>
@@ -2059,7 +2078,7 @@ mark{
 
   <div class="callout">
     <div class="callout-title">Regra base</div>
-    <p>Taumaturgia funciona em <strong>caminhos</strong>. Cada personagem escolhe um caminho primário e pode aprender outros. Cada nível de caminho é um Extra de 2 de recarga (como uma Disciplina normal). Além disso, para cada nível de Taumaturgia, o personagem <strong>recebe um ritual de mesmo nível</strong> — rituais adicionais custam recarga.</p>
+    <p>Taumaturgia funciona em <strong>caminhos</strong>. Cada personagem escolhe um caminho primário e pode aprender outros. Cada nível de caminho é um Extra de 2 de recarga (como uma Disciplina normal). Além disso, para cada nível de Taumaturgia, o personagem <strong>recebe um ritual de mesmo nível</strong> � rituais adicionais custam recarga.</p>
   </div>
 
   <div class="tabs" id="thaum-tabs">
@@ -2073,10 +2092,10 @@ mark{
   <div class="tab-content active" id="tab-blood">
     <div class="discipline">
       <h3>Caminho do Sangue <span class="src-tag src-original">Original</span></h3>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Gosto de Sangue:</span> Se puder provar o sangue, role Ocultismo. Descobre o Clã ou um aspecto relacionado ao clã, ou responde uma pergunta — uma por grau de sucesso (1 em +1, 2 em +2, etc.). Perguntas precisam ser sobre sangue.</div></div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Gosto de Sangue:</span> Se puder provar o sangue, role Ocultismo. Descobre o Clã ou um aspecto relacionado ao clã, ou responde uma pergunta � uma por grau de sucesso (1 em +1, 2 em +2, etc.). Perguntas precisam ser sobre sangue.</div></div>
       <div class="level"><div class="level-num">2</div><div><span class="level-name">Roubo de Vitae:</span> Role Vontade contra Fisiologia para arrancar sangue de um alvo em linha de visão, até 2 zonas. Causa estresse físico e restaura igual em estresse mental ou físico seu. Dano 2: trata consequência leve. Dano 4: trata consequência moderada. O dano deve ocorrer em um único ataque.</div></div>
       <div class="level"><div class="level-num">3</div><div><span class="level-name">Caldeirão de Sangue:</span> Tocando a vítima, role Ocultismo +2 contra Fisiologia para ferver o sangue dela. Mortal: qualquer dano mata. Vampiro: trate como arma +2 de dano.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Sangue de Potência<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 1 PD. Por uma cena, quando você gasta sangue para fazer efeitos (por ex. aumentar perícia — ver <a href="#" data-goto="sangue">Gastar Sangue</a>), o custo em Fome é pago pela sua vítima mais próxima (contato ou linha de visão). Ela agrava uma consequência de fome/dor relacionada.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Sangue de Potência<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 1 PD. Por uma cena, quando você gasta sangue para fazer efeitos (por ex. aumentar perícia � ver <a href="#" data-goto="sangue">Gastar Sangue</a>), o custo em Fome é pago pela sua vítima mais próxima (contato ou linha de visão). Ela agrava uma consequência de fome/dor relacionada.</div></div>
     </div>
   </div>
 
@@ -2087,7 +2106,7 @@ mark{
       <div class="level"><div class="level-num">1</div><div><span class="level-name">Básico:</span> Use Vontade em lugar de Atirar para lançar chamas a até 2 zonas. Defesa: Atletismo ou Vontade. Arma +3 dano. Pelo menos 1 ponto do estresse deve ser mental.</div></div>
       <div class="level"><div class="level-num">2</div><div><span class="level-name">Intermediário:</span> +2 em Vontade para o ataque.</div></div>
       <div class="level"><div class="level-num">3</div><div><span class="level-name">Avançado:</span> As chamas agora são arma +4 de dano. 2 pontos de estresse devem ser mentais.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Inferno<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 1 PD. Incendeia toda uma zona: o aspecto "Inferno" é adicionado. Todos dentro sofrem dano 4 por rodada (mínimo 1 mental) até saírem. Fogo dura a cena. Pelo menos 1 PD adicional deve ser gasto por rodada para mantê-lo sob controle — sem isso, vira aspecto persistente da cena até ser apagado naturalmente.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Inferno<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 1 PD. Incendeia toda uma zona: o aspecto "Inferno" é adicionado. Todos dentro sofrem dano 4 por rodada (mínimo 1 mental) até saírem. Fogo dura a cena. Pelo menos 1 PD adicional deve ser gasto por rodada para mantê-lo sob controle � sem isso, vira aspecto persistente da cena até ser apagado naturalmente.</div></div>
     </div>
   </div>
 
@@ -2095,7 +2114,7 @@ mark{
     <div class="discipline">
       <h3>Movimento da Mente <span class="src-tag src-original">Original</span></h3>
       <div class="level"><div class="level-num">1</div><div><span class="level-name">Básico:</span> Use Vontade em lugar de Fisiologia para levantar objetos e pessoas. Vítimas resistem com Vontade. Levantar pessoa média: obstáculo +2.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Intermediário:</span> +2 em Vontade substituindo Fisiologia — permite feitos sobre-humanos de telecinese.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Intermediário:</span> +2 em Vontade substituindo Fisiologia � permite feitos sobre-humanos de telecinese.</div></div>
       <div class="level"><div class="level-num">3</div><div><span class="level-name">Avançado:</span> +4 em Vontade substituindo Fisiologia.</div></div>
       <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Mão do Mestre<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Pode agir em multiplas "mãos" telecinéticas simultâneas. Gaste 1 PD para ter 2 ações telecinéticas por turno (ataque/manipulação/defesa), cada qual rolada separadamente.</div></div>
     </div>
@@ -2119,7 +2138,7 @@ mark{
     <ul>
       <li><strong>Laço da Língua Acusadora:</strong> Vontade contra Vontade do taumaturgo. Se a vítima falar algo negativo sobre ele durante a cena, fica marcada.</li>
       <li><strong>Onda de Sangue:</strong> Após o ritual, conta uma consequência leve relacionada à Besta como "tratada". <em>OU</em> permite rolagem de Ocultismo para tratar consequências bestiais: +2 leve, +4 moderada, +6 severa.</li>
-      <li><strong>Caminhada Sanguínea:</strong> Versão limitada de Gosto de Sangue que revela linhagem do vampiro — uma geração para trás por grau de sucesso.</li>
+      <li><strong>Caminhada Sanguínea:</strong> Versão limitada de Gosto de Sangue que revela linhagem do vampiro � uma geração para trás por grau de sucesso.</li>
       <li><strong>Comunicação com o Sire Kindred:</strong> Basicamente um telefonema ocultista. Muitos anciões Tremere nem têm celular, o que complica.</li>
       <li><strong>Defesa da Perdição de Madeira:</strong> A próxima estaca que te atingir ainda causa dano, mas não paralisa. Você precisa manter um pedaço de madeira na boca o tempo todo.</li>
       <li><strong>Toque do Demônio:</strong> Amaldiçoa um mortal escondendo algo sobre ele discretamente.</li>
@@ -2156,7 +2175,7 @@ mark{
 <!-- ========== PÁGINA: NECROMANCIA ========== -->
 <section class="page" id="page-necromancia" data-page="necromancia">
   <h1>Necromancia</h1>
-  <div class="page-sub">A arte proibida Giovanni — conversa com os mortos, comando sobre os corpos</div>
+  <div class="page-sub">A arte proibida Giovanni � conversa com os mortos, comando sobre os corpos</div>
 
   <p>Como a Taumaturgia, a Necromancia tem caminhos. Na adaptação original, os caminhos V20 foram combinados por terem muita sobreposição, resultando em dois caminhos principais. Os demais caminhos recebem aqui uma adaptação minha.</p>
 
@@ -2174,24 +2193,24 @@ mark{
       <div class="level"><div class="level-num">1</div><div><span class="level-name">Línguas Sem Vida:</span> O necromante pode usar Carisma e Manipulação em espíritos depois de detectá-los.</div></div>
       <div class="level"><div class="level-num">2</div><div><span class="level-name">Ex Nihilo:</span> Gaste 1 PD e estenda-se através da Mortalha. Use Lutar e Fisiologia contra fantasmas durante uma cena, <em>ou</em> puxe um objeto das terras dos mortos para o mundo dos vivos.</div></div>
       <div class="level"><div class="level-num">3</div><div><span class="level-name">Maestria da Mortalha:</span> Pode aumentar ou reduzir a Mortalha em sua zona e zonas adjacentes, afetando drasticamente a dificuldade para fantasmas e necromancia. A Mortalha urbana média é +6; cada grau de sucesso em Ocultismo reduz em 1.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Porta dos Mortos<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 2 PD. Abre um portal para as terras dos mortos que dura uma cena. Corpos vivos e mortos podem atravessar em ambas direções. Consequências graves: atenção de poderes maiores. Todo uso gera uma consequência moderada sobre a zona local — "Mortalha Rasgada" — que pode ser compelida por uma sessão.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Porta dos Mortos<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 2 PD. Abre um portal para as terras dos mortos que dura uma cena. Corpos vivos e mortos podem atravessar em ambas direções. Consequências graves: atenção de poderes maiores. Todo uso gera uma consequência moderada sobre a zona local � "Mortalha Rasgada" � que pode ser compelida por uma sessão.</div></div>
     </div>
   </div>
 
   <div class="tab-content" id="tab-bone">
     <div class="discipline">
       <h3>Caminho dos Ossos <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: "Tremens" — Vampiros com qualquer nível podem rolar Vontade para fazer um cadáver realizar um único movimento sinistro.</div>
+      <div class="discipline-passive">Passivo: "Tremens" � Vampiros com qualquer nível podem rolar Vontade para fazer um cadáver realizar um único movimento sinistro.</div>
       <div class="level"><div class="level-num">1</div><div><span class="level-name">Vassouras Aprendizes:</span> Gaste 1 PD e role Ocultismo. Cada +1 anima um servo morto-vivo. Não têm habilidade notável, mas executam tarefas menores.
         <div class="callout"><strong>Servo Cadáver:</strong> Uma perícia em +1, 4 caixas de estresse físico.</div>
       </div></div>
       <div class="level"><div class="level-num">2</div><div><span class="level-name">Hordas Cambaleantes:</span> Gaste 1 PD e role Ocultismo. Cada +1 ergue um zumbi. Seguem comandos simples e duram uma cena.
         <div class="callout"><strong>Zumbi:</strong> Fisiologia +2, Lutar +1, Percepção +1, 4 caixas de estresse físico.</div>
       </div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Possessão Demoníaca:</span> O necromante pode remover a alma de um vivo ou restaurar alma em corpo morto. Gaste 1 PD e toque a vítima. Role Ocultismo +2 contra Vontade. Para remover alma, precisa tirá-la com estresse mental. Para implantar alma, gaste 1 PD e role Ocultismo — cria um revenant, criatura morta-viva que fica corporal até sua única tarefa ser cumprida. O necromante define a tarefa como seu único aspecto.
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Possessão Demoníaca:</span> O necromante pode remover a alma de um vivo ou restaurar alma em corpo morto. Gaste 1 PD e toque a vítima. Role Ocultismo +2 contra Vontade. Para remover alma, precisa tirá-la com estresse mental. Para implantar alma, gaste 1 PD e role Ocultismo � cria um revenant, criatura morta-viva que fica corporal até sua única tarefa ser cumprida. O necromante define a tarefa como seu único aspecto.
         <div class="callout"><strong>Revenant:</strong> +3 em uma perícia, +2 em duas, +1 em três. Um aspecto representando a tarefa. 4 caixas de estresse mental e físico, uma consequência moderada física.</div>
       </div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Legião dos Ossos<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 2 PD e role Ocultismo contra +4. Ergue um pequeno exército de mortos no cemitério — 2d6 zumbis + 1 revenant líder. O grupo funciona como uma única unidade com estresse coletivo de 8 caixas e Lutar +3.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Legião dos Ossos<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 2 PD e role Ocultismo contra +4. Ergue um pequeno exército de mortos no cemitério � 2d6 zumbis + 1 revenant líder. O grupo funciona como uma única unidade com estresse coletivo de 8 caixas e Lutar +3.</div></div>
     </div>
   </div>
 
@@ -2201,7 +2220,7 @@ mark{
       <div class="discipline-passive">Passivo: Pode ver fantasmas com clareza e falar com eles diretamente sem precisar de medium.</div>
       <div class="level"><div class="level-num">1</div><div><span class="level-name">Compele a Alma:</span> Role Manipulação contra Vontade do espírito para forçá-lo a responder uma pergunta por grau de sucesso.</div></div>
       <div class="level"><div class="level-num">2</div><div><span class="level-name">Sentir a Morte:</span> Rolagem de Percepção para saber como uma pessoa vai morrer (morte próxima: visão clara; morte distante: só dica).</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Haunt:</span> Gaste 1 PD e role Ocultismo para prender um fantasma a um lugar ou objeto — ele não pode sair sem sua permissão.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Haunt:</span> Gaste 1 PD e role Ocultismo para prender um fantasma a um lugar ou objeto � ele não pode sair sem sua permissão.</div></div>
       <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Torpor dos Vivos<span class="level-elder-tag">Ancião</span></span> Toque um mortal e role Ocultismo +2 contra Fisiologia. Sucesso: o alvo entra num sono parecido com a morte por até 24h. Sucesso com estilo: vai até 1 semana.</div></div>
     </div>
   </div>
@@ -2209,7 +2228,7 @@ mark{
   <div class="tab-content" id="tab-vitreous">
     <div class="discipline">
       <h3>Caminho Vítreo <span class="src-tag src-homebrew">Adaptação minha</span></h3>
-      <div class="discipline-passive">Passivo: Espíritos próximos se sentem compelidos a se manifestar na sua presença — bom para obter respostas, ruim para a Máscara.</div>
+      <div class="discipline-passive">Passivo: Espíritos próximos se sentem compelidos a se manifestar na sua presença � bom para obter respostas, ruim para a Máscara.</div>
       <div class="level"><div class="level-num">1</div><div><span class="level-name">Prisão Fantasmática:</span> Role Ocultismo contra Vontade do fantasma para prendê-lo em um objeto. Duração: até a lua cheia.</div></div>
       <div class="level"><div class="level-num">2</div><div><span class="level-name">Possessão:</span> Force um fantasma aliado a possuir um alvo mortal (Manipulação contra Vontade da vítima).</div></div>
       <div class="level"><div class="level-num">3</div><div><span class="level-name">Retorno Temporário:</span> Traga de volta um fantasma à forma corpórea por uma cena, gastando 1 PD.</div></div>
@@ -2219,22 +2238,22 @@ mark{
 
   <h2>Rituais de Necromancia</h2>
   <p class="src-tag src-original">Original</p>
-  <p>O autor notou que estes rituais são deliberadamente deixados sem mecânica rígida. Trate como rituais de Taumaturgia — 1 grátis por nível + compra gastando recarga.</p>
+  <p>O autor notou que estes rituais são deliberadamente deixados sem mecânica rígida. Trate como rituais de Taumaturgia � 1 grátis por nível + compra gastando recarga.</p>
 
   <div class="callout tip">
     <div class="callout-title">Dica de Narrador</div>
-    <p>Rituais necromânticos funcionam melhor como ganchos de história do que como mecânicas fechadas. "Chamado de Paparruçio" chama um fantasma específico se você souber o nome dele — sem rolagem, com dificuldade narrativa. Deixe Rituais movimentarem a ficção, não a mesa.</p>
+    <p>Rituais necromânticos funcionam melhor como ganchos de história do que como mecânicas fechadas. "Chamado de Paparruçio" chama um fantasma específico se você souber o nome dele � sem rolagem, com dificuldade narrativa. Deixe Rituais movimentarem a ficção, não a mesa.</p>
   </div>
 </section>
 
 <!-- ========== PÁGINA: FOME ========== -->
 <section class="page" id="page-fome" data-page="fome">
   <h1>Fome &amp; Caça</h1>
-  <div class="page-sub">A engrenagem central do jogo — vampiros sempre têm fome</div>
+  <div class="page-sub">A engrenagem central do jogo � vampiros sempre têm fome</div>
 
   <div class="callout">
     <div class="callout-title">A mais importante das regras</div>
-    <p>Toda noite, quando seu personagem acorda, o Narrador diz antes de qualquer outra coisa: <strong>"Você acorda com fome."</strong> Deve soar como um mantra incessante. É a primeira fala da noite, sempre.</p>
+    <p>Toda noite, quando seu personagem acorda, o Narrador diz antes de qualquer outra coisa: <strong>"Você acorda com fome."</strong> Deve soar como um mantra incessante. �0 a primeira fala da noite, sempre.</p>
   </div>
 
   <h2>A condição Fome</h2>
@@ -2256,13 +2275,13 @@ mark{
       <div class="hunt-step-title">Encontrar a presa</div>
       <div class="hunt-step-body">Escolha a perícia que reflete <em>como</em> você caça</div>
     </div>
-    <div class="hunt-arrow">→</div>
+    <div class="hunt-arrow">� </div>
     <div class="hunt-step">
       <div class="hunt-step-num">2</div>
       <div class="hunt-step-title">Convencer/Dominar</div>
       <div class="hunt-step-body">Ganhe o sangue sem escândalo</div>
     </div>
-    <div class="hunt-arrow">→</div>
+    <div class="hunt-arrow">� </div>
     <div class="hunt-step">
       <div class="hunt-step-num">3</div>
       <div class="hunt-step-title">Trata a fome</div>
@@ -2278,7 +2297,7 @@ mark{
       <tr><td>Dominação</td><td>Percepção ou Empatia</td><td>Manipulação via Dominate</td></tr>
       <tr><td>Sedução</td><td>Empatia (achar vítima)</td><td>Carisma</td></tr>
       <tr><td>Predador do submundo</td><td>Ruídos</td><td>Lutar</td></tr>
-      <tr><td>Social (com Façanha Herd)</td><td>Contatos (1×/noite)</td><td>—</td></tr>
+      <tr><td>Social (com Façanha Herd)</td><td>Contatos (1�/noite)</td><td>�</td></tr>
     </tbody>
   </table>
 
@@ -2291,7 +2310,7 @@ mark{
 
   <div class="callout warn">
     <div class="callout-title">A saída extrema</div>
-    <p>Você <em>sempre</em> pode tratar a condição Fome <strong>matando alguém e drenando todo o sangue</strong>. Isso limpa todas as consequências de fome de uma vez. É poderoso, é horrível, e praticamente garante um atentado à Máscara e consequências para a Humanidade — ver <a href="#" data-goto="humanidade">Humanidade &amp; Trilhas</a>.</p>
+    <p>Você <em>sempre</em> pode tratar a condição Fome <strong>matando alguém e drenando todo o sangue</strong>. Isso limpa todas as consequências de fome de uma vez. �0 poderoso, é horrível, e praticamente garante um atentado à Máscara e consequências para a Humanidade � ver <a href="#" data-goto="humanidade">Humanidade &amp; Trilhas</a>.</p>
   </div>
 
   <h2>Exemplos narrados</h2>
@@ -2329,14 +2348,14 @@ mark{
   <p>Para morder em combate direto:</p>
   <ol>
     <li>Primeiro, <strong>agarre a vítima com Fisiologia</strong> (manobra de agarrar, cria aspecto "Agarrado").</li>
-    <li>Então, <strong>morda com Lutar</strong> — as presas causam <strong>+1 de dano</strong>.</li>
+    <li>Então, <strong>morda com Lutar</strong> � as presas causam <strong>+1 de dano</strong>.</li>
   </ol>
 
   <h2>Zonas e movimento</h2>
   <p class="src-tag src-homebrew">Resumo do Fate Core base</p>
   <p>O Fate Core divide espaços em <strong>zonas</strong>. Mover-se dentro de uma zona é livre; entre zonas adjacentes consome uma ação ou uma rolagem de Atletismo se houver obstáculos. Ataques em close combat (Lutar) precisam estar na mesma zona; ataques com arma de fogo (Atirar) podem ser entre zonas.</p>
 
-  <h2>Armas — dano adicional</h2>
+  <h2>Armas � dano adicional</h2>
   <table>
     <thead><tr><th>Arma</th><th>Dano extra</th><th>Notas</th></tr></thead>
     <tbody>
@@ -2346,7 +2365,7 @@ mark{
       <tr><td>Pistola</td><td>+2</td><td></td></tr>
       <tr><td>Rifle</td><td>+3</td><td></td></tr>
       <tr><td>Arma de assalto</td><td>+2</td><td>Atinge todos numa zona</td></tr>
-      <tr><td>Estaca</td><td>+0</td><td>Desajeitada; efeito especial — ver <a href="#" data-goto="torpor">Torpor &amp; Estaca</a></td></tr>
+      <tr><td>Estaca</td><td>+0</td><td>Desajeitada; efeito especial � ver <a href="#" data-goto="torpor">Torpor &amp; Estaca</a></td></tr>
     </tbody>
   </table>
 
@@ -2367,7 +2386,7 @@ mark{
 
   <div class="callout homebrew">
     <div class="callout-title">Nota de autoria</div>
-    <p>O documento original diz explicitamente: <em>"atualmente não tenho regras de dano agravado"</em>. As regras abaixo são <strong>minha adaptação</strong> — completamente substituível se você preferir outra abordagem.</p>
+    <p>O documento original diz explicitamente: <em>"atualmente não tenho regras de dano agravado"</em>. As regras abaixo são <strong>minha adaptação</strong> � completamente substituível se você preferir outra abordagem.</p>
   </div>
 
   <h2>Fontes de dano agravado</h2>
@@ -2375,7 +2394,7 @@ mark{
   <ul>
     <li><strong>Fogo</strong> (comum ou sobrenatural)</li>
     <li><strong>Luz solar</strong></li>
-    <li><strong>Garras de Proteu (Feral Claws)</strong> — exceto contra alvos com Fortitude</li>
+    <li><strong>Garras de Proteu (Feral Claws)</strong> � exceto contra alvos com Fortitude</li>
     <li><strong>Presas vampíricas em outro vampiro</strong></li>
   </ul>
   <p class="src-tag src-homebrew">Adaptado por mim</p>
@@ -2392,14 +2411,14 @@ mark{
   <h3>1. Representação na ficha</h3>
   <p>Quando você recebe estresse/consequência de fonte agravada, marque-a com um <strong>asterisco (*)</strong> na ficha. Visualmente assim:</p>
   <div class="callout">
-    <p>Leve: <strong>Queimadura Séria*</strong> — mesmo slot que uma consequência leve normal, mas marcada como agravada.</p>
+    <p>Leve: <strong>Queimadura Séria*</strong> � mesmo slot que uma consequência leve normal, mas marcada como agravada.</p>
   </div>
 
   <h3>2. Regra do dano dobrado</h3>
   <p>Fogo e luz solar têm uma regra adicional vinda do documento original:</p>
   <div class="callout warn">
     <div class="callout-title">Regra original</div>
-    <p>Fogo e luz solar causam <strong>dano dobrado</strong> a vampiros: tanto estresse físico quanto estresse mental iguais. Se você tomaria 3 de dano físico, também toma 3 de dano mental — simultaneamente.</p>
+    <p>Fogo e luz solar causam <strong>dano dobrado</strong> a vampiros: tanto estresse físico quanto estresse mental iguais. Se você tomaria 3 de dano físico, também toma 3 de dano mental � simultaneamente.</p>
   </div>
 
   <h3>3. Defesa limitada</h3>
@@ -2484,7 +2503,7 @@ mark{
   </table>
 
   <h2>Frenesi involuntário</h2>
-  <p>Quando um personagem é "derrubado" por estresse mental, ele <strong>entra em frenesi contra a vontade</strong>. Esse frenesi será <strong>sempre severo</strong>. Por isso "surfar a onda" — escolher o frenesi — pode ser preferível.</p>
+  <p>Quando um personagem é "derrubado" por estresse mental, ele <strong>entra em frenesi contra a vontade</strong>. Esse frenesi será <strong>sempre severo</strong>. Por isso "surfar a onda" � escolher o frenesi � pode ser preferível.</p>
 
   <h2>Depois do frenesi</h2>
   <p>Após uma sessão em que você frenesiou, considere:</p>
@@ -2506,11 +2525,11 @@ mark{
 
   <div class="callout homebrew">
     <div class="callout-title">Nota de autoria</div>
-    <p>O documento original <strong>não desenvolveu mecânicas para Humanidade e Trilhas</strong> — apenas listou como algo que queria cobrir. Toda esta página é <strong>minha adaptação</strong>, fazendo Humanidade funcionar no espírito do Fate Core (como aspecto que degrada) em vez de escala numérica.</p>
+    <p>O documento original <strong>não desenvolveu mecânicas para Humanidade e Trilhas</strong> � apenas listou como algo que queria cobrir. Toda esta página é <strong>minha adaptação</strong>, fazendo Humanidade funcionar no espírito do Fate Core (como aspecto que degrada) em vez de escala numérica.</p>
   </div>
 
   <h2>Filosofia geral</h2>
-  <p>No Fate Core, Humanidade <strong>não é uma escala de 1 a 10</strong>. É um <strong>aspecto contínuo</strong> com consequências narrativas. O personagem começa com uma <strong>Trilha</strong> (Humanidade ou um dos Caminhos do Sabbat), expressa como aspecto, e ações que violam a Trilha geram <strong>consequências específicas de degradação</strong>.</p>
+  <p>No Fate Core, Humanidade <strong>não é uma escala de 1 a 10</strong>. �0 um <strong>aspecto contínuo</strong> com consequências narrativas. O personagem começa com uma <strong>Trilha</strong> (Humanidade ou um dos Caminhos do Sabbat), expressa como aspecto, e ações que violam a Trilha geram <strong>consequências específicas de degradação</strong>.</p>
 
   <h2>A Trilha como aspecto</h2>
   <p>Cada personagem tem um <strong>aspecto de Trilha</strong>, geralmente como um dos cinco aspectos livres (ou incorporado ao Conceito Principal). Exemplos:</p>
@@ -2527,10 +2546,10 @@ mark{
     <li>O Narrador declara o ato como contraste com a Trilha (matar inocente se for Humanidade; mostrar piedade se for Via do Sangue).</li>
     <li>O jogador rola <strong>Vontade</strong> contra uma dificuldade baseada na gravidade:
       <ul>
-        <li>+0 — imoral leve (roubar, mentir grave)</li>
-        <li>+2 — crime pessoal (ferir inocente, beber até quase matar)</li>
-        <li>+4 — atrocidade (matar, torturar)</li>
-        <li>+6 — imperdoável (massacrar família, diablerie)</li>
+        <li>+0 � imoral leve (roubar, mentir grave)</li>
+        <li>+2 � crime pessoal (ferir inocente, beber até quase matar)</li>
+        <li>+4 � atrocidade (matar, torturar)</li>
+        <li>+6 � imperdoável (massacrar família, diablerie)</li>
       </ul>
     </li>
     <li>Se falhar, aceite uma <strong>consequência de Trilha</strong> correspondente à severidade.</li>
@@ -2555,7 +2574,7 @@ mark{
   </ul>
 
   <h2>Mudar de Trilha</h2>
-  <p>Em crônicas longas, um personagem pode <strong>trocar de Trilha</strong> — um Humanidade caindo para o Caminho da Noite, por exemplo. Exige:</p>
+  <p>Em crônicas longas, um personagem pode <strong>trocar de Trilha</strong> � um Humanidade caindo para o Caminho da Noite, por exemplo. Exige:</p>
   <ol>
     <li>Declaração ao Narrador com pelo menos uma sessão de antecedência</li>
     <li>Um evento catalisador pesado</li>
@@ -2587,7 +2606,7 @@ mark{
 
   <div class="callout">
     <div class="callout-title">Regra base</div>
-    <p>Você pode <strong>gastar sangue</strong> aumentando sua condição de Fome (leve → moderada) em troca de <strong>+2 em Atletismo, Lutar OU Fisiologia</strong> (escolha uma) por uma cena.</p>
+    <p>Você pode <strong>gastar sangue</strong> aumentando sua condição de Fome (leve �  moderada) em troca de <strong>+2 em Atletismo, Lutar OU Fisiologia</strong> (escolha uma) por uma cena.</p>
   </div>
 
   <h2>Extensões <span class="src-tag src-homebrew">Adaptação minha</span></h2>
@@ -2606,11 +2625,11 @@ mark{
 
   <div class="callout warn">
     <div class="callout-title">Limite</div>
-    <p>Você não pode agravar a Fome além de <strong>Severa</strong> por gastos voluntários. Chegando lá, só matando e drenando alguém para zerar. Isso naturalmente limita quantos gastos você pode fazer por noite — exatamente como o VtM original limitava com o Pool.</p>
+    <p>Você não pode agravar a Fome além de <strong>Severa</strong> por gastos voluntários. Chegando lá, só matando e drenando alguém para zerar. Isso naturalmente limita quantos gastos você pode fazer por noite � exatamente como o VtM original limitava com o Pool.</p>
   </div>
 </section>
 
-<!-- ========== PÁGINA: LAÇO ========== -->
+<!-- ========== PÁGINA: LA�!O ========== -->
 <section class="page" id="page-laco" data-page="laco">
   <h1>Laço de Sangue</h1>
   <div class="page-sub">O vínculo mais íntimo e mais perigoso entre mortos-vivos</div>
@@ -2625,7 +2644,7 @@ mark{
       <li>Apague um dos seus aspectos (menos o Conceito Principal e o Problema do clã)</li>
       <li>Substitua por <strong>"Ligado(a) a [Nome do domitor]"</strong></li>
       <li>Este aspecto conta como uma <strong>consequência</strong> que o domitor pode invocar <strong>sem gastar Pontos de Destino</strong></li>
-      <li>Fora isso, funciona como qualquer outro aspecto — principalmente para compels</li>
+      <li>Fora isso, funciona como qualquer outro aspecto � principalmente para compels</li>
     </ol>
   </div>
 
@@ -2638,19 +2657,19 @@ mark{
   <ul>
     <li><strong>1 gole:</strong> Você começa a se afeiçoar. Narrativo, sem mecânica.</li>
     <li><strong>2 goles:</strong> Obtém aspecto temporário "Fascinado por X", compelível apenas em situações com o domitor.</li>
-    <li><strong>3 goles:</strong> Aplique a regra acima — aspecto permanente substitui um seu.</li>
+    <li><strong>3 goles:</strong> Aplique a regra acima � aspecto permanente substitui um seu.</li>
   </ul>
 
   <div class="callout tip">
     <div class="callout-title">Uso dramático</div>
-    <p>Um personagem pode permitir voluntariamente ser blood-bound para ganhar proteção política — isso geralmente vira ponto-chave da crônica, não uma decisão casual.</p>
+    <p>Um personagem pode permitir voluntariamente ser blood-bound para ganhar proteção política � isso geralmente vira ponto-chave da crônica, não uma decisão casual.</p>
   </div>
 </section>
 
-<!-- ========== PÁGINA: RECUPERAÇÃO ========== -->
+<!-- ========== PÁGINA: RECUPERA�!ÒO ========== -->
 <section class="page" id="page-recuperacao" data-page="recuperacao">
   <h1>Recuperação &amp; Regeneração</h1>
-  <div class="page-sub">Como vampiros curam — e quando precisam de sangue para isso</div>
+  <div class="page-sub">Como vampiros curam � e quando precisam de sangue para isso</div>
 
   <p class="src-tag src-original">Original</p>
 
@@ -2695,13 +2714,13 @@ mark{
   <p class="src-tag src-original">Original</p>
 
   <h2>Torpor</h2>
-  <p>Torpor é uma das opções para "derrubado" em conflito entre vampiros — e pode ocorrer com mais frequência do que o normal. Um vampiro que é <strong>alimentado com sangue vampírico</strong> sai do torpor relativamente rápido — mas fica <strong>um passo de laço de sangue</strong> com quem o acordou.</p>
+  <p>Torpor é uma das opções para "derrubado" em conflito entre vampiros � e pode ocorrer com mais frequência do que o normal. Um vampiro que é <strong>alimentado com sangue vampírico</strong> sai do torpor relativamente rápido � mas fica <strong>um passo de laço de sangue</strong> com quem o acordou.</p>
   <p>Sem isso, quanto mais alta a <strong>Vontade</strong> do vampiro, mais cedo ele acorda.</p>
 
   <table>
     <thead><tr><th>Vontade</th><th>Tempo em torpor (sem intervenção)</th></tr></thead>
     <tbody>
-      <tr><td>+0</td><td>Décadas/séculos — basicamente perdido na ficção</td></tr>
+      <tr><td>+0</td><td>Décadas/séculos � basicamente perdido na ficção</td></tr>
       <tr><td>+1</td><td>Anos</td></tr>
       <tr><td>+2</td><td>Meses</td></tr>
       <tr><td>+3</td><td>Semanas</td></tr>
@@ -2711,17 +2730,17 @@ mark{
   </table>
 
   <h2>Estacar</h2>
-  <p>Como o torpor, estacar é uma opção de "derrubado" em combate entre vampiros — <strong>desde que o atacante tenha uma estaca</strong>. Se o jogador não mencionou que trouxe uma, pode <strong>gastar 1 PD para declarar</strong> que lembrou de pegar uma antes.</p>
+  <p>Como o torpor, estacar é uma opção de "derrubado" em combate entre vampiros � <strong>desde que o atacante tenha uma estaca</strong>. Se o jogador não mencionou que trouxe uma, pode <strong>gastar 1 PD para declarar</strong> que lembrou de pegar uma antes.</p>
 
   <p>Duas abordagens:</p>
   <ul>
-    <li><strong>Usar a estaca como arma</strong> — causa estresse físico até a vítima ser derrubada (+0 de dano; é desajeitada)</li>
-    <li><strong>Subjugar primeiro</strong> — derrotar o vampiro primeiro, depois estacar para derrubá-lo definitivamente</li>
+    <li><strong>Usar a estaca como arma</strong> � causa estresse físico até a vítima ser derrubada (+0 de dano; é desajeitada)</li>
+    <li><strong>Subjugar primeiro</strong> � derrotar o vampiro primeiro, depois estacar para derrubá-lo definitivamente</li>
   </ul>
 
   <div class="callout">
     <div class="callout-title">Efeito da estaca</div>
-    <p>Estaca não mata — paralisa. A vítima fica congelada até a estaca ser removida. Pode ser levada, torturada, queimada ao amanhecer, ou guardada como troféu. É o movimento clássico do jogo político Kindred.</p>
+    <p>Estaca não mata � paralisa. A vítima fica congelada até a estaca ser removida. Pode ser levada, torturada, queimada ao amanhecer, ou guardada como troféu. �0 o movimento clássico do jogo político Kindred.</p>
   </div>
 </section>
 
@@ -2748,10 +2767,10 @@ mark{
   <table>
     <thead><tr><th>Nível</th><th>Descrição</th><th>Consequência mecânica</th></tr></thead>
     <tbody>
-      <tr><td><strong>1 — Suspeita isolada</strong></td><td>Uma testemunha mortal vê algo estranho mas pode racionalizar</td><td>Aspecto de cena: "Alguém notou"; Narrador pode compelir mais tarde</td></tr>
-      <tr><td><strong>2 — Evidência física</strong></td><td>Câmera captou; sangue deixado para trás; corpo com marcas inexplicáveis</td><td>Aspecto persistente na crônica: "Pistas deixadas para os Caçadores"</td></tr>
-      <tr><td><strong>3 — Revelação pública</strong></td><td>Vários testemunharam; imprensa está envolvida; viralizou</td><td>Aspecto de cidade ativa; atrai intervenção da Camarilla (Flagelo, Xerife)</td></tr>
-      <tr><td><strong>4 — Catastrófico</strong></td><td>Vampirismo vira discussão social</td><td>Julgamento pelo Príncipe; sanção formal do Sabbat; consequência severa pessoal "Marcado pela Massa"</td></tr>
+      <tr><td><strong>1 � Suspeita isolada</strong></td><td>Uma testemunha mortal vê algo estranho mas pode racionalizar</td><td>Aspecto de cena: "Alguém notou"; Narrador pode compelir mais tarde</td></tr>
+      <tr><td><strong>2 � Evidência física</strong></td><td>Câmera captou; sangue deixado para trás; corpo com marcas inexplicáveis</td><td>Aspecto persistente na crônica: "Pistas deixadas para os Caçadores"</td></tr>
+      <tr><td><strong>3 � Revelação pública</strong></td><td>Vários testemunharam; imprensa está envolvida; viralizou</td><td>Aspecto de cidade ativa; atrai intervenção da Camarilla (Flagelo, Xerife)</td></tr>
+      <tr><td><strong>4 � Catastrófico</strong></td><td>Vampirismo vira discussão social</td><td>Julgamento pelo Príncipe; sanção formal do Sabbat; consequência severa pessoal "Marcado pela Massa"</td></tr>
     </tbody>
   </table>
 
@@ -2762,7 +2781,7 @@ mark{
     <li><strong>Quimerismo</strong> (plantar explicação alternativa)</li>
     <li><strong>Ritual Tremere</strong> (por exemplo o adaptado "Selo da Máscara")</li>
     <li><strong>Eliminação</strong> (ugly mas clássico; piora a Trilha)</li>
-    <li><strong>Cobertura política</strong> (a Camarilla tem recursos — por um preço)</li>
+    <li><strong>Cobertura política</strong> (a Camarilla tem recursos � por um preço)</li>
   </ul>
 
   <div class="callout warn">
@@ -2774,7 +2793,7 @@ mark{
 <!-- ========== PÁGINA: DIABLERIE ========== -->
 <section class="page" id="page-diablerie" data-page="diablerie">
   <h1>Diabolerie</h1>
-  <div class="page-sub">O pecado mais negro dos Kindred — beber outro vampiro até a alma</div>
+  <div class="page-sub">O pecado mais negro dos Kindred � beber outro vampiro até a alma</div>
 
   <div class="callout homebrew">
     <div class="callout-title">Nota de autoria</div>
@@ -2782,7 +2801,7 @@ mark{
   </div>
 
   <h2>O que é</h2>
-  <p>Drenar completamente outro vampiro — não apenas o sangue, mas <strong>a própria essência</strong>. A vítima morre definitivamente, sua alma destruída. O diablerista absorve força dela.</p>
+  <p>Drenar completamente outro vampiro � não apenas o sangue, mas <strong>a própria essência</strong>. A vítima morre definitivamente, sua alma destruída. O diablerista absorve força dela.</p>
 
   <h2>Como fazer</h2>
   <ol>
@@ -2795,7 +2814,7 @@ mark{
   <h2>Benefícios</h2>
   <ul>
     <li>Se a vítima era de <strong>geração mais baixa</strong> que o diablerista, ele <em>reduz sua geração em 1</em> (ver <a href="#" data-goto="geracoes">Gerações</a>)</li>
-    <li>Ganha um dos aspectos da vítima como <strong>aspecto extra</strong> permanente (até o 6º) — reflete que parte dela vive em você</li>
+    <li>Ganha um dos aspectos da vítima como <strong>aspecto extra</strong> permanente (até o 6º) � reflete que parte dela vive em você</li>
     <li>Se a vítima tinha uma Disciplina que você não possui: pode escolher ganhar o <strong>nível 1 dela gratuitamente</strong> (ou subir 1 nível numa que já tem)</li>
   </ul>
 
@@ -2804,16 +2823,16 @@ mark{
     <li>Consequência severa mental "Consumido pela Besta" (cura longa; só tratável após múltiplas sessões e introspecção)</li>
     <li><strong>Marca Negra na Aura</strong>: qualquer vampiro com Auspícios 2+ vê imediatamente que você diablerizou. Dura pelo menos 1 década na ficção.</li>
     <li>Diabolerie é crime <strong>capital</strong> na Camarilla. Se descoberto, execução é o destino.</li>
-    <li>Teste de Trilha <strong>+6</strong> — quase impossível passar ileso.</li>
+    <li>Teste de Trilha <strong>+6</strong> � quase impossível passar ileso.</li>
   </ul>
 
   <div class="callout warn">
     <div class="callout-title">Uso dramático</div>
-    <p>Diabolerie é ferramenta narrativa poderosa e deve ser rara. Grande parte das crônicas <em>gira em torno</em> de uma diabolerie — investigando-a, ameaçando-a, prevenindo-a. Não é item de lista de ações num turno — é virada de ato.</p>
+    <p>Diabolerie é ferramenta narrativa poderosa e deve ser rara. Grande parte das crônicas <em>gira em torno</em> de uma diabolerie � investigando-a, ameaçando-a, prevenindo-a. Não é item de lista de ações num turno � é virada de ato.</p>
   </div>
 </section>
 
-<!-- ========== PÁGINA: AVANÇO ========== -->
+<!-- ========== PÁGINA: AVAN�!O ========== -->
 <section class="page" id="page-avanco" data-page="avanco">
   <h1>Avanço</h1>
   <div class="page-sub">Como personagens crescem sessão a sessão</div>
@@ -2831,7 +2850,7 @@ mark{
   <p>Quando uma <strong>Questão</strong> (issue) da crônica é resolvida na história, isso marca um <strong>Marco Menor</strong>:</p>
   <ul>
     <li>Todo PJ ganha uma perícia bônus em +1</li>
-    <li>Se já tiver o máximo de perícias em +1, pode mover uma de +1 para +2 — e assim por diante</li>
+    <li>Se já tiver o máximo de perícias em +1, pode mover uma de +1 para +2 � e assim por diante</li>
     <li>Após 5 Marcos Menores isso pode resultar numa perícia passando de +4 para +5</li>
   </ul>
 
@@ -2839,7 +2858,7 @@ mark{
   <p>Em crônicas longas, podem acontecer Marcos maiores, adicionando mais opções:</p>
   <ul>
     <li><strong>Marco Significativo</strong> (fim de arco): ganhar +1 de recarga <em>ou</em> trocar uma Façanha</li>
-    <li><strong>Marco Maior</strong> (fim de crônica): avançar para nível superior (Neonato → Ancião, por exemplo) se a ficção justificar, redefinir aspectos pesadamente</li>
+    <li><strong>Marco Maior</strong> (fim de crônica): avançar para nível superior (Neonato �  Ancião, por exemplo) se a ficção justificar, redefinir aspectos pesadamente</li>
   </ul>
 </section>
 
@@ -2856,7 +2875,7 @@ mark{
     <li>Um ligado a <strong>quem é o Keeper</strong></li>
     <li>Um ligado ao <strong>lugar em si</strong></li>
   </ul>
-  <p>Exemplos: "O Ópera Decadente", "Sob o Olhar do Keeper Ancião", "Neutralidade Sagrada", "Salão dos Sussurros".</p>
+  <p>Exemplos: "O �pera Decadente", "Sob o Olhar do Keeper Ancião", "Neutralidade Sagrada", "Salão dos Sussurros".</p>
 
   <h2>Matilhas Sabbat</h2>
   <p>Toda matilha Sabbat tem um <strong>aspecto de reputação</strong> que se aplica a outros Sabbat <em>e</em> a qualquer não-Sabbat que tenha ouvido sobre eles. Exemplos: "Os Abutres da Cathedral", "Matilha que Queimou um Primogen Tremere".</p>
@@ -2873,7 +2892,7 @@ mark{
 
   <div class="callout warn">
     <div class="callout-title">Cláusula da inimizade</div>
-    <p>Se você falha na rolagem de Contatos, pode acabar encontrando exatamente o tipo certo de pessoa — mas essa pessoa <strong>não gosta de você</strong>.</p>
+    <p>Se você falha na rolagem de Contatos, pode acabar encontrando exatamente o tipo certo de pessoa � mas essa pessoa <strong>não gosta de você</strong>.</p>
   </div>
 
   <h2>Ritae Sabbat</h2>
@@ -2881,38 +2900,38 @@ mark{
 
   <h3>Lista breve de Ritae <span class="src-tag src-homebrew">Adaptação minha</span></h3>
   <ul>
-    <li><strong>Vaulderie</strong> — formar a Vínculo Vitae na matilha (substitui o aspecto de laço individual por "Membro da Matilha X"); rito anual</li>
-    <li><strong>Caça do Sangue</strong> — declarar alvo proscrito; todo Sabbat ganha invoke grátis contra ele durante a cena</li>
-    <li><strong>Confissão Fogueira</strong> — matilha compartilha pecados; limpa consequências leves de Trilha de todos envolvidos</li>
-    <li><strong>Renovação do Monstro</strong> — ritual de Abraço Sabbat; cria ghoulificação permanente com aspectos distorcidos</li>
+    <li><strong>Vaulderie</strong> � formar a Vínculo Vitae na matilha (substitui o aspecto de laço individual por "Membro da Matilha X"); rito anual</li>
+    <li><strong>Caça do Sangue</strong> � declarar alvo proscrito; todo Sabbat ganha invoke grátis contra ele durante a cena</li>
+    <li><strong>Confissão Fogueira</strong> � matilha compartilha pecados; limpa consequências leves de Trilha de todos envolvidos</li>
+    <li><strong>Renovação do Monstro</strong> � ritual de Abraço Sabbat; cria ghoulificação permanente com aspectos distorcidos</li>
   </ul>
 </section>
 
-<!-- ========== PÁGINA: GERAÇÕES ========== -->
+<!-- ========== PÁGINA: GERA�!�"ES ========== -->
 <section class="page" id="page-geracoes" data-page="geracoes">
   <h1>Gerações</h1>
-  <div class="page-sub">A distância da semente de Caim — e o que ela significa nas regras</div>
+  <div class="page-sub">A distância da semente de Caim � e o que ela significa nas regras</div>
 
   <div class="callout homebrew">
     <div class="callout-title">Nota de autoria</div>
-    <p>O documento original <strong>não cobriu sistema de Gerações</strong> — apenas o ritual <em>Caminhada Sanguínea</em>, que revela linhagem. A página inteira é minha adaptação, agora reescrita para integrar a tabela canônica do V20 (Atributo/Perícia Máx, Reservatório, Pontos por Turno, Disciplina Máx, Potência do Sangue) e traduzir cada coluna para o vocabulário do Fate Core.</p>
+    <p>O documento original <strong>não cobriu sistema de Gerações</strong> � apenas o ritual <em>Caminhada Sanguínea</em>, que revela linhagem. A página inteira é minha adaptação, agora reescrita para integrar a tabela canônica do V20 (Atributo/Perícia Máx, Reservatório, Pontos por Turno, Disciplina Máx, Potência do Sangue) e traduzir cada coluna para o vocabulário do Fate Core.</p>
   </div>
 
   <h2>O que é Geração</h2>
-  <p>Caim é a <strong>1ª Geração</strong>. Seus filhos diretos são a 2ª; os Antediluvianos (fundadores dos clãs) são a 3ª; e assim por diante. Quanto mais distante de Caim — quanto <em>maior</em> o número da Geração — mais <strong>diluído</strong> está o sangue, e <strong>menor</strong> o potencial vampírico. Neonatos modernos típicos pertencem à 12ª ou 13ª Geração.</p>
+  <p>Caim é a <strong>1ª Geração</strong>. Seus filhos diretos são a 2ª; os Antediluvianos (fundadores dos clãs) são a 3ª; e assim por diante. Quanto mais distante de Caim � quanto <em>maior</em> o número da Geração � mais <strong>diluído</strong> está o sangue, e <strong>menor</strong> o potencial vampírico. Neonatos modernos típicos pertencem à 12ª ou 13ª Geração.</p>
 
-  <p>Geração é a <strong>medida bruta de potencial</strong> de um vampiro. Ela não diz <em>quão poderoso o personagem é hoje</em> — diz <em>quão poderoso ele pode chegar a ser</em>. Um Antediluviano da 3ª pode ter perícias mais altas, mais Disciplinas, e gastar muito mais sangue por cena do que qualquer Neonato — é por isso que Anciões aterrorizam Anarcas e Caitiff.</p>
+  <p>Geração é a <strong>medida bruta de potencial</strong> de um vampiro. Ela não diz <em>quão poderoso o personagem é hoje</em> � diz <em>quão poderoso ele pode chegar a ser</em>. Um Antediluviano da 3ª pode ter perícias mais altas, mais Disciplinas, e gastar muito mais sangue por cena do que qualquer Neonato � é por isso que Anciões aterrorizam Anarcas e Caitiff.</p>
 
   <h2>Geração como aspecto</h2>
-  <p>Antes de qualquer mecânica, a Geração de cada PJ <strong>deve aparecer em um aspecto</strong> — geralmente embutida no Conceito Principal ou em um aspecto livre. Sem isso, fica invisível na ficção. Exemplos:</p>
+  <p>Antes de qualquer mecânica, a Geração de cada PJ <strong>deve aparecer em um aspecto</strong> � geralmente embutida no Conceito Principal ou em um aspecto livre. Sem isso, fica invisível na ficção. Exemplos:</p>
   <ul>
-    <li>"Tremere da 11ª Geração — corro atrás do prestígio que meu sangue não me dá"</li>
-    <li>"Anciã Ventrue da 8ª — sinto o peso da coroa antes mesmo de pegá-la"</li>
-    <li>"Brujah da 13ª — Sangue Fraco, mas o que sobra é fúria"</li>
-    <li>"Matusalém escondido (5ª) — ninguém sabe o que eu realmente sou"</li>
+    <li>"Tremere da 11ª Geração � corro atrás do prestígio que meu sangue não me dá"</li>
+    <li>"Anciã Ventrue da 8ª � sinto o peso da coroa antes mesmo de pegá-la"</li>
+    <li>"Brujah da 13ª � Sangue Fraco, mas o que sobra é fúria"</li>
+    <li>"Matusalém escondido (5ª) � ninguém sabe o que eu realmente sou"</li>
   </ul>
 
-  <h2>Tabela de Geração — adaptação para Fate Core</h2>
+  <h2>Tabela de Geração � adaptação para Fate Core</h2>
   <p>A tabela abaixo é o coração desta página. A coluna esquerda é a Geração canônica do V20, e cada coluna seguinte traduz o limite original em uma equivalência funcional dentro do Fate.</p>
 
   <div class="callout">
@@ -2922,7 +2941,7 @@ mark{
       <li><strong>Disciplinas máx (níveis totais):</strong> a quantidade total de níveis de Disciplina que o personagem pode ter somando tudo.</li>
       <li><strong>Gasto de sangue por cena:</strong> quantos efeitos de "agravar Fome" o personagem pode pagar antes que sua Fome chegue ao limite Severa. Substitui "Pontos por Turno" do V20.</li>
       <li><strong>Reserva (consequências de Fome):</strong> caixas extras de consequência que o personagem pode marcar para Fome antes de entrar em frenesi automático.</li>
-      <li><strong>Potência do Sangue:</strong> bônus passivo místico — armadura contra Dominação/Presença vinda de geração superior, e bônus em testes opostos contra geração superior.</li>
+      <li><strong>Potência do Sangue:</strong> bônus passivo místico � armadura contra Dominação/Presença vinda de geração superior, e bônus em testes opostos contra geração superior.</li>
     </ul>
   </div>
 
@@ -2949,7 +2968,7 @@ mark{
       <tr><td><strong>11ª</strong> (Ancilla/Neonato)</td><td>+4</td><td>6</td><td>2</td><td>+2</td><td>3</td></tr>
       <tr><td><strong>12ª</strong> (Neonato)</td><td>+4</td><td>5</td><td>2</td><td>+1</td><td>2</td></tr>
       <tr><td><strong>13ª</strong> (Neonato)</td><td>+4</td><td>5</td><td>2</td><td>+1</td><td>1</td></tr>
-      <tr><td><strong>14ª–16ª</strong> (Sangue Fraco)</td><td>+3</td><td>3</td><td>1</td><td>+0</td><td>0</td></tr>
+      <tr><td><strong>14ª�16ª</strong> (Sangue Fraco)</td><td>+3</td><td>3</td><td>1</td><td>+0</td><td>0</td></tr>
     </tbody>
   </table>
 
@@ -2961,8 +2980,8 @@ mark{
   <h2>O bônus de Geração baixa em testes opostos</h2>
 
   <div class="callout homebrew">
-    <div class="callout-title">Adaptação minha — sugestão do usuário</div>
-    <p>Quando dois vampiros se confrontam diretamente — Dominação contra Vontade, Presença contra Vontade, Auspícios sondando aura, Quietus contra Fisiologia, leitura de mente contra mente — <strong>o de Geração mais baixa recebe +1 por degrau de diferença, até o máximo de +3</strong>.</p>
+    <div class="callout-title">Adaptação minha � sugestão do usuário</div>
+    <p>Quando dois vampiros se confrontam diretamente � Dominação contra Vontade, Presença contra Vontade, Auspícios sondando aura, Quietus contra Fisiologia, leitura de mente contra mente � <strong>o de Geração mais baixa recebe +1 por degrau de diferença, até o máximo de +3</strong>.</p>
   </div>
 
   <h3>Como funciona</h3>
@@ -2971,7 +2990,7 @@ mark{
   <table>
     <thead><tr><th>Diferença de Geração</th><th>Bônus para o de geração mais baixa</th></tr></thead>
     <tbody>
-      <tr><td>0 (mesma geração)</td><td>—</td></tr>
+      <tr><td>0 (mesma geração)</td><td>�</td></tr>
       <tr><td>1 geração</td><td>+1</td></tr>
       <tr><td>2 gerações</td><td>+2</td></tr>
       <tr><td>3+ gerações</td><td>+3 (teto)</td></tr>
@@ -2981,7 +3000,7 @@ mark{
   <h3>Exemplo</h3>
   <div class="callout">
     <div class="callout-title">Príncipe (8ª) tenta dominar Neonato (12ª)</div>
-    <p>Diferença de 4 gerações → bônus máximo de <strong>+3</strong>. O Príncipe rola Manipulação +3 (perícia) +3 (Geração) = <strong>+6 base</strong> antes dos dados, contra a Vontade do Neonato. Vira batalha quase impossível para o Neonato, exatamente como deve ser quando um pirralho desafia um Ancião.</p>
+    <p>Diferença de 4 gerações �  bônus máximo de <strong>+3</strong>. O Príncipe rola Manipulação +3 (perícia) +3 (Geração) = <strong>+6 base</strong> antes dos dados, contra a Vontade do Neonato. Vira batalha quase impossível para o Neonato, exatamente como deve ser quando um pirralho desafia um Ancião.</p>
   </div>
 
   <h3>Quando o bônus se aplica</h3>
@@ -2991,7 +3010,7 @@ mark{
     <li>Disciplinas sociais (Presença, Encantamento)</li>
     <li>Magia ou ritual (Taumaturgia/Necromancia contra outro vampiro como alvo)</li>
     <li>Resistir ao Laço de Sangue de geração superior (a vítima rola Vontade <em>com</em> o bônus se sua geração for menor)</li>
-    <li>Combate físico em geral (Lutar, Atletismo defensivo) — o sangue antigo dá vantagem natural</li>
+    <li>Combate físico em geral (Lutar, Atletismo defensivo) � o sangue antigo dá vantagem natural</li>
   </ul>
 
   <p>Não se aplica para:</p>
@@ -3004,29 +3023,29 @@ mark{
   <h2>O limite duro da Dominação</h2>
   <div class="callout warn">
     <div class="callout-title">Regra inquebrável do V20</div>
-    <p>Dominação <strong>não funciona em vampiros de Geração inferior à do conjurador</strong>, ponto. Não há rolagem, não há teste — a Disciplina simplesmente falha. Esta é uma das razões pelas quais Geração baixa é cobiçada politicamente: imunidade automática contra a manipulação mental dos rivais "menores".</p>
+    <p>Dominação <strong>não funciona em vampiros de Geração inferior à do conjurador</strong>, ponto. Não há rolagem, não há teste � a Disciplina simplesmente falha. Esta é uma das razões pelas quais Geração baixa é cobiçada politicamente: imunidade automática contra a manipulação mental dos rivais "menores".</p>
   </div>
 
-  <h2>Potência do Sangue — uso prático</h2>
+  <h2>Potência do Sangue � uso prático</h2>
   <p class="src-tag src-homebrew">Adaptação minha</p>
   <p>O valor de "Potência do Sangue" da tabela tem três usos práticos no Fate:</p>
 
   <ol>
     <li><strong>Armadura contra magias mentais e sociais:</strong> reduz em <em>1 ponto</em> de estresse (até o limite da Potência) qualquer dano mental causado por outro vampiro de Potência inferior. Um Ancião com Potência 5 atacado mentalmente por um Neonato (Potência 1) reduz até 4 de dano.</li>
-    <li><strong>Sabor distinto na aura:</strong> Auspícios 2+ revela a Potência do Sangue de um vampiro, mesmo sem revelar a Geração exata. É assim que Anciões "se reconhecem" sem precisar declarar.</li>
+    <li><strong>Sabor distinto na aura:</strong> Auspícios 2+ revela a Potência do Sangue de um vampiro, mesmo sem revelar a Geração exata. �0 assim que Anciões "se reconhecem" sem precisar declarar.</li>
     <li><strong>Custo de Diabolerie:</strong> aumentar a própria Geração via diabolerie funciona <em>uma vez</em> se a vítima tinha Potência maior que a do diablerista. Cada ponto de diferença é um obstáculo extra na rolagem (ver <a href="#" data-goto="diablerie">Diabolerie</a>).</li>
   </ol>
 
-  <h2>Tipo de personagem &times; Geração — pareamento típico</h2>
+  <h2>Tipo de personagem &times; Geração � pareamento típico</h2>
   <p>Use como guia ao montar fichas. Não é regra rígida; conceitos especiais (Ancião jovem por diabolerie, Neonato de geração estranha, Caitiff sem origem clara) podem furar a tabela.</p>
 
   <table>
     <thead><tr><th>Tipo mecânico</th><th>Geração típica</th><th>Observação</th></tr></thead>
     <tbody>
-      <tr><td>Mortal / Ghoul</td><td>—</td><td>Ghoul opera sob a Geração do domitor para limites de Disciplinas aprendidas</td></tr>
-      <tr><td>Neonato (recarga 5)</td><td>13ª – 11ª</td><td>Padrão. 13ª pega "Sangue Fraco" como aspecto-problema</td></tr>
-      <tr><td>Ancião (recarga 3)</td><td>10ª – 8ª</td><td>Primogens, Bispos, Whips antigos</td></tr>
-      <tr><td>Antigo (recarga 1)</td><td>7ª – 5ª</td><td>Príncipes seculares, Justicars, raríssimos Matusaléns "ativos"</td></tr>
+      <tr><td>Mortal / Ghoul</td><td>�</td><td>Ghoul opera sob a Geração do domitor para limites de Disciplinas aprendidas</td></tr>
+      <tr><td>Neonato (recarga 5)</td><td>13ª � 11ª</td><td>Padrão. 13ª pega "Sangue Fraco" como aspecto-problema</td></tr>
+      <tr><td>Ancião (recarga 3)</td><td>10ª � 8ª</td><td>Primogens, Bispos, Whips antigos</td></tr>
+      <tr><td>Antigo (recarga 1)</td><td>7ª � 5ª</td><td>Príncipes seculares, Justicars, raríssimos Matusaléns "ativos"</td></tr>
       <tr><td>Antediluviano</td><td>3ª</td><td>Apenas NPCs míticos. A mesa não joga com isto</td></tr>
     </tbody>
   </table>
@@ -3037,7 +3056,7 @@ mark{
   <ul>
     <li>Aspecto-problema: <strong>"Sangue Fraco"</strong> (Narrador pode compelir para falhar gastos de sangue, sentir fome mais rápido, etc.)</li>
     <li>Não pode aprender Disciplinas avançadas (3+) sem ritual ou diabolerie</li>
-    <li>Em compensação: <strong>recarga +1</strong> (6 em vez de 5) — porque a maldição ainda lhes deixou alguma sorte</li>
+    <li>Em compensação: <strong>recarga +1</strong> (6 em vez de 5) � porque a maldição ainda lhes deixou alguma sorte</li>
   </ul>
 
   <h2>Como descobrir a Geração de alguém</h2>
@@ -3045,7 +3064,7 @@ mark{
     <li><strong>Ritual <em>Caminhada Sanguínea</em></strong> (Taumaturgia básico): revela uma geração para trás por grau de sucesso</li>
     <li><strong>Auspícios 2 (Sintonia da Aura):</strong> revela a Potência do Sangue (não a Geração exata, mas dá um intervalo)</li>
     <li><strong>Diabolerie consumada:</strong> ao terminar de drenar a vítima, a Geração dela fica óbvia para o diablerista</li>
-    <li><strong>Saber acumulado:</strong> rolagem de Ocultismo +4 contra Anciões conhecidos da cidade — a Camarilla mantém registros (ainda que mentirosos)</li>
+    <li><strong>Saber acumulado:</strong> rolagem de Ocultismo +4 contra Anciões conhecidos da cidade � a Camarilla mantém registros (ainda que mentirosos)</li>
   </ul>
 
   <h2>Mudar de Geração</h2>
@@ -3060,30 +3079,30 @@ mark{
   <h2>Os primeiros 5 minutos da sessão</h2>
   <div class="callout">
     <div class="callout-title">Ritual de abertura</div>
-    <p>Sempre comece com a mesma fala: <strong>"Vocês acordam com fome."</strong> Em seguida, descreva o haven, o estado da Fome de cada um (eles já marcaram nas fichas), e dê um <em>gancho</em> imediato — uma mensagem, um cheiro, uma visita inesperada. Não deixe a sessão começar com "e aí, o que vocês fazem?".</p>
+    <p>Sempre comece com a mesma fala: <strong>"Vocês acordam com fome."</strong> Em seguida, descreva o haven, o estado da Fome de cada um (eles já marcaram nas fichas), e dê um <em>gancho</em> imediato � uma mensagem, um cheiro, uma visita inesperada. Não deixe a sessão começar com "e aí, o que vocês fazem?".</p>
   </div>
 
   <h2>Tom e atmosfera</h2>
   <ul>
     <li><strong>Sons:</strong> sussurros, pingar de água, motor distante, sirene. Use 2 sons descritivos por cena de exteriores noturnos.</li>
-    <li><strong>Cheiros:</strong> sangue não é só vermelho — é <em>cheiro</em> de cobre, de medo, de perfume + suor. Vampiros sentem isso de longe.</li>
+    <li><strong>Cheiros:</strong> sangue não é só vermelho � é <em>cheiro</em> de cobre, de medo, de perfume + suor. Vampiros sentem isso de longe.</li>
     <li><strong>Presença das presas:</strong> mortais devem soar <em>frágeis</em> e <em>quentes</em>. Use isso ao descrevê-los.</li>
     <li><strong>Política em camadas:</strong> ninguém diz o que quer diretamente. Sempre há subtexto. Modele isso nos PNJs.</li>
   </ul>
 
   <h2>Preparando uma crônica</h2>
   <ol>
-    <li><strong>Defina 2-3 Questões da Crônica</strong> — perguntas centrais que vão se desenrolar (ex.: "Quem matou o Príncipe?", "O Sabbat tomará a cidade?"). Resolução de cada uma é Marco Menor.</li>
-    <li><strong>Escolha um cenário-cidade</strong> com 4-6 aspectos — locais, facções, tensões.</li>
+    <li><strong>Defina 2-3 Questões da Crônica</strong> � perguntas centrais que vão se desenrolar (ex.: "Quem matou o Príncipe?", "O Sabbat tomará a cidade?"). Resolução de cada uma é Marco Menor.</li>
+    <li><strong>Escolha um cenário-cidade</strong> com 4-6 aspectos � locais, facções, tensões.</li>
     <li><strong>Crie 5-10 PNJs centrais</strong> com Conceito, Aspecto, 2-3 perícias notáveis, e um <em>desejo</em>.</li>
-    <li><strong>Não planeje a trama linear</strong> — planeje os atores, deixe os jogadores serem o catalisador.</li>
+    <li><strong>Não planeje a trama linear</strong> � planeje os atores, deixe os jogadores serem o catalisador.</li>
   </ol>
 
   <h2>Gerenciando frenesi na mesa</h2>
   <p>Frenesi é momento dramático, não punição. Quando ocorrer:</p>
   <ul>
     <li>Pause. Descreva a transformação interior em uma frase poética.</li>
-    <li>Pergunte ao jogador <em>como sua Besta agiria</em> — ele participa da narração.</li>
+    <li>Pergunte ao jogador <em>como sua Besta agiria</em> � ele participa da narração.</li>
     <li>Se possível, vire frenesi numa cena fechada que <em>termina</em> com decisão moral, não numa fuga.</li>
     <li>Ao final, dê espaço para o jogador processar o que aconteceu (compels de remorso valem PD).</li>
   </ul>
@@ -3091,9 +3110,9 @@ mark{
   <h2>Equilibrando spotlight</h2>
   <p>Em mesa com 4-5 jogadores, é fácil um deles dominar. Use:</p>
   <ul>
-    <li><strong>Cenas de abertura individuais</strong> — antes da reunião do grupo, 5 minutos com cada PJ no haven dele</li>
-    <li><strong>Compels direcionados</strong> — ofereça PDs para PJs mais quietos com aspectos que tragam complicação pessoal</li>
-    <li><strong>NPCs ligados a cada PJ</strong> — cada um tem seu sire, seu retentor, seu inimigo</li>
+    <li><strong>Cenas de abertura individuais</strong> � antes da reunião do grupo, 5 minutos com cada PJ no haven dele</li>
+    <li><strong>Compels direcionados</strong> � ofereça PDs para PJs mais quietos com aspectos que tragam complicação pessoal</li>
+    <li><strong>NPCs ligados a cada PJ</strong> � cada um tem seu sire, seu retentor, seu inimigo</li>
   </ul>
 
   <h2>Política entre PJs</h2>
@@ -3102,7 +3121,7 @@ mark{
     <p>VtM tem tradição de PJs traindo PJs. <strong>Discuta na sessão zero</strong> se isso é bem-vindo. Se for, defina <em>limites</em>: nunca PvP letal sem aceite explícito; conflitos políticos são incentivados; manipulação não-consensual fora de cena precisa de check-in.</p>
   </div>
 
-  <h2>Dificuldades — guia rápido</h2>
+  <h2>Dificuldades � guia rápido</h2>
   <table>
     <thead><tr><th>Cena</th><th>Dificuldade típica</th></tr></thead>
     <tbody>
@@ -3119,9 +3138,9 @@ mark{
   <h2>Erros comuns a evitar</h2>
   <ul>
     <li><strong>Não esquecer da Fome.</strong> Se eles não falaram em caçar há 2 sessões, agrave a Fome de todos.</li>
-    <li><strong>Não negar Disciplinas.</strong> Os jogadores compraram esses Extras — deixe brilhar. O sistema é "super-heróis com presas", lembra?</li>
+    <li><strong>Não negar Disciplinas.</strong> Os jogadores compraram esses Extras � deixe brilhar. O sistema é "super-heróis com presas", lembra?</li>
     <li><strong>Não tratar combate como D&amp;D.</strong> 3-4 rodadas é o máximo. Use consequências para encerrar.</li>
-    <li><strong>Não esconder a quebra da Máscara.</strong> Quando acontece, dê eco — Harpias ficam sabendo, Príncipe convoca.</li>
+    <li><strong>Não esconder a quebra da Máscara.</strong> Quando acontece, dê eco � Harpias ficam sabendo, Príncipe convoca.</li>
   </ul>
 </section>
 
@@ -3131,58 +3150,58 @@ mark{
   <div class="page-sub">Como tirar o máximo da sua personagem morta-viva</div>
 
   <h2>Escrevendo bons aspectos</h2>
-  <p>Aspecto bom é aquele que <strong>cabe nas duas mãos</strong> — pode ser invocado para benefício <em>e</em> compelido para complicação. Teste:</p>
+  <p>Aspecto bom é aquele que <strong>cabe nas duas mãos</strong> � pode ser invocado para benefício <em>e</em> compelido para complicação. Teste:</p>
   <ul>
-    <li>"Brujah forte" — fraco. Genérico. Quase só serve para invocar bônus em Lutar.</li>
-    <li>"Brujah que jurou nunca tocar uma mulher de novo" — forte. Bônus contra ataques de mulheres, complicação quando uma precisa de proteção.</li>
-    <li>"Toreador apaixonado por arte" — ok. Compelível só em museus.</li>
-    <li>"Toreador escravizada pela coleção do meu sire" — forte. Sire é PNJ explorável, coleção é gancho.</li>
+    <li>"Brujah forte" � fraco. Genérico. Quase só serve para invocar bônus em Lutar.</li>
+    <li>"Brujah que jurou nunca tocar uma mulher de novo" � forte. Bônus contra ataques de mulheres, complicação quando uma precisa de proteção.</li>
+    <li>"Toreador apaixonado por arte" � ok. Compelível só em museus.</li>
+    <li>"Toreador escravizada pela coleção do meu sire" � forte. Sire é PNJ explorável, coleção é gancho.</li>
   </ul>
 
   <h2>Quando gastar Pontos de Destino</h2>
   <ul>
     <li><strong>Em rolagens críticas.</strong> Caça que vai impactar a Fome a noite toda. Conflito político decisivo.</li>
-    <li><strong>Para declarar fato narrativo.</strong> "Conheço esse bartender. Já o ajudei numa fria." — 1 PD bem investido.</li>
+    <li><strong>Para declarar fato narrativo.</strong> "Conheço esse bartender. Já o ajudei numa fria." � 1 PD bem investido.</li>
     <li><strong>Para resistir a um compel.</strong> Quando aceitar a complicação atrapalharia <em>demais</em> a sessão.</li>
     <li><strong>Não acumule.</strong> No fim da sessão, PDs não usados acima da recarga inicial são perdidos.</li>
   </ul>
 
   <h2>Aceitar compels</h2>
-  <p>Compels são presente do Narrador — você ganha um PD para que a história fique mais interessante. Recusas devem ser raras. Algumas dicas:</p>
+  <p>Compels são presente do Narrador � você ganha um PD para que a história fique mais interessante. Recusas devem ser raras. Algumas dicas:</p>
   <ul>
     <li>Aceite quando a complicação for divertida narrativamente, mesmo que ruim para o personagem</li>
-    <li>Aceite quando você está com 0-1 PDs — você precisa do recurso</li>
+    <li>Aceite quando você está com 0-1 PDs � você precisa do recurso</li>
     <li>Recuse só quando aceitar inviabilizaria a sessão para os outros</li>
-    <li>Negocie: "E se em vez de eu atacar o Príncipe, eu fizer um insulto público?" — Narradores costumam aceitar variações</li>
+    <li>Negocie: "E se em vez de eu atacar o Príncipe, eu fizer um insulto público?" � Narradores costumam aceitar variações</li>
   </ul>
 
   <h2>Roleplay vampírico</h2>
   <ul>
     <li><strong>Pense em décadas, não em horas.</strong> O ressentimento que você nutriu por 50 anos é real.</li>
-    <li><strong>Use a respiração consciente.</strong> Vampiros não respiram automaticamente — quando você "respira", é encenação. Pode usar isso como tique do personagem.</li>
-    <li><strong>Saudades dos vivos.</strong> Comida, sol, sexo (dependendo do clã), filhos — coisas que você não tem mais. Mencione.</li>
+    <li><strong>Use a respiração consciente.</strong> Vampiros não respiram automaticamente � quando você "respira", é encenação. Pode usar isso como tique do personagem.</li>
+    <li><strong>Saudades dos vivos.</strong> Comida, sol, sexo (dependendo do clã), filhos � coisas que você não tem mais. Mencione.</li>
     <li><strong>Hierarquia importa.</strong> Você é Neonato. Anciões te tratam como criança. Aceite e jogue dentro disso.</li>
   </ul>
 
   <h2>Colaborando com o Narrador</h2>
   <ul>
     <li><strong>Compartilhe seus ganchos pessoais.</strong> Aspectos não exploram-se sozinhos.</li>
-    <li><strong>Sinalize quando quiser cenas pesadas</strong> — frenesi público, descida moral, traição</li>
-    <li><strong>Sinalize seus limites</strong> — temas que você não quer ver na mesa</li>
-    <li><strong>Crie ganchos para outros PJs</strong> — aspectos compartilhados são ouro</li>
+    <li><strong>Sinalize quando quiser cenas pesadas</strong> � frenesi público, descida moral, traição</li>
+    <li><strong>Sinalize seus limites</strong> � temas que você não quer ver na mesa</li>
+    <li><strong>Crie ganchos para outros PJs</strong> � aspectos compartilhados são ouro</li>
   </ul>
 
   <h2>Cuidado com sua Fome</h2>
   <div class="callout">
     <div class="callout-title">Regra de bolso</div>
-    <p>Se você está em Fome leve no início da noite, <strong>não comece a sessão usando sangue para feitos</strong>. Resolva a Fome primeiro. Se não, vai chegar Severa rápido — e quando isso ocorre, frenesis viram quase certeza.</p>
+    <p>Se você está em Fome leve no início da noite, <strong>não comece a sessão usando sangue para feitos</strong>. Resolva a Fome primeiro. Se não, vai chegar Severa rápido � e quando isso ocorre, frenesis viram quase certeza.</p>
   </div>
 </section>
 
-<!-- ========== PÁGINA: REFERÊNCIA ========== -->
+<!-- ========== PÁGINA: REFER�`NCIA ========== -->
 <section class="page" id="page-referencia" data-page="referencia">
   <h1>Tabelas de Referência</h1>
-  <div class="page-sub">Tudo o que importa em uma tela — para usar na mesa</div>
+  <div class="page-sub">Tudo o que importa em uma tela � para usar na mesa</div>
 
   <h2>Escala de bônus / dificuldade</h2>
   <table>
@@ -3191,10 +3210,10 @@ mark{
       <tr><td>+0</td><td>Medíocre</td><td>Sem treino / trivial</td></tr>
       <tr><td>+1</td><td>Razoável</td><td>Treino básico / fácil</td></tr>
       <tr><td>+2</td><td>Bom</td><td>Competente / Fome leve</td></tr>
-      <tr><td>+3</td><td>Ótimo</td><td>Profissional / desafio sério</td></tr>
+      <tr><td>+3</td><td>�timo</td><td>Profissional / desafio sério</td></tr>
       <tr><td>+4</td><td>Excelente</td><td>Expert / Fome moderada</td></tr>
       <tr><td>+5</td><td>Fantástico</td><td>Mestre / quase impossível</td></tr>
-      <tr><td>+6</td><td>Épico</td><td>Lendário / Fome severa</td></tr>
+      <tr><td>+6</td><td>�0pico</td><td>Lendário / Fome severa</td></tr>
       <tr><td>+8</td><td>Lendário</td><td>Sobre-humano</td></tr>
     </tbody>
   </table>
@@ -3203,8 +3222,8 @@ mark{
   <table>
     <thead><tr><th>Tipo</th><th>Perícia máx</th><th>Disc.</th><th>Recarga</th><th>Estresse</th></tr></thead>
     <tbody>
-      <tr><td>Mortal</td><td>+3</td><td>0</td><td>—</td><td>2/2</td></tr>
-      <tr><td>Ghoul</td><td>+3</td><td>Potência 1 grátis</td><td>—</td><td>3/2</td></tr>
+      <tr><td>Mortal</td><td>+3</td><td>0</td><td>�</td><td>2/2</td></tr>
+      <tr><td>Ghoul</td><td>+3</td><td>Potência 1 grátis</td><td>�</td><td>3/2</td></tr>
       <tr><td>Neonato</td><td>+4</td><td>3 níveis</td><td>5</td><td>3/3</td></tr>
       <tr><td>Ancião</td><td>+5</td><td>6 níveis</td><td>3</td><td>3/3</td></tr>
       <tr><td>Antigo</td><td>+6</td><td>9 níveis</td><td>1</td><td>3/3</td></tr>
@@ -3225,12 +3244,12 @@ mark{
   <table>
     <thead><tr><th>Arma</th><th>Dano +</th><th>Notas</th></tr></thead>
     <tbody>
-      <tr><td>Punho</td><td>+0</td><td>—</td></tr>
+      <tr><td>Punho</td><td>+0</td><td>�</td></tr>
       <tr><td>Mordida</td><td>+1</td><td>Após agarrar</td></tr>
-      <tr><td>Faca</td><td>+1</td><td>—</td></tr>
-      <tr><td>Espada</td><td>+2</td><td>—</td></tr>
-      <tr><td>Pistola</td><td>+2</td><td>—</td></tr>
-      <tr><td>Rifle</td><td>+3</td><td>—</td></tr>
+      <tr><td>Faca</td><td>+1</td><td>�</td></tr>
+      <tr><td>Espada</td><td>+2</td><td>�</td></tr>
+      <tr><td>Pistola</td><td>+2</td><td>�</td></tr>
+      <tr><td>Rifle</td><td>+3</td><td>�</td></tr>
       <tr><td>Assalto</td><td>+2</td><td>Atinge zona</td></tr>
       <tr><td>Estaca</td><td>+0</td><td>Paralisa em derrubado</td></tr>
     </tbody>
@@ -3282,7 +3301,7 @@ mark{
     </tbody>
   </table>
 
-  <h2>Geração — limites &amp; bônus</h2>
+  <h2>Geração � limites &amp; bônus</h2>
   <table>
     <thead><tr><th>Geração</th><th>Pirâmide</th><th>Disc. máx</th><th>Sangue/cena</th><th>Reserva</th><th>Pot. Sangue</th></tr></thead>
     <tbody>
@@ -3297,7 +3316,7 @@ mark{
       <tr><td>11ª</td><td>+4</td><td>6</td><td>2</td><td>+2</td><td>3</td></tr>
       <tr><td>12ª</td><td>+4</td><td>5</td><td>2</td><td>+1</td><td>2</td></tr>
       <tr><td>13ª</td><td>+4</td><td>5</td><td>2</td><td>+1</td><td>1</td></tr>
-      <tr><td>14ª–16ª</td><td>+3</td><td>3</td><td>1</td><td>+0</td><td>0</td></tr>
+      <tr><td>14ª�16ª</td><td>+3</td><td>3</td><td>1</td><td>+0</td><td>0</td></tr>
     </tbody>
   </table>
   <div class="callout">
@@ -3306,7 +3325,7 @@ mark{
   </div>
 
   <h2>Tabela rápida: Clãs e suas 3 Disciplinas nativas</h2>
-  <p><em>Use esta na hora de montar personagem — são as 3 Disciplinas entre as quais você distribui os níveis grátis.</em></p>
+  <p><em>Use esta na hora de montar personagem � são as 3 Disciplinas entre as quais você distribui os níveis grátis.</em></p>
   <table>
     <thead><tr><th>Clã</th><th>Nativas</th><th>Seita</th></tr></thead>
     <tbody>
@@ -3326,12 +3345,12 @@ mark{
       <tr><td>Gárgulas</td><td>Fortitude · Potência · Visceratika</td><td>Linhagem</td></tr>
       <tr><td>Salubri</td><td>Auspícios · Fortitude · Valeren</td><td>Linhagem (caçada)</td></tr>
       <tr><td>True Brujah</td><td>Potência · Presença · Temporis</td><td>Linhagem</td></tr>
-      <tr><td>Caitiff / Pander</td><td><em>Qualquer — 3 níveis livres</em></td><td>Sem clã</td></tr>
+      <tr><td>Caitiff / Pander</td><td><em>Qualquer � 3 níveis livres</em></td><td>Sem clã</td></tr>
     </tbody>
   </table>
 
   <h2>Tabela rápida: Disciplinas e seus clãs</h2>
-  <p><em>Inversa da tabela acima — útil quando você quer saber "quem tem Ofuscação?".</em></p>
+  <p><em>Inversa da tabela acima � útil quando você quer saber "quem tem Ofuscação?".</em></p>
   <table>
     <thead><tr><th>Disciplina</th><th>Clã</th></tr></thead>
     <tbody>
@@ -3361,13 +3380,13 @@ mark{
   <div class="callout tip">
     <div class="callout-title">Combos úteis</div>
     <ul>
-      <li><strong>Conflito político?</strong> → <a href="#" data-goto="sociedade">Sociedade Kindred</a></li>
-      <li><strong>PJ quer caçar?</strong> → <a href="#" data-goto="fome">Fome &amp; Caça</a></li>
-      <li><strong>PJ quer gastar sangue?</strong> → <a href="#" data-goto="sangue">Gastar Sangue</a></li>
-      <li><strong>Combate começou?</strong> → <a href="#" data-goto="combate">Combate</a></li>
-      <li><strong>PJ frenesiou?</strong> → <a href="#" data-goto="frenesi">Frenesi</a></li>
-      <li><strong>Quebra de Máscara?</strong> → <a href="#" data-goto="mascara">A Máscara</a></li>
-      <li><strong>Ato moralmente pesado?</strong> → <a href="#" data-goto="humanidade">Humanidade &amp; Trilhas</a></li>
+      <li><strong>Conflito político?</strong> �  <a href="#" data-goto="sociedade">Sociedade Kindred</a></li>
+      <li><strong>PJ quer caçar?</strong> �  <a href="#" data-goto="fome">Fome &amp; Caça</a></li>
+      <li><strong>PJ quer gastar sangue?</strong> �  <a href="#" data-goto="sangue">Gastar Sangue</a></li>
+      <li><strong>Combate começou?</strong> �  <a href="#" data-goto="combate">Combate</a></li>
+      <li><strong>PJ frenesiou?</strong> �  <a href="#" data-goto="frenesi">Frenesi</a></li>
+      <li><strong>Quebra de Máscara?</strong> �  <a href="#" data-goto="mascara">A Máscara</a></li>
+      <li><strong>Ato moralmente pesado?</strong> �  <a href="#" data-goto="humanidade">Humanidade &amp; Trilhas</a></li>
     </ul>
   </div>
 </section>
@@ -3376,7 +3395,7 @@ mark{
 </div>
 </div>
 
-<!-- ============ SEÇÃO: CRIAR PERSONAGEM ============ -->
+<!-- ============ SE�!ÒO: CRIAR PERSONAGEM ============ -->
 <div id="section-char-creator" class="main-section">
   <div class="cc-container">
     <h1 class="cc-title">Desperte seu Sangue</h1>
@@ -3430,7 +3449,7 @@ mark{
             <input type="file" id="cc-photo-input" accept="image/*" onchange="ccLoadPhoto(this)">
             <img id="cc-photo-preview" class="cc-image-preview" style="display:none">
             <div class="cc-image-placeholder" id="cc-photo-placeholder">
-              <span class="cc-image-icon">🩸</span>
+              <span class="cc-image-icon">�x��</span>
               <span>Clique para carregar</span>
             </div>
           </div>
@@ -3447,7 +3466,7 @@ mark{
           <div class="cc-field">
             <label class="cc-label">Clã</label>
             <select class="cc-input cc-select" id="cc-clan" onchange="ccUpdateClan()">
-              <option value="">— Escolha seu Clã —</option>
+              <option value="">� Escolha seu Clã �</option>
               <option>Brujah</option><option>Gangrel</option><option>Malkaviano</option>
               <option>Nosferatu</option><option>Toreador</option><option>Tremere</option>
               <option>Ventrue</option><option>Lasombra</option><option>Tzimisce</option>
@@ -3461,8 +3480,8 @@ mark{
       <div id="cc-clan-info" style="display:none">
         <div class="cc-clan-grid">
           <div class="cc-clan-card">
-            <h4 id="cc-clan-name-display">—</h4>
-            <p id="cc-clan-desc">—</p>
+            <h4 id="cc-clan-name-display">�</h4>
+            <p id="cc-clan-desc">�</p>
             <div class="cc-label" style="font-size:9px;margin-bottom:6px">Disciplinas Nativas</div>
             <div id="cc-clan-discs"></div>
           </div>
@@ -3476,10 +3495,10 @@ mark{
       </div>
 
       <div class="cc-neonato-box">
-        <h4>◈ Você é um Neonato — 2 Anos de Abraço</h4>
+        <h4>�� Você é um Neonato � 2 Anos de Abraço</h4>
         <p>
-          <strong>Geração: 13ª</strong> — Sangue distante de Caim. Potência vampírica limitada mas real.<br><br>
-          Como Neonato, você existe à margem da sociedade Kindred. Seu sire ainda é sua âncora. A Camarilla te tolera; os mais velhos te ignoram ou usam. Dois anos foram suficientes para aprender que a noite é vasta e perigosa — mas não para navegar seus jogos completamente.<br><br>
+          <strong>Geração: 13ª</strong> � Sangue distante de Caim. Potência vampírica limitada mas real.<br><br>
+          Como Neonato, você existe à margem da sociedade Kindred. Seu sire ainda é sua âncora. A Camarilla te tolera; os mais velhos te ignoram ou usam. Dois anos foram suficientes para aprender que a noite é vasta e perigosa � mas não para navegar seus jogos completamente.<br><br>
           <strong>Mecanicamente:</strong> Recarga inicial <strong>5</strong> · Perícia máx <strong>+4</strong> · <strong>3 níveis grátis</strong> em Disciplinas do Clã · <strong>5 pontos de destino</strong> para Disciplinas extras ou Façanhas.
         </p>
       </div>
@@ -3487,7 +3506,7 @@ mark{
       <div id="cc-error-1" class="cc-error">Preencha o nome e escolha um Clã antes de continuar.</div>
       <div class="cc-nav-btns">
         <div></div>
-        <button class="cc-btn-next" onclick="ccNext(1)">Background →</button>
+        <button class="cc-btn-next" onclick="ccNext(1)">Background � </button>
       </div>
     </div>
 
@@ -3496,12 +3515,12 @@ mark{
       <div class="cc-step2-header">
         <div>
           <img id="cc-portrait-2" class="cc-char-portrait" style="display:none">
-          <div id="cc-portrait-2-ph" class="cc-char-portrait-placeholder">🩸</div>
+          <div id="cc-portrait-2-ph" class="cc-char-portrait-placeholder">�x��</div>
         </div>
         <div>
-          <div style="color:var(--gold);font-family:'Cinzel Decorative',serif;font-size:20px" id="cc-name-display-2">—</div>
-          <div style="color:var(--blood);font-size:13px;margin-top:4px" id="cc-clan-display-2">—</div>
-          <div style="color:var(--ink-soft);font-size:11px;margin-top:4px;font-family:'Montserrat',sans-serif;letter-spacing:1px">NEONATO · 13ª GERAÇÃO · 2 ANOS</div>
+          <div style="color:var(--gold);font-family:'Cinzel Decorative',serif;font-size:20px" id="cc-name-display-2">�</div>
+          <div style="color:var(--blood);font-size:13px;margin-top:4px" id="cc-clan-display-2">�</div>
+          <div style="color:var(--ink-soft);font-size:11px;margin-top:4px;font-family:var(--font-ui);letter-spacing:1px">NEONATO · 13ª GERA�!ÒO · 2 ANOS</div>
         </div>
       </div>
 
@@ -3516,7 +3535,7 @@ mark{
       <div class="cc-field">
         <label class="cc-label">Dificuldade <span style="color:var(--ink-soft);font-size:9px;font-weight:400;letter-spacing:0">(Aspecto-Problema Principal)</span></label>
         <input type="text" class="cc-input" id="cc-difficulty" placeholder="O grande problema que assombra seu personagem..." oninput="ccSave()">
-        <div style="font-size:11px;color:var(--ink-soft);margin-top:5px;font-family:'Montserrat',sans-serif" id="cc-difficulty-hint"></div>
+        <div style="font-size:11px;color:var(--ink-soft);margin-top:5px;font-family:var(--font-ui)" id="cc-difficulty-hint"></div>
       </div>
       <div class="cc-field">
         <label class="cc-label">Quem Você Era Antes do Abraço</label>
@@ -3535,8 +3554,8 @@ mark{
       </div>
 
       <div class="cc-nav-btns">
-        <button class="cc-btn-prev" onclick="ccGoToStep(1)">← Identidade</button>
-        <button class="cc-btn-next" onclick="ccNext(2)">Perícias →</button>
+        <button class="cc-btn-prev" onclick="ccGoToStep(1)">� � Identidade</button>
+        <button class="cc-btn-next" onclick="ccNext(2)">Perícias � </button>
       </div>
     </div>
 
@@ -3544,29 +3563,29 @@ mark{
     <div class="cc-page" id="cc-step-3">
       <p style="color:var(--ink-soft);font-size:13px;line-height:1.75;margin-bottom:18px">
         Distribua as perícias formando uma pirâmide. Você tem exatamente:
-        <strong style="color:#ff00aa">1×+4</strong>,
-        <strong style="color:#ff44cc">2×+3</strong>,
-        <strong style="color:#00ffff">3×+2</strong>,
-        <strong style="color:#88ffee">4×+1</strong> e
-        <strong style="color:#ff4444">1×(−1)</strong>.
+        <strong style="color:#ff00aa">1�+4</strong>,
+        <strong style="color:#ff44cc">2�+3</strong>,
+        <strong style="color:#00ffff">3�+2</strong>,
+        <strong style="color:#88ffee">4�+1</strong> e
+        <strong style="color:#ff4444">1�(��1)</strong>.
         Todas as demais ficam em 0.
       </p>
       <div class="cc-skills-header">
-        <div class="cc-skill-counter level-4"><span class="cc-count" id="cc-cnt-4">1</span> restante ×+4</div>
-        <div class="cc-skill-counter level-3"><span class="cc-count" id="cc-cnt-3">2</span> restantes ×+3</div>
-        <div class="cc-skill-counter level-2"><span class="cc-count" id="cc-cnt-2">3</span> restantes ×+2</div>
-        <div class="cc-skill-counter level-1"><span class="cc-count" id="cc-cnt-1">4</span> restantes ×+1</div>
-        <div class="cc-skill-counter level-neg"><span class="cc-count" id="cc-cnt-neg">1</span> restante ×−1</div>
+        <div class="cc-skill-counter level-4"><span class="cc-count" id="cc-cnt-4">1</span> restante �+4</div>
+        <div class="cc-skill-counter level-3"><span class="cc-count" id="cc-cnt-3">2</span> restantes �+3</div>
+        <div class="cc-skill-counter level-2"><span class="cc-count" id="cc-cnt-2">3</span> restantes �+2</div>
+        <div class="cc-skill-counter level-1"><span class="cc-count" id="cc-cnt-1">4</span> restantes �+1</div>
+        <div class="cc-skill-counter level-neg"><span class="cc-count" id="cc-cnt-neg">1</span> restante ���1</div>
       </div>
       <div class="cc-skills-grid" id="cc-skills-grid"></div>
       <div id="cc-error-3" class="cc-error">Complete a pirâmide antes de continuar: aloque todos os pontos.</div>
       <div class="cc-nav-btns">
-        <button class="cc-btn-prev" onclick="ccGoToStep(2)">← Background</button>
-        <button class="cc-btn-next" onclick="ccNext(3)">Poderes →</button>
+        <button class="cc-btn-prev" onclick="ccGoToStep(2)">� � Background</button>
+        <button class="cc-btn-next" onclick="ccNext(3)">Poderes � </button>
       </div>
     </div>
 
-    <!-- ===== STEP 4: DISCIPLINAS & FAÇANHAS ===== -->
+    <!-- ===== STEP 4: DISCIPLINAS & FA�!ANHAS ===== -->
     <div class="cc-page" id="cc-step-4">
       <div class="cc-section-title">3 Níveis Grátis de Disciplina do Clã</div>
       <p style="color:var(--ink-soft);font-size:13px;line-height:1.75;margin-bottom:18px">
@@ -3582,9 +3601,9 @@ mark{
         <span class="cc-destiny-text" id="cc-destiny-remaining">5 restantes</span>
       </div>
       <p style="color:var(--ink-soft);font-size:12px;line-height:1.75;margin-bottom:14px">
-        <strong style="color:var(--gold)">1 ponto</strong> → nível extra em Disciplina do Clã &nbsp;|&nbsp;
-        <strong style="color:var(--gold)">2 pontos</strong> → nível em Disciplina fora do Clã &nbsp;|&nbsp;
-        <strong style="color:var(--gold)">1 ponto</strong> → Façanha
+        <strong style="color:var(--gold)">1 ponto</strong> �  nível extra em Disciplina do Clã &nbsp;|&nbsp;
+        <strong style="color:var(--gold)">2 pontos</strong> �  nível em Disciplina fora do Clã &nbsp;|&nbsp;
+        <strong style="color:var(--gold)">1 ponto</strong> �  Façanha
       </p>
 
       <div class="cc-section-title" style="font-size:9px;margin-bottom:10px">Disciplinas Extras</div>
@@ -3597,8 +3616,8 @@ mark{
 
       <div id="cc-error-4" class="cc-error">Pontos de destino insuficientes.</div>
       <div class="cc-nav-btns">
-        <button class="cc-btn-prev" onclick="ccGoToStep(3)">← Perícias</button>
-        <button class="cc-btn-next" onclick="ccNext(4)">Criador →</button>
+        <button class="cc-btn-prev" onclick="ccGoToStep(3)">� � Perícias</button>
+        <button class="cc-btn-next" onclick="ccNext(4)">Criador � </button>
       </div>
     </div>
 
@@ -3615,7 +3634,7 @@ mark{
             <input type="file" id="cc-creator-photo-input" accept="image/*" onchange="ccLoadCreatorPhoto(this)">
             <img id="cc-creator-photo-preview" class="cc-image-preview" style="display:none">
             <div class="cc-image-placeholder" id="cc-creator-photo-ph">
-              <span class="cc-image-icon">🦇</span>
+              <span class="cc-image-icon">�x�!</span>
               <span>Foto do Criador</span>
             </div>
           </div>
@@ -3641,25 +3660,25 @@ mark{
       </div>
       <div id="cc-finish-message"></div>
       <div class="cc-nav-btns">
-        <button class="cc-btn-prev" onclick="ccGoToStep(4)">← Poderes</button>
-        <button class="cc-btn-next" onclick="ccFinish()" style="background:rgba(0,255,255,0.08);border-color:var(--gold);color:var(--gold);text-shadow:0 0 8px var(--gold);box-shadow:0 0 10px rgba(0,255,255,0.2)">Finalizar ✦</button>
+        <button class="cc-btn-prev" onclick="ccGoToStep(4)">� � Poderes</button>
+        <button class="cc-btn-next" onclick="ccFinish()" style="background:rgba(0,255,255,0.08);border-color:var(--gold);color:var(--gold);text-shadow:0 0 8px var(--gold);box-shadow:0 0 10px rgba(0,255,255,0.2)">Finalizar �S�</button>
       </div>
     </div>
 
   </div>
 </div>
 
-<!-- ============ SEÇÃO: BLiNKMOTiON ============ -->
+<!-- ============ SE�!ÒO: BLiNKMOTiON ============ -->
 <div id="section-social" class="main-section">
   <div class="terminal-container">
     <div class="terminal-box">
       <div class="ascii-logo">
- ██████╗ ██╗     ██╗███╗   ██╗██╗  ██╗███╗   ███╗ ██████╗ ████████╗██╗ ██████╗ ███╗   ██╗
- ██╔══██╗██║     ██║████╗  ██║██║ ██╔╝████╗ ████║██╔═══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
- ██████╔╝██║     ██║██╔██╗ ██║█████╔╝ ██╔████╔██║██║   ██║   ██║   ██║██║   ██║██╔██╗ ██║
- ██╔══██╗██║     ██║██║╚██╗██║██╔═██╗ ██║╚██╔╝██║██║   ██║   ██║   ██║██║   ██║██║╚██╗██║
- ██████╔╝███████╗██║██║ ╚████║██║  ██╗██║ ╚═╝ ██║╚██████╔╝   ██║   ██║╚██████╔╝██║ ╚████║
- ╚══════╝╚══════╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝    ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+ �������������" �����"     �����"�������"   �����"�����"  �����"�������"   �������" �������������" �����������������"�����" �������������" �������"   �����"
+ �����"�"��"������"�����"     �����"���������"  �����"�����" �����"�"����������" ���������"�����"�"��"��"������"�"a�"��"������"�"��"��"������"�����"�"��"��"������"���������"  �����"
+ �������������"�"������"     �����"�����"�����" �����"�����������"�"� �����"���������"�����"�����"   �����"   �����"   �����"�����"   �����"�����"�����" �����"
+ �����"�"��"������"�����"     �����"�����"�"a�����"�����"�����"�"������" �����"�"a�����"�"������"�����"   �����"   �����"   �����"�����"   �����"�����"�"a�����"�����"
+ �������������"�"����������������"�����"�����" �"a���������"�����"  �����"�����" �"a�"��"� �����"�"a�������������"�"�   �����"   �����"�"a�������������"�"������" �"a���������"
+ �"a�"��"��"��"��"��"��"��"a�"��"��"��"��"��"��"��"a�"��"��"a�"��"�  �"a�"��"��"��"��"a�"��"�  �"a�"��"��"a�"��"�     �"a�"��"� �"a�"��"��"��"��"��"�    �"a�"��"�   �"a�"��"� �"a�"��"��"��"��"��"� �"a�"��"�  �"a�"��"��"��"�
       </div>
       <h2>01000001 01100011 01100101 01110011 01110011 01101111 01110010 01101001 01100001</h2>
       
@@ -3680,10 +3699,10 @@ mark{
   </div>
 </div>
 
-<button class="back-top" id="backTop" onclick="scrollToTop()" title="Voltar ao topo">▲</button>
+<button class="back-top" id="backTop" onclick="scrollToTop()" title="Voltar ao topo">��</button>
 
 <script>
-// ============ NAVEGAÇÃO PRINCIPAL (TOP MENU) ============
+// ============ NAVEGA�!ÒO PRINCIPAL (TOP MENU) ============
 function switchMainSection(sectionId) {
   // Hide all sections
   document.querySelectorAll('.main-section').forEach(s => s.classList.remove('active'));
@@ -3715,7 +3734,7 @@ function switchMainSection(sectionId) {
   scrollToTop();
 }
 
-// ============ PERSISTÊNCIA DE PERSONAGENS ============
+// ============ PERSIST�`NCIA DE PERSONAGENS ============
 function saveCharacter() {
   const concept = document.getElementById('char-concept').value;
   const clan = document.getElementById('char-clan').value;
@@ -3775,7 +3794,7 @@ function downloadCharacterData() {
 }
 
 
-// ============ NAVEGAÇÃO ENTRE PÁGINAS ============
+// ============ NAVEGA�!ÒO ENTRE PÁGINAS ============
 function showPage(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const target = document.getElementById('page-' + pageId);
@@ -3994,21 +4013,21 @@ document.addEventListener('keydown', (e) => {
 
 // ============ CHARACTER CREATOR ============
 const CC_CLANS = {
-  'Brujah':          { disciplines:['Celeridade','Potência','Presença'],        desc:'Rebeldes e guerreiros. Os Brujah são apaixonados, impulsivos e leais às suas causas. Filósofos que se tornaram soldados.',      role:'Combate, oratória e conflito. Especialistas em confronto direto — físico ou ideológico. Líderes caóticos ou força intelectual.',  flaw:'Fúria Indomável — resistência a Frenesi de Raiva tem dificuldade aumentada. Qualquer provocação pode bastar.',  difficulty:'Causa que vale morrer — e matar — por ela' },
-  'Gangrel':         { disciplines:['Animalismo','Fortitude','Proteu'],          desc:'Nômades e selvagens. Os Gangrel pertencem à noite e à terra aberta. São os mais próximos da natureza predatória do vampiro.',   role:'Sobrevivência, combate selvagem e companhia animal. Rastreadores e guerreiros resistentes, excelentes fora das cidades.',           flaw:'A Besta Marca — cada Frenesi deixa um traço animal permanente (olhos de gato, orelhas pontudas...).',             difficulty:'A Besta dentro de mim vive cada vez mais perto da superfície' },
-  'Malkaviano':      { disciplines:['Auspícios','Dementação','Ofuscação'],       desc:'Loucos proféticos. Todos os Malkavians têm uma loucura fundamental que os conecta a verdades que outros não conseguem ver.',       role:'Informação, manipulação e percepção sobre-humana. Espiões, oráculos e perturbadores do status quo.',                                flaw:'Desordem Mental Incurável — todos têm um distúrbio permanente. O Abraço não cura; frequentemente amplifica.',      difficulty:'As vozes não mentem, mas raramente falam claramente' },
-  'Nosferatu':       { disciplines:['Animalismo','Ofuscação','Potência'],        desc:'Monstros das sombras. O Abraço os deforma em algo claramente não-humano. Vivem nos esgotos, coletando informações que outros ignoram.', role:'Inteligência e sabotagem. Os melhores coletores de informação de todos os Clãs — ninguém vigia os invisíveis.',                  flaw:'Aparência Monstruosa — viola automaticamente a Máscara em espaços públicos. Só Ofuscação permite interação normal.',difficulty:'Monstros que o mundo não deve ver' },
-  'Toreador':        { disciplines:['Auspícios','Celeridade','Presença'],        desc:'Artistas e sedutores. Os Toreador vivem para a beleza — criá-la, experimentá-la, possuí-la. São os mais "humanos" dos vampiros.',   role:'Influência social, sedução e controle de situações. Face do grupo, manipuladores e negociadores de alto nível.',                    flaw:'Preso pela Beleza — diante de algo genuinamente belo deve rolar Vontade para agir. Pode ficar parado contemplando.', difficulty:'Beleza que corrompe e que me corrompe' },
-  'Tremere':         { disciplines:['Auspícios','Dominação','Taumaturgia'],      desc:'Feiticeiros de sangue. Magos que buscaram a imortalidade e a encontraram como vampiros. Taumaturgia os torna poderosos e temidos.',   role:'Magia de sangue versátil, controle mental e suporte arcano. Eficazes em quase qualquer situação com preparação.',                   flaw:'Juramento de Sangue — todos têm Laço de Sangue Triplo com o Conselho de Sete. Ordens do Clã são irresistíveis.',   difficulty:'O Clã sabe tudo. E cobra tudo.' },
-  'Ventrue':         { disciplines:['Dominação','Fortitude','Presença'],         desc:'Aristocracia vampírica. Os Ventrue são a espinha dorsal da Camarilla — Príncipes, políticos, CEOs da noite.',                        role:'Liderança, controle político e resistência física. Excelentes em situações sociais de alto nível e em absorver dano.',               flaw:'Dieta Restrita — cada Ventrue só bebe de um tipo específico de vítima. Sangue de outros tipos não nutre.',          difficulty:'O peso da coroa que não posso deixar cair' },
-  'Lasombra':        { disciplines:['Dominação','Obtenebração','Potência'],      desc:'Senhores das sombras do Sabbat. Abraçam a natureza predatória do vampiro completamente. Políticos de ferro e manipuladores das trevas.',role:'Controle de sombras, intimidação e combate. Dominação política dentro do Sabbat, terror tático no campo.',                         flaw:'Sem Reflexo — não aparecem em espelhos, câmeras ou superfícies refletivas. Viola a Máscara em ambientes modernos.',difficulty:'A escuridão que governo também me devora' },
-  'Tzimisce':        { disciplines:['Animalismo','Auspícios','Vicissitude'],     desc:'Demônios da carne do Sabbat. Aristocratas do leste europeu que se tornaram algo completamente além do humano. Remodelam carne e osso.', role:'Modificação corporal, horror tático e criação de ghoul-monstros. Construtores de "ferramentas" biológicas.',                      flaw:'Terra Natal — deve dormir em terra de sua pátria (pelo menos 1,5kg). Sem ela, não descansa e perde poderes.',       difficulty:'O que faço com carne alheia, farei comigo mesmo' },
-  'Assamita':        { disciplines:['Celeridade','Ofuscação','Quietus'],         desc:'Assassinos da Antiga Pérsia. Guerreiros e assassinos de elite, contratados para eliminar alvos. Cultuam Haqim e buscam a perfeição.',   role:'Assassinato, furtividade e combate de alta velocidade. Os melhores caçadores de vampiros entre os Clãs.',                           flaw:'Sede de Sangue Kindred — compulsão para provar o sangue de vampiros que matam. Falhar significa Diablerie potencial.', difficulty:'A Sede não distingue amigo de inimigo' },
-  'Giovanni':        { disciplines:['Dominação','Potência','Necromancia'],       desc:'Família italiana de necromantes. Os Giovanni dominam a morte e os mortos. Controlam negócios e espíritos com igual facilidade.',         role:'Necromancia e espionagem espiritual. Informação através dos mortos, exércitos de espectros, controle sobre a morte.',               flaw:'Mordida Agoniante — causa dor excruciante em vez de prazer. Mortais gritam; vampiros sentem dano dobrado.',         difficulty:'A família sempre tem prioridade. Sempre.' },
-  'Ravnos':          { disciplines:['Animalismo','Ofuscação','Quimerismo'],      desc:'Ciganos ilusionistas. Nômades e trapaceiros, criando ilusões e explorando fraquezas. Cada um carrega um vício específico no sangue.',   role:'Ilusões, engano e mobilidade. Excelentes em criar confusão, escapar de situações e manipular percepções.',                           flaw:'Vício de Sangue — um pecado/crime que o sangue os compele a cometer regularmente (roubar, mentir, trapacear...).',  difficulty:'Não consigo parar mesmo quando quero' },
-  'Followers of Set':{ disciplines:['Ofuscação','Presença','Serpentis'],         desc:'Sacerdotes do deus Set. Acreditam que Set dorme e querem libertá-lo. Corrompem e seduzem, espalhando os vícios que Set aprecia.',       role:'Corrupção, sedução e contraespionagem. Excelentes em criar redes de dependência e resistir a influências sobrenaturais.',            flaw:'Sensibilidade à Luz — qualquer luz intensa perturba. Luz artificial forte também causa desconforto além da solar.',  difficulty:'Cada alma que corrompo me afasta mais da minha própria' },
-  'Caitiff':         { disciplines:[],                                            desc:'Sem Clã, sem proteção, sem herança. Não têm pai Clã reconhecido. Livres das obrigações de Clã, mas também de suas proteções.',            role:'Qualquer coisa — e essa é tanto a força quanto a fraqueza do Caitiff. Sem comunidade, sem respaldo.',                               flaw:'Rejeitado por Todos — todos os vampiros desconfiam. Situações sociais com Kindred têm dificuldade aumentada.',       difficulty:'Ninguém me quer; então preciso me fazer necessário' },
-  'Pander':          { disciplines:[],                                            desc:'Caitiff do Sabbat. Reconhecidos como "família" informal da seita, mas sem prestígio das Clãs antigas. Liberdade de disciplinas.',         role:'Flexíveis e adaptáveis. O Sabbat os usa como tropa de choque. Sem nativa definida.',                                                 flaw:'Peão do Sabbat — externos desconfiam duplamente: sem Clã E do Sabbat.',                                              difficulty:'Lutar pelos que me tratam como descartável' }
+  'Brujah':          { disciplines:['Celeridade','Potência','Presença'],        desc:'Rebeldes e guerreiros. Os Brujah são apaixonados, impulsivos e leais às suas causas. Filósofos que se tornaram soldados.',      role:'Combate, oratória e conflito. Especialistas em confronto direto � físico ou ideológico. Líderes caóticos ou força intelectual.',  flaw:'Fúria Indomável � resistência a Frenesi de Raiva tem dificuldade aumentada. Qualquer provocação pode bastar.',  difficulty:'Causa que vale morrer � e matar � por ela' },
+  'Gangrel':         { disciplines:['Animalismo','Fortitude','Proteu'],          desc:'Nômades e selvagens. Os Gangrel pertencem à noite e à terra aberta. São os mais próximos da natureza predatória do vampiro.',   role:'Sobrevivência, combate selvagem e companhia animal. Rastreadores e guerreiros resistentes, excelentes fora das cidades.',           flaw:'A Besta Marca � cada Frenesi deixa um traço animal permanente (olhos de gato, orelhas pontudas...).',             difficulty:'A Besta dentro de mim vive cada vez mais perto da superfície' },
+  'Malkaviano':      { disciplines:['Auspícios','Dementação','Ofuscação'],       desc:'Loucos proféticos. Todos os Malkavians têm uma loucura fundamental que os conecta a verdades que outros não conseguem ver.',       role:'Informação, manipulação e percepção sobre-humana. Espiões, oráculos e perturbadores do status quo.',                                flaw:'Desordem Mental Incurável � todos têm um distúrbio permanente. O Abraço não cura; frequentemente amplifica.',      difficulty:'As vozes não mentem, mas raramente falam claramente' },
+  'Nosferatu':       { disciplines:['Animalismo','Ofuscação','Potência'],        desc:'Monstros das sombras. O Abraço os deforma em algo claramente não-humano. Vivem nos esgotos, coletando informações que outros ignoram.', role:'Inteligência e sabotagem. Os melhores coletores de informação de todos os Clãs � ninguém vigia os invisíveis.',                  flaw:'Aparência Monstruosa � viola automaticamente a Máscara em espaços públicos. Só Ofuscação permite interação normal.',difficulty:'Monstros que o mundo não deve ver' },
+  'Toreador':        { disciplines:['Auspícios','Celeridade','Presença'],        desc:'Artistas e sedutores. Os Toreador vivem para a beleza � criá-la, experimentá-la, possuí-la. São os mais "humanos" dos vampiros.',   role:'Influência social, sedução e controle de situações. Face do grupo, manipuladores e negociadores de alto nível.',                    flaw:'Preso pela Beleza � diante de algo genuinamente belo deve rolar Vontade para agir. Pode ficar parado contemplando.', difficulty:'Beleza que corrompe e que me corrompe' },
+  'Tremere':         { disciplines:['Auspícios','Dominação','Taumaturgia'],      desc:'Feiticeiros de sangue. Magos que buscaram a imortalidade e a encontraram como vampiros. Taumaturgia os torna poderosos e temidos.',   role:'Magia de sangue versátil, controle mental e suporte arcano. Eficazes em quase qualquer situação com preparação.',                   flaw:'Juramento de Sangue � todos têm Laço de Sangue Triplo com o Conselho de Sete. Ordens do Clã são irresistíveis.',   difficulty:'O Clã sabe tudo. E cobra tudo.' },
+  'Ventrue':         { disciplines:['Dominação','Fortitude','Presença'],         desc:'Aristocracia vampírica. Os Ventrue são a espinha dorsal da Camarilla � Príncipes, políticos, CEOs da noite.',                        role:'Liderança, controle político e resistência física. Excelentes em situações sociais de alto nível e em absorver dano.',               flaw:'Dieta Restrita � cada Ventrue só bebe de um tipo específico de vítima. Sangue de outros tipos não nutre.',          difficulty:'O peso da coroa que não posso deixar cair' },
+  'Lasombra':        { disciplines:['Dominação','Obtenebração','Potência'],      desc:'Senhores das sombras do Sabbat. Abraçam a natureza predatória do vampiro completamente. Políticos de ferro e manipuladores das trevas.',role:'Controle de sombras, intimidação e combate. Dominação política dentro do Sabbat, terror tático no campo.',                         flaw:'Sem Reflexo � não aparecem em espelhos, câmeras ou superfícies refletivas. Viola a Máscara em ambientes modernos.',difficulty:'A escuridão que governo também me devora' },
+  'Tzimisce':        { disciplines:['Animalismo','Auspícios','Vicissitude'],     desc:'Demônios da carne do Sabbat. Aristocratas do leste europeu que se tornaram algo completamente além do humano. Remodelam carne e osso.', role:'Modificação corporal, horror tático e criação de ghoul-monstros. Construtores de "ferramentas" biológicas.',                      flaw:'Terra Natal � deve dormir em terra de sua pátria (pelo menos 1,5kg). Sem ela, não descansa e perde poderes.',       difficulty:'O que faço com carne alheia, farei comigo mesmo' },
+  'Assamita':        { disciplines:['Celeridade','Ofuscação','Quietus'],         desc:'Assassinos da Antiga Pérsia. Guerreiros e assassinos de elite, contratados para eliminar alvos. Cultuam Haqim e buscam a perfeição.',   role:'Assassinato, furtividade e combate de alta velocidade. Os melhores caçadores de vampiros entre os Clãs.',                           flaw:'Sede de Sangue Kindred � compulsão para provar o sangue de vampiros que matam. Falhar significa Diablerie potencial.', difficulty:'A Sede não distingue amigo de inimigo' },
+  'Giovanni':        { disciplines:['Dominação','Potência','Necromancia'],       desc:'Família italiana de necromantes. Os Giovanni dominam a morte e os mortos. Controlam negócios e espíritos com igual facilidade.',         role:'Necromancia e espionagem espiritual. Informação através dos mortos, exércitos de espectros, controle sobre a morte.',               flaw:'Mordida Agoniante � causa dor excruciante em vez de prazer. Mortais gritam; vampiros sentem dano dobrado.',         difficulty:'A família sempre tem prioridade. Sempre.' },
+  'Ravnos':          { disciplines:['Animalismo','Ofuscação','Quimerismo'],      desc:'Ciganos ilusionistas. Nômades e trapaceiros, criando ilusões e explorando fraquezas. Cada um carrega um vício específico no sangue.',   role:'Ilusões, engano e mobilidade. Excelentes em criar confusão, escapar de situações e manipular percepções.',                           flaw:'Vício de Sangue � um pecado/crime que o sangue os compele a cometer regularmente (roubar, mentir, trapacear...).',  difficulty:'Não consigo parar mesmo quando quero' },
+  'Followers of Set':{ disciplines:['Ofuscação','Presença','Serpentis'],         desc:'Sacerdotes do deus Set. Acreditam que Set dorme e querem libertá-lo. Corrompem e seduzem, espalhando os vícios que Set aprecia.',       role:'Corrupção, sedução e contraespionagem. Excelentes em criar redes de dependência e resistir a influências sobrenaturais.',            flaw:'Sensibilidade à Luz � qualquer luz intensa perturba. Luz artificial forte também causa desconforto além da solar.',  difficulty:'Cada alma que corrompo me afasta mais da minha própria' },
+  'Caitiff':         { disciplines:[],                                            desc:'Sem Clã, sem proteção, sem herança. Não têm pai Clã reconhecido. Livres das obrigações de Clã, mas também de suas proteções.',            role:'Qualquer coisa � e essa é tanto a força quanto a fraqueza do Caitiff. Sem comunidade, sem respaldo.',                               flaw:'Rejeitado por Todos � todos os vampiros desconfiam. Situações sociais com Kindred têm dificuldade aumentada.',       difficulty:'Ninguém me quer; então preciso me fazer necessário' },
+  'Pander':          { disciplines:[],                                            desc:'Caitiff do Sabbat. Reconhecidos como "família" informal da seita, mas sem prestígio das Clãs antigas. Liberdade de disciplinas.',         role:'Flexíveis e adaptáveis. O Sabbat os usa como tropa de choque. Sem nativa definida.',                                                 flaw:'Peão do Sabbat � externos desconfiam duplamente: sem Clã E do Sabbat.',                                              difficulty:'Lutar pelos que me tratam como descartável' }
 };
 
 const CC_ALL_DISCIPLINES = ['Animalismo','Auspícios','Celeridade','Dominação','Fortitude','Ofuscação','Potência','Presença','Dementação','Obtenebração','Proteu','Quimerismo','Quietus','Serpentis','Taumaturgia','Necromancia','Temporis','Vicissitude','Visceratika','Valeren'];
@@ -4340,7 +4359,7 @@ function ccUpdateClan(autoSelectCreator=true) {
   document.getElementById('cc-clan-desc').textContent=c.desc;
   document.getElementById('cc-clan-role').textContent=c.role;
   document.getElementById('cc-clan-flaw').textContent=c.flaw;
-  document.getElementById('cc-clan-discs').innerHTML=(c.disciplines.length?c.disciplines:['Livre — escolha 3']).map(d=>`<span class="cc-clan-tag">${d}</span>`).join('');
+  document.getElementById('cc-clan-discs').innerHTML=(c.disciplines.length?c.disciplines:['Livre � escolha 3']).map(d=>`<span class="cc-clan-tag">${d}</span>`).join('');
   const hint=document.getElementById('cc-difficulty-hint');
   if(hint) hint.textContent=c.difficulty?`Sugestão: "${c.difficulty}"`:'';
   ccRenderDiscNative();
@@ -4381,8 +4400,8 @@ function ccNext(step) {
 }
 
 function ccRefreshStep2() {
-  document.getElementById('cc-name-display-2').textContent=ccState.name||'—';
-  document.getElementById('cc-clan-display-2').textContent=ccState.clan||'—';
+  document.getElementById('cc-name-display-2').textContent=ccState.name||'�';
+  document.getElementById('cc-clan-display-2').textContent=ccState.clan||'�';
   const p=document.getElementById('cc-portrait-2'), ph=document.getElementById('cc-portrait-2-ph');
   if(ccState.photo){ p.src=ccState.photo; p.style.display='block'; ph.style.display='none'; }
   else { p.style.display='none'; ph.style.display='flex'; }
@@ -4402,7 +4421,7 @@ function ccRenderSkillsGrid() {
     return `<div class="cc-skill-row ${rowCls}" id="cc-skill-row-${skill}">
       <span class="cc-skill-name">${skill}</span>
       <div class="cc-skill-controls">
-        <button class="cc-skill-btn" onclick="ccSkillChange('${skill}',-1)">−</button>
+        <button class="cc-skill-btn" onclick="ccSkillChange('${skill}',-1)">��</button>
         <span class="cc-skill-val ${cls}" id="cc-skill-val-${skill}">${disp}</span>
         <button class="cc-skill-btn" onclick="ccSkillChange('${skill}',1)">+</button>
       </div></div>`;
@@ -4451,7 +4470,7 @@ function ccRenderDiscNative() {
     return `<div class="cc-disc-card"><h5>${disc}</h5>
       <div class="cc-disc-level-dots">${dots}</div>
       <div class="cc-disc-controls">
-        <button class="cc-disc-btn" onclick="ccDiscFreeChange('${disc}',-1)">−</button>
+        <button class="cc-disc-btn" onclick="ccDiscFreeChange('${disc}',-1)">��</button>
         <span class="cc-disc-count">${lv}</span>
         <button class="cc-disc-btn" onclick="ccDiscFreeChange('${disc}',1)">+</button>
       </div></div>`;
@@ -4500,18 +4519,18 @@ function ccRenderExtraDiscs() {
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
         <div><div class="cc-label" style="font-size:9px">Disciplina</div>
           <select class="cc-input cc-select" onchange="ccUpdateExtraDisc(${d.id},'disc',this.value)">
-            <option value="">— Escolha —</option>
+            <option value="">� Escolha �</option>
             ${CC_ALL_DISCIPLINES.map(x=>`<option value="${x}" ${d.disc===x?'selected':''}>${x}</option>`).join('')}
           </select></div>
         <div><div class="cc-label" style="font-size:9px">Custo por Nível</div>
           <select class="cc-input cc-select" onchange="ccUpdateExtraDisc(${d.id},'inClan',this.value==='clan')">
-            <option value="clan" ${d.inClan?'selected':''}>Do Clã — 1 pt/nível</option>
-            <option value="outside" ${!d.inClan?'selected':''}>Fora do Clã — 2 pts/nível</option>
+            <option value="clan" ${d.inClan?'selected':''}>Do Clã � 1 pt/nível</option>
+            <option value="outside" ${!d.inClan?'selected':''}>Fora do Clã � 2 pts/nível</option>
           </select></div>
       </div>
       <div style="margin-top:10px"><div class="cc-label" style="font-size:9px">Níveis</div>
         <div style="display:flex;align-items:center;gap:12px;margin-top:6px">
-          <button class="cc-disc-btn" onclick="ccUpdateExtraDisc(${d.id},'levels',${Math.max(1,d.levels-1)})">−</button>
+          <button class="cc-disc-btn" onclick="ccUpdateExtraDisc(${d.id},'levels',${Math.max(1,d.levels-1)})">��</button>
           <span style="color:var(--blood);font-size:17px;font-weight:700">${d.levels}</span>
           <button class="cc-disc-btn" onclick="ccUpdateExtraDisc(${d.id},'levels',${d.levels+1})">+</button>
         </div></div>
@@ -4547,7 +4566,7 @@ function ccRenderStunts() {
         <input type="text" class="cc-input" placeholder="Nome da Façanha..." value="${s.name||''}" oninput="ccUpdateStunt(${s.id},'name',this.value)" style="margin-bottom:7px">
         <input type="text" class="cc-input" placeholder="Descrição: Uma vez por cena, posso..." value="${s.desc||''}" oninput="ccUpdateStunt(${s.id},'desc',this.value)">
       </div>
-      <button class="cc-stunt-remove" onclick="ccRemoveStunt(${s.id})">✕</button>
+      <button class="cc-stunt-remove" onclick="ccRemoveStunt(${s.id})">�S"</button>
     </div>`).join('');
 }
 
@@ -4559,10 +4578,10 @@ function ccFinish() {
   ccSave();
   ccPersistArchiveRecord();
   const name=ccState.name||'Personagem';
-  document.getElementById('cc-step-5').innerHTML += `<div class="cc-neonato-box" style="margin-top:24px;border-left-color:var(--blood)"><h4>✦ ${name} foi salvo!</h4><p>Seu personagem foi salvo localmente. Em breve será possível exportar a ficha completa como PDF.</p></div>`;
+  document.getElementById('cc-step-5').innerHTML += `<div class="cc-neonato-box" style="margin-top:24px;border-left-color:var(--blood)"><h4>�S� ${name} foi salvo!</h4><p>Seu personagem foi salvo localmente. Em breve será possível exportar a ficha completa como PDF.</p></div>`;
 }
 
-// Init when section is activated — hook into switchMainSection
+// Init when section is activated � hook into switchMainSection
 const _origSwitch = typeof switchMainSection === 'function' ? switchMainSection : null;
 // We patch switchMainSection after definition to init CC when entering char-creator
 window.addEventListener('load', () => { ccInit(); });
@@ -4583,10 +4602,10 @@ if (window.supabase && typeof window.supabase.createClient === 'function') {
     console.warn("Falha ao inicializar o cliente Supabase:", error);
   }
 } else {
-  console.warn("Supabase JS nÃ£o foi carregado; seguindo sem integraÃ§Ã£o remota.");
+  console.warn("Supabase JS nÒ£o foi carregado; seguindo sem integraÒ§Ò£o remota.");
 }
 
-// ============ INICIALIZAÇÃO DA PÁGINA ============
+// ============ INICIALIZA�!ÒO DA PÁGINA ============
 </script>
 
 </body>
