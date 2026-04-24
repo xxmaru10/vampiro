@@ -4143,39 +4143,37 @@ function ccRenderArchive() {
   const treeData = {};
   const orphans = [];
 
-  ccArchive.forEach(entry => {
+  ccArchive.forEach((entry, index) => {
     const creatorName = (entry.creator && entry.creator.name) ? entry.creator.name : null;
     if (creatorName) {
       if (!treeData[creatorName]) treeData[creatorName] = { name: creatorName, clan: entry.clan, children: [] };
-      treeData[creatorName].children.push(entry);
+      treeData[creatorName].children.push({ entry, index });
     } else {
-      orphans.push(entry);
+      orphans.push({ entry, index });
     }
   });
 
   let html = '';
 
-  // Render grouped creators
   for (const creatorKey in treeData) {
     const group = treeData[creatorKey];
-    // Use the first child's ID but with a prefix to indicate we want the creator's view
-    const firstChildId = group.children[0].id;
+    const firstChildIndex = group.children[0].index;
     html += `
       <div class="cc-tree-item">
-        <div class="cc-tree-node" style="border-color:var(--gold);opacity:0.9" onclick="ccSelectArchiveCharacter('${firstChildId}', true)">
+        <div class="cc-tree-node" style="border-color:var(--gold);opacity:0.9" onclick="ccSelectArchiveByIndex(${firstChildIndex}, true)">
           <div class="cc-tree-info">
             <span class="cc-tree-name" style="color:var(--gold)">${ccEscapeHtml(group.name)}</span>
             <span class="cc-tree-clan" style="color:var(--gold);font-size:9px">Ancestral / Criador</span>
           </div>
         </div>
         <div class="cc-tree-children">
-          ${group.children.map(child => {
-            const isActive = String(child.id) === String(ccSelectedArchiveId);
+          ${group.children.map(item => {
+            const isActive = String(item.entry.id) === String(ccSelectedArchiveId);
             return `
-              <div class="cc-tree-node ${isActive ? 'active' : ''}" onclick="ccSelectArchiveCharacter('${String(child.id)}')">
+              <div class="cc-tree-node ${isActive ? 'active' : ''}" onclick="ccSelectArchiveByIndex(${item.index}, false)">
                 <div class="cc-tree-info">
-                  <span class="cc-tree-name">${ccEscapeHtml(child.name || 'Vampiro')}</span>
-                  <span class="cc-tree-clan">${ccEscapeHtml(child.clan || 'Sem Cla')}</span>
+                  <span class="cc-tree-name">${ccEscapeHtml(item.entry.name || 'Vampiro')}</span>
+                  <span class="cc-tree-clan">${ccEscapeHtml(item.entry.clan || 'Sem Cla')}</span>
                 </div>
               </div>
             `;
@@ -4185,16 +4183,15 @@ function ccRenderArchive() {
     `;
   }
 
-  // Render orphans
   if (orphans.length) {
-    html += orphans.map(child => {
-      const isActive = String(child.id) === String(ccSelectedArchiveId);
+    html += orphans.map(item => {
+      const isActive = String(item.entry.id) === String(ccSelectedArchiveId);
       return `
         <div class="cc-tree-item">
-          <div class="cc-tree-node ${isActive ? 'active' : ''}" onclick="ccSelectArchiveCharacter('${String(child.id)}')">
+          <div class="cc-tree-node ${isActive ? 'active' : ''}" onclick="ccSelectArchiveByIndex(${item.index}, false)">
             <div class="cc-tree-info">
-              <span class="cc-tree-name">${ccEscapeHtml(child.name || 'Vampiro')}</span>
-              <span class="cc-tree-clan">${ccEscapeHtml(child.clan || 'Sem Cla')}</span>
+              <span class="cc-tree-name">${ccEscapeHtml(item.entry.name || 'Vampiro')}</span>
+              <span class="cc-tree-clan">${ccEscapeHtml(item.entry.clan || 'Sem Cla')}</span>
             </div>
           </div>
         </div>
@@ -4205,21 +4202,14 @@ function ccRenderArchive() {
   grid.innerHTML = html;
 }
 
-function ccSelectArchiveCharacter(id, isCreator = false) {
-  console.log("Selecionando:", id, "Criador:", isCreator);
-  ccSelectedArchiveId = id;
-  const entry = ccFindArchiveRecordById(id);
+function ccSelectArchiveByIndex(index, isCreator = false) {
+  const entry = ccArchive[index];
+  if (!entry) return;
   
-  const detail = document.getElementById('cc-archive-detail');
-  if (!detail) {
-    console.error("Elemento cc-archive-detail não encontrado!");
-    return;
-  }
+  ccSelectedArchiveId = entry.id;
 
-  if (!entry) {
-    console.warn("Ficha não encontrada para ID:", id);
-    return;
-  }
+  const detail = document.getElementById('cc-archive-detail');
+  if (!detail) return;
 
   // Build content
   let html = `<button class="cc-detail-close" onclick="ccCloseDetail()">×</button>`;
@@ -4266,11 +4256,11 @@ function ccSelectArchiveCharacter(id, isCreator = false) {
   detail.style.opacity = '1';
   detail.style.visibility = 'visible';
   
-  ccRenderArchive(); // Update tree highlight
+  ccRenderArchive();
   
   setTimeout(() => {
-    detail.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 100);
+    detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 50);
 }
 
 function ccCloseDetail() {
