@@ -4481,7 +4481,7 @@ function ccRenderDestinyDots() {
 }
 
 function ccAddExtraDisc() {
-  if(ccCalcDestinySpent()>=5) return;
+  if(ccCalcDestinySpent() >= 4) return;
   ccState.discExtra.push({id:Date.now(),disc:'',levels:1,cost:1,inClan:true});
   ccRenderExtraDiscs(); ccRenderDestinyDots(); ccSave();
 }
@@ -4521,15 +4521,35 @@ function ccRenderExtraDiscs() {
 function ccUpdateExtraDisc(id,field,value) {
   const d=ccState.discExtra.find(x=>x.id===id); if(!d) return;
   const old={...d};
-  if(field==='inClan') d.inClan=(value===true||value==='true'||value==='clan');
-  else d[field]=value;
+  
+  if(field==='levels') {
+    value = Math.min(3, parseInt(value));
+  }
+  
+  if(field==='disc') {
+    d.disc = value;
+    // Auto-detect if in clan
+    const clanDiscs = (ccState.clan && CC_CLANS[ccState.clan]) ? CC_CLANS[ccState.clan].disciplines : [];
+    d.inClan = clanDiscs.includes(value);
+  } else if(field==='inClan') {
+    d.inClan=(value===true||value==='true'||value==='clan');
+  } else {
+    d[field]=value;
+  }
+  
   d.cost=d.levels*(d.inClan?1:2);
-  if(ccCalcDestinySpent()>5){ Object.assign(d,old); d.cost=old.cost; }
+  
+  // Enforce 1 Fate Point remaining limit (max 4 spent)
+  if(ccCalcDestinySpent() > 4){ 
+    Object.assign(d,old); 
+    d.cost=old.cost; 
+  }
+  
   ccRenderExtraDiscs(); ccRenderDestinyDots(); ccSave();
 }
 
 function ccAddStunt() {
-  if(ccCalcDestinySpent()>=5) return;
+  if(ccCalcDestinySpent() >= 4) return;
   ccState.stunts.push({id:Date.now(),name:'',desc:''});
   ccRenderStunts(); ccRenderDestinyDots(); ccSave();
 }
@@ -4557,9 +4577,24 @@ function ccUpdateStunt(id,field,value) {
 
 function ccFinish() {
   ccSave();
-  ccPersistArchiveRecord();
-  const name=ccState.name||'Personagem';
-  document.getElementById('cc-step-5').innerHTML += `<div class="cc-neonato-box" style="margin-top:24px;border-left-color:var(--blood)"><h4>✦ ${name} foi salvo!</h4><p>Seu personagem foi salvo localmente. Em breve será possível exportar a ficha completa como PDF.</p></div>`;
+  try {
+    ccPersistArchiveRecord();
+    const name = ccState.name || 'Personagem';
+    const finishMsg = document.getElementById('cc-finish-message');
+    if (finishMsg) {
+      finishMsg.innerHTML = `
+        <div class="cc-neonato-box" style="margin-top:24px;border-left-color:var(--gold);background:rgba(0,255,255,0.05);animation:fadeIn 0.5s ease">
+          <h4 style="color:var(--gold)">✦ ${ccEscapeHtml(name)} foi imortalizado!</h4>
+          <p>Sua ficha foi salva no arquivo local com sucesso. Agora você pode encontrá-la na aba "Geral" para consulta ou exportação futura.</p>
+          <button class="cc-btn-next" onclick="switchMainSection('lore')" style="margin-top:15px;width:auto;padding:8px 20px">Ir para Geral →</button>
+        </div>
+      `;
+      finishMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  } catch (err) {
+    console.error("Erro ao finalizar personagem:", err);
+    alert("Ocorreu um erro ao salvar o personagem. Verifique o console.");
+  }
 }
 
 // Init when section is activated — hook into switchMainSection
