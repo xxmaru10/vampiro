@@ -4206,18 +4206,26 @@ function ccRenderArchive() {
 }
 
 function ccSelectArchiveCharacter(id, isCreator = false) {
+  console.log("Selecionando:", id, "Criador:", isCreator);
   ccSelectedArchiveId = id;
   const entry = ccFindArchiveRecordById(id);
-  if (!entry) return;
-
+  
   const detail = document.getElementById('cc-archive-detail');
-  if (!detail) return;
+  if (!detail) {
+    console.error("Elemento cc-archive-detail não encontrado!");
+    return;
+  }
 
-  detail.style.display = 'grid';
+  if (!entry) {
+    console.warn("Ficha não encontrada para ID:", id);
+    return;
+  }
+
+  // Build content
+  let html = `<button class="cc-detail-close" onclick="ccCloseDetail()">×</button>`;
   
   if (isCreator && entry.creator) {
-    detail.innerHTML = `
-      <button class="cc-detail-close" onclick="ccCloseDetail()">×</button>
+    html += `
       <div class="cc-archive-detail-photo">
         ${ccArchiveThumbMarkup(entry.creator.photo, entry.creator.name)}
       </div>
@@ -4234,8 +4242,7 @@ function ccSelectArchiveCharacter(id, isCreator = false) {
       </div>
     `;
   } else {
-    detail.innerHTML = `
-      <button class="cc-detail-close" onclick="ccCloseDetail()">×</button>
+    html += `
       <div class="cc-archive-detail-photo">
         ${ccArchiveThumbMarkup(entry.photo, entry.name)}
       </div>
@@ -4253,8 +4260,17 @@ function ccSelectArchiveCharacter(id, isCreator = false) {
       </div>
     `;
   }
-  ccRenderArchive();
-  detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  detail.innerHTML = html;
+  detail.style.display = 'grid';
+  detail.style.opacity = '1';
+  detail.style.visibility = 'visible';
+  
+  ccRenderArchive(); // Update tree highlight
+  
+  setTimeout(() => {
+    detail.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 100);
 }
 
 function ccCloseDetail() {
