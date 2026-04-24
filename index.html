@@ -4158,9 +4158,11 @@ function ccRenderArchive() {
   // Render grouped creators
   for (const creatorKey in treeData) {
     const group = treeData[creatorKey];
+    // Use the first child's ID but with a prefix to indicate we want the creator's view
+    const firstChildId = group.children[0].id;
     html += `
       <div class="cc-tree-item">
-        <div class="cc-tree-node" style="border-color:var(--gold);opacity:0.9;cursor:default">
+        <div class="cc-tree-node" style="border-color:var(--gold);opacity:0.9" onclick="ccSelectArchiveCharacter('${firstChildId}', true)">
           <div class="cc-tree-info">
             <span class="cc-tree-name" style="color:var(--gold)">${ccEscapeHtml(group.name)}</span>
             <span class="cc-tree-clan" style="color:var(--gold);font-size:9px">Ancestral / Criador</span>
@@ -4203,7 +4205,7 @@ function ccRenderArchive() {
   grid.innerHTML = html;
 }
 
-function ccSelectArchiveCharacter(id) {
+function ccSelectArchiveCharacter(id, isCreator = false) {
   ccSelectedArchiveId = id;
   const entry = ccFindArchiveRecordById(id);
   if (!entry) return;
@@ -4212,17 +4214,45 @@ function ccSelectArchiveCharacter(id) {
   if (!detail) return;
 
   detail.style.display = 'grid';
-  detail.innerHTML = `
-    <button class="cc-detail-close" onclick="ccCloseDetail()">×</button>
-    <div class="cc-archive-detail-photo">
-      ${ccArchiveThumbMarkup(entry.photo, entry.name)}
-    </div>
-    <div>
-      <div class="cc-archive-detail-title">${ccEscapeHtml(entry.name || 'Sem Nome')}</div>
-      <div class="cc-archive-detail-clan">${ccEscapeHtml(entry.clan || 'Sem Cla')}</div>
-      <div class="cc-archive-detail-lore">${entry.lore ? ccFormatHtml(entry.lore) : 'Sem lore registrada.'}</div>
-    </div>
-  `;
+  
+  if (isCreator && entry.creator) {
+    detail.innerHTML = `
+      <button class="cc-detail-close" onclick="ccCloseDetail()">×</button>
+      <div class="cc-archive-detail-photo">
+        ${ccArchiveThumbMarkup(entry.creator.photo, entry.creator.name)}
+      </div>
+      <div>
+        <div class="cc-label" style="color:var(--gold);margin-bottom:5px">Ficha do Ancestral</div>
+        <div class="cc-archive-detail-title" style="color:var(--gold)">${ccEscapeHtml(entry.creator.name || 'Criador')}</div>
+        <div class="cc-archive-detail-clan">${ccEscapeHtml(entry.clan || 'Sem Cla')}</div>
+        <div style="margin-top:15px">
+          <div class="cc-label">Personalidade</div>
+          <p style="font-size:14px;color:var(--ink);margin-bottom:15px">${ccEscapeHtml(entry.creator.personality || 'Não descrita')}</p>
+          <div class="cc-label">Lore / Relação</div>
+          <div class="cc-archive-detail-lore">${ccFormatHtml(entry.creator.lore || 'Sem lore registrada.')}</div>
+        </div>
+      </div>
+    `;
+  } else {
+    detail.innerHTML = `
+      <button class="cc-detail-close" onclick="ccCloseDetail()">×</button>
+      <div class="cc-archive-detail-photo">
+        ${ccArchiveThumbMarkup(entry.photo, entry.name)}
+      </div>
+      <div>
+        <div class="cc-archive-detail-title">${ccEscapeHtml(entry.name || 'Sem Nome')}</div>
+        <div class="cc-archive-detail-clan">${ccEscapeHtml(entry.clan || 'Sem Cla')}</div>
+        
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:20px">
+          <div><div class="cc-label">Conceito</div><div style="font-size:13px">${ccEscapeHtml(entry.concept || '—')}</div></div>
+          <div><div class="cc-label">Eu Mortal</div><div style="font-size:13px">${ccEscapeHtml(entry.mortalSelf || '—')}</div></div>
+        </div>
+
+        <div class="cc-label">História (Lore)</div>
+        <div class="cc-archive-detail-lore">${entry.lore ? ccFormatHtml(entry.lore) : 'Sem lore registrada.'}</div>
+      </div>
+    `;
+  }
   ccRenderArchive();
   detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
