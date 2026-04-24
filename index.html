@@ -4075,11 +4075,25 @@ function ccReadArchive() {
 }
 
 function ccWriteArchive(archive) {
-  localStorage.setItem(CC_ARCHIVE_KEY, JSON.stringify(archive));
+  try {
+    localStorage.setItem(CC_ARCHIVE_KEY, JSON.stringify(archive));
+  } catch (e) {
+    if (e.name === 'QuotaExceededError') {
+      console.warn("LocalStorage lotado. Falha ao persistir arquivo completo.");
+      throw e;
+    }
+  }
 }
 
-function ccFindArchiveRecordById(id) {
-  return ccArchive.find(entry => String(entry.id) === String(id)) || null;
+function ccRescueCharacter() {
+  const data = JSON.stringify(ccState, null, 2);
+  const blob = new Blob([data], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `backup_${ccState.name || 'personagem'}_${Date.now()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 function ccHasArchiveCreator(entry) {
@@ -4625,25 +4639,110 @@ function ccUpdateStunt(id,field,value) {
   const s=ccState.stunts.find(x=>x.id===id); if(s){s[field]=value;ccSave();}
 }
 
-function ccFinish() {
-  ccSave();
+async function ccUploadImageToSupabase(dataUrl, path) {
+  if (!supabaseClient) return dataUrl;
   try {
-    ccPersistArchiveRecord();
+    // Convert base64/dataUrl to Blob
+    const res = await fetch(dataUrl);
+    const blob = await res.blob();
+    const fileName = `${path}/${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
+    
+    const { data, error } = await supabaseClient.storage
+      .from('char-images')
+      .upload(fileName, blob, { contentType: 'image/jpeg' });
+      
+    if (error) throw error;
+    
+    // Get public URL
+    const { data: { publicUrl } } = supabaseClient.storage
+      .from('char-images')
+      .getPublicUrl(fileName);
+      
+    return publicUrl;
+  } catch (err) {
+    console.error("Erro no upload para Supabase:", err);
+    return dataUrl; // Fallback to base64 if upload fails
+  }
+}
+
+async function ccSaveToSupabase(record) {
+  if (!supabaseClient) return null;
+  try {
+    const { data, error } = await supabaseClient
+      .from('characters')
+      .upsert({
+        id: record.id,
+        name: record.name,
+        player_name: record.playerName,
+        clan: record.clan,
+        concept: record.concept,
+        data: ccState, // Store full state as JSONB
+        updated_at: new Date().toISOString()
+      });
+      
+    if (error) throw error;
+    console.log("Salvo no Supabase com sucesso!");
+    return data;
+  } catch (err) {
+    console.error("Erro ao salvar na tabela characters:", err);
+    return null;
+  }
+}
+
+async function ccFinish() {
+  const finishMsg = document.getElementById('cc-finish-message');
+  if (finishMsg) {
+    finishMsg.innerHTML = `<div class="cc-neonato-box" style="border-left-color:var(--gold)"><h4>Sincronizando...</h4><p>Enviando ficha para o arquivo...</p></div>`;
+    finishMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // 1. Try to offload images to Supabase if available to save space
+  if (supabaseClient) {
+    if (ccState.photo && ccState.photo.startsWith('data:')) {
+      ccState.photo = await ccUploadImageToSupabase(ccState.photo, 'portraits');
+    }
+    if (ccState.creatorPhoto && ccState.creatorPhoto.startsWith('data:')) {
+      ccState.creatorPhoto = await ccUploadImageToSupabase(ccState.creatorPhoto, 'creators');
+    }
+    ccSave();
+  }
+
+  try {
+    ccSave();
+    const record = ccPersistArchiveRecord();
+    
+    // 2. Try to save data to Supabase table
+    await ccSaveToSupabase(record);
+
     const name = ccState.name || 'Personagem';
-    const finishMsg = document.getElementById('cc-finish-message');
     if (finishMsg) {
       finishMsg.innerHTML = `
         <div class="cc-neonato-box" style="margin-top:24px;border-left-color:var(--gold);background:rgba(0,255,255,0.05);animation:fadeIn 0.5s ease">
           <h4 style="color:var(--gold)">✦ ${ccEscapeHtml(name)} foi imortalizado!</h4>
-          <p>Sua ficha foi salva no arquivo local com sucesso. Agora você pode encontrá-la na aba "Geral" para consulta ou exportação futura.</p>
+          <p>Sua ficha foi salva com sucesso. Os dados agora ocupam menos espaço e foram replicados na nuvem.</p>
           <button class="cc-btn-next" onclick="switchMainSection('lore')" style="margin-top:15px;width:auto;padding:8px 20px">Ir para Geral →</button>
         </div>
       `;
-      finishMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   } catch (err) {
     console.error("Erro ao finalizar personagem:", err);
-    alert("Ocorreu um erro ao salvar o personagem. Verifique o console.");
+    if (err.name === 'QuotaExceededError') {
+      if (finishMsg) {
+        finishMsg.innerHTML = `
+          <div class="cc-neonato-box" style="margin-top:24px;border-left-color:#ff4444;background:rgba(255,0,0,0.05)">
+            <h4 style="color:#ff4444">⚠️ Memória Local Cheia!</h4>
+            <p>O navegador não tem mais espaço para salvar personagens. <strong>Não feche esta aba ainda!</strong></p>
+            <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap">
+              <button class="cc-btn-next" onclick="ccRescueCharacter()" style="background:#ff4444;border-color:#ff4444;width:auto">Baixar Ficha (JSON)</button>
+              <button class="cc-btn-prev" onclick="localStorage.removeItem('cc_character_archive_v1'); location.reload();" style="width:auto">Limpar Cache e Recomeçar</button>
+            </div>
+            <p style="font-size:10px;margin-top:10px">Dica: Baixe a ficha como arquivo antes de limpar o cache para não perder seu progresso.</p>
+          </div>
+        `;
+      }
+    } else {
+      alert("Ocorreu um erro ao salvar. Verifique o console.");
+    }
   }
 }
 
