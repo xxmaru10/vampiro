@@ -679,8 +679,8 @@ mark{
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--blood-dark);
   display: flex;
-  justify-content: center;
   align-items: center;
+  padding: 0 24px;
   z-index: 200;
   box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
   transition: transform 0.3s ease-in-out;
@@ -691,6 +691,8 @@ mark{
 .top-nav {
   display: flex;
   gap: 20px;
+  flex: 1;
+  justify-content: center;
 }
 .top-nav-item {
   color: var(--ink-soft);
@@ -736,8 +738,7 @@ mark{
 }
 
 .btn-export {
-  position: absolute;
-  right: 24px;
+  flex-shrink: 0;
   background: rgba(255, 0, 170, 0.1);
   border: 1px solid var(--blood);
   color: #fff;
@@ -762,9 +763,9 @@ mark{
 
 @media (max-width: 900px) {
   .btn-export {
-    right: 10px;
     padding: 4px 8px;
-    font-size: 14px;
+    font-size: 11px;
+    letter-spacing: 1px;
   }
   .top-nav { gap: 20px; }
 }
@@ -959,6 +960,107 @@ mark{
 .terminal-box {
   animation: flicker 0.15s infinite;
 }
+
+/* ============ CHARACTER CREATOR ============ */
+.cc-container { max-width: 900px; margin: 0 auto; padding: 80px 20px 60px; min-height: 100vh; }
+.cc-title { text-align: center; font-family: 'Cinzel Decorative', serif; font-size: clamp(22px,5vw,38px); color: var(--blood); text-shadow: 0 0 20px var(--blood); margin-bottom: 8px; }
+.cc-subtitle { text-align: center; color: var(--ink-soft); font-family: 'Montserrat', sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 36px; }
+.cc-steps-bar { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 44px; flex-wrap: nowrap; }
+.cc-step-item { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; }
+.cc-step-dot { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--blood-dark); display: flex; align-items: center; justify-content: center; font-family: 'Cinzel Decorative', serif; font-size: 12px; color: var(--ink-soft); transition: all 0.3s; background: rgba(255,0,170,0.05); }
+.cc-step-item.active .cc-step-dot { border-color: var(--blood); color: var(--blood); background: rgba(255,0,170,0.15); box-shadow: 0 0 14px rgba(255,0,170,0.4); }
+.cc-step-item.done .cc-step-dot { border-color: var(--gold); color: var(--gold); background: rgba(0,255,255,0.1); box-shadow: 0 0 10px rgba(0,255,255,0.3); }
+.cc-step-label { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-soft); font-family: 'Montserrat', sans-serif; white-space: nowrap; }
+.cc-step-item.active .cc-step-label { color: var(--blood); }
+.cc-step-item.done .cc-step-label { color: var(--gold); }
+.cc-step-connector { width: 40px; height: 2px; background: var(--blood-dark); margin-bottom: 20px; transition: background 0.3s; flex-shrink: 0; }
+.cc-step-connector.done { background: var(--gold); box-shadow: 0 0 6px rgba(0,255,255,0.4); }
+@media (max-width: 600px) { .cc-step-connector { width: 18px; } .cc-step-label { display: none; } }
+.cc-page { display: none; }
+.cc-page.active { display: block; }
+.cc-field { margin-bottom: 20px; }
+.cc-label { display: block; font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 7px; }
+.cc-input { width: 100%; background: rgba(21,5,46,0.8); border: 1px solid var(--blood-dark); color: var(--ink); font-family: 'Crimson Text', serif; font-size: 16px; padding: 10px 14px; border-radius: 4px; transition: border-color 0.3s, box-shadow 0.3s; box-sizing: border-box; }
+.cc-input:focus { outline: none; border-color: var(--blood); box-shadow: 0 0 10px rgba(255,0,170,0.2); }
+.cc-textarea { resize: vertical; min-height: 110px; }
+.cc-select { appearance: none; -webkit-appearance: none; cursor: pointer; }
+.cc-image-upload { position: relative; width: 150px; height: 190px; border: 2px dashed var(--blood-dark); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: border-color 0.3s; overflow: hidden; background: rgba(21,5,46,0.5); }
+.cc-image-upload:hover { border-color: var(--blood); }
+.cc-image-upload input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.cc-image-preview { position: absolute; inset: 0; object-fit: cover; width: 100%; height: 100%; border-radius: 6px; }
+.cc-image-placeholder { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--ink-soft); font-size: 11px; text-align: center; padding: 14px; font-family: 'Montserrat', sans-serif; }
+.cc-image-icon { font-size: 28px; }
+.cc-step1-grid { display: grid; grid-template-columns: 170px 1fr; gap: 28px; align-items: start; margin-bottom: 28px; }
+@media (max-width: 580px) { .cc-step1-grid { grid-template-columns: 1fr; } .cc-image-upload { width: 120px; height: 155px; margin: 0 auto; } }
+.cc-clan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 20px; }
+@media (max-width: 580px) { .cc-clan-grid { grid-template-columns: 1fr; } }
+.cc-clan-card { background: rgba(21,5,46,0.6); border: 1px solid var(--blood-dark); border-radius: 8px; padding: 18px; }
+.cc-clan-card h4 { color: var(--blood); font-family: 'Cinzel Decorative', serif; font-size: 13px; margin: 0 0 10px; text-shadow: 0 0 8px rgba(255,0,170,0.4); }
+.cc-clan-card p { color: var(--ink-soft); font-size: 13px; line-height: 1.6; margin: 0 0 8px; }
+.cc-clan-tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-family: 'Montserrat', sans-serif; letter-spacing: 1px; margin: 2px; background: rgba(0,255,255,0.1); border: 1px solid rgba(0,255,255,0.3); color: var(--gold); }
+.cc-neonato-box { background: linear-gradient(135deg,rgba(255,0,170,0.04),rgba(0,255,255,0.04)); border: 1px solid rgba(0,255,255,0.2); border-left: 3px solid var(--gold); border-radius: 8px; padding: 18px 22px; margin-bottom: 20px; }
+.cc-neonato-box h4 { color: var(--gold); font-family: 'Cinzel Decorative', serif; font-size: 12px; margin: 0 0 10px; }
+.cc-neonato-box p { color: var(--ink-soft); font-size: 13px; line-height: 1.75; margin: 0; }
+.cc-neonato-box strong { color: var(--ink); }
+.cc-step2-header { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 22px; }
+.cc-char-portrait { width: 90px; height: 120px; object-fit: cover; border-radius: 6px; border: 2px solid var(--blood-dark); flex-shrink: 0; }
+.cc-char-portrait-placeholder { width: 90px; height: 120px; border: 2px solid var(--blood-dark); border-radius: 6px; display: flex; align-items: center; justify-content: center; background: rgba(21,5,46,0.5); color: var(--ink-soft); font-size: 22px; flex-shrink: 0; }
+.cc-skills-header { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+.cc-skill-counter { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1px; border: 1px solid; }
+.cc-skill-counter.level-4 { border-color: #ff00aa; color: #ff00aa; background: rgba(255,0,170,0.1); }
+.cc-skill-counter.level-3 { border-color: #ff44cc; color: #ff44cc; background: rgba(255,68,204,0.1); }
+.cc-skill-counter.level-2 { border-color: #00ffff; color: #00ffff; background: rgba(0,255,255,0.1); }
+.cc-skill-counter.level-1 { border-color: #88ffee; color: #88ffee; background: rgba(136,255,238,0.1); }
+.cc-skill-counter.level-neg { border-color: #ff4444; color: #ff4444; background: rgba(255,68,68,0.1); }
+.cc-skill-counter .cc-count { font-size: 15px; font-weight: 900; min-width: 16px; text-align: center; }
+.cc-skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin-bottom: 20px; }
+.cc-skill-row { display: flex; align-items: center; justify-content: space-between; background: rgba(21,5,46,0.6); border: 1px solid var(--blood-dark); border-radius: 6px; padding: 9px 12px; gap: 8px; transition: border-color 0.2s; }
+.cc-skill-row.has-value { border-color: rgba(255,0,170,0.4); }
+.cc-skill-row.is-negative { border-color: rgba(255,68,68,0.4); }
+.cc-skill-name { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-soft); flex: 1; }
+.cc-skill-controls { display: flex; align-items: center; gap: 5px; }
+.cc-skill-btn { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--blood-dark); background: transparent; color: var(--ink-soft); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; padding: 0; line-height: 1; }
+.cc-skill-btn:hover { border-color: var(--blood); color: var(--blood); }
+.cc-skill-val { min-width: 28px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; color: var(--ink); }
+.cc-skill-val.positive { color: var(--gold); }
+.cc-skill-val.negative { color: #ff4444; }
+.cc-disc-native { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 20px; }
+@media (max-width: 580px) { .cc-disc-native { grid-template-columns: 1fr; } }
+.cc-disc-card { background: rgba(21,5,46,0.6); border: 1px solid var(--blood-dark); border-radius: 8px; padding: 16px; text-align: center; }
+.cc-disc-card h5 { color: var(--gold); font-family: 'Cinzel Decorative', serif; font-size: 11px; margin: 0 0 10px; }
+.cc-disc-level-dots { display: flex; justify-content: center; gap: 6px; margin-bottom: 10px; }
+.cc-disc-dot { width: 13px; height: 13px; border-radius: 50%; border: 1px solid var(--blood-dark); background: transparent; transition: all 0.2s; }
+.cc-disc-dot.filled { background: var(--blood); border-color: var(--blood); box-shadow: 0 0 6px rgba(255,0,170,0.5); }
+.cc-disc-controls { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.cc-disc-btn { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--blood-dark); background: transparent; color: var(--ink-soft); font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; padding: 0; }
+.cc-disc-btn:hover { border-color: var(--blood); color: var(--blood); }
+.cc-disc-count { font-family: 'Cinzel Decorative', serif; font-size: 17px; color: var(--blood); min-width: 22px; text-align: center; }
+.cc-destiny-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding: 14px 18px; background: rgba(0,255,255,0.04); border: 1px solid rgba(0,255,255,0.2); border-radius: 8px; flex-wrap: wrap; }
+.cc-destiny-label { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
+.cc-destiny-dots { display: flex; gap: 7px; }
+.cc-destiny-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--gold); background: transparent; transition: all 0.2s; }
+.cc-destiny-dot.filled { background: var(--gold); box-shadow: 0 0 8px rgba(0,255,255,0.5); }
+.cc-destiny-text { color: var(--ink-soft); font-size: 12px; }
+.cc-extra-disc { background: rgba(21,5,46,0.4); border: 1px solid var(--blood-dark); border-radius: 8px; padding: 14px; margin-bottom: 10px; }
+.cc-extra-disc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.cc-extra-disc-header h5 { color: var(--ink); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; margin: 0; }
+.cc-stunt-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; padding: 12px; background: rgba(21,5,46,0.4); border: 1px solid var(--blood-dark); border-radius: 6px; }
+.cc-stunt-remove { background: transparent; border: 1px solid rgba(255,68,68,0.3); color: rgba(255,68,68,0.6); border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 11px; transition: all 0.2s; flex-shrink: 0; }
+.cc-stunt-remove:hover { border-color: #ff4444; color: #ff4444; }
+.cc-add-btn { background: rgba(255,0,170,0.06); border: 1px dashed var(--blood-dark); color: var(--blood); padding: 10px 16px; border-radius: 6px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s; width: 100%; text-align: center; display: block; }
+.cc-add-btn:hover { background: rgba(255,0,170,0.14); border-color: var(--blood); }
+.cc-nav-btns { display: flex; justify-content: space-between; margin-top: 36px; gap: 14px; }
+.cc-btn-prev { background: transparent; border: 1px solid var(--blood-dark); color: var(--ink-soft); padding: 11px 24px; border-radius: 30px; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+.cc-btn-prev:hover { border-color: var(--blood); color: var(--blood); }
+.cc-btn-next { background: rgba(255,0,170,0.1); border: 1px solid var(--blood); color: #fff; padding: 11px 24px; border-radius: 30px; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; text-shadow: 0 0 8px var(--blood); box-shadow: 0 0 10px rgba(255,0,170,0.2); }
+.cc-btn-next:hover { background: rgba(255,0,170,0.2); box-shadow: 0 0 20px rgba(255,0,170,0.4); transform: translateY(-2px); }
+.cc-divider { border: none; border-top: 1px solid rgba(255,0,170,0.12); margin: 28px 0; }
+.cc-section-title { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--blood); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.cc-section-title::after { content: ''; flex: 1; height: 1px; background: rgba(255,0,170,0.18); }
+.cc-creator-grid { display: grid; grid-template-columns: 160px 1fr; gap: 22px; align-items: start; margin-bottom: 20px; }
+@media (max-width: 580px) { .cc-creator-grid { grid-template-columns: 1fr; } }
+.cc-error { color: #ff4444; font-size: 12px; font-family: 'Montserrat', sans-serif; margin-top: 8px; padding: 10px 14px; background: rgba(255,68,68,0.08); border: 1px solid rgba(255,68,68,0.25); border-radius: 4px; display: none; }
+.cc-error.visible { display: block; }
 </style>
 </head>
 <body>
@@ -3242,41 +3344,257 @@ mark{
 
 <!-- ============ SEÇÃO: CRIAR PERSONAGEM ============ -->
 <div id="section-char-creator" class="main-section">
-  <div class="char-creator-container">
-    <h1 style="text-align: center;">Desperte seu Sangue</h1>
-    <div class="page-sub" style="text-align: center;">Inicie sua jornada nas sombras da noite</div>
-    
-    <div class="creator-steps">
-      <div class="step-dot active">I</div>
-      <div class="step-dot">II</div>
-      <div class="step-dot">III</div>
-      <div class="step-dot">IV</div>
+  <div class="cc-container">
+    <h1 class="cc-title">Desperte seu Sangue</h1>
+    <p class="cc-subtitle">Inicie sua jornada nas sombras da noite</p>
+
+    <!-- Steps indicator -->
+    <div class="cc-steps-bar">
+      <div class="cc-step-item active" data-cc-step="1" onclick="ccGoToStep(1)">
+        <div class="cc-step-dot">I</div>
+        <div class="cc-step-label">Identidade</div>
+      </div>
+      <div class="cc-step-connector" id="cc-conn-1"></div>
+      <div class="cc-step-item" data-cc-step="2" onclick="ccGoToStep(2)">
+        <div class="cc-step-dot">II</div>
+        <div class="cc-step-label">Background</div>
+      </div>
+      <div class="cc-step-connector" id="cc-conn-2"></div>
+      <div class="cc-step-item" data-cc-step="3" onclick="ccGoToStep(3)">
+        <div class="cc-step-dot">III</div>
+        <div class="cc-step-label">Perícias</div>
+      </div>
+      <div class="cc-step-connector" id="cc-conn-3"></div>
+      <div class="cc-step-item" data-cc-step="4" onclick="ccGoToStep(4)">
+        <div class="cc-step-dot">IV</div>
+        <div class="cc-step-label">Poderes</div>
+      </div>
+      <div class="cc-step-connector" id="cc-conn-4"></div>
+      <div class="cc-step-item" data-cc-step="5" onclick="ccGoToStep(5)">
+        <div class="cc-step-dot">V</div>
+        <div class="cc-step-label">Criador</div>
+      </div>
     </div>
 
-    <div class="card-grid">
-      <div class="card" style="text-align: center; border-color: var(--gold);">
-        <div class="card-title">Conceito</div>
-        <p>Quem era você antes do abraço?</p>
-        <input type="text" id="char-concept" class="form-control" placeholder="Ex: Detetive Amargurado" oninput="saveDraft()">
+    <!-- ===== STEP 1: IDENTIDADE ===== -->
+    <div class="cc-page active" id="cc-step-1">
+      <div class="cc-step1-grid">
+        <div>
+          <div class="cc-label">Foto do Personagem</div>
+          <div class="cc-image-upload">
+            <input type="file" id="cc-photo-input" accept="image/*" onchange="ccLoadPhoto(this)">
+            <img id="cc-photo-preview" class="cc-image-preview" style="display:none">
+            <div class="cc-image-placeholder" id="cc-photo-placeholder">
+              <span class="cc-image-icon">🩸</span>
+              <span>Clique para carregar</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="cc-field">
+            <label class="cc-label">Nome do Personagem</label>
+            <input type="text" class="cc-input" id="cc-name" placeholder="Nome completo..." oninput="ccSave()">
+          </div>
+          <div class="cc-field">
+            <label class="cc-label">Clã</label>
+            <select class="cc-input cc-select" id="cc-clan" onchange="ccUpdateClan()">
+              <option value="">— Escolha seu Clã —</option>
+              <option>Brujah</option><option>Gangrel</option><option>Malkaviano</option>
+              <option>Nosferatu</option><option>Toreador</option><option>Tremere</option>
+              <option>Ventrue</option><option>Lasombra</option><option>Tzimisce</option>
+              <option>Assamita</option><option>Giovanni</option><option>Ravnos</option>
+              <option>Followers of Set</option><option>Caitiff</option><option>Pander</option>
+            </select>
+          </div>
+        </div>
       </div>
-      <div class="card" style="text-align: center;">
-        <div class="card-title">Clã</div>
-        <p>Qual linhagem corre em suas veias?</p>
-        <select id="char-clan" class="form-control" onchange="saveDraft()">
-          <option>Ventrue</option>
-          <option>Toreador</option>
-          <option>Brujah</option>
-          <option>Tremere</option>
-          <option>Nosferatu</option>
-          <option>Gangrel</option>
-          <option>Malkaviano</option>
-        </select>
+
+      <div id="cc-clan-info" style="display:none">
+        <div class="cc-clan-grid">
+          <div class="cc-clan-card">
+            <h4 id="cc-clan-name-display">—</h4>
+            <p id="cc-clan-desc">—</p>
+            <div class="cc-label" style="font-size:9px;margin-bottom:6px">Disciplinas Nativas</div>
+            <div id="cc-clan-discs"></div>
+          </div>
+          <div class="cc-clan-card">
+            <h4>Função & Papel</h4>
+            <p id="cc-clan-role"></p>
+            <div class="cc-label" style="font-size:9px;margin:10px 0 6px">Fraqueza do Clã</div>
+            <p id="cc-clan-flaw" style="font-style:italic;color:#ff8888;font-size:12px;margin:0"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cc-neonato-box">
+        <h4>◈ Você é um Neonato — 2 Anos de Abraço</h4>
+        <p>
+          <strong>Geração: 13ª</strong> — Sangue distante de Caim. Potência vampírica limitada mas real.<br><br>
+          Como Neonato, você existe à margem da sociedade Kindred. Seu sire ainda é sua âncora. A Camarilla te tolera; os mais velhos te ignoram ou usam. Dois anos foram suficientes para aprender que a noite é vasta e perigosa — mas não para navegar seus jogos completamente.<br><br>
+          <strong>Mecanicamente:</strong> Recarga inicial <strong>5</strong> · Perícia máx <strong>+4</strong> · <strong>3 níveis grátis</strong> em Disciplinas do Clã · <strong>5 pontos de destino</strong> para Disciplinas extras ou Façanhas.
+        </p>
+      </div>
+
+      <div id="cc-error-1" class="cc-error">Preencha o nome e escolha um Clã antes de continuar.</div>
+      <div class="cc-nav-btns">
+        <div></div>
+        <button class="cc-btn-next" onclick="ccNext(1)">Background →</button>
       </div>
     </div>
-    
-    <button class="btn-blood" onclick="saveCharacter()" style="max-width: 200px; margin: 40px auto 0; display: block;">Salvar Personagem</button>
-  </div>
-</div>
+
+    <!-- ===== STEP 2: BACKGROUND ===== -->
+    <div class="cc-page" id="cc-step-2">
+      <div class="cc-step2-header">
+        <div>
+          <img id="cc-portrait-2" class="cc-char-portrait" style="display:none">
+          <div id="cc-portrait-2-ph" class="cc-char-portrait-placeholder">🩸</div>
+        </div>
+        <div>
+          <div style="color:var(--gold);font-family:'Cinzel Decorative',serif;font-size:20px" id="cc-name-display-2">—</div>
+          <div style="color:var(--blood);font-size:13px;margin-top:4px" id="cc-clan-display-2">—</div>
+          <div style="color:var(--ink-soft);font-size:11px;margin-top:4px;font-family:'Montserrat',sans-serif;letter-spacing:1px">NEONATO · 13ª GERAÇÃO · 2 ANOS</div>
+        </div>
+      </div>
+
+      <div class="cc-field">
+        <label class="cc-label">História do Personagem</label>
+        <textarea class="cc-input cc-textarea" id="cc-lore" rows="6" placeholder="Conte a história do seu personagem... Sua vida antes do Abraço, como foi transformado, suas primeiras noites como vampiro, o que o trouxe a Miami..." oninput="ccSave()"></textarea>
+      </div>
+      <div class="cc-field">
+        <label class="cc-label">Conceito</label>
+        <input type="text" class="cc-input" id="cc-concept" placeholder="Ex: Detetive Corrupto que Sabe Demais" oninput="ccSave()">
+      </div>
+      <div class="cc-field">
+        <label class="cc-label">Dificuldade <span style="color:var(--ink-soft);font-size:9px;font-weight:400;letter-spacing:0">(Aspecto-Problema Principal)</span></label>
+        <input type="text" class="cc-input" id="cc-difficulty" placeholder="O grande problema que assombra seu personagem..." oninput="ccSave()">
+        <div style="font-size:11px;color:var(--ink-soft);margin-top:5px;font-family:'Montserrat',sans-serif" id="cc-difficulty-hint"></div>
+      </div>
+      <div class="cc-field">
+        <label class="cc-label">Quem Você Era Antes do Abraço</label>
+        <textarea class="cc-input cc-textarea" id="cc-mortal-self" rows="3" placeholder="Profissão, relações, sonhos, medos... Quem era essa pessoa mortal?" oninput="ccSave()"></textarea>
+      </div>
+
+      <div class="cc-divider"></div>
+      <div class="cc-section-title">Aspectos Livres</div>
+      <div class="cc-field">
+        <label class="cc-label">Aspecto Livre 1</label>
+        <input type="text" class="cc-input" id="cc-aspect-1" placeholder="Um traço, crença, relação ou fato marcante..." oninput="ccSave()">
+      </div>
+      <div class="cc-field">
+        <label class="cc-label">Aspecto Livre 2</label>
+        <input type="text" class="cc-input" id="cc-aspect-2" placeholder="Outro aspecto que define seu personagem..." oninput="ccSave()">
+      </div>
+
+      <div class="cc-nav-btns">
+        <button class="cc-btn-prev" onclick="ccGoToStep(1)">← Identidade</button>
+        <button class="cc-btn-next" onclick="ccNext(2)">Perícias →</button>
+      </div>
+    </div>
+
+    <!-- ===== STEP 3: PERÍCIAS ===== -->
+    <div class="cc-page" id="cc-step-3">
+      <p style="color:var(--ink-soft);font-size:13px;line-height:1.75;margin-bottom:18px">
+        Distribua as perícias formando uma pirâmide. Você tem exatamente:
+        <strong style="color:#ff00aa">1×+4</strong>,
+        <strong style="color:#ff44cc">2×+3</strong>,
+        <strong style="color:#00ffff">3×+2</strong>,
+        <strong style="color:#88ffee">4×+1</strong> e
+        <strong style="color:#ff4444">1×(−1)</strong>.
+        Todas as demais ficam em 0.
+      </p>
+      <div class="cc-skills-header">
+        <div class="cc-skill-counter level-4"><span class="cc-count" id="cc-cnt-4">1</span> restante ×+4</div>
+        <div class="cc-skill-counter level-3"><span class="cc-count" id="cc-cnt-3">2</span> restantes ×+3</div>
+        <div class="cc-skill-counter level-2"><span class="cc-count" id="cc-cnt-2">3</span> restantes ×+2</div>
+        <div class="cc-skill-counter level-1"><span class="cc-count" id="cc-cnt-1">4</span> restantes ×+1</div>
+        <div class="cc-skill-counter level-neg"><span class="cc-count" id="cc-cnt-neg">1</span> restante ×−1</div>
+      </div>
+      <div class="cc-skills-grid" id="cc-skills-grid"></div>
+      <div id="cc-error-3" class="cc-error">Complete a pirâmide antes de continuar: aloque todos os pontos.</div>
+      <div class="cc-nav-btns">
+        <button class="cc-btn-prev" onclick="ccGoToStep(2)">← Background</button>
+        <button class="cc-btn-next" onclick="ccNext(3)">Poderes →</button>
+      </div>
+    </div>
+
+    <!-- ===== STEP 4: DISCIPLINAS & FAÇANHAS ===== -->
+    <div class="cc-page" id="cc-step-4">
+      <div class="cc-section-title">3 Níveis Grátis de Disciplina do Clã</div>
+      <p style="color:var(--ink-soft);font-size:13px;line-height:1.75;margin-bottom:18px">
+        Distribua <strong style="color:var(--blood)">3 níveis</strong> entre as Disciplinas nativas (1/1/1, 2/1/0 ou 3/0/0).
+      </p>
+      <div class="cc-disc-native" id="cc-disc-native-grid"></div>
+
+      <div class="cc-divider"></div>
+      <div class="cc-section-title">5 Pontos de Destino</div>
+      <div class="cc-destiny-bar">
+        <span class="cc-destiny-label">Pontos de Destino</span>
+        <div class="cc-destiny-dots" id="cc-destiny-dots"></div>
+        <span class="cc-destiny-text" id="cc-destiny-remaining">5 restantes</span>
+      </div>
+      <p style="color:var(--ink-soft);font-size:12px;line-height:1.75;margin-bottom:14px">
+        <strong style="color:var(--gold)">1 ponto</strong> → nível extra em Disciplina do Clã &nbsp;|&nbsp;
+        <strong style="color:var(--gold)">2 pontos</strong> → nível em Disciplina fora do Clã &nbsp;|&nbsp;
+        <strong style="color:var(--gold)">1 ponto</strong> → Façanha
+      </p>
+
+      <div class="cc-section-title" style="font-size:9px;margin-bottom:10px">Disciplinas Extras</div>
+      <div id="cc-extra-discs-list"></div>
+      <button class="cc-add-btn" onclick="ccAddExtraDisc()" id="cc-add-disc-btn" style="margin-bottom:22px">+ Adicionar Disciplina Extra</button>
+
+      <div class="cc-section-title" style="font-size:9px;margin-bottom:10px">Façanhas</div>
+      <div id="cc-stunts-list"></div>
+      <button class="cc-add-btn" onclick="ccAddStunt()" id="cc-add-stunt-btn">+ Criar Façanha (1 ponto)</button>
+
+      <div id="cc-error-4" class="cc-error">Pontos de destino insuficientes.</div>
+      <div class="cc-nav-btns">
+        <button class="cc-btn-prev" onclick="ccGoToStep(3)">← Perícias</button>
+        <button class="cc-btn-next" onclick="ccNext(4)">Criador →</button>
+      </div>
+    </div>
+
+    <!-- ===== STEP 5: CRIADOR ===== -->
+    <div class="cc-page" id="cc-step-5">
+      <p style="color:var(--ink-soft);font-size:13px;line-height:1.75;margin-bottom:22px">
+        Seu <strong style="color:var(--blood)">Criador</strong> é o vampiro que te deu o Abraço. Ele é sua âncora, seu mestre, seu algoz ou sua inspiração. Defina quem é essa figura sombria.
+      </p>
+      <div class="cc-creator-grid">
+        <div>
+          <div class="cc-label">Foto do Criador</div>
+          <div class="cc-image-upload">
+            <input type="file" id="cc-creator-photo-input" accept="image/*" onchange="ccLoadCreatorPhoto(this)">
+            <img id="cc-creator-photo-preview" class="cc-image-preview" style="display:none">
+            <div class="cc-image-placeholder" id="cc-creator-photo-ph">
+              <span class="cc-image-icon">🦇</span>
+              <span>Foto do Criador</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="cc-field">
+            <label class="cc-label">Nome do Criador</label>
+            <input type="text" class="cc-input" id="cc-creator-name" placeholder="Nome completo..." oninput="ccSave()">
+          </div>
+        </div>
+      </div>
+      <div class="cc-field">
+        <label class="cc-label">História do Criador</label>
+        <textarea class="cc-input cc-textarea" id="cc-creator-lore" rows="5" placeholder="Quem é este vampiro? De onde veio, há quanto tempo existe, que papel ocupa na sociedade Kindred de Miami..." oninput="ccSave()"></textarea>
+      </div>
+      <div class="cc-field">
+        <label class="cc-label">Personalidade</label>
+        <textarea class="cc-input cc-textarea" id="cc-creator-personality" rows="4" placeholder="Como ele age, o que valoriza, seus vícios, seu humor, como lida com criações..." oninput="ccSave()"></textarea>
+      </div>
+      <div class="cc-field">
+        <label class="cc-label">Relação com Você</label>
+        <textarea class="cc-input cc-textarea" id="cc-creator-relation" rows="4" placeholder="Por que te abraçou? Como é a dinâmica entre vocês agora? Há afeto, ressentimento, obrigação, dívida?" oninput="ccSave()"></textarea>
+      </div>
+      <div class="cc-nav-btns">
+        <button class="cc-btn-prev" onclick="ccGoToStep(4)">← Poderes</button>
+        <button class="cc-btn-next" onclick="ccFinish()" style="background:rgba(0,255,255,0.08);border-color:var(--gold);color:var(--gold);text-shadow:0 0 8px var(--gold);box-shadow:0 0 10px rgba(0,255,255,0.2)">Finalizar ✦</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -3618,6 +3936,321 @@ document.addEventListener('keydown', (e) => {
     focusSearch();
   }
 });
+
+// ============ CHARACTER CREATOR ============
+const CC_CLANS = {
+  'Brujah':          { disciplines:['Celeridade','Potência','Presença'],        desc:'Rebeldes e guerreiros. Os Brujah são apaixonados, impulsivos e leais às suas causas. Filósofos que se tornaram soldados.',      role:'Combate, oratória e conflito. Especialistas em confronto direto — físico ou ideológico. Líderes caóticos ou força intelectual.',  flaw:'Fúria Indomável — resistência a Frenesi de Raiva tem dificuldade aumentada. Qualquer provocação pode bastar.',  difficulty:'Causa que vale morrer — e matar — por ela' },
+  'Gangrel':         { disciplines:['Animalismo','Fortitude','Proteu'],          desc:'Nômades e selvagens. Os Gangrel pertencem à noite e à terra aberta. São os mais próximos da natureza predatória do vampiro.',   role:'Sobrevivência, combate selvagem e companhia animal. Rastreadores e guerreiros resistentes, excelentes fora das cidades.',           flaw:'A Besta Marca — cada Frenesi deixa um traço animal permanente (olhos de gato, orelhas pontudas...).',             difficulty:'A Besta dentro de mim vive cada vez mais perto da superfície' },
+  'Malkaviano':      { disciplines:['Auspícios','Dementação','Ofuscação'],       desc:'Loucos proféticos. Todos os Malkavians têm uma loucura fundamental que os conecta a verdades que outros não conseguem ver.',       role:'Informação, manipulação e percepção sobre-humana. Espiões, oráculos e perturbadores do status quo.',                                flaw:'Desordem Mental Incurável — todos têm um distúrbio permanente. O Abraço não cura; frequentemente amplifica.',      difficulty:'As vozes não mentem, mas raramente falam claramente' },
+  'Nosferatu':       { disciplines:['Animalismo','Ofuscação','Potência'],        desc:'Monstros das sombras. O Abraço os deforma em algo claramente não-humano. Vivem nos esgotos, coletando informações que outros ignoram.', role:'Inteligência e sabotagem. Os melhores coletores de informação de todos os Clãs — ninguém vigia os invisíveis.',                  flaw:'Aparência Monstruosa — viola automaticamente a Máscara em espaços públicos. Só Ofuscação permite interação normal.',difficulty:'Monstros que o mundo não deve ver' },
+  'Toreador':        { disciplines:['Auspícios','Celeridade','Presença'],        desc:'Artistas e sedutores. Os Toreador vivem para a beleza — criá-la, experimentá-la, possuí-la. São os mais "humanos" dos vampiros.',   role:'Influência social, sedução e controle de situações. Face do grupo, manipuladores e negociadores de alto nível.',                    flaw:'Preso pela Beleza — diante de algo genuinamente belo deve rolar Vontade para agir. Pode ficar parado contemplando.', difficulty:'Beleza que corrompe e que me corrompe' },
+  'Tremere':         { disciplines:['Auspícios','Dominação','Taumaturgia'],      desc:'Feiticeiros de sangue. Magos que buscaram a imortalidade e a encontraram como vampiros. Taumaturgia os torna poderosos e temidos.',   role:'Magia de sangue versátil, controle mental e suporte arcano. Eficazes em quase qualquer situação com preparação.',                   flaw:'Juramento de Sangue — todos têm Laço de Sangue Triplo com o Conselho de Sete. Ordens do Clã são irresistíveis.',   difficulty:'O Clã sabe tudo. E cobra tudo.' },
+  'Ventrue':         { disciplines:['Dominação','Fortitude','Presença'],         desc:'Aristocracia vampírica. Os Ventrue são a espinha dorsal da Camarilla — Príncipes, políticos, CEOs da noite.',                        role:'Liderança, controle político e resistência física. Excelentes em situações sociais de alto nível e em absorver dano.',               flaw:'Dieta Restrita — cada Ventrue só bebe de um tipo específico de vítima. Sangue de outros tipos não nutre.',          difficulty:'O peso da coroa que não posso deixar cair' },
+  'Lasombra':        { disciplines:['Dominação','Obtenebração','Potência'],      desc:'Senhores das sombras do Sabbat. Abraçam a natureza predatória do vampiro completamente. Políticos de ferro e manipuladores das trevas.',role:'Controle de sombras, intimidação e combate. Dominação política dentro do Sabbat, terror tático no campo.',                         flaw:'Sem Reflexo — não aparecem em espelhos, câmeras ou superfícies refletivas. Viola a Máscara em ambientes modernos.',difficulty:'A escuridão que governo também me devora' },
+  'Tzimisce':        { disciplines:['Animalismo','Auspícios','Vicissitude'],     desc:'Demônios da carne do Sabbat. Aristocratas do leste europeu que se tornaram algo completamente além do humano. Remodelam carne e osso.', role:'Modificação corporal, horror tático e criação de ghoul-monstros. Construtores de "ferramentas" biológicas.',                      flaw:'Terra Natal — deve dormir em terra de sua pátria (pelo menos 1,5kg). Sem ela, não descansa e perde poderes.',       difficulty:'O que faço com carne alheia, farei comigo mesmo' },
+  'Assamita':        { disciplines:['Celeridade','Ofuscação','Quietus'],         desc:'Assassinos da Antiga Pérsia. Guerreiros e assassinos de elite, contratados para eliminar alvos. Cultuam Haqim e buscam a perfeição.',   role:'Assassinato, furtividade e combate de alta velocidade. Os melhores caçadores de vampiros entre os Clãs.',                           flaw:'Sede de Sangue Kindred — compulsão para provar o sangue de vampiros que matam. Falhar significa Diablerie potencial.', difficulty:'A Sede não distingue amigo de inimigo' },
+  'Giovanni':        { disciplines:['Dominação','Potência','Necromancia'],       desc:'Família italiana de necromantes. Os Giovanni dominam a morte e os mortos. Controlam negócios e espíritos com igual facilidade.',         role:'Necromancia e espionagem espiritual. Informação através dos mortos, exércitos de espectros, controle sobre a morte.',               flaw:'Mordida Agoniante — causa dor excruciante em vez de prazer. Mortais gritam; vampiros sentem dano dobrado.',         difficulty:'A família sempre tem prioridade. Sempre.' },
+  'Ravnos':          { disciplines:['Animalismo','Ofuscação','Quimerismo'],      desc:'Ciganos ilusionistas. Nômades e trapaceiros, criando ilusões e explorando fraquezas. Cada um carrega um vício específico no sangue.',   role:'Ilusões, engano e mobilidade. Excelentes em criar confusão, escapar de situações e manipular percepções.',                           flaw:'Vício de Sangue — um pecado/crime que o sangue os compele a cometer regularmente (roubar, mentir, trapacear...).',  difficulty:'Não consigo parar mesmo quando quero' },
+  'Followers of Set':{ disciplines:['Ofuscação','Presença','Serpentis'],         desc:'Sacerdotes do deus Set. Acreditam que Set dorme e querem libertá-lo. Corrompem e seduzem, espalhando os vícios que Set aprecia.',       role:'Corrupção, sedução e contraespionagem. Excelentes em criar redes de dependência e resistir a influências sobrenaturais.',            flaw:'Sensibilidade à Luz — qualquer luz intensa perturba. Luz artificial forte também causa desconforto além da solar.',  difficulty:'Cada alma que corrompo me afasta mais da minha própria' },
+  'Caitiff':         { disciplines:[],                                            desc:'Sem Clã, sem proteção, sem herança. Não têm pai Clã reconhecido. Livres das obrigações de Clã, mas também de suas proteções.',            role:'Qualquer coisa — e essa é tanto a força quanto a fraqueza do Caitiff. Sem comunidade, sem respaldo.',                               flaw:'Rejeitado por Todos — todos os vampiros desconfiam. Situações sociais com Kindred têm dificuldade aumentada.',       difficulty:'Ninguém me quer; então preciso me fazer necessário' },
+  'Pander':          { disciplines:[],                                            desc:'Caitiff do Sabbat. Reconhecidos como "família" informal da seita, mas sem prestígio das Clãs antigas. Liberdade de disciplinas.',         role:'Flexíveis e adaptáveis. O Sabbat os usa como tropa de choque. Sem nativa definida.',                                                 flaw:'Peão do Sabbat — externos desconfiam duplamente: sem Clã E do Sabbat.',                                              difficulty:'Lutar pelos que me tratam como descartável' }
+};
+
+const CC_ALL_DISCIPLINES = ['Animalismo','Auspícios','Celeridade','Dominação','Fortitude','Ofuscação','Potência','Presença','Dementação','Obtenebração','Proteu','Quimerismo','Quietus','Serpentis','Taumaturgia','Necromancia','Temporis','Vicissitude','Visceratika','Valeren'];
+
+const CC_SKILLS = ['Atletismo','Carisma','Contatos','Dirigir','Empatia','Expressão','Lutar','Investigar','Conhecimento','Manipulação','Percepção','Ocultismo','Fisiologia','Recursos','Atirar','Furtividade','Ruídos','Sobrevivência','Tecnologia','Vontade'];
+
+let ccPyramidLeft = {'4':1,'3':2,'2':3,'1':4,'-1':1};
+
+let ccState = {
+  photo:null, name:'', clan:'', lore:'', concept:'', difficulty:'', mortalSelf:'',
+  aspect1:'', aspect2:'', skills:{}, discFree:{}, discExtra:[], stunts:[],
+  creatorPhoto:null, creatorName:'', creatorLore:'', creatorPersonality:'', creatorRelation:''
+};
+
+let ccCurrentStep = 1;
+
+function ccInit() {
+  ccRenderSkillsGrid();
+  const saved = localStorage.getItem('cc_draft_v2');
+  if (saved) { try { Object.assign(ccState, JSON.parse(saved)); ccRestoreForm(); } catch(e){} }
+}
+
+function ccSave() {
+  const g = id => document.getElementById(id);
+  ccState.name = g('cc-name')?.value||'';
+  ccState.lore = g('cc-lore')?.value||'';
+  ccState.concept = g('cc-concept')?.value||'';
+  ccState.difficulty = g('cc-difficulty')?.value||'';
+  ccState.mortalSelf = g('cc-mortal-self')?.value||'';
+  ccState.aspect1 = g('cc-aspect-1')?.value||'';
+  ccState.aspect2 = g('cc-aspect-2')?.value||'';
+  ccState.creatorName = g('cc-creator-name')?.value||'';
+  ccState.creatorLore = g('cc-creator-lore')?.value||'';
+  ccState.creatorPersonality = g('cc-creator-personality')?.value||'';
+  ccState.creatorRelation = g('cc-creator-relation')?.value||'';
+  localStorage.setItem('cc_draft_v2', JSON.stringify(ccState));
+}
+
+function ccRestoreForm() {
+  const set = (id,v) => { const el=document.getElementById(id); if(el&&v) el.value=v; };
+  set('cc-name',ccState.name); set('cc-lore',ccState.lore); set('cc-concept',ccState.concept);
+  set('cc-difficulty',ccState.difficulty); set('cc-mortal-self',ccState.mortalSelf);
+  set('cc-aspect-1',ccState.aspect1); set('cc-aspect-2',ccState.aspect2);
+  set('cc-creator-name',ccState.creatorName); set('cc-creator-lore',ccState.creatorLore);
+  set('cc-creator-personality',ccState.creatorPersonality); set('cc-creator-relation',ccState.creatorRelation);
+  if(ccState.clan){ const el=document.getElementById('cc-clan'); if(el){el.value=ccState.clan;ccUpdateClan();} }
+  if(ccState.photo){ const p=document.getElementById('cc-photo-preview'); if(p){p.src=ccState.photo;p.style.display='block';document.getElementById('cc-photo-placeholder').style.display='none';} }
+  if(ccState.creatorPhoto){ const p=document.getElementById('cc-creator-photo-preview'); if(p){p.src=ccState.creatorPhoto;p.style.display='block';document.getElementById('cc-creator-photo-ph').style.display='none';} }
+  if(ccState.skills && Object.keys(ccState.skills).length){ ccRecalcPyramid(); ccRenderSkillsGrid(); }
+}
+
+function ccLoadPhoto(input) {
+  if(!input.files[0]) return;
+  const r=new FileReader();
+  r.onload=e=>{ ccState.photo=e.target.result; const p=document.getElementById('cc-photo-preview'); p.src=e.target.result; p.style.display='block'; document.getElementById('cc-photo-placeholder').style.display='none'; ccSave(); };
+  r.readAsDataURL(input.files[0]);
+}
+
+function ccLoadCreatorPhoto(input) {
+  if(!input.files[0]) return;
+  const r=new FileReader();
+  r.onload=e=>{ ccState.creatorPhoto=e.target.result; const p=document.getElementById('cc-creator-photo-preview'); p.src=e.target.result; p.style.display='block'; document.getElementById('cc-creator-photo-ph').style.display='none'; ccSave(); };
+  r.readAsDataURL(input.files[0]);
+}
+
+function ccUpdateClan() {
+  const clan=document.getElementById('cc-clan').value; ccState.clan=clan;
+  const info=document.getElementById('cc-clan-info');
+  if(!clan||!CC_CLANS[clan]){info.style.display='none';return;}
+  info.style.display='block';
+  const c=CC_CLANS[clan];
+  document.getElementById('cc-clan-name-display').textContent=clan;
+  document.getElementById('cc-clan-desc').textContent=c.desc;
+  document.getElementById('cc-clan-role').textContent=c.role;
+  document.getElementById('cc-clan-flaw').textContent=c.flaw;
+  document.getElementById('cc-clan-discs').innerHTML=(c.disciplines.length?c.disciplines:['Livre — escolha 3']).map(d=>`<span class="cc-clan-tag">${d}</span>`).join('');
+  const hint=document.getElementById('cc-difficulty-hint');
+  if(hint) hint.textContent=c.difficulty?`Sugestão: "${c.difficulty}"`:'';
+  ccRenderDiscNative();
+  ccSave();
+}
+
+function ccGoToStep(n) {
+  if(n<1||n>5) return;
+  document.querySelectorAll('.cc-page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('cc-step-'+n).classList.add('active');
+  document.querySelectorAll('[data-cc-step]').forEach(el=>{
+    const s=parseInt(el.dataset.ccStep);
+    el.classList.remove('active','done');
+    if(s===n) el.classList.add('active');
+    else if(s<n) el.classList.add('done');
+  });
+  for(let i=1;i<=4;i++){ const c=document.getElementById('cc-conn-'+i); if(c) c.classList.toggle('done',i<n); }
+  ccCurrentStep=n;
+  if(n===2) ccRefreshStep2();
+  if(n===3) { ccRenderSkillsGrid(); ccUpdatePyramidCounters(); }
+  if(n===4) { ccRenderDiscNative(); ccRenderExtraDiscs(); ccRenderStunts(); ccRenderDestinyDots(); }
+  scrollToTop();
+}
+
+function ccNext(step) {
+  const err=document.getElementById('cc-error-'+step);
+  if(err) err.classList.remove('visible');
+  if(step===1){
+    if(!document.getElementById('cc-name').value.trim()||!document.getElementById('cc-clan').value){
+      if(err) err.classList.add('visible'); return;
+    }
+  }
+  if(step===3 && !ccIsPyramidComplete()){ if(err) err.classList.add('visible'); return; }
+  ccSave(); ccGoToStep(step+1);
+}
+
+function ccRefreshStep2() {
+  document.getElementById('cc-name-display-2').textContent=ccState.name||'—';
+  document.getElementById('cc-clan-display-2').textContent=ccState.clan||'—';
+  const p=document.getElementById('cc-portrait-2'), ph=document.getElementById('cc-portrait-2-ph');
+  if(ccState.photo){ p.src=ccState.photo; p.style.display='block'; ph.style.display='none'; }
+  else { p.style.display='none'; ph.style.display='flex'; }
+  const hint=document.getElementById('cc-difficulty-hint');
+  if(hint&&ccState.clan&&CC_CLANS[ccState.clan]&&!document.getElementById('cc-difficulty').value)
+    hint.textContent=`Sugestão: "${CC_CLANS[ccState.clan].difficulty}"`;
+}
+
+// ---- SKILLS ----
+function ccRenderSkillsGrid() {
+  const grid=document.getElementById('cc-skills-grid'); if(!grid) return;
+  grid.innerHTML=CC_SKILLS.map(skill=>{
+    const val=ccState.skills[skill]||0;
+    const disp=val>0?'+'+val:''+val;
+    const cls=val>0?'positive':val<0?'negative':'';
+    const rowCls=val<0?'is-negative':val!==0?'has-value':'';
+    return `<div class="cc-skill-row ${rowCls}" id="cc-skill-row-${skill}">
+      <span class="cc-skill-name">${skill}</span>
+      <div class="cc-skill-controls">
+        <button class="cc-skill-btn" onclick="ccSkillChange('${skill}',-1)">−</button>
+        <span class="cc-skill-val ${cls}" id="cc-skill-val-${skill}">${disp}</span>
+        <button class="cc-skill-btn" onclick="ccSkillChange('${skill}',1)">+</button>
+      </div></div>`;
+  }).join('');
+  ccUpdatePyramidCounters();
+}
+
+function ccSkillChange(skill,delta) {
+  const cur=ccState.skills[skill]||0, tgt=cur+delta;
+  if(tgt>4||tgt<-1) return;
+  const tk=String(tgt);
+  if(tgt!==0&&(ccPyramidLeft[tk]||0)<=0) return;
+  if(cur!==0) ccPyramidLeft[String(cur)]=(ccPyramidLeft[String(cur)]||0)+1;
+  if(tgt!==0) ccPyramidLeft[tk]=(ccPyramidLeft[tk]||0)-1;
+  ccState.skills[skill]=tgt;
+  const v=document.getElementById('cc-skill-val-'+skill), rw=document.getElementById('cc-skill-row-'+skill);
+  if(v){v.textContent=tgt>0?'+'+tgt:''+tgt; v.className='cc-skill-val '+(tgt>0?'positive':tgt<0?'negative':'');}
+  if(rw) rw.className='cc-skill-row'+(tgt<0?' is-negative':tgt!==0?' has-value':'');
+  ccUpdatePyramidCounters(); ccSave();
+}
+
+function ccUpdatePyramidCounters() {
+  const m={'4':'cc-cnt-4','3':'cc-cnt-3','2':'cc-cnt-2','1':'cc-cnt-1','-1':'cc-cnt-neg'};
+  Object.entries(m).forEach(([k,id])=>{ const el=document.getElementById(id); if(el) el.textContent=ccPyramidLeft[k]||0; });
+}
+
+function ccRecalcPyramid() {
+  ccPyramidLeft={'4':1,'3':2,'2':3,'1':4,'-1':1};
+  Object.entries(ccState.skills).forEach(([,v])=>{ if(v!==0) ccPyramidLeft[String(v)]=(ccPyramidLeft[String(v)]||0)-1; });
+}
+
+function ccIsPyramidComplete() { return Object.values(ccPyramidLeft).every(v=>v===0); }
+
+// ---- DISCIPLINES ----
+function ccRenderDiscNative() {
+  const grid=document.getElementById('cc-disc-native-grid'); if(!grid) return;
+  const discs=(ccState.clan&&CC_CLANS[ccState.clan])?CC_CLANS[ccState.clan].disciplines:[];
+  if(!discs.length){
+    grid.innerHTML=`<div style="color:var(--ink-soft);font-size:13px;grid-column:1/-1">${!ccState.clan?'Selecione um Clã primeiro.':'Caitiff/Pander: use Disciplinas Extras abaixo para distribuir seus 3 níveis livres.'}</div>`;
+    return;
+  }
+  const total=Object.values(ccState.discFree).reduce((a,b)=>a+b,0);
+  grid.innerHTML=discs.map(disc=>{
+    const lv=ccState.discFree[disc]||0;
+    const dots=[1,2,3].map(i=>`<div class="cc-disc-dot ${i<=lv?'filled':''}"></div>`).join('');
+    return `<div class="cc-disc-card"><h5>${disc}</h5>
+      <div class="cc-disc-level-dots">${dots}</div>
+      <div class="cc-disc-controls">
+        <button class="cc-disc-btn" onclick="ccDiscFreeChange('${disc}',-1)">−</button>
+        <span class="cc-disc-count">${lv}</span>
+        <button class="cc-disc-btn" onclick="ccDiscFreeChange('${disc}',1)">+</button>
+      </div></div>`;
+  }).join('');
+}
+
+function ccDiscFreeChange(disc,delta) {
+  const cur=ccState.discFree[disc]||0, nv=cur+delta;
+  if(nv<0||nv>3) return;
+  const total=Object.values(ccState.discFree).reduce((a,b)=>a+b,0);
+  if(delta>0&&total>=3) return;
+  ccState.discFree[disc]=nv;
+  ccRenderDiscNative(); ccSave();
+}
+
+// ---- DESTINY POINTS ----
+function ccCalcDestinySpent() {
+  return ccState.discExtra.reduce((s,d)=>s+d.cost,0)+ccState.stunts.length;
+}
+
+function ccRenderDestinyDots() {
+  const c=document.getElementById('cc-destiny-dots'); if(!c) return;
+  const spent=ccCalcDestinySpent(), left=5-spent;
+  c.innerHTML=Array.from({length:5},(_,i)=>`<div class="cc-destiny-dot ${i<spent?'filled':''}"></div>`).join('');
+  const t=document.getElementById('cc-destiny-remaining');
+  if(t) t.textContent=left+' restante'+(left!==1?'s':'');
+}
+
+function ccAddExtraDisc() {
+  if(ccCalcDestinySpent()>=5) return;
+  ccState.discExtra.push({id:Date.now(),disc:'',levels:1,cost:1,inClan:true});
+  ccRenderExtraDiscs(); ccRenderDestinyDots(); ccSave();
+}
+
+function ccRemoveExtraDisc(id) {
+  ccState.discExtra=ccState.discExtra.filter(d=>d.id!==id);
+  ccRenderExtraDiscs(); ccRenderDestinyDots(); ccSave();
+}
+
+function ccRenderExtraDiscs() {
+  const list=document.getElementById('cc-extra-discs-list'); if(!list) return;
+  list.innerHTML=ccState.discExtra.map(d=>`
+    <div class="cc-extra-disc">
+      <div class="cc-extra-disc-header"><h5>Disciplina Extra (custo: ${d.cost} pts)</h5>
+        <button class="cc-stunt-remove" onclick="ccRemoveExtraDisc(${d.id})">Remover</button></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div><div class="cc-label" style="font-size:9px">Disciplina</div>
+          <select class="cc-input cc-select" onchange="ccUpdateExtraDisc(${d.id},'disc',this.value)">
+            <option value="">— Escolha —</option>
+            ${CC_ALL_DISCIPLINES.map(x=>`<option value="${x}" ${d.disc===x?'selected':''}>${x}</option>`).join('')}
+          </select></div>
+        <div><div class="cc-label" style="font-size:9px">Custo por Nível</div>
+          <select class="cc-input cc-select" onchange="ccUpdateExtraDisc(${d.id},'inClan',this.value==='clan')">
+            <option value="clan" ${d.inClan?'selected':''}>Do Clã — 1 pt/nível</option>
+            <option value="outside" ${!d.inClan?'selected':''}>Fora do Clã — 2 pts/nível</option>
+          </select></div>
+      </div>
+      <div style="margin-top:10px"><div class="cc-label" style="font-size:9px">Níveis</div>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:6px">
+          <button class="cc-disc-btn" onclick="ccUpdateExtraDisc(${d.id},'levels',${Math.max(1,d.levels-1)})">−</button>
+          <span style="color:var(--blood);font-size:17px;font-weight:700">${d.levels}</span>
+          <button class="cc-disc-btn" onclick="ccUpdateExtraDisc(${d.id},'levels',${d.levels+1})">+</button>
+        </div></div>
+    </div>`).join('');
+}
+
+function ccUpdateExtraDisc(id,field,value) {
+  const d=ccState.discExtra.find(x=>x.id===id); if(!d) return;
+  const old={...d};
+  if(field==='inClan') d.inClan=(value===true||value==='true'||value==='clan');
+  else d[field]=value;
+  d.cost=d.levels*(d.inClan?1:2);
+  if(ccCalcDestinySpent()>5){ Object.assign(d,old); d.cost=old.cost; }
+  ccRenderExtraDiscs(); ccRenderDestinyDots(); ccSave();
+}
+
+function ccAddStunt() {
+  if(ccCalcDestinySpent()>=5) return;
+  ccState.stunts.push({id:Date.now(),name:'',desc:''});
+  ccRenderStunts(); ccRenderDestinyDots(); ccSave();
+}
+
+function ccRemoveStunt(id) {
+  ccState.stunts=ccState.stunts.filter(s=>s.id!==id);
+  ccRenderStunts(); ccRenderDestinyDots(); ccSave();
+}
+
+function ccRenderStunts() {
+  const list=document.getElementById('cc-stunts-list'); if(!list) return;
+  list.innerHTML=ccState.stunts.map(s=>`
+    <div class="cc-stunt-item">
+      <div style="flex:1">
+        <input type="text" class="cc-input" placeholder="Nome da Façanha..." value="${s.name||''}" oninput="ccUpdateStunt(${s.id},'name',this.value)" style="margin-bottom:7px">
+        <input type="text" class="cc-input" placeholder="Descrição: Uma vez por cena, posso..." value="${s.desc||''}" oninput="ccUpdateStunt(${s.id},'desc',this.value)">
+      </div>
+      <button class="cc-stunt-remove" onclick="ccRemoveStunt(${s.id})">✕</button>
+    </div>`).join('');
+}
+
+function ccUpdateStunt(id,field,value) {
+  const s=ccState.stunts.find(x=>x.id===id); if(s){s[field]=value;ccSave();}
+}
+
+function ccFinish() {
+  ccSave();
+  const name=ccState.name||'Personagem';
+  document.getElementById('cc-step-5').innerHTML += `<div class="cc-neonato-box" style="margin-top:24px;border-left-color:var(--blood)"><h4>✦ ${name} foi salvo!</h4><p>Seu personagem foi salvo localmente. Em breve será possível exportar a ficha completa como PDF.</p></div>`;
+}
+
+// Init when section is activated — hook into switchMainSection
+const _origSwitch = typeof switchMainSection === 'function' ? switchMainSection : null;
+// We patch switchMainSection after definition to init CC when entering char-creator
+window.addEventListener('load', () => { ccInit(); });
 
 // ============ SUPABASE CONNECTION ============
 // NOTA: 'Px7RZwjEGnwh6gRD' parece ser a senha do banco de dados (database password).
