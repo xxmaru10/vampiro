@@ -418,6 +418,24 @@ tr:hover td{background: rgba(0, 255, 255, 0.05)}
   text-transform: uppercase;
   letter-spacing: 1px;
 }
+.disc-cost {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 3px;
+  margin-left: 6px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.disc-cost.free { background: rgba(0,255,128,0.10); color: #00d96a; border: 1px solid rgba(0,255,128,0.25); }
+.disc-cost.sangue { background: rgba(255,0,170,0.12); color: var(--blood-bright); border: 1px solid rgba(255,0,170,0.30); }
+.disc-cost.pd { background: rgba(0,200,255,0.10); color: #4df0ff; border: 1px solid rgba(0,200,255,0.25); }
+.disc-cost.sangue-pd { background: rgba(180,0,220,0.12); color: #e080ff; border: 1px solid rgba(180,0,220,0.28); }
+.disc-cost.pd2 { background: rgba(255,160,0,0.10); color: #ffb84d; border: 1px solid rgba(255,160,0,0.28); }
+.disc-cost.proprio { background: rgba(255,80,80,0.10); color: #ff8080; border: 1px solid rgba(255,80,80,0.28); }
 .level-elder-tag{
   display: inline-block;
   font-size: 12px;
@@ -1402,7 +1420,7 @@ mark{
         <td>Pirâmide +4</td>
         <td>3 níveis no Clã (grátis)</td>
         <td>5</td>
-        <td>3 Físico / 3 Mental</td>
+        <td>3 Físico / 3 Mental / 3 Sangue</td>
       </tr>
       <tr>
         <td><strong>Ancião</strong></td>
@@ -1410,7 +1428,7 @@ mark{
         <td>Pirâmide +5</td>
         <td>6 níveis</td>
         <td>3</td>
-        <td>3 Físico / 3 Mental</td>
+        <td>3 Físico / 3 Mental / 4 Sangue</td>
       </tr>
       <tr>
         <td><strong>Antigo</strong></td>
@@ -1418,7 +1436,7 @@ mark{
         <td>Pirâmide +6</td>
         <td>9 níveis</td>
         <td>1</td>
-        <td>3 Físico / 3 Mental</td>
+        <td>3 Físico / 3 Mental / 5 Sangue</td>
       </tr>
     </tbody>
   </table>
@@ -1776,6 +1794,16 @@ mark{
   <div class="callout">
     <div class="callout-title">Como funcionam</div>
     <p>Cada <strong>Disciplina</strong> tem 4 níveis. Cada nível é um Extra separado que custa <strong>2 de recarga</strong>. O nível 4 é <em>exclusivo de Anciões</em> — Neonatos não têm acesso. Muitas Disciplinas têm um <em>efeito passivo</em> sempre ativo, descrito no topo.</p>
+    <p style="margin-top:12px"><strong>Custo de ativação</strong> — cada nível indica seu custo com um badge colorido:</p>
+    <p style="margin-top:6px;line-height:2">
+      <span class="disc-cost free">Gratuito</span> Sem custo — efeito passivo ou sempre ativo. &nbsp;
+      <span class="disc-cost sangue">1 Sangue</span> Gasta do seu Pool de Sangue. &nbsp;
+      <span class="disc-cost pd">1 PD</span> Gasta um Ponto de Destino (vontade). &nbsp;
+      <span class="disc-cost sangue-pd">1 Sangue + 1 PD</span> Gasta os dois. &nbsp;
+      <span class="disc-cost pd2">2 PD</span> Dois Pontos de Destino. &nbsp;
+      <span class="disc-cost proprio">1 Estresse próprio</span> Você aceita dano para ativar.
+    </p>
+    <p style="margin-top:8px">Ver <a href="#" data-goto="sangue">Pool de Sangue</a> para quantos pontos de sangue seu vampiro tem por geração.</p>
   </div>
 
   <div class="callout homebrew">
@@ -1795,38 +1823,38 @@ mark{
   <div class="tab-content active" id="tab-physical">
     <div class="discipline">
       <h3>Celeridade <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: Um personagem com Celeridade que tira sucesso com estilo em combate pode usar o boost para uma ação adicional.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Básico:</span> +2 em Atletismo para velocidade e defesa física. Uma vez escolhido, permanece sempre ativo.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Intermediário:</span> +2 adicional em velocidade e defesa (total +4). Custa 1 PD para ativar esta ou qualquer camada superior numa cena.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Avançado:</span> Mais +2 (total +6).</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Flor da Morte<span class="level-elder-tag">Ancião</span></span> Faça um ataque corpo-a-corpo contra <em>todos</em> os adversários na zona.</div></div>
+      <div class="discipline-passive">Passivo: <span class="disc-cost free">Gratuito</span> Um personagem com Celeridade que tira sucesso com estilo em combate pode usar o boost para uma ação adicional.</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Básico:</span> <span class="disc-cost free">Gratuito</span> +2 em Atletismo para velocidade e defesa física. Permanece sempre ativo — não exige ativação.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Intermediário:</span> <span class="disc-cost sangue">1 Sangue</span> +2 adicional em velocidade e defesa (total +4). Gaste 1 Sangue para ativar esta camada (ou qualquer superior que você possua) por uma cena.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Avançado:</span> <span class="disc-cost sangue">1 Sangue</span> Mais +2 (total +6). Incluído na mesma ativação do Intermediário — se já pagou 1 Sangue para ativar a Celeridade nessa cena, usa o nível máximo que tiver.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Flor da Morte<span class="level-elder-tag">Ancião</span></span> <span class="disc-cost sangue-pd">1 Sangue + 1 PD</span> Faça um ataque corpo-a-corpo contra <em>todos</em> os adversários na zona.</div></div>
     </div>
 
     <div class="discipline">
       <h3>Fortitude <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: Qualquer personagem com Fortitude pode usar Fisiologia em lugar de Atletismo para defender-se de ataques físicos.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Básico:</span> Armadura 2 contra estresse físico.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Intermediário:</span> +2 em Fisiologia quando usada para defender.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Avançado:</span> Ganha uma caixa extra de consequência moderada.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Resistência Lendária<span class="level-elder-tag">Ancião</span></span> Gaste 1 PD para cancelar todo o dano de um ataque. Adicionalmente, quando se defender com sucesso usando Fisiologia, <em>destrói a arma que te atingiu</em>.</div></div>
+      <div class="discipline-passive">Passivo: <span class="disc-cost free">Gratuito</span> Qualquer personagem com Fortitude pode usar Fisiologia em lugar de Atletismo para defender-se de ataques físicos.</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Básico:</span> <span class="disc-cost free">Gratuito</span> Armadura 2 contra estresse físico. Sempre ativa — sem custo de ativação.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Intermediário:</span> <span class="disc-cost free">Gratuito</span> +2 em Fisiologia quando usada para defender. Sempre ativo.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Avançado:</span> <span class="disc-cost free">Gratuito</span> Ganha uma caixa extra de consequência moderada. Permanente.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Resistência Lendária<span class="level-elder-tag">Ancião</span></span> <span class="disc-cost pd">1 PD</span> Gaste 1 PD para cancelar todo o dano de um ataque. Adicionalmente, quando se defender com sucesso usando Fisiologia, <em>destrói a arma que te atingiu</em>.</div></div>
     </div>
 
     <div class="discipline">
       <h3>Potência <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: Fisiologia mapeia bem a Força do VtM. Consulte V20 pg. 261 para feitos de força exemplificados.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Básico:</span> +2 em Fisiologia para força bruta, +1 de dano desarmado ou com arma branca.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Intermediário:</span> +4 em Fisiologia, +2 de dano.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Avançado:</span> +6 em Fisiologia, +3 de dano.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Palma Trovejante<span class="level-elder-tag">Ancião</span></span> Bate as mãos e cria uma onda de choque atacando todos na zona. Usa Lutar, com o bônus de dano +3 da Potência.</div></div>
+      <div class="discipline-passive">Passivo: <span class="disc-cost free">Gratuito</span> Fisiologia mapeia bem a Força do VtM. Os bônus de Potência são sempre ativos — não exigem ativação. Consulte V20 pg. 261 para feitos de força exemplificados.</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Básico:</span> <span class="disc-cost free">Gratuito</span> +2 em Fisiologia para força bruta, +1 de dano desarmado ou com arma branca. Sempre ativo.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Intermediário:</span> <span class="disc-cost free">Gratuito</span> +4 em Fisiologia, +2 de dano. Sempre ativo.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Avançado:</span> <span class="disc-cost free">Gratuito</span> +6 em Fisiologia, +3 de dano. Sempre ativo.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Palma Trovejante<span class="level-elder-tag">Ancião</span></span> <span class="disc-cost sangue">1 Sangue</span> Gaste 1 Sangue e bata as mãos para criar uma onda de choque que ataca todos na zona. Usa Lutar, com o bônus de dano +3 da Potência.</div></div>
     </div>
 
     <div class="discipline">
       <h3>Visceratika <span class="src-tag src-incomplete">Parcial</span></h3>
-      <div class="discipline-passive">Passivo: "Pele do Camaleão" dá +2 em Furtividade para evitar ser visto (Gárgulas).</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Escrutinar a Pedra:</span> Gaste 1 PD e use Percepção para detectar qualquer movimento dentro de um edifício por até uma noite.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Vínculo com a Montanha:</span> Como Fundir-se à Terra de Proteu, mas funciona em pedra e concreto.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Armadura de Terra:</span> A Gárgula ganha 2 caixas de estresse adicionais (total 5, antes de Fisiologia), pois seu corpo endurece como pedra.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Fúria Petrificada<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 1 PD. Transforme-se em uma forma bestial de pedra animada para uma cena: armadura 3, Fisiologia +4, dano natural +3, imune a fogo não-mágico. Durante esse tempo, mover-se exige uma rolagem de Atletismo contra +2 ou você fica parado na zona.</div></div>
+      <div class="discipline-passive">Passivo: <span class="disc-cost free">Gratuito</span> "Pele do Camaleão" dá +2 em Furtividade para evitar ser visto (Gárgulas). Sempre ativo.</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Escrutinar a Pedra:</span> <span class="disc-cost sangue">1 Sangue</span> Gaste 1 Sangue e use Percepção para detectar qualquer movimento dentro de um edifício por até uma noite.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Vínculo com a Montanha:</span> <span class="disc-cost sangue">1 Sangue</span> Como Fundir-se à Terra de Proteu, mas funciona em pedra e concreto. Gaste 1 Sangue para ativar.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Armadura de Terra:</span> <span class="disc-cost free">Gratuito</span> A Gárgula ganha 2 caixas de estresse adicionais (total 5, antes de Fisiologia), pois seu corpo endurece como pedra. Permanente.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Fúria Petrificada<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> <span class="disc-cost sangue-pd">1 Sangue + 1 PD</span> Gaste 1 Sangue + 1 PD. Transforme-se em uma forma bestial de pedra animada para uma cena: armadura 3, Fisiologia +4, dano natural +3, imune a fogo não-mágico. Durante esse tempo, mover-se exige uma rolagem de Atletismo contra +2 ou você fica parado na zona.</div></div>
     </div>
   </div>
 
@@ -1834,29 +1862,29 @@ mark{
   <div class="tab-content" id="tab-mental">
     <div class="discipline">
       <h3>Auspícios <span class="src-tag src-homebrew">Adaptação minha</span></h3>
-      <div class="discipline-passive">Passivo: +1 em Percepção sempre ativo. Você percebe o sobrenatural ao redor de maneira intuitiva, mesmo quando não sabe identificar o quê.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Sentidos Intensificados:</span> Gaste 1 PD para ganhar +4 em Percepção numa cena — pode ouvir batidas de coração a zonas de distância, ler cartas de cabeça para baixo, sentir feromônios, etc. Você pode ser sobrecarregado: em ambientes ruidosos/intensos, aceite uma Compulsão grátis para um problema sensorial.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Sintonia da Aura:</span> Role Empatia contra a Vontade do alvo para ler sua aura. Cada sucesso revela uma coisa: emoção dominante, se é sobrenatural (e qual tipo), se há Laço de Sangue, e semelhantes. Um sucesso com estilo revela até um aspecto escondido do alvo.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Toque do Espírito:</span> Tocando um objeto, role Ocultismo para "ler" eventos passados ligados a ele. Cada sucesso revela uma cena. Consequências emocionais podem ser transferidas para você — Narrador pode impor consequência mental leve se a cena foi traumática.</div></div>
-      <div class="level"><div class="level-num">4</div><div><span class="level-name">Presciência<span class="level-elder-tag">Ancião</span></span> Uma vez por sessão, declare que você "sabia que isso ia acontecer" e adicione um aspecto de cena relacionado a um evento iminente. Ganha um invoke gratuito. Alternativamente, gaste 1 PD e role Ocultismo para prever as 5 ações mais prováveis de um alvo na próxima cena — ganhe +2 em defesas contra ele.</div></div>
+      <div class="discipline-passive">Passivo: <span class="disc-cost free">Gratuito</span> +1 em Percepção sempre ativo. Você percebe o sobrenatural ao redor de maneira intuitiva, mesmo quando não sabe identificar o quê.</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Sentidos Intensificados:</span> <span class="disc-cost pd">1 PD</span> Gaste 1 PD para ganhar +4 em Percepção numa cena — pode ouvir batidas de coração a zonas de distância, ler cartas de cabeça para baixo, sentir feromônios, etc. Você pode ser sobrecarregado: em ambientes ruidosos/intensos, aceite uma Compulsão grátis para um problema sensorial.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Sintonia da Aura:</span> <span class="disc-cost free">Gratuito</span> Role Empatia contra a Vontade do alvo para ler sua aura. Cada sucesso revela uma coisa: emoção dominante, se é sobrenatural (e qual tipo), se há Laço de Sangue, e semelhantes. Um sucesso com estilo revela até um aspecto escondido do alvo.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Toque do Espírito:</span> <span class="disc-cost free">Gratuito</span> Tocando um objeto, role Ocultismo para "ler" eventos passados ligados a ele. Cada sucesso revela uma cena. Consequências emocionais podem ser transferidas para você — Narrador pode impor consequência mental leve se a cena foi traumática.</div></div>
+      <div class="level"><div class="level-num">4</div><div><span class="level-name">Presciência<span class="level-elder-tag">Ancião</span></span> <span class="disc-cost pd">1 PD</span> Uma vez por sessão, declare que você "sabia que isso ia acontecer" e adicione um aspecto de cena relacionado a um evento iminente. Ganha um invoke gratuito. Alternativamente, gaste 1 PD e role Ocultismo para prever as 5 ações mais prováveis de um alvo na próxima cena — ganhe +2 em defesas contra ele.</div></div>
     </div>
 
     <div class="discipline">
       <h3>Dementação <span class="src-tag src-incomplete">Parcial</span></h3>
-      <div class="discipline-passive">Passivo: Personagens com Dementação podem contar com "falhar para frente" em rolagens mentais/sociais, à custa de agravar temporariamente suas derangements (perturbações).</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">A Assombração:</span> Role Manipulação +2 contra a Vontade da vítima para causar estresse mental — manifesta-se como alucinações durante uma cena.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Olhos do Caos:</span> Role Ocultismo para entender qualquer sistema complexo, substituindo Investigar ou mesmo Empatia/Conhecimento a critério do Narrador.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Insanidade Total:</span> Role Vontade contra Vontade para atacar mentalmente todos na sua zona.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Flagelo Pessoal<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 1 PD. Role Manipulação +2 contra a Vontade da vítima. Se bem-sucedido, implante uma perturbação persistente — o alvo recebe um aspecto permanente de insanidade ("Convencido de que está sendo observado", "Ouve a voz do sire morto", etc.) que você pode invocar e o Narrador pode compelir livremente. Dura até ser curado com tratamento psiquiátrico prolongado ou Dominação de mesmo nível.</div></div>
+      <div class="discipline-passive">Passivo: <span class="disc-cost free">Gratuito</span> Personagens com Dementação podem contar com "falhar para frente" em rolagens mentais/sociais, à custa de agravar temporariamente suas derangements (perturbações).</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">A Assombração:</span> <span class="disc-cost free">Gratuito</span> Role Manipulação +2 contra a Vontade da vítima para causar estresse mental — manifesta-se como alucinações durante uma cena.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Olhos do Caos:</span> <span class="disc-cost free">Gratuito</span> Role Ocultismo para entender qualquer sistema complexo, substituindo Investigar ou mesmo Empatia/Conhecimento a critério do Narrador.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Insanidade Total:</span> <span class="disc-cost pd">1 PD</span> Gaste 1 PD e role Vontade contra Vontade para atacar mentalmente todos na sua zona.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Flagelo Pessoal<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> <span class="disc-cost sangue-pd">1 Sangue + 1 PD</span> Gaste 1 Sangue + 1 PD. Role Manipulação +2 contra a Vontade da vítima. Se bem-sucedido, implante uma perturbação persistente...</div></div>
     </div>
 
     <div class="discipline">
       <h3>Dominação <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: Dominação permite criar vantagem através de condicionamento. Exige ao menos uma cena de ameaças e abuso. A vantagem é "Condicionado a X" — X deve ser algo específico, não apenas "obedecer".</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Comando:</span> Role Manipulação +2 contra a Vontade para um comando único e curto. Se a vítima resiste, toma estresse mental. Comandos que impliquem dano pessoal ou violação moral dão +2 na resistência. Comandos suicidas <em>falham automaticamente</em>.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Mente Esquecida:</span> Role Carisma contra Vontade para reescrever memórias da vítima, começando pela cena mais recente e indo mais longe com maiores graus de sucesso.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Possessão:</span> Role Manipulação contra Vontade para assumir o corpo de um mortal.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Manipulação em Massa<span class="level-elder-tag">Ancião</span></span> Comando e Mente Esquecida podem ser usados contra todos na sua zona. Role contra a Vontade mais alta, ou +2 como padrão.</div></div>
+      <div class="discipline-passive">Passivo: <span class="disc-cost free">Gratuito</span> Dominação permite criar vantagem através de condicionamento. Exige ao menos uma cena de ameaças e abuso. A vantagem é "Condicionado a X" — X deve ser algo específico, não apenas "obedecer".</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Comando:</span> <span class="disc-cost free">Gratuito</span> Role Manipulação +2 contra a Vontade para um comando único e curto. Se a vítima resiste, toma estresse mental. Comandos que impliquem dano pessoal ou violação moral dão +2 na resistência. Comandos suicidas <em>falham automaticamente</em>.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Mente Esquecida:</span> <span class="disc-cost free">Gratuito</span> Role Carisma contra Vontade para reescrever memórias da vítima, começando pela cena mais recente e indo mais longe com maiores graus de sucesso.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Possessão:</span> <span class="disc-cost pd">1 PD</span> Gaste 1 PD e role Manipulação contra Vontade para assumir o corpo de um mortal.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Manipulação em Massa<span class="level-elder-tag">Ancião</span></span> <span class="disc-cost sangue-pd">1 Sangue + 1 PD</span> Gaste 1 Sangue + 1 PD. Comando e Mente Esquecida podem ser usados contra todos na sua zona. Role contra a Vontade mais alta, ou +2 como padrão.</div></div>
     </div>
   </div>
 
@@ -1864,15 +1892,15 @@ mark{
   <div class="tab-content" id="tab-social">
     <div class="discipline">
       <h3>Presença <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: "Assombrosidade" — +2 em Carisma quando se dirige a uma multidão.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Olhar Aterrorizante:</span> Revela sua natureza vampírica por um instante. Role Manipulação +2 contra Vontade. Sucesso: a vítima deve fugir da sua presença ou sofrer estresse mental.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Encantamento:</span> Gaste 1 PD e role Carisma +2 contra Vontade. Vítima te vê como amiga próxima e aliada durante a duração:
+      <div class="discipline-passive">Passivo: <span class="disc-cost free">Gratuito</span> "Assombrosidade" — +2 em Carisma quando se dirige a uma multidão. Sempre ativo.</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Olhar Aterrorizante:</span> <span class="disc-cost free">Gratuito</span> Revela sua natureza vampírica por um instante. Role Manipulação +2 contra Vontade. Sucesso: a vítima deve fugir da sua presença ou sofrer estresse mental.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Encantamento:</span> <span class="disc-cost pd">1 PD</span> Gaste 1 PD e role Carisma +2 contra Vontade. Vítima te vê como amiga próxima e aliada durante a duração:
         <ul>
           <li>+1: uma hora</li><li>+2: uma noite</li><li>+3: uma semana</li><li>+4: um mês</li><li>+5: um ano</li>
         </ul>
       </div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Majestade:</span> Quando alguém em sua zona ou adjacente tenta te causar estresse, primeiro tem que rolar Vontade contra seu Carisma. Só pode agir nesse turno se tiver sucesso. Só age no mesmo turno com sucesso <em>com estilo</em>, gastando o boost.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Convocação<span class="level-elder-tag">Ancião</span></span> Role Contatos +2 contra Vontade. Vítima deve vir até você com toda a velocidade possível ou sofrer estresse mental igual ao grau de sucesso. Falhando, não pode invocá-la de novo naquela noite.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Majestade:</span> <span class="disc-cost pd">1 PD</span> Gaste 1 PD para ativar por uma cena. Enquanto ativa, quem tentar te causar estresse na sua zona ou adjacente precisa rolar Vontade contra seu Carisma primeiro. Só pode agir se tiver sucesso. Só age no mesmo turno com sucesso <em>com estilo</em>, gastando the boost.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Convocação<span class="level-elder-tag">Ancião</span></span> <span class="disc-cost sangue-pd">1 Sangue + 1 PD</span> Gaste 1 Sangue + 1 PD e role Contatos +2 contra Vontade. Vítima deve vir até você com toda a velocidade possível ou sofrer estresse mental igual ao grau de sucesso. Falhando, não pode invocá-la de novo naquela noite.</div></div>
     </div>
   </div>
 
@@ -1880,83 +1908,83 @@ mark{
   <div class="tab-content" id="tab-supernatural">
     <div class="discipline">
       <h3>Animalismo <span class="src-tag src-incomplete">Parcial</span> <span class="src-tag src-homebrew">Preenchi níveis 1-3</span></h3>
-      <div class="discipline-passive">Passivo: Animais reagem à sua presença com cautela natural mas não hostilidade. Você pode se aproximar de qualquer besta sem assustá-la.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Acalmar a Besta <span class="src-tag src-homebrew">Adaptação minha</span>:</span> Role Carisma ou Empatia contra Vontade para comunicar-se com um animal e dar-lhe uma ordem simples. Sucesso com estilo permite perguntas básicas — o que ele viu, cheirou, ouviu.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Ira Voraz <span class="src-tag src-homebrew">Adaptação minha</span>:</span> Gaste 1 PD. Role Manipulação para despertar a fúria de um animal (ou vampiro em frenesi), direcionando-a a um alvo específico. Contra vampiros, é Vontade contra Vontade; uma falha simples atrasa o frenesi para mais tarde naquela noite.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Partilha do Espírito <span class="src-tag src-homebrew">Adaptação minha</span>:</span> Gaste 1 PD e role Ocultismo contra +2. Sua mente entra no corpo de um animal próximo, abandonando seu próprio corpo, que fica em torpor. Você age através do animal com seus sentidos e movimentos, mas usa sua Mente/Vontade para escolhas. Sair a qualquer momento.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Reflexo Espelhado<span class="level-elder-tag">Ancião</span></span> Use Empatia em lugar de Atletismo <em>ou</em> de Lutar (escolha) para defesa em combate. Você lê o oponente como um predador lê sua presa.</div></div>
+      <div class="discipline-passive">Passivo: <span class="disc-cost free">Gratuito</span> Animais reagem à sua presença com cautela natural mas não hostilidade. Você pode se aproximar de qualquer besta sem assustá-la.</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Acalmar a Besta <span class="src-tag src-homebrew">Adaptação minha</span>:</span> <span class="disc-cost free">Gratuito</span> Role Carisma ou Empatia contra Vontade para comunicar-se com um animal e dar-lhe uma ordem simples. Sucesso com estilo permite perguntas básicas — o que ele viu, cheirou, ouviu.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Ira Voraz <span class="src-tag src-homebrew">Adaptação minha</span>:</span> <span class="disc-cost pd">1 PD</span> Gaste 1 PD. Role Manipulação para despertar a fúria de um animal (ou vampiro em frenesi), direcionando-a a um alvo específico. Contra vampiros, é Vontade contra Vontade; uma falha simples atrasa o frenesi para mais tarde naquela noite.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Partilha do Espírito <span class="src-tag src-homebrew">Adaptação minha</span>:</span> <span class="disc-cost pd">1 PD</span> Gaste 1 PD e role Ocultismo contra +2. Sua mente entra no corpo de um animal próximo, abandonando seu próprio corpo, que fica em torpor. Você age através do animal com seus sentidos e movimentos, mas usa sua Mente/Vontade para escolhas. Sair a qualquer momento.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Reflexo Espelhado<span class="level-elder-tag">Ancião</span></span> <span class="disc-cost free">Gratuito</span> Use Empatia em lugar de Atletismo <em>ou</em> de Lutar (escolha) para defesa em combate. Você lê o oponente como um predador lê sua presa.</div></div>
     </div>
 
     <div class="discipline">
       <h3>Quimerismo <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: Você pode criar pequenas ilusões incidentais à vontade, apenas como cor narrativa.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Fata Morgana:</span> Role Expressão para criar uma ilusão em uma cena. Quem interagir diretamente deve rolar Vontade contra sua Manipulação para ver através.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Permanência:</span> Gaste 1 PD para a ilusão persistir mesmo depois que você sair da zona — a ilusão permanece naquela zona.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Realidade Horrenda:</span> Role Carisma para causar estresse físico contra uma vítima através da ilusão. Custa 1 PD a não ser que já tenha gasto em Permanência. Defesa com Atletismo, Fisiologia ou Vontade (o maior).</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Pesadelo Compartilhado<span class="level-elder-tag">Ancião</span></span> Realidade Horrenda afeta todos em uma zona.</div></div>
+      <div class="discipline-passive">Passivo: <span class="disc-cost free">Gratuito</span> Você pode criar pequenas ilusões incidentais à vontade, apenas como cor narrativa.</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Fata Morgana:</span> <span class="disc-cost free">Gratuito</span> Role Expressão para criar uma ilusão em uma cena. Quem interagir diretamente deve rolar Vontade contra sua Manipulação para ver através.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Permanência:</span> <span class="disc-cost pd">1 PD</span> Gaste 1 PD para a ilusão persistir mesmo depois que você sair da zona — a ilusão permanece naquela zona.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Realidade Horrenda:</span> <span class="disc-cost pd">1 PD</span> Role Carisma para causar estresse físico contra uma vítima através da ilusão. Custa 1 PD a não ser que já tenha gasto em Permanência nessa cena. Defesa com Atletismo, Fisiologia ou Vontade (o maior).</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Pesadelo Compartilhado<span class="level-elder-tag">Ancião</span></span> <span class="disc-cost sangue-pd">1 Sangue + 1 PD</span> Gaste 1 Sangue + 1 PD. Realidade Horrenda afeta todos em uma zona simultaneamente.</div></div>
     </div>
 
     <div class="discipline">
       <h3>Ofuscação <span class="src-tag src-incomplete">Parcial</span></h3>
-      <div class="discipline-passive">Passivo: +1 por nível de Ofuscação para resistir a ser visto por Auspícios. Pode tentar desaparecer mesmo sendo observado: gaste 1 PD e role Furtividade contra a maior Percepção observando. Falha causa estresse mental.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Presença Oculta:</span> Pode ficar invisível se não observado. Role Furtividade contra Percepção para interagir com o ambiente e continuar invisível.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Máscara de Mil Faces:</span> Role Manipulação contra Empatia para se disfarçar como outra pessoa.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Encobrir a Reunião:</span> Estende seus poderes para um aliado por grau de sucesso (1 aliado por +1). Custa 1 PD.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Amigo Antigo<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 1 PD e role Manipulação contra Vontade. Quem te observar começa a vê-lo como alguém familiar e de confiança — um velho amigo, um parente, até um reflexo. Efeito dura a cena. Se você agir agressivamente, o alvo rola Vontade contra sua Manipulação para ver através, com +2 se a agressão foi contra ele. Diferente de Presença Oculta, você <em>é visto</em> — apenas não é identificado como ameaça.</div></div>
+      <div class="discipline-passive">Passivo: <span class="disc-cost free">Gratuito</span> +1 por nível de Ofuscação para resistir a ser visto por Auspícios. <span class="disc-cost pd">1 PD</span> Pode tentar desaparecer mesmo sendo observado: gaste 1 PD e role Furtividade contra a maior Percepção observando. Falha causa estresse mental.</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Presença Oculta:</span> <span class="disc-cost free">Gratuito</span> Pode ficar invisível se não estiver sendo observado. Role Furtividade contra Percepção para interagir com o ambiente e continuar invisível.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Máscara de Mil Faces:</span> <span class="disc-cost free">Gratuito</span> Role Manipulação contra Empatia para se disfarçar como outra pessoa.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Encobrir a Reunião:</span> <span class="disc-cost pd">1 PD</span> Gaste 1 PD. Estende seus poderes de Ofuscação para um aliado por grau de sucesso (1 aliado por +1).</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Amigo Antigo<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> <span class="disc-cost pd">1 PD</span> Gaste 1 PD e role Manipulação contra Vontade. Quem te observar começa a vê-lo como alguém familiar e de confiança — um velho amigo, um parente, até um reflexo. Efeito dura a cena. Se você agir agressivamente, o alvo rola Vontade contra sua Manipulação para ver através, com +2 se a agressão foi contra ele. Diferente de Presença Oculta, você <em>é visto</em> — apenas não é identificado como ameaça.</div></div>
     </div>
 
     <div class="discipline">
       <h3>Obtenebração <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: "Jogo de Sombras" — pode usar Ocultismo para criar vantagens relacionadas a manipulação de sombras.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Véu da Noite:</span> Gaste 1 PD para invocar uma nuvem de escuridão contorcida: barreira +4 contra Percepção dentro e através da zona. <em>OU</em> a zona ganha os aspectos "Escuridão" e "Sufocante", com um invoke grátis em cada.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Braços do Abismo:</span> Role Vontade contra +1 para convocar tentáculos de sombra. Cada boost, um tentáculo extra. Cada tentáculo: Fisiologia +3, Lutar +2, 3 caixas físicas.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Forma Tenebrosa:</span> Gaste 1 PD para se tornar um monstro-sombra-tentacular por uma cena. Pode usar Ocultismo +2 em lugar de Lutar. Tentáculos causam dano 2. Sucesso com estilo: ataque extra. +2 em Carisma para aterrorizar.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Sombra Gêmea<span class="level-elder-tag">Ancião</span></span> Gaste 1 PD para animar sua sombra que se ergue e luta por você durante uma cena. Tem uma perícia igual ao seu Ocultismo e duas iguais à sua Manipulação. Você <em>e</em> sua sombra agem a cada turno.</div></div>
+      <div class="discipline-passive">Passivo: <span class="disc-cost free">Gratuito</span> "Jogo de Sombras" — pode usar Ocultismo para criar vantagens relacionadas a manipulação de sombras.</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Véu da Noite:</span> <span class="disc-cost sangue">1 Sangue</span> Gaste 1 Sangue para invocar uma nuvem de escuridão contorcida: barreira +4 contra Percepção dentro e através da zona. <em>OU</em> a zona ganha os aspectos "Escuridão" e "Sufocante", com um invoke grátis em cada.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Braços do Abismo:</span> <span class="disc-cost free">Gratuito</span> Role Vontade contra +1 para convocar tentáculos de sombra. Cada boost, um tentáculo extra. Cada tentáculo: Fisiologia +3, Lutar +2, 3 caixas físicas.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Forma Tenebrosa:</span> <span class="disc-cost sangue">1 Sangue</span> Gaste 1 Sangue para se tornar um monstro-sombra-tentacular por uma cena. Pode usar Ocultismo +2 em lugar de Lutar. Tentáculos causam dano 2. Sucesso com estilo: ataque extra. +2 em Carisma para aterrorizar.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Sombra Gêmea<span class="level-elder-tag">Ancião</span></span> <span class="disc-cost sangue-pd">1 Sangue + 1 PD</span> Gaste 1 Sangue + 1 PD para animar sua sombra que se ergue e luta por você durante uma cena. Tem uma perícia igual ao seu Ocultismo e duas iguais à sua Manipulação. Você <em>e</em> sua sombra agem a cada turno.</div></div>
     </div>
 
     <div class="discipline">
       <h3>Proteu <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: A qualquer momento, pode ativar "Olhos da Besta" — seus olhos brilham vermelho-laranja e você elimina penalidades/obstáculos por escuridão. Proteu também dificulta que Garou farejem a mácula do Wyrm em você.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Garras Ferais:</span> Ataques desarmados ganham +2 de dano que <em>não pode ser resistido com Fisiologia</em> a menos que a vítima tenha Fortitude. (Note: autor original diz que "não há regras de dano agravado" aqui — ver <a href="#" data-goto="dano-agravado">Dano Agravado</a> para minha adaptação.)</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Fundir-se à Terra:</span> Gaste 1 PD. Você mergulha em qualquer pedaço de terra e dorme ali pela noite.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Forma da Besta:</span> Transforme-se em lobo ou morcego. Morcego: voa, +2 em Atletismo para voar e +2 em Percepção (audição). Lobo: +2 em Atletismo para correr, +2 em Lutar mordendo, mordida +2 dano (não cumulativo com Garras Ferais).</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Controle da Terra<span class="level-elder-tag">Ancião</span></span> Após Fundir-se à Terra, pode nadar pelo solo à velocidade semelhante à de natação em água. Metal, água e concreto te impedem.</div></div>
+      <div class="discipline-passive">Passivo: <span class="disc-cost free">Gratuito</span> A qualquer momento, pode ativar "Olhos da Besta" — seus olhos brilham vermelho-laranja e você elimina penalidades/obstáculos por escuridão. Proteu também dificulta que Garou farejem a mácula do Wyrm em você.</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Garras Ferais:</span> <span class="disc-cost sangue">1 Sangue</span> Gaste 1 Sangue para ativar por uma cena. Ataques desarmados ganham +2 de dano que <em>não pode ser resistido com Fisiologia</em> a menos que a vítima tenha Fortitude. (Ver <a href="#" data-goto="dano-agravado">Dano Agravado</a>.)</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Fundir-se à Terra:</span> <span class="disc-cost sangue">1 Sangue</span> Gaste 1 Sangue. Você mergulha em qualquer pedaço de terra e dorme ali pela noite.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Forma da Besta:</span> <span class="disc-cost sangue">1 Sangue</span> Gaste 1 Sangue para se transformar em lobo ou morcego por uma cena. Morcego: voa, +2 em Atletismo para voar e +2 em Percepção (audição). Lobo: +2 em Atletismo para correr, +2 em Lutar mordendo, mordida +2 dano (não cumulativo com Garras Ferais).</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Controle da Terra<span class="level-elder-tag">Ancião</span></span> <span class="disc-cost sangue-pd">1 Sangue + 1 PD</span> Gaste 1 Sangue + 1 PD (além do custo de Fundir-se à Terra). Após se fundir, pode nadar pelo solo à velocidade semelhante à de natação em água. Metal, água e concreto te impedem.</div></div>
     </div>
 
     <div class="discipline">
       <h3>Quietus <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: Gaste 1 PD para adicionar "Silêncio da Morte" como aspecto de cena. Também concede um invoke grátis.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Toque do Escorpião:</span> Aceite 1 estresse físico (cura no fim da cena) para aumentar o dano de qualquer arma cortante em +2 pela cena.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Chamado de Dagon:</span> Por uma cena após tocar a vítima, gaste 1 PD para iniciar ataques contra ela. Role Vontade contra Fisiologia — vítima se afoga no próprio sangue.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Sabor da Morte:</span> Use Atirar para cuspir sangue cáustico até uma zona de distância. Dano 4.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Envenenar o Poço da Vida<span class="level-elder-tag">Ancião</span></span> Gaste 1 PD para envenenar o sangue de um mortal. Qualquer vampiro que beber dele sofre 6 de estresse físico, que pode ser absorvido por uma consequência "Envenenado".</div></div>
+      <div class="discipline-passive">Passivo: <span class="disc-cost pd">1 PD</span> Gaste 1 PD para adicionar "Silêncio da Morte" como aspecto de cena, com um invoke grátis.</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Toque do Escorpião:</span> <span class="disc-cost proprio">1 Estresse próprio</span> Aceite 1 estresse físico (cura no fim da cena) para envenenar seu toque e aumentar o dano de qualquer arma cortante em +2 pela cena.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Chamado de Dagon:</span> <span class="disc-cost sangue">1 Sangue</span> Por uma cena após tocar a vítima, gaste 1 Sangue para iniciar ataques contra ela. Role Vontade contra Fisiologia — vítima se afoga no próprio sangue.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Sabor da Morte:</span> <span class="disc-cost sangue">1 Sangue</span> Gaste 1 Sangue para cuspir sangue cáustico. Use Atirar até uma zona de distância. Dano 4.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Envenenar o Poço da Vida<span class="level-elder-tag">Ancião</span></span> <span class="disc-cost sangue-pd">1 Sangue + 1 PD</span> Gaste 1 Sangue + 1 PD para envenenar o sangue de um mortal. Qualquer vampiro que beber dele sofre 6 de estresse físico, que pode ser absorvido por uma consequência "Envenenado".</div></div>
     </div>
 
     <div class="discipline">
       <h3>Serpentis <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: "Língua da Áspide" — pode estender sua língua bifurcada até ~45 cm, usando-a como arma de +1 dano ou para beber sangue como se fosse uma presa.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Olhos da Serpente:</span> Pode paralisar temporariamente qualquer mortal que encontre seu olhar. Se ameaçado ou atacado, o mortal rola Vontade contra seu Carisma para se soltar, +2 se sofrer estresse físico ou mental.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Forma da Serpente:</span> Sua pele concede armadura 1 contra estresse físico. Mordida +2 de dano e venenosa fatal para mortais. Pode passar por qualquer abertura em que a cabeça caiba.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Coração das Trevas:</span> Remova seu coração e esconda-o num vaso canópico. Concede armadura 2 contra estresse mental, imunidade a estaca e uma <em>baita</em> vulnerabilidade.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Ladrão de Corações<span class="level-elder-tag">Ancião</span></span> Ataque com Lutar contra Fisiologia. Sucesso com estilo: arranca o coração do oponente. De qualquer forma, o ataque causa estresse físico.</div></div>
+      <div class="discipline-passive">Passivo: <span class="disc-cost free">Gratuito</span> "Língua da Áspide" — pode estender sua língua bifurcada até ~45 cm, usando-a como arma de +1 dano ou para beber sangue como se fosse uma presa.</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Olhos da Serpente:</span> <span class="disc-cost free">Gratuito</span> Pode paralisar temporariamente qualquer mortal que encontre seu olhar. Se ameaçado ou atacado, o mortal rola Vontade contra seu Carisma para se soltar, +2 se sofrer estresse físico ou mental.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Forma da Serpente:</span> <span class="disc-cost sangue">1 Sangue</span> Gaste 1 Sangue para se transformar por uma cena. Sua pele concede armadura 1 contra estresse físico. Mordida +2 de dano e venenosa fatal para mortais. Pode passar por qualquer abertura em que a cabeça caiba.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Coração das Trevas:</span> <span class="disc-cost sangue">1 Sangue</span> Ritual único: gaste 1 Sangue para remover seu coração e escondê-lo num vaso canópico. Concede armadura 2 contra estresse mental, imunidade a estaca e uma <em>baita</em> vulnerabilidade. Não precisa ser repetido — o efeito é permanente enquanto o vaso estiver intacto.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Ladrão de Corações<span class="level-elder-tag">Ancião</span></span> <span class="disc-cost sangue">1 Sangue</span> Gaste 1 Sangue. Ataque com Lutar contra Fisiologia. Sucesso com estilo: arranca o coração do oponente. De qualquer forma, o ataque causa estresse físico.</div></div>
     </div>
 
     <div class="discipline">
       <h3>Temporis <span class="src-tag src-incomplete">Parcial</span></h3>
-      <div class="discipline-passive">Passivo: Qualquer vampiro com Temporis tem um relógio interno perfeito e pode colocar múltiplos alarmes mentais.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Contemplação Recorrente:</span> Role Manipulação contra Vontade da vítima em linha de visão. Sucesso: ela vive uma recorrência mental, experimentando os mesmos poucos minutos de novo e de novo, até a cena acabar ou algo dramático interromper.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Momento de Chumbo:</span> Gaste 1 PD e role Ocultismo contra Vontade para congelar um alvo vivo (objetos muito mais fácil). Uma rodada por grau de sucesso.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Dons de Cloto:</span> Gaste 1 PD e role Ocultismo contra +0. Ganhe uma ação extra neste turno, mais uma por boost. Na próxima rodada, gaste outro PD para repetir o mesmo número de ações bônus.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Fenda no Tempo<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> Gaste 2 PD. Você "volta" 1 rodada no tempo — desfaz as ações feitas contra você na rodada anterior, mas mantém qualquer descoberta/informação. Alternativamente, gaste 2 PD no início de uma cena para saber exatamente quem estará lá e em que estado — o Narrador compartilha um aspecto de situação e uma dificuldade, e você já pode se preparar.</div></div>
+      <div class="discipline-passive">Passivo: <span class="disc-cost free">Gratuito</span> Qualquer vampiro com Temporis tem um relógio interno perfeito e pode colocar múltiplos alarmes mentais.</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Contemplação Recorrente:</span> <span class="disc-cost free">Gratuito</span> Role Manipulação contra Vontade da vítima em linha de visão. Sucesso: ela vive uma recorrência mental, experimentando os mesmos poucos minutos de novo e de novo, até a cena acabar ou algo dramático interromper.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Momento de Chumbo:</span> <span class="disc-cost sangue">1 Sangue</span> Gaste 1 Sangue e role Ocultismo contra Vontade para congelar um alvo vivo (objetos muito mais fácil). Uma rodada por grau de sucesso.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Dons de Cloto:</span> <span class="disc-cost sangue">1 Sangue</span> Gaste 1 Sangue e role Ocultismo contra +0. Ganhe uma ação extra neste turno, mais uma por boost. Na próxima rodada, gaste outro Sangue para repetir o mesmo número de ações bônus.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Fenda no Tempo<span class="level-elder-tag">Ancião</span> <span class="src-tag src-homebrew">Adaptação minha</span></span> <span class="disc-cost sangue-pd">1 Sangue + 1 PD</span> Gaste 1 Sangue + 1 PD. Você "volta" 1 rodada no tempo — desfaz as ações feitas contra você na rodada anterior, mas mantém qualquer descoberta/informação. Alternativamente, gaste 1 Sangue + 1 PD no início de uma cena para saber exatamente quem estará lá e em que estado — o Narrador compartilha um aspecto de situação e uma dificuldade, e você já pode se preparar.</div></div>
     </div>
 
     <div class="discipline">
       <h3>Vicissitude <span class="src-tag src-original">Original</span></h3>
-      <div class="discipline-passive">Passivo: Pode rolar Expressão para impor mudança temporária de aparência em vítima contida ou voluntária, ou em si mesmo, por uma cena.</div>
-      <div class="level"><div class="level-num">1</div><div><span class="level-name">Moldar a Carne:</span> Gaste 1 PD. Use Conhecimento em lugar de Lutar por uma cena, torcendo a carne do oponente. Ataques causam +2 de dano.</div></div>
-      <div class="level"><div class="level-num">2</div><div><span class="level-name">Moldar os Ossos:</span> Gaste 1 PD para causar +3 em vez de +2 usando Conhecimento como Lutar. Também pode se alterar para causar +2 desarmado pela noite (esporões ósseos). E fazer alterações mais duradouras em voluntários, convertendo Fisiologia em armadura ou bônus de dano.</div></div>
-      <div class="level"><div class="level-num">3</div><div><span class="level-name">Forma Horrenda:</span> Gaste 1 PD para assumir a Forma Horrenda: armadura 2 contra estresse físico, +2 em Fisiologia, +2 de dano desarmado por garras.</div></div>
-      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Quiróptero Predatório<span class="level-elder-tag">Ancião</span></span> Como acima, mas também pode voar usando Atletismo e é forte o bastante para agarrar alguém com os pés e carregar pelo ar.</div></div>
+      <div class="discipline-passive">Passivo: <span class="disc-cost free">Gratuito</span> Pode rolar Expressão para impor mudança temporária de aparência em vítima contida ou voluntária, ou em si mesmo, por uma cena.</div>
+      <div class="level"><div class="level-num">1</div><div><span class="level-name">Moldar a Carne:</span> <span class="disc-cost sangue">1 Sangue</span> Gaste 1 Sangue. Use Conhecimento em lugar de Lutar por uma cena, torcendo a carne do oponente. Ataques causam +2 de dano.</div></div>
+      <div class="level"><div class="level-num">2</div><div><span class="level-name">Moldar os Ossos:</span> <span class="disc-cost sangue">1 Sangue</span> Gaste 1 Sangue para causar +3 em vez de +2 usando Conhecimento como Lutar. Também pode se alterar para causar +2 desarmado pela noite (esporões ósseos). E fazer alterações mais duradouras em voluntários, convertendo Fisiologia em armadura ou bônus de dano.</div></div>
+      <div class="level"><div class="level-num">3</div><div><span class="level-name">Forma Horrenda:</span> <span class="disc-cost sangue">1 Sangue</span> Gaste 1 Sangue para assumir a Forma Horrenda: armadura 2 contra estresse físico, +2 em Fisiologia, +2 de dano desarmado por garras.</div></div>
+      <div class="level"><div class="level-num elder">4</div><div><span class="level-name">Quiróptero Predatório<span class="level-elder-tag">Ancião</span></span> <span class="disc-cost sangue-pd">1 Sangue + 1 PD</span> Gaste 1 Sangue + 1 PD. Como Forma Horrenda, mas também pode voar usando Atletismo e é forte o bastante para agarrar alguém com os pés e carregar pelo ar.</div></div>
     </div>
 
     <div class="discipline">
@@ -2247,6 +2275,11 @@ mark{
     <p>Toda noite, quando seu personagem acorda, o Narrador diz antes de qualquer outra coisa: <strong>"Você acorda com fome."</strong> Deve soar como um mantra incessante. É a primeira fala da noite, sempre.</p>
   </div>
 
+  <div class="callout tip">
+    <div class="callout-title">Fome &amp; Pool de Sangue</div>
+    <p>A Fome reflete o nível do seu Pool de Sangue. Quanto menos sangue armazenado, maior a Fome. Ao gastar Sangue em Disciplinas ou outros usos, o pool diminui — e a Fome pode escalar. Ver <a href="#" data-goto="sangue">Pool de Sangue</a> para reservas por geração e o que cada nível do pool representa.</p>
+  </div>
+
   <h2>A condição Fome</h2>
   <p class="src-tag src-original">Original</p>
   <p>"Fome" é uma consequência narrativa que <strong>escala</strong> se não for tratada:</p>
@@ -2275,8 +2308,8 @@ mark{
     <div class="hunt-arrow">→</div>
     <div class="hunt-step">
       <div class="hunt-step-num">3</div>
-      <div class="hunt-step-title">Trata a fome</div>
-      <div class="hunt-step-body">Se ambas bem-sucedidas, cura no fim da cena</div>
+      <div class="hunt-step-title">Limpa o Sangue</div>
+      <div class="hunt-step-body">Se ambas bem-sucedidas, limpa o Pool e pode tratar Sede</div>
     </div>
   </div>
 
@@ -2589,34 +2622,93 @@ mark{
 
 <!-- ========== PÁGINA: SANGUE ========== -->
 <section class="page" id="page-sangue" data-page="sangue">
-  <h1>Gastar Sangue</h1>
-  <div class="page-sub">Como vampiros queimam vitae para fazer coisas impossíveis</div>
-
-  <p class="src-tag src-original">Original</p>
-  <p>Em vez do tradicional "pool de sangue" por pontos, esta adaptação trata o sangue como moeda narrativa ligada à condição Fome:</p>
+  <h1>Pool de Sangue &amp; Sede</h1>
+  <div class="page-sub">Como vampiros queimam vitae — e pagam o preço</div>
 
   <div class="callout">
-    <div class="callout-title">Regra base</div>
-    <p>Você pode <strong>gastar sangue</strong> aumentando sua condição de Fome (leve → moderada) em troca de <strong>+2 em Atletismo, Lutar OU Fisiologia</strong> (escolha uma) por uma cena.</p>
+    <div class="callout-title">Duas moedas distintas</div>
+    <p>Vampiros têm dois recursos internos de poder:</p>
+    <ul>
+      <li><span class="disc-cost sangue">Sangue</span> <strong>Pontos de Sangue</strong> — vitae armazenada no corpo. Alimenta poderes físicos e sobrenaturais.</li>
+      <li><span class="disc-cost pd">PD</span> <strong>Pontos de Destino</strong> — força de vontade. Alimenta poderes mentais e sociais, e invoca aspectos. Invocar aspectos em qualquer rolagem custa <em>apenas</em> 1 PD — sem sangue.</li>
+    </ul>
+    <p>O custo de cada Disciplina está indicado no próprio nível com um badge colorido — ver <a href="#" data-goto="disciplinas">Disciplinas</a>.</p>
   </div>
 
-  <h2>Extensões <span class="src-tag src-homebrew">Adaptação minha</span></h2>
-  <p>Para dar mais versatilidade, estas extensões cobrem usos típicos do sangue em VtM:</p>
+  <h2>Pool de Sangue — funciona como Estresse</h2>
+  <p>Sangue não é contado em pontos abstratos. Funciona <strong>exatamente como a trilha de Estresse Físico</strong>: você tem <strong>caixas de pool</strong> que absorvem os gastos, e quando elas acabam, aceita <strong>consequências de Sede</strong> — cada uma mais grave que a anterior.</p>
+
+  <div class="callout">
+    <div class="callout-title">A trilha de Sangue na ficha</div>
+    <p><strong>Caixas de Pool:</strong> Gastar 1 Sangue = marcar 1 caixa. Quando todas estiverem marcadas e o vampiro precisar gastar mais, aceita uma consequência de Sede na ordem abaixo:</p>
+    <ul>
+      <li><strong>Sede Leve</strong> — consequência leve. Aspecto <em>"Faminto"</em> — compelível pelo Narrador.</li>
+      <li><strong>Sede Moderada</strong> — consequência moderada. Aspecto <em>"Dominado pela Sede"</em> — ações sociais e de autocontrole sofrem -2.</li>
+      <li><strong>Sede Grave</strong> — consequência severa. Aspecto <em>"À Beira do Frenesi"</em> — qualquer estímulo de sangue ou emoção intensa exige rolar Vontade ou entrar em Frenesi.</li>
+    </ul>
+    <p>Se as três consequências estiverem marcadas e o vampiro gastar mais Sangue: <strong>Frenesi automático</strong>.</p>
+  </div>
+
+  <h2>Caixas de Pool por tipo de vampiro</h2>
+  <p>Vampiros mais antigos armazenam mais sangue — mais caixas antes de precisar aceitar sede. As 3 consequências de Sede são iguais para todos.</p>
+
   <table>
-    <thead><tr><th>Uso</th><th>Custo</th><th>Efeito</th></tr></thead>
+    <thead><tr><th>Tipo</th><th>Geração típica</th><th>Caixas de Pool</th><th>Consequências de Sede</th></tr></thead>
     <tbody>
-      <tr><td>Bônus a perícia física (padrão)</td><td>Agrava Fome 1 nível</td><td>+2 em Atletismo, Lutar ou Fisiologia por cena</td></tr>
-      <tr><td>Curar estresse físico</td><td>Agrava Fome 1 nível</td><td>Limpa todas as caixas de estresse físico</td></tr>
-      <tr><td>Tratar consequência física leve</td><td>Agrava Fome 1 nível</td><td>Marca consequência leve como tratada</td></tr>
-      <tr><td>Tratar consequência física moderada</td><td>Agrava Fome 2 níveis</td><td>Marca consequência moderada como tratada</td></tr>
-      <tr><td>Aparência humana (Blush of Life)</td><td>Agrava Fome 1 nível</td><td>Parece vivo por uma cena (se não tiver o façanha grátis)</td></tr>
-      <tr><td>Ativar Disciplina intermediária</td><td>Agrava Fome 1 nível</td><td>Algumas Disciplinas cobram Fome em vez de PD</td></tr>
+      <tr><td><strong>Sangue Fraco</strong></td><td>14ª–16ª</td><td>2 caixas</td><td rowspan="5" style="vertical-align:middle;text-align:center">Sede Leve<br>Sede Moderada<br>Sede Grave</td></tr>
+      <tr><td><strong>Neonato</strong></td><td>13ª–11ª</td><td>3 caixas</td></tr>
+      <tr><td><strong>Ancião</strong></td><td>10ª–8ª</td><td>4 caixas</td></tr>
+      <tr><td><strong>Antigo</strong></td><td>7ª–5ª</td><td>5 caixas</td></tr>
+      <tr><td><strong>Metusela / Antediluviano</strong></td><td>4ª–3ª</td><td>6+ caixas</td></tr>
     </tbody>
   </table>
 
   <div class="callout warn">
-    <div class="callout-title">Limite</div>
-    <p>Você não pode agravar a Fome além de <strong>Severa</strong> por gastos voluntários. Chegando lá, só matando e drenando alguém para zerar. Isso naturalmente limita quantos gastos você pode fazer por noite — exatamente como o VtM original limitava com o Pool.</p>
+    <div class="callout-title">Todo vampiro acorda com fome</div>
+    <p>No início de cada noite, marque 1 caixa de pool como consumida — o sangue queimado dormindo. Sangue Fraco marca 2. É o mantra do Narrador: <em>"Você acorda com fome."</em> Vampiros nunca iniciam a noite no pico da reserva.</p>
+  </div>
+
+  <h2>O que custa Sangue — Extensões <span class="src-tag src-original">Original</span> <span class="src-tag src-homebrew">+ Extensões</span></h2>
+  <p>Além de ativar Disciplinas físicas e sobrenaturais, sangue pode ser gasto para os usos abaixo. Todas as extensões originais foram mantidas.</p>
+
+  <table>
+    <thead><tr><th>Uso</th><th>Custo</th><th>Efeito</th></tr></thead>
+    <tbody>
+      <tr><td>Bônus a perícia física</td><td>1 Sangue</td><td>+2 em Atletismo, Lutar ou Fisiologia por cena</td></tr>
+      <tr><td>Curar estresse físico</td><td>1 Sangue</td><td>Limpa todas as caixas de estresse físico</td></tr>
+      <tr><td>Tratar consequência física leve</td><td>1 Sangue</td><td>Marca a consequência leve como tratada</td></tr>
+      <tr><td>Tratar consequência física moderada</td><td>2 Sangue</td><td>Marca a consequência moderada como tratada</td></tr>
+      <tr><td>Aparência humana (Blush of Life)</td><td>1 Sangue</td><td>Parece vivo por uma cena (sem a façanha grátis)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <div class="callout-title">Com o pool vazio</div>
+    <p>Quando todas as caixas estão marcadas, o vampiro ainda pode usar poderes que custem apenas <span class="disc-cost pd">PD</span> ou <span class="disc-cost free">Gratuito</span> — esses não drenam sangue. Para usar qualquer poder que custe <span class="disc-cost sangue">Sangue</span>, precisa aceitar a próxima consequência de Sede. Ao atingir Sede Grave com as 3 caixas cheias e tentar gastar mais: <strong>Frenesi</strong>.</p>
+  </div>
+
+  <h2>Recuperar Sangue (Caçar)</h2>
+  <p>Ver <a href="#" data-goto="fome">Fome &amp; Caça</a> para o fluxo completo.</p>
+
+  <table>
+    <thead><tr><th>Fonte</th><th>Recupera</th><th>Notas</th></tr></thead>
+    <tbody>
+      <tr><td>Mortal (alimentação normal, sem matar)</td><td>Todas as caixas de pool</td><td>Não remove consequências de Sede; só as caixas</td></tr>
+      <tr><td>Mortal (drenagem completa — matar)</td><td>Caixas + trata 1 consequência de Sede</td><td>Mata; risco grave à Máscara e à Humanidade</td></tr>
+      <tr><td>Animal grande (cavalo, vaca)</td><td>2 caixas</td><td>Menos potente que humano</td></tr>
+      <tr><td>Animal pequeno (cachorro, gato)</td><td>1 caixa</td><td>Insuficiente para Anciões e acima</td></tr>
+      <tr><td>Sangue vampírico (por gole)</td><td>Caixas + trata 1 consequência de Sede</td><td>Potente; alto risco de Laço de Sangue</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <div class="callout-title">Recuperar consequências de Sede</div>
+    <p>Consequências de Sede seguem as mesmas regras de recuperação do Fate Core, mas exigem alimentação:</p>
+    <ul>
+      <li><strong>Sede Leve:</strong> tratada ao fim da cena em que o vampiro se alimentar normalmente.</li>
+      <li><strong>Sede Moderada:</strong> tratada ao fim da sessão, após pelo menos uma caça bem-sucedida.</li>
+      <li><strong>Sede Grave:</strong> tratada entre sessões, após drenar completamente um mortal ou receber sangue vampírico.</li>
+    </ul>
   </div>
 </section>
 
@@ -2930,8 +3022,7 @@ mark{
     <ul>
       <li><strong>Pirâmide máx:</strong> o teto da pirâmide de perícias do personagem (substitui "Atributo/Perícia Máx 5/10/15" do V20).</li>
       <li><strong>Disciplinas máx (níveis totais):</strong> a quantidade total de níveis de Disciplina que o personagem pode ter somando tudo.</li>
-      <li><strong>Gasto de sangue por cena:</strong> quantos efeitos de "agravar Fome" o personagem pode pagar antes que sua Fome chegue ao limite Severa. Substitui "Pontos por Turno" do V20.</li>
-      <li><strong>Reserva (consequências de Fome):</strong> caixas extras de consequência que o personagem pode marcar para Fome antes de entrar em frenesi automático.</li>
+      <li><strong>Pool (Caixas):</strong> a quantidade de caixas de estresse de sangue (Pool) que o personagem possui. Todos têm 3 consequências de Sede.</li>
       <li><strong>Potência do Sangue:</strong> bônus passivo místico — armadura contra Dominação/Presença vinda de geração superior, e bônus em testes opostos contra geração superior.</li>
     </ul>
   </div>
@@ -2942,24 +3033,23 @@ mark{
         <th>Geração</th>
         <th>Pirâmide máx</th>
         <th>Disc. máx (níveis totais)</th>
-        <th>Gasto de sangue / cena</th>
-        <th>Reserva</th>
+        <th>Pool (Caixas)</th>
         <th>Potência do Sangue</th>
       </tr>
     </thead>
     <tbody>
-      <tr><td><strong>3ª</strong> (Antediluviano)</td><td>+8</td><td>20+</td><td>10</td><td>+10</td><td>10</td></tr>
-      <tr><td><strong>4ª</strong> (Matusalém)</td><td>+7</td><td>16</td><td>8</td><td>+8</td><td>9</td></tr>
-      <tr><td><strong>5ª</strong> (Matusalém)</td><td>+7</td><td>14</td><td>7</td><td>+7</td><td>8</td></tr>
-      <tr><td><strong>6ª</strong> (Antigo)</td><td>+6</td><td>12</td><td>6</td><td>+6</td><td>7</td></tr>
-      <tr><td><strong>7ª</strong> (Antigo)</td><td>+6</td><td>10</td><td>5</td><td>+5</td><td>6</td></tr>
-      <tr><td><strong>8ª</strong> (Ancião)</td><td>+5</td><td>9</td><td>4</td><td>+4</td><td>5</td></tr>
-      <tr><td><strong>9ª</strong> (Ancião)</td><td>+5</td><td>8</td><td>3</td><td>+3</td><td>5</td></tr>
-      <tr><td><strong>10ª</strong> (Ancilla)</td><td>+5</td><td>7</td><td>3</td><td>+2</td><td>4</td></tr>
-      <tr><td><strong>11ª</strong> (Ancilla/Neonato)</td><td>+4</td><td>6</td><td>2</td><td>+2</td><td>3</td></tr>
-      <tr><td><strong>12ª</strong> (Neonato)</td><td>+4</td><td>5</td><td>2</td><td>+1</td><td>2</td></tr>
-      <tr><td><strong>13ª</strong> (Neonato)</td><td>+4</td><td>5</td><td>2</td><td>+1</td><td>1</td></tr>
-      <tr><td><strong>14ª–16ª</strong> (Sangue Fraco)</td><td>+3</td><td>3</td><td>1</td><td>+0</td><td>0</td></tr>
+      <tr><td><strong>3ª</strong> (Antediluviano)</td><td>+8</td><td>20+</td><td>8</td><td>10</td></tr>
+      <tr><td><strong>4ª</strong> (Matusalém)</td><td>+7</td><td>16</td><td>7</td><td>9</td></tr>
+      <tr><td><strong>5ª</strong> (Matusalém)</td><td>+7</td><td>14</td><td>6</td><td>8</td></tr>
+      <tr><td><strong>6ª</strong> (Antigo)</td><td>+6</td><td>12</td><td>5</td><td>7</td></tr>
+      <tr><td><strong>7ª</strong> (Antigo)</td><td>+6</td><td>10</td><td>5</td><td>6</td></tr>
+      <tr><td><strong>8ª</strong> (Ancião)</td><td>+5</td><td>9</td><td>4</td><td>5</td></tr>
+      <tr><td><strong>9ª</strong> (Ancião)</td><td>+5</td><td>8</td><td>4</td><td>5</td></tr>
+      <tr><td><strong>10ª</strong> (Ancilla)</td><td>+5</td><td>7</td><td>4</td><td>4</td></tr>
+      <tr><td><strong>11ª</strong> (Ancilla/Neonato)</td><td>+4</td><td>6</td><td>3</td><td>3</td></tr>
+      <tr><td><strong>12ª</strong> (Neonato)</td><td>+4</td><td>5</td><td>3</td><td>2</td></tr>
+      <tr><td><strong>13ª</strong> (Neonato)</td><td>+4</td><td>5</td><td>3</td><td>1</td></tr>
+      <tr><td><strong>14ª–16ª</strong> (Sangue Fraco)</td><td>+3</td><td>3</td><td>2</td><td>0</td></tr>
     </tbody>
   </table>
 
