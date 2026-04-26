@@ -3521,6 +3521,11 @@ mark{
 
     <!-- ===== STEP 1: IDENTIDADE ===== -->
     <div class="cc-page active" id="cc-step-1">
+      <div class="cc-neonato-box" style="margin-bottom:25px; border-left-color:var(--gold); background:rgba(255,255,255,0.03)">
+        <p style="font-size:12px; color:var(--ink-soft); margin:0; line-height:1.4">
+          <strong style="color:var(--gold)">🎞️ ESTILO DA ÉPOCA:</strong> Miami, anos 70. Lembre-se de que a aparência, vestimentas e a foto do seu personagem devem refletir a estética desta década.
+        </p>
+      </div>
       <div class="cc-step1-grid">
         <div>
           <div class="cc-label">Foto do Personagem</div>
@@ -3736,6 +3741,21 @@ mark{
       <div class="cc-field">
         <label class="cc-label">Relação com Você</label>
         <textarea class="cc-input cc-textarea" id="cc-creator-relation" rows="4" placeholder="Por que te abraçou? Como é a dinâmica entre vocês agora? Há afeto, ressentimento, obrigação, dívida?" oninput="ccSave()"></textarea>
+      </div>
+      <div class="cc-divider"></div>
+      <div class="cc-section-title">Acesso Seguro (Blinkmotion)</div>
+      <div class="cc-neonato-box" style="border-left-color:var(--gold); background:rgba(0,255,255,0.03)">
+        <p style="font-size:12px; color:var(--gold); margin-bottom:10px; font-family:'Montserrat',sans-serif">
+          Para sua segurança e anonimato no sistema, utilize um <strong>pseudônimo</strong> como login.
+        </p>
+        <div class="cc-field">
+          <label class="cc-label">Login (Pseudônimo)</label>
+          <input type="text" class="cc-input" id="cc-blink-user" placeholder="Ex: Ghost23..." oninput="ccSave()">
+        </div>
+        <div class="cc-field">
+          <label class="cc-label">Senha de Acesso</label>
+          <input type="password" class="cc-input" id="cc-blink-pass" placeholder="••••••••" oninput="ccSave()">
+        </div>
       </div>
       <div id="cc-finish-message"></div>
       <div class="cc-nav-btns">
@@ -4124,7 +4144,9 @@ let ccState = {
   photo:null, name:'', playerName:'', clan:'', lore:'', concept:'', difficulty:'', mortalSelf:'',
   aspect1:'', aspect2:'', skills:{}, discFree:{}, discExtra:[], stunts:[],
   creatorPhoto:null, creatorName:'', creatorLore:'', creatorPersonality:'', creatorRelation:'',
-  creatorSourceId:null
+  creatorSourceId:null,
+  blinkUsername: '',
+  blinkPassword: ''
 };
 
 let ccCurrentStep = 1;
@@ -4490,7 +4512,9 @@ function ccBuildArchiveRecord() {
       lore: ccState.creatorLore || '',
       personality: ccState.creatorPersonality || '',
       relation: ccState.creatorRelation || ''
-    }
+    },
+    blinkUsername: ccState.blinkUsername || '',
+    blinkPassword: ccState.blinkPassword || ''
   };
 }
 
@@ -4537,6 +4561,8 @@ function ccSave() {
   ccState.creatorLore = g('cc-creator-lore')?.value||'';
   ccState.creatorPersonality = g('cc-creator-personality')?.value||'';
   ccState.creatorRelation = g('cc-creator-relation')?.value||'';
+  ccState.blinkUsername = g('cc-blink-user')?.value||'';
+  ccState.blinkPassword = g('cc-blink-pass')?.value||'';
   localStorage.setItem('cc_draft_v2', JSON.stringify(ccState));
 }
 
@@ -4547,6 +4573,7 @@ function ccRestoreForm() {
   set('cc-aspect-1',ccState.aspect1); set('cc-aspect-2',ccState.aspect2);
   set('cc-creator-name',ccState.creatorName); set('cc-creator-lore',ccState.creatorLore);
   set('cc-creator-personality',ccState.creatorPersonality); set('cc-creator-relation',ccState.creatorRelation);
+  set('cc-blink-user', ccState.blinkUsername); set('cc-blink-pass', ccState.blinkPassword);
   if(ccState.clan){ const el=document.getElementById('cc-clan'); if(el){el.value=ccState.clan;ccUpdateClan(false);} }
   if(ccState.photo){ const p=document.getElementById('cc-photo-preview'); if(p){p.src=ccState.photo;p.style.display='block';document.getElementById('cc-photo-placeholder').style.display='none';} }
   ccSyncCreatorPreview();
@@ -4982,7 +5009,9 @@ function ccResetState() {
     photo:null, name:'', playerName:'', clan:'', lore:'', concept:'', difficulty:'', mortalSelf:'',
     aspect1:'', aspect2:'', skills:{}, discFree:{}, discExtra:[], stunts:[],
     creatorPhoto:null, creatorName:'', creatorLore:'', creatorPersonality:'', creatorRelation:'',
-    creatorSourceId:null
+    creatorSourceId:null,
+    blinkUsername: '',
+    blinkPassword: ''
   };
   localStorage.removeItem('cc_draft_v2');
   ccPyramidLeft = {'4':1,'3':2,'2':3,'1':4,'-1':1};
