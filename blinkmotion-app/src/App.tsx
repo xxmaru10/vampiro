@@ -94,9 +94,9 @@ function App() {
         <form onSubmit={handleSubmit}>
           <div className="terminal-prompt">
             <input 
-              type="email" 
+              type="text" 
               className="terminal-input" 
-              placeholder="USUARIO (EMAIL)" 
+              placeholder="USUARIO" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required 
