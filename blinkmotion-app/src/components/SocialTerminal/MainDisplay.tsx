@@ -5,6 +5,7 @@ import { WeeklyNews } from './WeeklyNews';
 import { ForumFeed } from './ForumFeed';
 import { MessagesView } from './MessagesView';
 import { Classifieds } from './Classifieds';
+import { Trailer } from './Trailer';
 import { useNews } from '../../hooks/useNews';
 
 interface MainDisplayProps {
@@ -12,7 +13,7 @@ interface MainDisplayProps {
   user?: User | null;
 }
 
-const ACTIVE_PATHS = ['/LOCAL_BROADCAST', '/ROOT_ACCESS', '/SECURE_COMMS', '/CLASSIFIEDS'];
+const ACTIVE_PATHS = ['/LOCAL_BROADCAST', '/ROOT_ACCESS', '/SECURE_COMMS', '/CLASSIFIEDS', '/SYSTEM_TRAILER'];
 
 export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) => {
   const { news } = useNews();
@@ -43,6 +44,12 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) =
       {currentPath === '/CLASSIFIEDS' && (
         <div className="feed-container" style={{ height: '100%' }}>
           <Classifieds />
+        </div>
+      )}
+
+      {currentPath === '/SYSTEM_TRAILER' && (
+        <div className="feed-container">
+          <Trailer />
         </div>
       )}
 

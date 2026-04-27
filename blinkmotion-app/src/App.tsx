@@ -34,6 +34,7 @@ function App() {
     if (currentPath === '/TERMINATING_SESSION...') {
       const timer = setTimeout(() => {
         logout();
+        window.location.href = '../index.html';
       }, 1500);
       return () => clearTimeout(timer);
     }

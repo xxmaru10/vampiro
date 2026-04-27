@@ -153,7 +153,16 @@ CREATE TABLE IF NOT EXISTS blink_posts (
 
 ALTER TABLE blink_posts ADD COLUMN IF NOT EXISTS approved BOOLEAN DEFAULT false;
 
--- Habilite RLS e políticas de acesso no Supabase`}
+-- Habilite RLS e políticas de acesso (CORRIGE ERRO DE ENVIO)
+ALTER TABLE blink_messages ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public Access" ON blink_messages FOR ALL USING (true) WITH CHECK (true);
+
+ALTER TABLE blink_posts ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public Access Posts" ON blink_posts FOR ALL USING (true) WITH CHECK (true);
+
+-- Se preferir restrito (apenas logados):
+-- CREATE POLICY "Authenticated Access" ON blink_messages FOR ALL TO authenticated USING (true);
+`}
           </pre>
         </div>
       )}
