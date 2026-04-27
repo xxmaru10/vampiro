@@ -270,12 +270,43 @@ CREATE POLICY "Public Access Posts" ON blink_posts FOR ALL USING (true) WITH CHE
                 </div>
                 <div className="input-group">
                   <label>ARTE ASCII (OPCIONAL)</label>
-                  <textarea
-                    value={newsContentAscii}
-                    onChange={e => setNewsContentAscii(e.target.value)}
-                    placeholder="Cole sua arte ASCII aqui..."
-                    className="ascii-textarea"
-                  />
+                  <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                    <textarea
+                      value={newsContentAscii}
+                      onChange={e => setNewsContentAscii(e.target.value)}
+                      placeholder="Cole sua arte ASCII aqui..."
+                      className="ascii-textarea"
+                      style={{ flex: 1 }}
+                    />
+                    <div style={{ 
+                      background: '#000', 
+                      border: '1px solid #00ff0044', 
+                      width: 110, 
+                      minWidth: 110, 
+                      height: 90, 
+                      overflow: 'hidden', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      flexShrink: 0,
+                      marginTop: 0
+                    }}>
+                      {newsContentAscii ? (
+                        <pre style={{ 
+                          margin: 0, 
+                          color: '#00ff00', 
+                          whiteSpace: 'pre',
+                          fontSize: `${Math.min(5, Math.min(110 / (Math.max(...newsContentAscii.split('\n').map(l => l.length)) || 1) / 0.6, 90 / (newsContentAscii.split('\n').length || 1)))}px`,
+                          lineHeight: 1,
+                          textAlign: 'center'
+                        }}>
+                          {newsContentAscii}
+                        </pre>
+                      ) : (
+                        <span style={{ fontSize: '0.6rem', color: '#00ff0033', letterSpacing: 2 }}>PREVIEW</span>
+                      )}
+                    </div>
+                  </div>
                 </div>
                 <button type="submit" className="btn-save" disabled={newsLoading}>
                   {newsLoading ? 'ENVIANDO...' : 'PUBLICAR_NOTÍCIA'}

@@ -63,8 +63,18 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail,
           <>
             <div style={{ display: 'flex', gap: 12, padding: 12 }}>
               {asciiContent && (
-                <div style={{ background: '#000', border: '1px solid #111', width: 110, minWidth: 110, height: 90, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 4, lineHeight: 1, flexShrink: 0 }}>
-                  <pre style={{ margin: 0, color: '#00ff00', opacity: 0.8, whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>{asciiContent}</pre>
+                <div style={{ background: '#000', border: '1px solid #111', width: 110, minWidth: 110, height: 90, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <pre style={{ 
+                    margin: 0, 
+                    color: '#00ff00', 
+                    opacity: 0.8, 
+                    whiteSpace: 'pre',
+                    fontSize: `${Math.min(5, Math.min(110 / (Math.max(...asciiContent.split('\n').map(l => l.length)) || 1) / 0.6, 90 / (asciiContent.split('\n').length || 1)))}px`,
+                    lineHeight: 1,
+                    textAlign: 'center'
+                  }}>
+                    {asciiContent}
+                  </pre>
                 </div>
               )}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 4, flex: 1, minWidth: 0 }}>
