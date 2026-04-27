@@ -2,6 +2,7 @@ import React from 'react';
 import type { User } from '@supabase/supabase-js';
 import { AdminPanel } from './AdminPanel';
 import { WeeklyNews } from './WeeklyNews';
+import { ForumFeed } from './ForumFeed';
 import { useNews } from '../../hooks/useNews';
 
 interface MainDisplayProps {
@@ -22,6 +23,9 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) =
       {currentPath === '/LOCAL_BROADCAST' && (
         <div className="feed-container">
           <WeeklyNews news={news} userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
+          <div style={{ borderTop: '2px dashed #00ff0022', marginTop: 8, paddingTop: 16 }}>
+            <ForumFeed userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
+          </div>
         </div>
       )}
 
