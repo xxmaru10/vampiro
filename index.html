@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vampiro: a Máscara — Adaptação para Fate Core</title>
+<link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Damion&family=Montserrat:wght@300;400;600;700&family=VT323&display=swap" rel="stylesheet">
@@ -1161,23 +1162,51 @@ mark{
 <body>
 
 <header class="top-header">
+  <div class="header-logo" style="display: flex; align-items: center; gap: 12px; cursor: pointer; flex-shrink: 0;" onclick="switchMainSection('trailer')">
+    <img src="logo.png" alt="Logo" style="height: 40px; width: auto; filter: drop-shadow(0 0 5px var(--blood));">
+    <span style="font-family: 'Damion', cursive; font-size: 24px; color: #fff; text-shadow: 0 0 5px var(--blood); margin-top: -5px; transform: skewX(-10deg);">Vampiro</span>
+  </div>
   <nav class="top-nav">
-    <div class="top-nav-item active" onclick="switchMainSection('lore')">Geral</div>
+    <div class="top-nav-item active" onclick="switchMainSection('trailer')">Trailer</div>
+    <div class="top-nav-item" onclick="switchMainSection('lore')">Geral</div>
     <div class="top-nav-item" onclick="openBlinkSection()">BLiNKMOTiON</div>
     <div class="top-nav-item" onclick="switchMainSection('char-creator')">Criar Personagem</div>
   </nav>
-  <button class="btn-export" onclick="downloadCharacterData()">Baixar Dados</button>
+  <div style="display: flex; gap: 10px;">
+    <button class="btn-export" onclick="downloadCharacterData()">Baixar Dados</button>
+    <button class="btn-export" style="background: rgba(255, 68, 68, 0.1); border-color: rgba(255, 68, 68, 0.5); color: #ff8888;" onclick="resetAllData()">Limpar Dados</button>
+  </div>
 </header>
 
 <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
 
-<div id="section-lore" class="main-section active">
+<div id="section-trailer" class="main-section active">
+  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: calc(100vh - 64px); padding: 40px; background: #000; position: relative; overflow: hidden;">
+    <!-- Background Glow -->
+    <div style="position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(255, 0, 170, 0.15) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; z-index: 1;"></div>
+    
+    <div style="width: 100%; max-width: 1100px; aspect-ratio: 16/9; box-shadow: 0 0 50px rgba(0, 255, 255, 0.2), 0 0 100px rgba(255, 0, 170, 0.1); border: 2px solid var(--blood); position: relative; z-index: 2; background: #050505;">
+      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/U7_SGf1S3qk?autoplay=1&mute=0" title="Vampiro: a Máscara — Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="display: block;"></iframe>
+    </div>
+    
+    <div style="margin-top: 40px; text-align: center; position: relative; z-index: 2;">
+      <img src="logo.png" alt="Vampiro Logo" style="width: 400px; max-width: 90vw; height: auto; filter: drop-shadow(0 0 20px var(--blood)); margin-bottom: 20px;">
+      <p style="color: var(--gold); letter-spacing: 6px; text-transform: uppercase; font-size: 1.2rem; font-weight: 600; text-shadow: 0 0 10px var(--gold);">Adaptação para Fate Core</p>
+    </div>
+    
+    <div style="margin-top: 50px; display: flex; gap: 20px; z-index: 2;">
+      <button class="cc-btn-next" onclick="switchMainSection('lore')" style="padding: 15px 40px; font-size: 1.1rem;">ENTRAR NO SISTEMA</button>
+    </div>
+  </div>
+</div>
+
+<div id="section-lore" class="main-section">
   <div class="app">
 
 <!-- ============ SIDEBAR ============ -->
 <aside class="sidebar" id="sidebar">
   <div class="brand">
-    <div class="brand-title">Vampiro</div>
+    <img src="logo.png" alt="Vampiro Logo" style="width: 180px; height: auto; margin-bottom: 12px; filter: drop-shadow(0 0 10px var(--blood));">
     <div class="brand-sub">A Máscara · adaptado para Fate Core</div>
   </div>
 
@@ -1227,6 +1256,7 @@ mark{
 
     <div class="nav-section">
       <div class="nav-section-title">Mundo</div>
+      <a href="#clãs" data-page="clas">Os Clãs de Caim</a>
       <a href="#sociedade" data-page="sociedade">Sociedade Kindred</a>
       <a href="#gerações" data-page="geracoes">Gerações</a>
     </div>
@@ -1289,7 +1319,10 @@ mark{
 
 <!-- ========== PÁGINA: INÍCIO ========== -->
 <section class="page" id="page-inicio" data-page="inicio">
-  <h1>Vampiro: a Máscara</h1>
+  <div style="text-align: center; margin-bottom: 40px;">
+    <img src="logo.png" alt="Vampiro Logo" style="width: 500px; max-width: 100%; height: auto; filter: drop-shadow(0 0 20px var(--blood));">
+    <p style="color: var(--gold); letter-spacing: 4px; text-transform: uppercase; font-size: 1.1rem; margin-top: 10px;">Adaptação para Fate Core</p>
+  </div>
   <div class="page-sub">Um guia de adaptação para Fate Core — todas as regras, reunidas e em português</div>
 
   <div class="quick-nav">
@@ -2979,6 +3012,137 @@ mark{
   </ul>
 </section>
 
+<!-- ========== PÁGINA: CLÃS ========== -->
+<section class="page" id="page-clas" data-page="clas">
+  <h1>Os Clãs de Caim</h1>
+  <div class="page-sub">As 13 linhagens fundamentais que moldam o mundo das trevas</div>
+
+  <div class="tabs" style="margin-bottom: 30px;">
+    <div class="tab active" data-tab="camarilla">Camarilla</div>
+    <div class="tab" data-tab="sabat">Sabá</div>
+    <div class="tab" data-tab="independentes">Independentes</div>
+  </div>
+
+  <div id="tab-camarilla" class="tab-content active">
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">Brujah</div>
+        <div class="card-body">
+          <p><strong>Os Rebeldes:</strong> Filósofos guerreiros e punks anarquistas. Conhecidos por seu temperamento explosivo e paixão por ideais.</p>
+          <p style="margin-top:10px"><strong>Disciplinas:</strong> Celeridade, Potência, Presença.</p>
+          <p style="color:var(--blood); font-size: 13px; margin-top:8px"><strong>Fraqueza:</strong> Fúria Incontrolável — sofrem -2 em testes para resistir ao Frenesi de Ira.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Gangrel</div>
+        <div class="card-body">
+          <p><strong>Os Animais:</strong> Nômades e solitários, mais próximos da Besta do que qualquer outro clã. Mestres da sobrevivência e da mudança de forma.</p>
+          <p style="margin-top:10px"><strong>Disciplinas:</strong> Animalismo, Fortitude, Proteu.</p>
+          <p style="color:var(--blood); font-size: 13px; margin-top:8px"><strong>Fraqueza:</strong> Traços Animais — a cada frenesi, ganham um traço físico animal temporário que dificulta interações sociais.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Malkaviano</div>
+        <div class="card-body">
+          <p><strong>Os Lunáticos:</strong> Marcados por uma loucura incurável que lhes concede visões proféticas e percepções além do véu da realidade.</p>
+          <p style="margin-top:10px"><strong>Disciplinas:</strong> Auspícios, Ofuscação, Dementação.</p>
+          <p style="color:var(--blood); font-size: 13px; margin-top:8px"><strong>Fraqueza:</strong> Derangement — possuem uma perturbação mental incurável que o Narrador pode compelir frequentemente.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Nosferatu</div>
+        <div class="card-body">
+          <p><strong>Os Ratos de Esgoto:</strong> Amaldiçoados com deformidades monstruosas. Mestres da furtividade e corretores de segredos nas sombras.</p>
+          <p style="margin-top:10px"><strong>Disciplinas:</strong> Animalismo, Ofuscação, Potência.</p>
+          <p style="color:var(--blood); font-size: 13px; margin-top:8px"><strong>Fraqueza:</strong> Repulsivos — sua aparência é automaticamente 0 ou negativa; falham automaticamente em testes de beleza/aparência.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Toreador</div>
+        <div class="card-body">
+          <p><strong>Os Artistas:</strong> Hedonistas apaixonados pela beleza e arte. Buscam o sentido da existência através das paixões humanas.</p>
+          <p style="margin-top:10px"><strong>Disciplinas:</strong> Auspícios, Celeridade, Presença.</p>
+          <p style="color:var(--blood); font-size: 13px; margin-top:8px"><strong>Fraqueza:</strong> Fascínio — ao ver algo de beleza extrema, ficam paralisados em transe por minutos ou até serem interrompidos.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Tremere</div>
+        <div class="card-body">
+          <p><strong>Os Usurpadores:</strong> Magos de sangue hierárquicos e secretos. Transformaram sua magia hermética em taumaturgia vampírica.</p>
+          <p style="margin-top:10px"><strong>Disciplinas:</strong> Auspícios, Dominação, Taumaturgia.</p>
+          <p style="color:var(--blood); font-size: 13px; margin-top:8px"><strong>Fraqueza:</strong> Vínculo de Sangue — são mais suscetíveis ao laço de sangue; apenas 2 goles de um superior já criam o laço completo.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Ventrue</div>
+        <div class="card-body">
+          <p><strong>Os Reis:</strong> A aristocracia de sangue azul. Políticos, líderes e CEOs que acreditam ser o destino de sua linhagem governar.</p>
+          <p style="margin-top:10px"><strong>Disciplinas:</strong> Dominação, Fortitude, Presença.</p>
+          <p style="color:var(--blood); font-size: 13px; margin-top:8px"><strong>Fraqueza:</strong> Paladar Exigente — só podem se alimentar de um tipo específico de sangue humano (ex: virgens, loiros, músicos).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-sabat" class="tab-content">
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">Lasombra</div>
+        <div class="card-body">
+          <p><strong>Os Guardiões das Sombras:</strong> Líderes implacáveis do Sabá e mestres das trevas abissais. Valorizam o poder acima de tudo.</p>
+          <p style="margin-top:10px"><strong>Disciplinas:</strong> Dominação, Obtenebração, Potência.</p>
+          <p style="color:var(--blood); font-size: 13px; margin-top:8px"><strong>Fraqueza:</strong> Sem Reflexo — não aparecem em espelhos ou fotos; sofrem dano extra de luz solar.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Tzimisce</div>
+        <div class="card-body">
+          <p><strong>Os Demônios:</strong> Mestres da transformação da carne e do osso. Estudiosos da evolução através do horror e da dor.</p>
+          <p style="margin-top:10px"><strong>Disciplinas:</strong> Animalismo, Auspícios, Vicissitude.</p>
+          <p style="color:var(--blood); font-size: 13px; margin-top:8px"><strong>Fraqueza:</strong> Terra Natal — precisam dormir cercados por terra de um lugar importante de sua vida mortal para descansar plenamente.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-independentes" class="tab-content">
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">Assamita (Banu Haqim)</div>
+        <div class="card-body">
+          <p><strong>Os Assassinos:</strong> Juízes e carrascos sagrados que operam a partir de sua fortaleza em Alamut. Temidos por sua maestria no abate.</p>
+          <p style="margin-top:10px"><strong>Disciplinas:</strong> Celeridade, Ofuscação, Quietus.</p>
+          <p style="color:var(--blood); font-size: 13px; margin-top:8px"><strong>Fraqueza:</strong> Vício em Sangue — sofrem uma fome incontrolável por sangue de outros vampiros após prová-lo.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Giovanni</div>
+        <div class="card-body">
+          <p><strong>Os Necromantes:</strong> Uma família insular que mistura negócios bancários com o controle dos mortos e dos espíritos.</p>
+          <p style="margin-top:10px"><strong>Disciplinas:</strong> Dominação, Necromancia, Potência.</p>
+          <p style="color:var(--blood); font-size: 13px; margin-top:8px"><strong>Fraqueza:</strong> O Beijo Doloroso — sua mordida causa dor agonizante em vez de prazer, tornando a alimentação difícil e traumática.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Ravnos</div>
+        <div class="card-body">
+          <p><strong>Os Charlatães:</strong> Mestres da ilusão e viajantes eternos. Possuem uma conexão mística com o caos e a decepção.</p>
+          <p style="margin-top:10px"><strong>Disciplinas:</strong> Animalismo, Fortitude, Quimerismo.</p>
+          <p style="color:var(--blood); font-size: 13px; margin-top:8px"><strong>Fraqueza:</strong> Vício Moral — cada Ravnos possui um vício específico (roubo, mentira, etc.) que devem realizar para não sofrerem penalidades.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Seguidores de Set</div>
+        <div class="card-body">
+          <p><strong>As Serpentes:</strong> Cultistas dedicados a libertar o deus Set através da corrupção e da queda dos impérios.</p>
+          <p style="margin-top:10px"><strong>Disciplinas:</strong> Ofuscação, Presença, Serpentis.</p>
+          <p style="color:var(--blood); font-size: 13px; margin-top:8px"><strong>Fraqueza:</strong> Fraqueza à Luz — sofrem o dobro de dano por luz solar e penalidades em ambientes muito iluminados.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ========== PÁGINA: SOCIEDADE ========== -->
 <section class="page" id="page-sociedade" data-page="sociedade">
   <h1>Sociedade Kindred</h1>
@@ -3587,9 +3751,7 @@ mark{
               <option value="">— Escolha seu Clã —</option>
               <option>Brujah</option><option>Gangrel</option><option>Malkaviano</option>
               <option>Nosferatu</option><option>Toreador</option><option>Tremere</option>
-              <option>Ventrue</option><option>Lasombra</option><option>Tzimisce</option>
-              <option>Assamita</option><option>Giovanni</option><option>Ravnos</option>
-              <option>Followers of Set</option><option>Caitiff</option><option>Pander</option>
+              <option>Ventrue</option><option>Assamita</option><option>Giovanni</option><option>Ravnos</option>
             </select>
           </div>
         </div>
@@ -3973,6 +4135,14 @@ function focusSearch() {
   }, 100);
 }
 
+
+function resetAllData() {
+  if (confirm("Deseja apagar todos os personagens e dados salvos? Esta ação não pode ser desfeita.")) {
+    localStorage.clear();
+    alert("Todos os dados foram apagados com sucesso.");
+    location.reload();
+  }
+}
 
 document.querySelectorAll('.nav a, [data-goto]').forEach(el => {
   el.addEventListener('click', function(e) {
