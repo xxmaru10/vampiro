@@ -3869,6 +3869,19 @@ mark{
               <option>Ventrue</option><option>Assamita</option><option>Giovanni</option><option>Ravnos</option>
             </select>
           </div>
+          <div class="cc-field">
+            <label class="cc-label">Cargo na Banda</label>
+            <select class="cc-input cc-select" id="cc-band-role" onchange="ccSave()">
+              <option value="">— Escolha seu Cargo —</option>
+              <option value="Vocalista">Vocalista</option>
+              <option value="Guitarrista">Guitarrista</option>
+              <option value="Baixista">Baixista</option>
+              <option value="Tecladista">Tecladista</option>
+              <option value="Baterista">Baterista</option>
+              <option value="Empresário">Empresário / Roadie</option>
+            </select>
+            <div id="cc-role-warning" style="color:var(--gold); font-size:10px; margin-top:5px; display:none">Este cargo já foi ocupado por outro jogador.</div>
+          </div>
         </div>
       </div>
 
@@ -4481,7 +4494,7 @@ let ccSelectedArchiveId = null;
 
 let ccState = {
   recordId:null,
-  photo:null, name:'', playerName:'', clan:'', lore:'', concept:'', difficulty:'', mortalSelf:'',
+  photo:null, name:'', playerName:'', clan:'', bandRole:'', lore:'', concept:'', difficulty:'', mortalSelf:'',
   aspect1:'', aspect2:'', skills:{}, discFree:{}, discExtra:[], stunts:[],
   creatorPhoto:null, creatorName:'', creatorLore:'', creatorPersonality:'', creatorRelation:'',
   creatorSourceId:null,
@@ -5313,6 +5326,7 @@ async function ccSaveToSupabase(record) {
         name: record.name,
         player_name: record.playerName,
         clan: record.clan,
+        band_role: record.bandRole,
         concept: record.concept,
         data: ccState, // Store full state as JSONB
         updated_at: new Date().toISOString()
