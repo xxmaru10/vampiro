@@ -135,8 +135,8 @@ function App() {
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
             />
-            <span className="custom-checkbox"></span>
-            <label htmlFor="remember">RELEMBRAR_LOGIN_E_SENHA</label>
+            <div className="checkbox-box"></div>
+            <label htmlFor="remember">LEMBRAR_LOGIN_E_SENHA</label>
           </div>
           
           <button type="submit" className="btn-terminal" disabled={loading}>
@@ -152,44 +152,6 @@ function App() {
             {isRegistering ? '[ VOLTAR AO LOGIN ]' : '[ SOLICITAR NOVO ACESSO ]'}
           </a>
         </div>
-        <style>{`
-          .checkbox-prompt {
-            margin: 15px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #00ff00;
-            font-family: 'VT323', monospace;
-            cursor: pointer;
-          }
-          .custom-checkbox {
-            width: 20px;
-            height: 20px;
-            border: 1px solid #00ff00;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            flex-shrink: 0;
-          }
-          .custom-checkbox::after {
-            content: "X";
-            display: none;
-            color: #00ff00;
-            font-weight: bold;
-          }
-          input:checked + .custom-checkbox::after {
-            display: block;
-          }
-          .checkbox-prompt input {
-            display: none;
-          }
-          .checkbox-prompt label {
-            cursor: pointer;
-            font-size: 1.1rem;
-            user-select: none;
-          }
-        `}</style>
       </div>
     </div>
   );
