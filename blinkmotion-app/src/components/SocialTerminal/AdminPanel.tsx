@@ -1,10 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
-import { useNews } from '../../hooks/useNews';
 import { usePosts } from '../../hooks/usePosts';
 import { BulkCommentModal } from './BulkCommentModal';
+import { NewsItem } from '../../hooks/useNews';
 
-export const AdminPanel: React.FC = () => {
+interface AdminPanelProps {
+  news: NewsItem[];
+  createNews: (title: string, content: string, asciiText?: string, publishedAt?: string) => Promise<void>;
+  deleteNews: (id: string) => Promise<void>;
+  newsLoading: boolean;
+  newsError: string | null;
+}
+
+export const AdminPanel: React.FC<AdminPanelProps> = ({ 
+  news, 
+  createNews, 
+  deleteNews, 
+  newsLoading, 
+  newsError 
+}) => {
   const [identities, setIdentities] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -16,7 +30,6 @@ export const AdminPanel: React.FC = () => {
   const [showBulkModal, setShowBulkModal] = useState(false);
 
   // News states
-  const { news, createNews, deleteNews, loading: newsLoading, error: newsError } = useNews();
   const [newsTitle, setNewsTitle] = useState('');
   const [newsContent, setNewsContent] = useState('');
   const [newsContentAscii, setNewsContentAscii] = useState('');
@@ -296,8 +309,9 @@ CREATE POLICY "Public Access Posts" ON blink_posts FOR ALL USING (true) WITH CHE
                           margin: 0, 
                           color: '#00ff00', 
                           whiteSpace: 'pre',
-                          fontSize: `${Math.min(5, Math.min(110 / (Math.max(...newsContentAscii.split('\n').map(l => l.length)) || 1) / 0.6, 90 / (newsContentAscii.split('\n').length || 1)))}px`,
+                          fontSize: `${Math.min(6, Math.min(104 / (Math.max(...newsContentAscii.split('\n').map(l => l.trimEnd().length)) || 1) / 0.55, 84 / (newsContentAscii.split('\n').filter(l => l.length > 0).length || 1)))}px`,
                           lineHeight: 1,
+                          letterSpacing: 0,
                           textAlign: 'center'
                         }}>
                           {newsContentAscii}

@@ -69,9 +69,11 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail,
                     color: '#00ff00', 
                     opacity: 0.8, 
                     whiteSpace: 'pre',
-                    fontSize: `${Math.min(5, Math.min(110 / (Math.max(...asciiContent.split('\n').map(l => l.length)) || 1) / 0.6, 90 / (asciiContent.split('\n').length || 1)))}px`,
+                    fontSize: `${Math.min(6, Math.min(104 / (Math.max(...asciiContent.split('\n').map(l => l.trimEnd().length)) || 1) / 0.55, 84 / (asciiContent.split('\n').filter(l => l.trim().length > 0).length || 1)))}px`,
                     lineHeight: 1,
-                    textAlign: 'center'
+                    letterSpacing: 0,
+                    textAlign: 'center',
+                    display: 'inline-block'
                   }}>
                     {asciiContent}
                   </pre>

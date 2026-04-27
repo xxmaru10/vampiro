@@ -15,14 +15,20 @@ interface MainDisplayProps {
 const ACTIVE_PATHS = ['/LOCAL_BROADCAST', '/ROOT_ACCESS', '/SECURE_COMMS', '/CLASSIFIEDS'];
 
 export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) => {
-  const { news } = useNews();
+  const { news, createNews, deleteNews, loading: newsLoading, error: newsError } = useNews();
   const isAdmin = user?.email === 'admin@blinkmotion.com';
   const isActive = ACTIVE_PATHS.includes(currentPath);
 
   return (
     <div className={`main-display ${isActive ? 'feed-active' : ''}`}>
       {currentPath === '/ROOT_ACCESS' && (
-        <AdminPanel />
+        <AdminPanel 
+          news={news} 
+          createNews={createNews} 
+          deleteNews={deleteNews} 
+          newsLoading={newsLoading} 
+          newsError={newsError} 
+        />
       )}
 
       {currentPath === '/LOCAL_BROADCAST' && (
