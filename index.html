@@ -3794,15 +3794,16 @@ mark{
       </div>
       <h2>01000001 01100011 01100101 01110011 01110011 01101111 01110010 01101001 01100001</h2>
       
-      <form onsubmit="event.preventDefault(); return false;">
+      <form onsubmit="event.preventDefault(); ccBlinkConnect(); return false;">
         <div class="terminal-prompt">
-          <input type="text" class="terminal-input" placeholder="01010101 01010011 01010101 01000001 01010010 01001001 01001111">
+          <input type="text" id="terminal-user" class="terminal-input" placeholder="USUARIO">
         </div>
         <div class="terminal-prompt">
-          <input type="password" class="terminal-input" placeholder="01010011 01000101 01001110 01001000 01000001">
+          <input type="password" id="terminal-pass" class="terminal-input" placeholder="SENHA">
         </div>
         <button type="submit" class="btn-terminal">conectar</button>
       </form>
+      <div id="terminal-status" style="font-family: 'VT323', monospace; color: #00ff00; margin-top: 10px; font-size: 14px;"></div>
       
       <div class="terminal-footer">
         01010011 01010100 01000001 01010100 01010101 01010011: 01101111 01101011<br>
@@ -4953,6 +4954,39 @@ async function ccSaveToSupabase(record) {
   } catch (err) {
     console.error("Erro ao salvar na tabela characters:", err);
     return null;
+  }
+}
+
+async function ccBlinkConnect() {
+  const user = document.getElementById('terminal-user').value.trim();
+  const pass = document.getElementById('terminal-pass').value.trim();
+  const status = document.getElementById('terminal-status');
+
+  if (!user || !pass) {
+    if (status) status.innerText = 'ERRO: CREDENCIAIS INCOMPLETAS';
+    return;
+  }
+
+  if (supabaseClient) {
+    if (status) status.innerText = 'NEGOCIANDO ACESSO...';
+    
+    const systemEmail = `${user.toLowerCase().replace(/[^a-z0-9]/g, '')}@blinkmotion.com`;
+    
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email: systemEmail,
+      password: pass
+    });
+
+    if (error) {
+      if (status) status.innerText = 'ERRO: ' + error.message.toUpperCase();
+    } else {
+      if (status) status.innerText = 'ACESSO CONCEDIDO. REDIRECIONANDO...';
+      // Redireciona para o novo app da rede social
+      setTimeout(() => {
+        window.location.href = './blinkmotion-app/dist/index.html'; 
+        // Nota: Se estiver rodando o dev server, seria localhost:5173
+      }, 1000);
+    }
   }
 }
 
