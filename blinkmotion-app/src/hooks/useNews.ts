@@ -7,6 +7,7 @@ export interface NewsItem {
   content: string;
   ascii_url: string;
   content_ascii?: string | null;
+  published_at?: string | null;
   created_at: string;
 }
 
@@ -27,61 +28,21 @@ export const useNews = () => {
     setLoading(false);
   };
 
-  const uploadAsciiArt = async (file: File) => {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Math.random()}.${fileExt}`;
-    const filePath = `ascii/${fileName}`;
-
-    const { error: uploadError } = await supabase.storage
-      .from('news_assets')
-      .upload(filePath, file);
-
-    if (uploadError) throw uploadError;
-
-    const { data } = supabase.storage
-      .from('news_assets')
-      .getPublicUrl(filePath);
-
-    return data.publicUrl;
-  };
-
-  const createNews = async (title: string, content: string, asciiFile?: File, asciiText?: string) => {
+  const createNews = async (
+    title: string,
+    content: string,
+    asciiText?: string,
+    publishedAt?: string
+  ) => {
     setLoading(true);
     setError(null);
     try {
-      let ascii_url = '';
       const content_ascii = asciiText && asciiText.trim().length > 0 ? asciiText : null;
+      const published_at = publishedAt && publishedAt.trim().length > 0 ? publishedAt : null;
 
-      // Só faz upload pra Storage se o usuário enviou um ARQUIVO.
-      // Texto colado é gravado direto em `content_ascii` (sem dependência de bucket).
-      if (asciiFile) {
-        try {
-          ascii_url = await uploadAsciiArt(asciiFile);
-        } catch (uploadErr: any) {
-          throw new Error(
-            `Upload do arquivo ASCII falhou: ${uploadErr.message || uploadErr}. ` +
-            `Crie o bucket "news_assets" no Supabase Storage ou cole o ASCII no campo de texto.`
-          );
-        }
-      }
-
-      // Tenta inserir com content_ascii. Se a coluna não existir, faz fallback sem ela.
-      let insertErr = (await supabase
+      const { error: insertErr } = await supabase
         .from('blink_news')
-        .insert([{ title, content, ascii_url, content_ascii }])).error;
-
-      if (insertErr && /content_ascii/i.test(insertErr.message)) {
-        const fallback = await supabase
-          .from('blink_news')
-          .insert([{ title, content, ascii_url }]);
-        insertErr = fallback.error;
-        if (!insertErr) {
-          setError(
-            'Notícia publicada, mas a coluna content_ascii não existe. ' +
-            'Rode: ALTER TABLE blink_news ADD COLUMN content_ascii TEXT;'
-          );
-        }
-      }
+        .insert([{ title, content, ascii_url: '', content_ascii, published_at }]);
 
       if (insertErr) throw insertErr;
       await fetchNews();
@@ -92,27 +53,15 @@ export const useNews = () => {
     }
   };
 
-  const deleteNews = async (id: string, asciiUrl?: string) => {
+  const deleteNews = async (id: string) => {
     setLoading(true);
     try {
-      // 1. Deletar do banco
       const { error: err } = await supabase
         .from('blink_news')
         .delete()
         .eq('id', id);
 
       if (err) throw err;
-
-      // 2. Deletar do storage se existir URL
-      if (asciiUrl) {
-        const path = asciiUrl.split('/').pop();
-        if (path) {
-          await supabase.storage
-            .from('news_assets')
-            .remove([`ascii/${path}`]);
-        }
-      }
-
       await fetchNews();
     } catch (err: any) {
       setError(err.message);

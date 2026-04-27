@@ -40,34 +40,44 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news }) => {
     }
   }, [currentIndex, news]);
 
-  if (news.length === 0) return null;
-
-  const currentNews = news[currentIndex];
+  const currentNews = news.length > 0 ? news[currentIndex] : null;
 
   return (
     <div className="weekly-news-box">
       <div className="news-header">
         <Newspaper size={16} />
         <span>NOTÍCIAS_DA_SEMANA_V.1.0</span>
-        <div className="news-nav">
-          <button onClick={prevSlide}><ChevronLeft size={14} /></button>
-          <span>{currentIndex + 1}/{news.length}</span>
-          <button onClick={nextSlide}><ChevronRight size={14} /></button>
-        </div>
+        {news.length > 1 && (
+          <div className="news-nav">
+            <button onClick={prevSlide}><ChevronLeft size={14} /></button>
+            <span>{currentIndex + 1}/{news.length}</span>
+            <button onClick={nextSlide}><ChevronRight size={14} /></button>
+          </div>
+        )}
       </div>
 
-      <div className="news-content-wrapper">
-        <div className="news-ascii-thumb">
-          <pre>{asciiContent || 'NO_IMAGE'}</pre>
+      {!currentNews ? (
+        <div className="news-empty">
+          <span>NO_SIGNAL // AGUARDANDO_TRANSMISSÃO</span>
         </div>
+      ) : (
+      <div className="news-content-wrapper">
+        {asciiContent && (
+          <div className="news-ascii-thumb">
+            <pre>{asciiContent}</pre>
+          </div>
+        )}
         <div className="news-text-info">
           <h3 className="news-title">{currentNews.title}</h3>
           <p className="news-description">{currentNews.content}</p>
           <div className="news-date">
-            DATA_REF: {new Date(currentNews.created_at).toLocaleDateString('pt-BR')}
+            DATA_REF: {currentNews.published_at
+              ? new Date(currentNews.published_at + 'T12:00:00').toLocaleDateString('pt-BR')
+              : new Date(currentNews.created_at).toLocaleDateString('pt-BR')}
           </div>
         </div>
       </div>
+      )}
 
       <style>{`
         .weekly-news-box {
@@ -106,9 +116,16 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news }) => {
         .news-nav button:hover {
           color: #fff;
         }
+        .news-empty {
+          padding: 24px 12px;
+          text-align: center;
+          color: #00ff0033;
+          font-family: 'VT323', monospace;
+          font-size: 0.9rem;
+          letter-spacing: 3px;
+        }
         .news-content-wrapper {
-          display: grid;
-          grid-template-columns: 120px 1fr;
+          display: flex;
           gap: 15px;
           padding: 12px;
           min-height: 100px;
@@ -116,13 +133,16 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news }) => {
         .news-ascii-thumb {
           background: #000;
           border: 1px solid #111;
+          width: 120px;
+          min-width: 120px;
           height: 100px;
           overflow: hidden;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 4px; /* Miniatura */
+          font-size: 4px;
           line-height: 1;
+          flex-shrink: 0;
         }
         .news-ascii-thumb pre {
           margin: 0;
@@ -136,6 +156,7 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news }) => {
           flex-direction: column;
           gap: 5px;
           overflow: hidden;
+          flex: 1;
         }
         .news-title {
           margin: 0;

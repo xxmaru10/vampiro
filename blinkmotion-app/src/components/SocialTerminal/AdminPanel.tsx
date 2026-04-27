@@ -18,7 +18,7 @@ export const AdminPanel: React.FC = () => {
   const [newsTitle, setNewsTitle] = useState('');
   const [newsContent, setNewsContent] = useState('');
   const [newsContentAscii, setNewsContentAscii] = useState('');
-  const [newsFile, setNewsFile] = useState<File | null>(null);
+  const [newsPublishedAt, setNewsPublishedAt] = useState('');
 
   const fetchIdentities = async () => {
     setLoading(true);
@@ -88,11 +88,11 @@ export const AdminPanel: React.FC = () => {
   const handleCreateNews = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newsTitle || !newsContent) return;
-    await createNews(newsTitle, newsContent, newsFile || undefined, newsContentAscii);
+    await createNews(newsTitle, newsContent, newsContentAscii, newsPublishedAt);
     setNewsTitle('');
     setNewsContent('');
     setNewsContentAscii('');
-    setNewsFile(null);
+    setNewsPublishedAt('');
   };
 
   return (
@@ -120,17 +120,14 @@ CREATE TABLE IF NOT EXISTS blink_news (
   title TEXT NOT NULL,
   content TEXT NOT NULL,
   ascii_url TEXT,
-  content_ascii TEXT,            -- ASCII inline (sem precisar de bucket)
+  content_ascii TEXT,
+  published_at DATE,
   created_at TIMESTAMPTZ DEFAULT now()
 );
-ALTER TABLE blink_news ADD COLUMN IF NOT EXISTS content_ascii TEXT;
 
--- (OPCIONAL) BUCKET DE STORAGE — só necessário p/ UPLOAD de arquivo .txt
--- Dashboard > Storage > New bucket > nome: news_assets > Public: ON
--- Ou via SQL:
-INSERT INTO storage.buckets (id, name, public)
-VALUES ('news_assets', 'news_assets', true)
-ON CONFLICT (id) DO NOTHING;
+-- Se a tabela já existe, adicione as colunas:
+ALTER TABLE blink_news ADD COLUMN IF NOT EXISTS content_ascii TEXT;
+ALTER TABLE blink_news ADD COLUMN IF NOT EXISTS published_at DATE;
 
 -- Habilite RLS e políticas de acesso no Supabase`}
           </pre>
@@ -230,29 +227,21 @@ ON CONFLICT (id) DO NOTHING;
                   />
                 </div>
                 <div className="input-group">
-                  <label>CONTEÚDO ASCII (OPCIONAL - COLE OU FAÇA UPLOAD)</label>
-                  <textarea 
-                    value={newsContentAscii}
-                    onChange={e => setNewsContentAscii(e.target.value)}
-                    placeholder="Cole sua arte ASCII aqui ou selecione um arquivo abaixo..."
-                    className="ascii-textarea"
+                  <label>DATA DE PUBLICAÇÃO</label>
+                  <input
+                    type="date"
+                    value={newsPublishedAt}
+                    onChange={e => setNewsPublishedAt(e.target.value)}
+                    style={{ colorScheme: 'dark' }}
                   />
                 </div>
                 <div className="input-group">
-                  <label>ARQUIVO ASCII (.TXT)</label>
-                  <input 
-                    type="file" 
-                    accept=".txt"
-                    onChange={e => {
-                      const file = e.target.files?.[0] || null;
-                      setNewsFile(file);
-                      if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (ev) => setNewsContentAscii(ev.target?.result as string);
-                        reader.readAsText(file);
-                      }
-                    }}
-                    className="file-input"
+                  <label>ARTE ASCII (OPCIONAL)</label>
+                  <textarea
+                    value={newsContentAscii}
+                    onChange={e => setNewsContentAscii(e.target.value)}
+                    placeholder="Cole sua arte ASCII aqui..."
+                    className="ascii-textarea"
                   />
                 </div>
                 <button type="submit" className="btn-save" disabled={newsLoading}>
@@ -268,10 +257,14 @@ ON CONFLICT (id) DO NOTHING;
                   <div key={item.id} className="npc-item">
                     <div className="npc-info">
                       <div className="npc-name">{item.title}</div>
-                      <div className="npc-date">{new Date(item.created_at).toLocaleDateString()}</div>
+                      <div className="npc-date">
+                        {item.published_at
+                          ? new Date(item.published_at + 'T12:00:00').toLocaleDateString('pt-BR')
+                          : new Date(item.created_at).toLocaleDateString('pt-BR')}
+                      </div>
                     </div>
                     <button onClick={() => {
-                      if(window.confirm('Apagar notícia?')) deleteNews(item.id, item.ascii_url)
+                      if (window.confirm('Apagar notícia?')) deleteNews(item.id);
                     }} className="btn-delete">APAGAR</button>
                   </div>
                 ))}
