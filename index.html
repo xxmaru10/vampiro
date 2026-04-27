@@ -3871,7 +3871,7 @@ mark{
           </div>
           <div class="cc-field">
             <label class="cc-label">Cargo na Banda</label>
-            <select class="cc-input cc-select" id="cc-band-role" onchange="ccSave()">
+            <select class="cc-input cc-select" id="cc-band-role" onchange="ccSave(); ccSyncBandRoleToAspect()">
               <option value="">— Escolha seu Cargo —</option>
               <option value="Vocalista">Vocalista</option>
               <option value="Co-vocalista">Co-vocalista</option>
@@ -3931,7 +3931,7 @@ mark{
         <div>
           <div style="color:var(--gold);font-family:'Cinzel Decorative',serif;font-size:20px" id="cc-name-display-2">—</div>
           <div style="color:var(--blood);font-size:13px;margin-top:4px" id="cc-clan-display-2">—</div>
-          <div style="color:var(--ink-soft);font-size:11px;margin-top:4px;font-family:'Montserrat',sans-serif;letter-spacing:1px">NEONATO · 13ª GERAÇÃO · 2 ANOS</div>
+          <div style="color:var(--ink-soft);font-size:11px;margin-top:4px;font-family:'Montserrat',sans-serif;letter-spacing:1px">NEÓNATO · 12ª GERAÇÃO · 2 ANOS</div>
         </div>
       </div>
 
@@ -3956,8 +3956,8 @@ mark{
       <div class="cc-divider"></div>
       <div class="cc-section-title">Aspectos Livres</div>
       <div class="cc-field">
-        <label class="cc-label">Aspecto Livre 1</label>
-        <input type="text" class="cc-input" id="cc-aspect-1" placeholder="Um traço, crença, relação ou fato marcante..." oninput="ccSave()">
+        <label class="cc-label">Aspecto Livre 1 <span style="color:var(--gold);font-size:9px">(Cargo na Banda — fixo)</span></label>
+        <input type="text" class="cc-input" id="cc-aspect-1" readonly style="opacity:0.7;cursor:not-allowed" placeholder="Definido pelo Cargo na Banda...">
       </div>
       <div class="cc-field">
         <label class="cc-label">Aspecto Livre 2</label>
@@ -4562,7 +4562,13 @@ async function ccReadArchive() { console.log("DIAGNOSTICO: Busca iniciada no Sup
           bandRole: d.band_role,
           concept: d.concept,
           photo: d.data?.photo || '',
-          creator: d.data?.creator || {},
+          creator: {
+            name: d.data?.creatorName || '',
+            photo: d.data?.creatorPhoto || '',
+            lore: d.data?.creatorLore || '',
+            personality: d.data?.creatorPersonality || '',
+            relation: d.data?.creatorRelation || ''
+          },
           lore: d.data?.lore || '',
           mortalSelf: d.data?.mortalSelf || '',
           updatedAt: d.created_at
@@ -4963,6 +4969,13 @@ async function ccInit() {
   }
   // Atualiza cargos a cada 20 segundos
   setInterval(ccUpdateRoleAvailability, 20000);
+}
+
+function ccSyncBandRoleToAspect() {
+  const role = document.getElementById('cc-band-role')?.value || '';
+  const asp = document.getElementById('cc-aspect-1');
+  if (asp) asp.value = role ? Cargo na Banda: ${role} : '';
+  ccState.aspect1 = asp?.value || '';
 }
 
 function ccSave() {
