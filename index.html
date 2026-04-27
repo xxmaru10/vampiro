@@ -4295,16 +4295,34 @@ function loadDraft() {
 }
 
 
-function downloadCharacterData() {
-  let archive = [];
-  let legacy = [];
-  try { archive = JSON.parse(localStorage.getItem('cc_character_archive_v1') || '[]'); } catch (e) {}
-  try { legacy = JSON.parse(localStorage.getItem('vampiro_chars') || '[]'); } catch (e) {}
-  const payload = { archive, legacy };
+async function downloadCharacterData() {
+  let fullData = [];
+  if (supabaseClient) {
+    try {
+      const { data, error } = await supabaseClient.from('characters').select('*');
+      if (!error && data) {
+        fullData = data;
+      } else {
+        alert("Erro ao buscar dados do servidor para o backup.");
+      }
+    } catch (e) {
+      alert("Erro de conexão ao tentar fazer o backup.");
+    }
+  }
+
+  // Fallback caso não consiga do Supabase ou para juntar com localStorage antigo
+  let localArchive = [];
+  try { localArchive = JSON.parse(localStorage.getItem('cc_character_archive_v1') || '[]'); } catch (e) {}
+  
+  const payload = {
+    supabase_characters: fullData,
+    local_archive_v1: localArchive
+  };
+
   const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 2));
   const downloadAnchorNode = document.createElement('a');
   downloadAnchorNode.setAttribute("href", dataStr);
-  downloadAnchorNode.setAttribute("download", "personagens_vampiro.json");
+  downloadAnchorNode.setAttribute("download", "backup_personagens_vampiro_global.json");
   document.body.appendChild(downloadAnchorNode);
   downloadAnchorNode.click();
   downloadAnchorNode.remove();
@@ -4850,17 +4868,6 @@ function ccSelectArchiveByIndex(index, isCreator = false) {
         <div class="cc-label">História (Lore)</div>
         <div class="cc-archive-detail-lore">${entry.lore ? ccFormatHtml(entry.lore) : 'Sem lore registrada.'}</div>
 
-        <div class="cc-label" style="margin-top:15px">Objetivos e Laços</div>
-        <div class="cc-archive-detail-lore" style="font-size:12px">
-          ${entry.objectives?.q1 ? '<strong style="color:var(--blood)">Curto prazo:</strong> ' + ccEscapeHtml(entry.objectives.q1) + '<br>' : ''}
-          ${entry.objectives?.q2 ? '<strong style="color:var(--blood)">Médio prazo:</strong> ' + ccEscapeHtml(entry.objectives.q2) + '<br>' : ''}
-          ${entry.objectives?.q3 ? '<strong style="color:var(--blood)">Longo prazo:</strong> ' + ccEscapeHtml(entry.objectives.q3) + '<br>' : ''}
-          ${entry.objectives?.q4 ? '<strong style="color:var(--blood)">Consequências (Falha):</strong> ' + ccEscapeHtml(entry.objectives.q4) + '<br>' : ''}
-          ${entry.objectives?.q5 ? '<strong style="color:var(--blood)">Obstáculos Atuais:</strong> ' + ccEscapeHtml(entry.objectives.q5) + '<br>' : ''}
-          ${entry.objectives?.q6 ? '<strong style="color:var(--blood)">Dependência do Grupo:</strong> ' + ccEscapeHtml(entry.objectives.q6) + '<br>' : ''}
-          ${entry.objectives?.q7 ? '<strong style="color:var(--blood)">Inimigos:</strong> ' + ccEscapeHtml(entry.objectives.q7) + '<br>' : ''}
-          ${entry.objectives?.q8 ? '<strong style="color:var(--blood)">Devedor/Aliado:</strong> ' + ccEscapeHtml(entry.objectives.q8) : ''}
-        </div>
       </div>
     `;
   }
