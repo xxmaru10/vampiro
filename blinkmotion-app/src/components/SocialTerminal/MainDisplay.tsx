@@ -1,10 +1,18 @@
 import React from 'react';
+import { AdminPanel } from './AdminPanel';
 
-export const MainDisplay: React.FC = () => {
+interface MainDisplayProps {
+  currentPath: string;
+}
+
+export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath }) => {
   return (
     <div className="main-display">
-      {/* Conteúdo futuro será injetado aqui */}
-      <div className="empty-indicator">SYSTEM_IDLE... WAITING_FOR_CONTENT</div>
+      {currentPath === '/ROOT_ACCESS' ? (
+        <AdminPanel />
+      ) : (
+        <div className="empty-indicator">SYSTEM_IDLE... WAITING_FOR_CONTENT</div>
+      )}
       <style>{`
         .main-display {
           flex-grow: 1;

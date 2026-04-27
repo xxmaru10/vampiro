@@ -62,7 +62,7 @@ function App() {
           onExecute={executeCommand}
           isProcessing={isProcessing}
         />
-        <MainDisplay />
+        <MainDisplay currentPath={currentPath} />
         
         <style>{`
           .social-terminal-layout {
