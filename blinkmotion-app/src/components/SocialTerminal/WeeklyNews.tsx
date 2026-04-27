@@ -61,10 +61,22 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail,
           </div>
         ) : (
           <>
-            <div style={{ display: 'flex', gap: 12, padding: 12 }}>
+            <div style={{ display: 'flex', gap: 20, padding: 18 }}>
               {asciiContent && (
-                <div style={{ background: '#000', border: '1px solid #111', width: 110, minWidth: 110, height: 90, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <pre style={((): React.CSSProperties => {
+                <div style={{ 
+                  background: '#000', 
+                  border: '1px solid #00ff0022', 
+                  width: 200, 
+                  minWidth: 200, 
+                  height: 160, 
+                  overflow: 'hidden', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  flexShrink: 0,
+                  position: 'relative'
+                }}>
+                  <div style={((): React.CSSProperties => {
                     const lines = asciiContent.split('\n');
                     let maxLineLen = 0;
                     for (let i = 0; i < lines.length; i++) {
@@ -73,34 +85,41 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail,
                     }
                     const lineCount = lines.length || 1;
                     const safeMaxLen = maxLineLen || 1;
-                    // Cálculo idêntico ao AdminPanel para consistência
-                    const fontSize = Math.min(8, Math.min(104 / (safeMaxLen * 0.55), 84 / lineCount));
+                    
+                    const charWidth = 6;
+                    const charHeight = 10;
+                    const contentWidth = safeMaxLen * charWidth;
+                    const contentHeight = lineCount * charHeight;
+                    
+                    const scaleW = 190 / contentWidth; 
+                    const scaleH = 150 / contentHeight;
+                    const scale = Math.min(1, Math.min(scaleW, scaleH));
 
                     return {
-                      margin: 0,
-                      color: '#00ff00',
-                      opacity: 0.8,
+                      transform: `scale(${scale})`,
+                      transformOrigin: 'center',
                       whiteSpace: 'pre',
-                      fontSize: `${fontSize}px`,
-                      lineHeight: 1,
-                      letterSpacing: 0,
+                      color: '#00ff00',
+                      opacity: 0.9,
+                      lineHeight: `${charHeight}px`,
+                      fontSize: '10px',
+                      fontFamily: "'VT323', monospace",
                       textAlign: 'center',
-                      display: 'inline-block',
-                      fontFamily: "'VT323', monospace"
+                      display: 'inline-block'
                     };
                   })()}>
                     {asciiContent}
-                  </pre>
+                  </div>
                 </div>
               )}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 4, flex: 1, minWidth: 0 }}>
-                <div style={{ fontWeight: 'bold', fontSize: '1.05rem', color: '#00ff00', textTransform: 'uppercase', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1, minWidth: 0 }}>
+                <div style={{ fontWeight: 'bold', fontSize: '1.4rem', color: '#00ff00', textTransform: 'uppercase', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', letterSpacing: 1 }}>
                   {currentNews.title}
                 </div>
-                <div style={{ fontSize: '0.82rem', color: '#00ff00aa', lineHeight: 1.3 }}>
+                <div style={{ fontSize: '1rem', color: '#00ff00cc', lineHeight: 1.4, textAlign: 'justify' }}>
                   {currentNews.content}
                 </div>
-                <div style={{ fontSize: '0.7rem', color: '#00ff0055', textAlign: 'right', marginTop: 'auto' }}>
+                <div style={{ fontSize: '0.8rem', color: '#00ff0055', textAlign: 'right', marginTop: 'auto', letterSpacing: 2 }}>
                   DATA_REF: {currentNews.published_at
                     ? new Date(currentNews.published_at + 'T12:00:00').toLocaleDateString('pt-BR')
                     : new Date(currentNews.created_at).toLocaleDateString('pt-BR')}
