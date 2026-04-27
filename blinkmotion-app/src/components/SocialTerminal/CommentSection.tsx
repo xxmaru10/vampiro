@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useComments } from '../../hooks/useComments';
+import { useComments, type BulkItem } from '../../hooks/useComments';
 import { CommentItem } from './CommentItem';
 import { supabase } from '../../lib/supabaseClient';
 
@@ -10,14 +10,9 @@ interface CommentSectionProps {
   isAdmin: boolean;
 }
 
-// Parseia o formato simples:
-//   Usuario
-//   comentario
-//   curtidas
-//   (linha em branco)
-function parseBulkText(text: string): { author: string; content: string; likes: number; is_npc: boolean }[] {
+function parseBulkText(text: string): BulkItem[] {
   const blocks = text.trim().split(/\n\s*\n/);
-  const results: { author: string; content: string; likes: number; is_npc: boolean }[] = [];
+  const results: BulkItem[] = [];
   for (const block of blocks) {
     const lines = block.trim().split('\n').map(l => l.trim()).filter(Boolean);
     if (lines.length < 2) continue;
@@ -30,6 +25,17 @@ function parseBulkText(text: string): { author: string; content: string; likes: 
     results.push({ author, content: contentFinal, likes, is_npc: true });
   }
   return results;
+}
+
+function parseBulkInput(text: string): BulkItem[] {
+  const trimmed = text.trim();
+  if (trimmed.startsWith('[') || trimmed.startsWith('{')) {
+    try {
+      const parsed = JSON.parse(trimmed);
+      return Array.isArray(parsed) ? parsed : [parsed];
+    } catch {}
+  }
+  return parseBulkText(text);
 }
 
 export const CommentSection: React.FC<CommentSectionProps> = ({ newsId, userId, userEmail, isAdmin }) => {
@@ -77,16 +83,14 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ newsId, userId, 
   };
 
   const handleBulkRun = async () => {
-    const items = parseBulkText(bulkText);
+    const items = parseBulkInput(bulkText);
     if (items.length === 0) { setBulkError('Nenhum comentário válido encontrado.'); return; }
     setBulkError('');
     setBulkRunning(true);
     setBulkDone(false);
     setBulkProgress({ done: 0, total: items.length });
     try {
-      // Converte para BulkItem e injeta
-      const bulkItems = items.map(i => ({ author: i.author, is_npc: i.is_npc, content: i.content, likes: i.likes }));
-      await bulkInsert(newsId, bulkItems, (done, total) => setBulkProgress({ done, total }));
+      await bulkInsert(newsId, items, (done, total) => setBulkProgress({ done, total }));
       setBulkDone(true);
       setBulkText('');
     } catch (e: any) {
@@ -94,6 +98,10 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ newsId, userId, 
     } finally {
       setBulkRunning(false);
     }
+  };
+
+  const handleBulkReply = async (parentId: string, items: BulkItem[]) => {
+    await bulkInsert(newsId, items, () => {}, parentId);
   };
 
   const totalCount = countAll(comments);
@@ -116,7 +124,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ newsId, userId, 
             style={{ flex: 1, background: '#000', border: '1px solid #00ff0044', color: '#00ff00', fontFamily: "'VT323', monospace", fontSize: '0.8rem', padding: '2px 6px' }}
           >
             <option value="__self__">[ {currentUserName} ]</option>
-            {identities.map(id => <option key={id.id} value={id.id}>[NPC] {id.name}</option>)}
+            {identities.map(id => <option key={id.id} value={id.id}>{id.name}</option>)}
           </select>
         </div>
       )}
@@ -147,6 +155,8 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ newsId, userId, 
               onReply={addComment}
               onDelete={deleteComment}
               onSetExtraLikes={setExtraLikes}
+              onBulkReply={handleBulkReply}
+              parseBulkInput={parseBulkInput}
             />
           ))}
         </div>
@@ -188,10 +198,10 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ newsId, userId, 
       {isAdmin && bulkOpen && (
         <div style={{ marginTop: 10, background: '#050505', border: '1px solid #00ff0033', padding: 12 }}>
           <div style={{ color: '#00ff0077', fontSize: '0.78rem', marginBottom: 8, letterSpacing: 1 }}>
-            INJEÇÃO_EM_MASSA — formato por bloco (separe com linha em branco):
+            INJEÇÃO_EM_MASSA — texto simples ou JSON com replies aninhados:
           </div>
           <div style={{ color: '#00ff0044', fontSize: '0.72rem', marginBottom: 8, fontFamily: 'Courier New, monospace', lineHeight: 1.6 }}>
-            {'NomeDoUsuario\nTexto do comentário\nNúmero de curtidas'}
+            {'Texto: Nome / Mensagem / Curtidas (bloco por linha em branco)\nJSON: [{"author":"X","content":"...","likes":3,"replies":[{"author":"Y","content":"..."}]}]'}
           </div>
           <textarea
             value={bulkText}

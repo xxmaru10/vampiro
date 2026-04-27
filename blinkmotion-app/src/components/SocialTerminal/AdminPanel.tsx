@@ -188,7 +188,7 @@ ALTER TABLE blink_news ADD COLUMN IF NOT EXISTS published_at DATE;
                       <div className="npc-name">ID: {npc.name}</div>
                       <div className="npc-bio">{npc.bio || 'Sem biografia...'}</div>
                     </div>
-                    <button onClick={() => handleDeleteNPC(npc.id)} className="btn-delete">APAGAR</button>
+                    <button onClick={() => handleDeleteNPC(npc.id)} className="btn-delete">🗑</button>
                   </div>
                 ))}
                 {identities.length === 0 && !loading && (
@@ -263,7 +263,7 @@ ALTER TABLE blink_news ADD COLUMN IF NOT EXISTS published_at DATE;
                     </div>
                     <button onClick={() => {
                       if (window.confirm('Apagar notícia?')) deleteNews(item.id);
-                    }} className="btn-delete">APAGAR</button>
+                    }} className="btn-delete">🗑</button>
                   </div>
                 ))}
                 {news.length === 0 && !newsLoading && (

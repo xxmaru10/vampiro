@@ -119,7 +119,8 @@ export const useComments = (newsId: string, userId?: string) => {
   const bulkInsert = async (
     targetNewsId: string,
     items: BulkItem[],
-    onProgress: (done: number, total: number) => void
+    onProgress: (done: number, total: number) => void,
+    rootParentId?: string
   ) => {
     let done = 0;
     const total = countBulkItems(items);
@@ -145,7 +146,7 @@ export const useComments = (newsId: string, userId?: string) => {
       }
     };
 
-    for (const item of items) await insertOne(item);
+    for (const item of items) await insertOne(item, rootParentId);
     await fetchComments();
   };
 

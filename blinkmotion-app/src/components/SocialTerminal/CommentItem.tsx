@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { Comment } from '../../hooks/useComments';
+import type { Comment, BulkItem } from '../../hooks/useComments';
 
 interface CommentItemProps {
   comment: Comment;
@@ -13,16 +13,23 @@ interface CommentItemProps {
   onReply: (content: string, authorName: string, isNpc: boolean, parentId: string) => Promise<void>;
   onDelete: (id: string) => void;
   onSetExtraLikes: (id: string, count: number) => void;
+  onBulkReply?: (parentId: string, items: BulkItem[]) => Promise<void>;
+  parseBulkInput?: (text: string) => BulkItem[];
 }
 
 export const CommentItem: React.FC<CommentItemProps> = ({
   comment, depth, isAdmin, currentUserId, currentUserName,
   identities, selectedIdentity,
   onToggleLike, onReply, onDelete, onSetExtraLikes,
+  onBulkReply, parseBulkInput,
 }) => {
   const [replying, setReplying] = useState(false);
+  const [replyMode, setReplyMode] = useState<'text' | 'inject'>('text');
   const [replyText, setReplyText] = useState('');
   const [replyLoading, setReplyLoading] = useState(false);
+  const [injectText, setInjectText] = useState('');
+  const [injectError, setInjectError] = useState('');
+  const [injectDone, setInjectDone] = useState(false);
   const [editingLikes, setEditingLikes] = useState(false);
   const [likesInput, setLikesInput] = useState(String(comment.extra_likes));
 
@@ -47,6 +54,24 @@ export const CommentItem: React.FC<CommentItemProps> = ({
     setReplyLoading(false);
   };
 
+  const handleInjectReply = async () => {
+    if (!parseBulkInput || !onBulkReply) return;
+    const items = parseBulkInput(injectText);
+    if (items.length === 0) { setInjectError('Nenhum item válido.'); return; }
+    setInjectError('');
+    setReplyLoading(true);
+    try {
+      await onBulkReply(comment.id, items);
+      setInjectText('');
+      setInjectDone(true);
+      setTimeout(() => { setReplying(false); setInjectDone(false); }, 1200);
+    } catch (e: any) {
+      setInjectError('Erro: ' + e.message);
+    } finally {
+      setReplyLoading(false);
+    }
+  };
+
   const handleSaveLikes = () => {
     const n = Math.max(0, parseInt(likesInput, 10) || 0);
     onSetExtraLikes(comment.id, n);
@@ -61,12 +86,9 @@ export const CommentItem: React.FC<CommentItemProps> = ({
       <div style={{ background: '#050505', border: `1px solid ${borderColor}`, padding: '8px 12px' }}>
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4, flexWrap: 'wrap' }}>
-          <span style={{ color: comment.is_npc ? '#00ffff' : '#00ff00', fontWeight: 'bold', fontSize: '0.95rem' }}>
+          <span style={{ color: '#00ff00', fontWeight: 'bold', fontSize: '0.95rem' }}>
             [{comment.author_name.toUpperCase()}]
           </span>
-          {comment.is_npc && (
-            <span style={{ color: '#00ffff', border: '1px solid #00ffff44', padding: '0 4px', fontSize: '0.65rem' }}>NPC</span>
-          )}
           <span style={{ color: '#00ff0044', fontSize: '0.7rem', marginLeft: 'auto' }}>
             {timestamp}
           </span>
@@ -98,7 +120,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 
           {/* Reply */}
           <button
-            onClick={() => setReplying(r => !r)}
+            onClick={() => { setReplying(r => !r); setReplyMode('text'); setInjectError(''); setInjectDone(false); }}
             style={{ background: 'transparent', border: 'none', color: '#00ff0066', cursor: 'pointer', fontFamily: "'VT323', monospace", fontSize: '0.85rem', padding: 0 }}
           >
             [ RESPONDER ]
@@ -127,9 +149,9 @@ export const CommentItem: React.FC<CommentItemProps> = ({
               )}
               <button
                 onClick={() => { if (window.confirm('Apagar comentário?')) onDelete(comment.id); }}
-                style={{ background: 'transparent', border: 'none', color: '#ff333355', cursor: 'pointer', fontFamily: "'VT323', monospace", fontSize: '0.75rem', padding: 0 }}
+                style={{ background: 'transparent', border: 'none', color: '#ff333355', cursor: 'pointer', fontFamily: "'VT323', monospace", fontSize: '1rem', padding: 0 }}
               >
-                [APAGAR]
+                🗑
               </button>
             </>
           )}
@@ -137,22 +159,66 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 
         {/* Reply form */}
         {replying && (
-          <div style={{ marginTop: 8, borderTop: '1px solid #00ff0022', paddingTop: 8, display: 'flex', gap: 8, alignItems: 'flex-start' }}>
-            <span style={{ color: '#00ff0066', fontFamily: "'VT323', monospace", marginTop: 4 }}>▶</span>
-            <textarea
-              value={replyText}
-              onChange={e => setReplyText(e.target.value)}
-              placeholder="Resposta..."
-              rows={2}
-              style={{ flex: 1, background: '#000', border: '1px solid #00ff0044', color: '#00ff00', fontFamily: "'VT323', monospace", fontSize: '0.85rem', padding: 6, resize: 'none', outline: 'none' }}
-            />
-            <button
-              onClick={handleReply}
-              disabled={replyLoading || !replyText.trim()}
-              style={{ background: '#00ff00', color: '#000', border: 'none', padding: '4px 10px', fontFamily: "'VT323', monospace", fontSize: '0.85rem', cursor: 'pointer', alignSelf: 'flex-end' }}
-            >
-              {replyLoading ? '...' : 'OK'}
-            </button>
+          <div style={{ marginTop: 8, borderTop: '1px solid #00ff0022', paddingTop: 8 }}>
+            {/* Toggle text/inject for admin */}
+            {isAdmin && onBulkReply && (
+              <div style={{ display: 'flex', gap: 8, marginBottom: 6 }}>
+                <button
+                  onClick={() => setReplyMode('text')}
+                  style={{ background: replyMode === 'text' ? '#00ff00' : 'transparent', color: replyMode === 'text' ? '#000' : '#00ff0066', border: '1px solid #00ff0044', padding: '2px 10px', fontFamily: "'VT323', monospace", fontSize: '0.78rem', cursor: 'pointer' }}
+                >
+                  [ TEXTO ]
+                </button>
+                <button
+                  onClick={() => setReplyMode('inject')}
+                  style={{ background: replyMode === 'inject' ? '#00ff00' : 'transparent', color: replyMode === 'inject' ? '#000' : '#00ff0066', border: '1px solid #00ff0044', padding: '2px 10px', fontFamily: "'VT323', monospace", fontSize: '0.78rem', cursor: 'pointer' }}
+                >
+                  [ INJEÇÃO ]
+                </button>
+              </div>
+            )}
+
+            {replyMode === 'text' ? (
+              <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+                <span style={{ color: '#00ff0066', fontFamily: "'VT323', monospace", marginTop: 4 }}>▶</span>
+                <textarea
+                  value={replyText}
+                  onChange={e => setReplyText(e.target.value)}
+                  placeholder="Resposta..."
+                  rows={2}
+                  style={{ flex: 1, background: '#000', border: '1px solid #00ff0044', color: '#00ff00', fontFamily: "'VT323', monospace", fontSize: '0.85rem', padding: 6, resize: 'none', outline: 'none' }}
+                />
+                <button
+                  onClick={handleReply}
+                  disabled={replyLoading || !replyText.trim()}
+                  style={{ background: '#00ff00', color: '#000', border: 'none', padding: '4px 10px', fontFamily: "'VT323', monospace", fontSize: '0.85rem', cursor: 'pointer', alignSelf: 'flex-end' }}
+                >
+                  {replyLoading ? '...' : 'OK'}
+                </button>
+              </div>
+            ) : (
+              <div>
+                <div style={{ color: '#00ff0044', fontSize: '0.7rem', marginBottom: 4, fontFamily: 'Courier New, monospace' }}>
+                  {'Texto simples ou JSON com replies aninhados'}
+                </div>
+                <textarea
+                  value={injectText}
+                  onChange={e => { setInjectText(e.target.value); setInjectError(''); setInjectDone(false); }}
+                  placeholder={'Nome\nMensagem\nCurtidas\n\nou JSON: [{"author":"X","content":"...","replies":[...]}]'}
+                  rows={5}
+                  style={{ width: '100%', background: '#000', border: `1px solid ${injectError ? '#ff3333' : '#00ff0033'}`, color: '#00ff00', fontFamily: 'Courier New, monospace', fontSize: '0.78rem', padding: 6, resize: 'vertical', outline: 'none', boxSizing: 'border-box', marginBottom: 6 }}
+                />
+                {injectError && <div style={{ color: '#ff3333', fontSize: '0.72rem', marginBottom: 4 }}>⚠ {injectError}</div>}
+                {injectDone && <div style={{ color: '#00ff00', fontSize: '0.78rem', marginBottom: 4 }}>✓ INJETADO</div>}
+                <button
+                  onClick={handleInjectReply}
+                  disabled={replyLoading || !injectText.trim()}
+                  style={{ background: '#00ff00', color: '#000', border: 'none', padding: '4px 14px', fontFamily: "'VT323', monospace", fontSize: '0.88rem', cursor: 'pointer' }}
+                >
+                  {replyLoading ? 'INJETANDO...' : '[ INJETAR_RESPOSTAS ]'}
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -174,6 +240,8 @@ export const CommentItem: React.FC<CommentItemProps> = ({
               onReply={onReply}
               onDelete={onDelete}
               onSetExtraLikes={onSetExtraLikes}
+              onBulkReply={onBulkReply}
+              parseBulkInput={parseBulkInput}
             />
           ))}
         </div>

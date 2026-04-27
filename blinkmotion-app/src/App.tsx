@@ -16,12 +16,16 @@ function App() {
 
   const { currentPath, logs, isProcessing, executeCommand, commands } = useTerminalNavigation(user?.email);
 
-  // Load saved email
+  // Load saved credentials
   useEffect(() => {
     const savedEmail = localStorage.getItem('blink_remember_email');
+    const savedPassword = localStorage.getItem('blink_remember_password');
     if (savedEmail) {
       setEmail(savedEmail);
       setRememberMe(true);
+    }
+    if (savedPassword) {
+      setPassword(savedPassword);
     }
   }, []);
 
@@ -47,8 +51,10 @@ function App() {
         await login(email, password);
         if (rememberMe) {
           localStorage.setItem('blink_remember_email', email);
+          localStorage.setItem('blink_remember_password', password);
         } else {
           localStorage.removeItem('blink_remember_email');
+          localStorage.removeItem('blink_remember_password');
         }
       }
     } catch (err) {

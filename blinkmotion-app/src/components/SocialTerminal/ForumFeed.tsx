@@ -86,7 +86,7 @@ export const ForumFeed: React.FC<ForumFeedProps> = ({ userId, userEmail, isAdmin
                 style={{ flex: 1, background: '#000', border: '1px solid #00ff0044', color: '#00ff00', fontFamily: "'VT323', monospace", fontSize: '0.82rem', padding: '2px 6px' }}
               >
                 <option value="__self__">[ {authorName} ]</option>
-                {identities.map(id => <option key={id.id} value={id.id}>[NPC] {id.name}</option>)}
+                {identities.map(id => <option key={id.id} value={id.id}>{id.name}</option>)}
               </select>
             </div>
           )}
@@ -148,16 +148,16 @@ export const ForumFeed: React.FC<ForumFeedProps> = ({ userId, userEmail, isAdmin
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap' }}>
                 <span style={{ color: '#00ff0033', fontSize: '0.72rem', minWidth: 24 }}>#{String(idx + 1).padStart(3, '0')}</span>
                 <span style={{ fontWeight: 'bold', fontSize: '0.95rem', flex: 1, color: '#00ff00' }}>{post.title}</span>
-                <span style={{ color: post.is_npc ? '#00ffff' : '#00ff0077', fontSize: '0.78rem', whiteSpace: 'nowrap' }}>
-                  [{post.author_name}]{post.is_npc ? ' [NPC]' : ''}
+                <span style={{ color: '#00ff0077', fontSize: '0.78rem', whiteSpace: 'nowrap' }}>
+                  [{post.author_name}]
                 </span>
                 <span style={{ color: '#00ff0033', fontSize: '0.7rem', whiteSpace: 'nowrap' }}>{ts(post.created_at)}</span>
                 {isAdmin && (
                   <button
                     onClick={e => { e.stopPropagation(); if (window.confirm('Apagar tópico?')) deletePost(post.id); }}
-                    style={{ background: 'transparent', border: 'none', color: '#ff333355', cursor: 'pointer', fontFamily: "'VT323', monospace", fontSize: '0.75rem', padding: 0 }}
+                    style={{ background: 'transparent', border: 'none', color: '#ff333355', cursor: 'pointer', fontSize: '1rem', padding: 0 }}
                   >
-                    [DEL]
+                    🗑
                   </button>
                 )}
                 <span style={{ color: '#00ff0044', fontSize: '0.75rem' }}>{isOpen ? '▲' : '▼'}</span>
