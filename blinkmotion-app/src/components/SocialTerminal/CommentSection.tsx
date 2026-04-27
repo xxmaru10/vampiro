@@ -10,21 +10,49 @@ interface CommentSectionProps {
   isAdmin: boolean;
 }
 
+// Parseia o formato simples:
+//   Usuario
+//   comentario
+//   curtidas
+//   (linha em branco)
+function parseBulkText(text: string): { author: string; content: string; likes: number; is_npc: boolean }[] {
+  const blocks = text.trim().split(/\n\s*\n/);
+  const results: { author: string; content: string; likes: number; is_npc: boolean }[] = [];
+  for (const block of blocks) {
+    const lines = block.trim().split('\n').map(l => l.trim()).filter(Boolean);
+    if (lines.length < 2) continue;
+    const author = lines[0];
+    const lastLine = lines[lines.length - 1];
+    const likes = /^\d+$/.test(lastLine) ? parseInt(lastLine, 10) : 0;
+    const contentFinal = /^\d+$/.test(lastLine) && lines.length > 2
+      ? lines.slice(1, lines.length - 1).join('\n')
+      : lines.slice(1).join('\n');
+    results.push({ author, content: contentFinal, likes, is_npc: true });
+  }
+  return results;
+}
+
 export const CommentSection: React.FC<CommentSectionProps> = ({ newsId, userId, userEmail, isAdmin }) => {
   const currentUserName = userEmail ? userEmail.split('@')[0].toUpperCase() : 'ANON';
-
-  const { comments, loading, error, addComment, toggleLike, setExtraLikes, deleteComment } = useComments(newsId, userId);
+  const { comments, loading, error, addComment, toggleLike, setExtraLikes, deleteComment, bulkInsert } = useComments(newsId, userId);
 
   const [newComment, setNewComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [selectedIdentity, setSelectedIdentity] = useState('__self__');
   const [identities, setIdentities] = useState<{ id: string; name: string }[]>([]);
 
+  // Injeção em massa inline
+  const [bulkOpen, setBulkOpen] = useState(false);
+  const [bulkText, setBulkText] = useState('');
+  const [bulkRunning, setBulkRunning] = useState(false);
+  const [bulkProgress, setBulkProgress] = useState<{ done: number; total: number } | null>(null);
+  const [bulkDone, setBulkDone] = useState(false);
+  const [bulkError, setBulkError] = useState('');
+
   useEffect(() => {
     if (isAdmin) {
-      supabase.from('blink_identities').select('id, name').order('name').then(({ data }) => {
-        setIdentities(data ?? []);
-      });
+      supabase.from('blink_identities').select('id, name').order('name')
+        .then(({ data }) => setIdentities(data ?? []));
     }
   }, [isAdmin]);
 
@@ -42,57 +70,69 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ newsId, userId, 
       await addComment(newComment.trim(), name, isNpc);
       setNewComment('');
     } catch (e: any) {
-      alert('Erro ao publicar: ' + e.message);
+      alert('Erro: ' + e.message);
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleBulkRun = async () => {
+    const items = parseBulkText(bulkText);
+    if (items.length === 0) { setBulkError('Nenhum comentário válido encontrado.'); return; }
+    setBulkError('');
+    setBulkRunning(true);
+    setBulkDone(false);
+    setBulkProgress({ done: 0, total: items.length });
+    try {
+      // Converte para BulkItem e injeta
+      const bulkItems = items.map(i => ({ author: i.author, is_npc: i.is_npc, content: i.content, likes: i.likes }));
+      await bulkInsert(newsId, bulkItems, (done, total) => setBulkProgress({ done, total }));
+      setBulkDone(true);
+      setBulkText('');
+    } catch (e: any) {
+      setBulkError('Erro: ' + e.message);
+    } finally {
+      setBulkRunning(false);
     }
   };
 
   const totalCount = countAll(comments);
 
   return (
-    <div style={{ marginTop: 16, borderTop: '1px solid #00ff0022', paddingTop: 12 }}>
+    <div style={{ fontFamily: "'VT323', monospace" }}>
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12, color: '#00ff0088', fontFamily: "'VT323', monospace", fontSize: '0.85rem', letterSpacing: 2 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10, color: '#00ff0066', fontSize: '0.8rem', letterSpacing: 2 }}>
         <span>[ THREAD_DE_COMENTÁRIOS ]</span>
-        <span style={{ marginLeft: 'auto', color: '#00ff0044' }}>{totalCount} MSG{totalCount !== 1 ? 'S' : ''}</span>
+        <span style={{ marginLeft: 'auto', color: '#00ff0033' }}>{totalCount} MSG{totalCount !== 1 ? 'S' : ''}</span>
       </div>
 
-      {/* Admin identity selector */}
+      {/* Admin: seletor de identidade */}
       {isAdmin && (
-        <div style={{ marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8, fontFamily: "'VT323', monospace", fontSize: '0.85rem', color: '#00ff0088' }}>
-          <span>COMENTAR_COMO:</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, fontSize: '0.8rem', color: '#00ff0077' }}>
+          <span>COMO:</span>
           <select
             value={selectedIdentity}
             onChange={e => setSelectedIdentity(e.target.value)}
-            style={{ background: '#000', border: '1px solid #00ff0066', color: '#00ff00', fontFamily: "'VT323', monospace", fontSize: '0.85rem', padding: '2px 6px', flex: 1 }}
+            style={{ flex: 1, background: '#000', border: '1px solid #00ff0044', color: '#00ff00', fontFamily: "'VT323', monospace", fontSize: '0.8rem', padding: '2px 6px' }}
           >
             <option value="__self__">[ {currentUserName} ]</option>
-            {identities.map(id => (
-              <option key={id.id} value={id.id}>[NPC] {id.name}</option>
-            ))}
+            {identities.map(id => <option key={id.id} value={id.id}>[NPC] {id.name}</option>)}
           </select>
         </div>
       )}
 
-      {/* Error */}
-      {error && (
-        <div style={{ color: '#ff3333', fontSize: '0.75rem', marginBottom: 8, fontFamily: "'VT323', monospace" }}>
-          ⚠ {error}
-        </div>
-      )}
+      {/* Erro */}
+      {error && <div style={{ color: '#ff3333', fontSize: '0.75rem', marginBottom: 8 }}>⚠ {error}</div>}
 
-      {/* Comments list */}
+      {/* Lista de comentários */}
       {loading && comments.length === 0 ? (
-        <div style={{ color: '#00ff0033', fontSize: '0.75rem', fontFamily: "'VT323', monospace", textAlign: 'center', padding: 16 }}>
-          CARREGANDO_THREAD...
-        </div>
+        <div style={{ color: '#00ff0022', fontSize: '0.75rem', textAlign: 'center', padding: '12px 0' }}>CARREGANDO...</div>
       ) : comments.length === 0 ? (
-        <div style={{ color: '#00ff0022', fontSize: '0.75rem', fontFamily: "'VT323', monospace", textAlign: 'center', padding: 16, letterSpacing: 3 }}>
+        <div style={{ color: '#00ff0022', fontSize: '0.75rem', textAlign: 'center', padding: '12px 0', letterSpacing: 3 }}>
           SEM_TRANSMISSÕES // SEJA_O_PRIMEIRO
         </div>
       ) : (
-        <div style={{ marginBottom: 12 }}>
+        <div style={{ marginBottom: 10 }}>
           {comments.map(c => (
             <CommentItem
               key={c.id}
@@ -112,28 +152,69 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ newsId, userId, 
         </div>
       )}
 
-      {/* New comment form */}
-      <div style={{ borderTop: '1px solid #00ff0022', paddingTop: 10, display: 'flex', gap: 8, alignItems: 'flex-end' }}>
-        <span style={{ color: '#00ff0066', fontFamily: "'VT323', monospace", fontSize: '1rem', paddingBottom: 6 }}>▶</span>
-        <textarea
-          value={newComment}
-          onChange={e => setNewComment(e.target.value)}
-          onKeyDown={e => { if (e.key === 'Enter' && e.ctrlKey) handleSubmit(); }}
-          placeholder="Digite sua mensagem... (Ctrl+Enter para enviar)"
-          rows={2}
-          style={{ flex: 1, background: '#000', border: '1px solid #00ff0044', color: '#00ff00', fontFamily: "'VT323', monospace", fontSize: '0.85rem', padding: 8, resize: 'none', outline: 'none' }}
-        />
-        <button
-          onClick={handleSubmit}
-          disabled={submitting || !newComment.trim()}
-          style={{ background: '#00ff00', color: '#000', border: 'none', padding: '6px 14px', fontFamily: "'VT323', monospace", fontSize: '0.9rem', fontWeight: 'bold', cursor: 'pointer', alignSelf: 'flex-end' }}
-        >
-          {submitting ? '...' : '[ TRANSMITIR ]'}
-        </button>
+      {/* Formulário de novo comentário */}
+      <div style={{ borderTop: '1px solid #00ff0011', paddingTop: 8 }}>
+        <div style={{ display: 'flex', gap: 6, alignItems: 'flex-end' }}>
+          <span style={{ color: '#00ff0044', fontSize: '1rem', paddingBottom: 5 }}>▶</span>
+          <textarea
+            value={newComment}
+            onChange={e => setNewComment(e.target.value)}
+            onKeyDown={e => { if (e.key === 'Enter' && e.ctrlKey) handleSubmit(); }}
+            placeholder="Mensagem... (Ctrl+Enter)"
+            rows={2}
+            style={{ flex: 1, background: '#000', border: '1px solid #00ff0033', color: '#00ff00', fontFamily: "'VT323', monospace", fontSize: '0.85rem', padding: '5px 7px', resize: 'none', outline: 'none' }}
+          />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4, alignSelf: 'flex-end' }}>
+            <button
+              onClick={handleSubmit}
+              disabled={submitting || !newComment.trim()}
+              style={{ background: '#00ff00', color: '#000', border: 'none', padding: '5px 10px', fontFamily: "'VT323', monospace", fontSize: '0.85rem', fontWeight: 'bold', cursor: 'pointer', whiteSpace: 'nowrap' }}
+            >
+              {submitting ? '...' : '[ TRANSMITIR ]'}
+            </button>
+            {isAdmin && (
+              <button
+                onClick={() => { setBulkOpen(o => !o); setBulkDone(false); setBulkError(''); }}
+                style={{ background: 'transparent', border: '1px solid #00ff0044', color: '#00ff0088', padding: '4px 10px', fontFamily: "'VT323', monospace", fontSize: '0.8rem', cursor: 'pointer', whiteSpace: 'nowrap' }}
+              >
+                {bulkOpen ? '[ ✕ LOTE ]' : '[ LOTE ]'}
+              </button>
+            )}
+          </div>
+        </div>
       </div>
-      <div style={{ color: '#00ff0022', fontSize: '0.65rem', fontFamily: "'VT323', monospace", marginTop: 4 }}>
-        Ctrl+Enter para enviar
-      </div>
+
+      {/* Painel de injeção em massa (admin, inline) */}
+      {isAdmin && bulkOpen && (
+        <div style={{ marginTop: 10, background: '#050505', border: '1px solid #00ff0033', padding: 12 }}>
+          <div style={{ color: '#00ff0077', fontSize: '0.78rem', marginBottom: 8, letterSpacing: 1 }}>
+            INJEÇÃO_EM_MASSA — formato por bloco (separe com linha em branco):
+          </div>
+          <div style={{ color: '#00ff0044', fontSize: '0.72rem', marginBottom: 8, fontFamily: 'Courier New, monospace', lineHeight: 1.6 }}>
+            {'NomeDoUsuario\nTexto do comentário\nNúmero de curtidas'}
+          </div>
+          <textarea
+            value={bulkText}
+            onChange={e => { setBulkText(e.target.value); setBulkDone(false); setBulkError(''); }}
+            placeholder={'Zero_Cool\nAlguém notou o sinal no setor 7?\n3\n\nPh4ntom\nSim, parece codificado.\n1'}
+            rows={10}
+            style={{ width: '100%', background: '#000', border: `1px solid ${bulkError ? '#ff3333' : '#00ff0033'}`, color: '#00ff00', fontFamily: 'Courier New, monospace', fontSize: '0.78rem', padding: 8, resize: 'vertical', outline: 'none', boxSizing: 'border-box', marginBottom: 8 }}
+          />
+          {bulkError && <div style={{ color: '#ff3333', fontSize: '0.75rem', marginBottom: 6 }}>⚠ {bulkError}</div>}
+          {bulkProgress && (
+            <div style={{ color: bulkDone ? '#00ff00' : '#00ffaa', fontSize: '0.82rem', marginBottom: 6, letterSpacing: 1 }}>
+              {bulkDone ? `✓ ${bulkProgress.done} comentário(s) injetado(s).` : `INJETANDO... ${bulkProgress.done}/${bulkProgress.total}`}
+            </div>
+          )}
+          <button
+            onClick={handleBulkRun}
+            disabled={bulkRunning || !bulkText.trim()}
+            style={{ background: '#00ff00', color: '#000', border: 'none', padding: '6px 16px', fontFamily: "'VT323', monospace", fontSize: '0.95rem', fontWeight: 'bold', cursor: 'pointer' }}
+          >
+            {bulkRunning ? `INJETANDO ${bulkProgress?.done}/${bulkProgress?.total}...` : '[ EXECUTAR_INJEÇÃO ]'}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
