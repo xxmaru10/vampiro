@@ -25,7 +25,7 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ items }) => {
         .nav-menu {
           padding: 20px 16px;
           color: #00ff00;
-          font-family: 'Courier New', Courier, monospace;
+          font-family: 'VT323', monospace;
         }
         .brand-name {
           font-size: 1.5rem;
@@ -35,8 +35,9 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ items }) => {
         }
         .nav-items {
           display: flex;
-          flex-direction: column;
-          gap: 8px;
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: 20px;
         }
         .nav-item {
           font-size: 1.1rem;
@@ -45,8 +46,8 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ items }) => {
           cursor: default;
         }
         .nav-key {
-          color: #ff00ff;
-          text-shadow: 0 0 5px #ff00ff;
+          color: #00ff00;
+          text-shadow: 0 0 5px #00ff00;
         }
         .nav-label {
           letter-spacing: 2px;

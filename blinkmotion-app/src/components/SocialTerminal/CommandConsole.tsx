@@ -63,10 +63,10 @@ export const CommandConsole: React.FC<CommandConsoleProps> = ({
           flex-direction: column;
         }
         .path-line {
-          color: #ff00ff;
+          color: #00ff00;
           font-weight: bold;
           margin-bottom: 10px;
-          font-family: 'Courier New', Courier, monospace;
+          font-family: 'VT323', monospace;
         }
         .logs-area {
           flex-grow: 1;
@@ -79,7 +79,7 @@ export const CommandConsole: React.FC<CommandConsoleProps> = ({
           color: #00ff00aa;
           font-size: 0.85rem;
           margin-bottom: 2px;
-          font-family: 'Courier New', Courier, monospace;
+          font-family: 'VT323', monospace;
         }
         .command-form {
           display: flex;
@@ -88,14 +88,14 @@ export const CommandConsole: React.FC<CommandConsoleProps> = ({
         }
         .command-label {
           color: #00ff00;
-          font-family: 'Courier New', Courier, monospace;
+          font-family: 'VT323', monospace;
         }
         .command-input {
           background: transparent;
           border: none;
           color: #00ff00;
           outline: none;
-          font-family: 'Courier New', Courier, monospace;
+          font-family: 'VT323', monospace;
           font-size: 1rem;
           flex-grow: 1;
         }

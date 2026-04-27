@@ -4,6 +4,7 @@ export type TerminalCommand = {
   id: string;
   label: string;
   path: string;
+  adminOnly?: boolean;
 };
 
 const COMMANDS: Record<string, TerminalCommand> = {
@@ -11,15 +12,25 @@ const COMMANDS: Record<string, TerminalCommand> = {
   '2': { id: 'messages', label: 'MENSAGENS', path: '/SECURE_COMMS' },
   '3': { id: 'blackmarket', label: 'MERCADO_NEGRO', path: '/CLASSIFIEDS' },
   '4': { id: 'disconnect', label: 'DESCONECTAR', path: '/TERMINATING_SESSION...' },
+  '5': { id: 'admin', label: 'ADMINISTRAÇÃO', path: '/ROOT_ACCESS', adminOnly: true },
 };
 
-export const useTerminalNavigation = () => {
+export const useTerminalNavigation = (userEmail?: string) => {
   const [currentPath, setCurrentPath] = useState("/SYSTEM_READY");
   const [logs, setLogs] = useState<string[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
 
+  // Filtra os comandos visíveis baseados no papel do usuário
+  const isAdmin = userEmail === 'admin@blinkmotion.com';
+  
+  const availableCommands = Object.entries(COMMANDS).filter(
+    ([, cmd]) => !cmd.adminOnly || isAdmin
+  );
+
+  const availableCommandsMap = Object.fromEntries(availableCommands);
+
   const executeCommand = (input: string) => {
-    const cmd = COMMANDS[input.trim()];
+    const cmd = availableCommandsMap[input.trim()];
     
     if (cmd) {
       setIsProcessing(true);
@@ -53,6 +64,6 @@ export const useTerminalNavigation = () => {
     logs,
     isProcessing,
     executeCommand,
-    commands: Object.entries(COMMANDS).map(([key, cmd]) => ({ key, ...cmd }))
+    commands: availableCommands.map(([key, cmd]) => ({ key, ...cmd }))
   };
 };

@@ -7,13 +7,13 @@ import { MainDisplay } from './components/SocialTerminal/MainDisplay';
 import { useTerminalNavigation } from './hooks/useTerminalNavigation';
 
 function App() {
-  const { login, register, logout, isAuthenticated, loading, error } = useBlinkAuth();
+  const { user, login, register, logout, isAuthenticated, loading, error } = useBlinkAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
 
-  const { currentPath, logs, isProcessing, executeCommand, commands } = useTerminalNavigation();
+  const { currentPath, logs, isProcessing, executeCommand, commands } = useTerminalNavigation(user?.email);
 
   // Watch for disconnect command
   useEffect(() => {

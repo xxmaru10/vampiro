@@ -18,7 +18,7 @@ export const MainDisplay: React.FC = () => {
         }
         .empty-indicator {
           color: #222;
-          font-family: 'Courier New', Courier, monospace;
+          font-family: 'VT323', monospace;
           font-size: 0.8rem;
           letter-spacing: 5px;
         }

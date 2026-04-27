@@ -17,7 +17,7 @@ export const StatusHeader: React.FC = () => {
           background: rgba(0, 0, 0, 0.8);
           border-bottom: 1px solid #00ff0033;
           color: #00ff00;
-          font-family: 'Courier New', Courier, monospace;
+          font-family: 'VT323', monospace;
           font-size: 0.75rem;
           letter-spacing: 2px;
           display: flex;
