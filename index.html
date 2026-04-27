@@ -4981,9 +4981,9 @@ async function ccBlinkConnect() {
       if (status) status.innerText = 'ERRO: ' + error.message.toUpperCase();
     } else {
       if (status) status.innerText = 'ACESSO CONCEDIDO. REDIRECIONANDO...';
-      // Redireciona para o app da rede social
+      // Redireciona para o app da rede social compilado
       setTimeout(() => {
-        window.location.href = './blinkmotion-app/'; 
+        window.location.href = './blinkmotion-app/dist/index.html'; 
       }, 1000);
     }
   }
