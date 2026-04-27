@@ -273,8 +273,6 @@ CREATE TABLE blink_news (
           </>
         )}
       </div>
-
-      </div>
     </div>
   );
 };
