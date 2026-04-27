@@ -98,15 +98,23 @@ export const AdminPanel: React.FC = () => {
         <span className="badge-admin">ROOT_ACCESS</span>
       </div>
 
-      {error || newsError && (
+      {(error || newsError) && (
         <div className="admin-error">
           <p>⚠️ {error || newsError}</p>
-          <pre style={{fontSize: '0.7rem', background: '#000', color: '#0f0', padding: '10px', marginTop: '10px'}}>
+          <pre style={{fontSize: '0.7rem', background: '#000', color: '#0f0', padding: '10px', marginTop: '10px', overflowX: 'auto'}}>
 {`CREATE TABLE blink_identities (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
   bio TEXT,
   is_npc BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE TABLE blink_news (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  title TEXT NOT NULL,
+  content TEXT NOT NULL,
+  ascii_url TEXT,
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
