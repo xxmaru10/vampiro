@@ -4971,8 +4971,11 @@ async function ccInit() {
   setInterval(ccUpdateRoleAvailability, 20000);
 }
 
-function ccSyncBandRoleToAspect() { var role = document.getElementById('cc-band-role') ? document.getElementById('cc-band-role').value : ''; var asp = document.getElementById('cc-aspect-1'); if (asp) asp.value = role ? 'Cargo na Banda: ' + role : ''; ccState.aspect1 = asp ? asp.value : ''; } : '';
-  ccState.aspect1 = asp?.value || '';
+function ccSyncBandRoleToAspect() {
+  var role = document.getElementById('cc-band-role') ? document.getElementById('cc-band-role').value : '';
+  var asp = document.getElementById('cc-aspect-1');
+  if (asp) asp.value = role ? 'Cargo na Banda: ' + role : '';
+  ccState.aspect1 = asp ? asp.value : '';
 }
 
 function ccSave() {
