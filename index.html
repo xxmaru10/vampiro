@@ -4574,6 +4574,8 @@ async function ccReadArchive() { console.log("DIAGNOSTICO: Busca iniciada no Sup
           mortalSelf: d.data?.mortalSelf || '',
           updatedAt: d.created_at
         }));
+      } else {
+        console.error("Falha na leitura do Supabase:", error?.message, "| Código:", error?.code, "| Data:", data);
       }
     } catch(e) { console.error("Erro ao ler Supabase:", e); }
   }
