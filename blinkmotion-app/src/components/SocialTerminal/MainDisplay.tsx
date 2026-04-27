@@ -26,4 +26,3 @@ export const MainDisplay: React.FC = () => {
     </div>
   );
 };
-漫

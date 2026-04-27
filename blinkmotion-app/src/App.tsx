@@ -7,7 +7,7 @@ import { MainDisplay } from './components/SocialTerminal/MainDisplay';
 import { useTerminalNavigation } from './hooks/useTerminalNavigation';
 
 function App() {
-  const { user, login, register, logout, isAuthenticated, loading, error } = useBlinkAuth();
+  const { login, register, logout, isAuthenticated, loading, error } = useBlinkAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);

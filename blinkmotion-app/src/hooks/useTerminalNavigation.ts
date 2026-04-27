@@ -56,4 +56,3 @@ export const useTerminalNavigation = () => {
     commands: Object.entries(COMMANDS).map(([key, cmd]) => ({ key, ...cmd }))
   };
 };
-漫
