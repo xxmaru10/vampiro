@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Newspaper } from 'lucide-react';
-import { NewsItem } from '../../hooks/useNews';
+import type { NewsItem } from '../../hooks/useNews';
 
 interface WeeklyNewsProps {
   news: NewsItem[];
