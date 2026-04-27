@@ -183,7 +183,7 @@ export const MessagesView: React.FC<MessagesViewProps> = ({ userEmail, isAdmin }
             style={S.btnConnect} 
             onClick={() => setShowConnectList(!showConnectList)}
           >
-            <span style={{ fontSize: '1.1rem' }}>{showConnectList ? '⛌' : '🌐'}</span>
+            <span style={{ fontSize: '1rem' }}>{showConnectList ? '[X]' : '[+]'}</span>
             [ {showConnectList ? 'CANCELAR' : 'CONECTAR A USUÁRIO'} ]
           </button>
 
@@ -213,7 +213,7 @@ export const MessagesView: React.FC<MessagesViewProps> = ({ userEmail, isAdmin }
                   onMouseEnter={(e) => (e.currentTarget.style.background = '#00ff0011')}
                   onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
                 >
-                  ▶ {i.name.toUpperCase()}
+                  [ {i.name.toUpperCase()} ]
                 </div>
               ))}
               {identities.length === 0 && (

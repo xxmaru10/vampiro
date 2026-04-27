@@ -13,7 +13,6 @@ export const Classifieds: React.FC = () => {
       setError(false);
     } else {
       setError(true);
-      // Efeito de glitch visual no erro seria legal, mas vamos manter simples por enquanto
     }
   };
 
@@ -21,9 +20,9 @@ export const Classifieds: React.FC = () => {
     return (
       <div className="access-prompt">
         <div className="security-header">
-          <span className="warning-icon">⚠️</span>
+          <span className="warning-icon">[!]</span>
           <h2 className="glitch-text" data-text="ACESSO RESTRITO">ACESSO RESTRITO</h2>
-          <span className="warning-icon">⚠️</span>
+          <span className="warning-icon">[!]</span>
         </div>
         
         <p className="instruction">ESTA ÁREA REQUER DECRIPTOGRAFIA DE NÍVEL 4</p>
@@ -70,11 +69,11 @@ export const Classifieds: React.FC = () => {
             margin-bottom: 20px;
           }
           .warning-icon {
-            font-size: 1.5rem;
-            color: #ff3333;
+            font-size: 1.2rem;
+            color: #00ff00;
           }
           .glitch-text {
-            color: #ff3333;
+            color: #00ff00;
             font-size: 1.8rem;
             letter-spacing: 4px;
             margin: 0;
@@ -115,11 +114,11 @@ export const Classifieds: React.FC = () => {
             letter-spacing: 10px;
           }
           .error-msg {
-            color: #ff3333;
+            color: #00ff00;
             font-size: 0.8rem;
-            background: rgba(255, 0, 0, 0.1);
+            background: rgba(0, 255, 0, 0.1);
             padding: 10px;
-            border: 1px solid rgba(255, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 255, 0.3);
           }
           .security-footer {
             margin-top: 40px;
@@ -207,7 +206,7 @@ export const Classifieds: React.FC = () => {
           margin-bottom: 5px;
         }
         .item-price {
-          color: #ffff00;
+          color: #ccffcc;
         }
         .item-desc {
           color: #00ff00aa;
