@@ -1,225 +1,167 @@
 import React, { useState, useEffect } from 'react';
-
-const SUPABASE_URL = 'https://srajipjjlhevdniujwod.supabase.co';
+import { supabase } from '../../lib/supabaseClient';
 
 export const AdminPanel: React.FC = () => {
-  const [serviceKey, setServiceKey] = useState(localStorage.getItem('blink_service_key') || '');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [users, setUsers] = useState<any[]>([]);
+  const [identities, setIdentities] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   // Form states
-  const [newUserEmail, setNewUserEmail] = useState('');
-  const [newUserPass, setNewUserPass] = useState('');
-  
-  const [editingUserId, setEditingUserId] = useState<string | null>(null);
-  const [newPassword, setNewPassword] = useState('');
+  const [newName, setNewName] = useState('');
+  const [newBio, setNewBio] = useState('');
+  const [newAvatar, setNewAvatar] = useState('');
 
-  const adminFetch = async (endpoint: string, method: string = 'GET', body?: any) => {
-    const res = await fetch(`${SUPABASE_URL}/auth/v1/admin/${endpoint}`, {
-      method,
-      headers: {
-        'apikey': serviceKey,
-        'Authorization': `Bearer ${serviceKey}`,
-        'Content-Type': 'application/json'
-      },
-      body: body ? JSON.stringify(body) : undefined
-    });
-    
-    const data = await res.json().catch(() => null);
-    if (!res.ok) {
-      throw new Error(data?.message || data?.error || 'Erro na requisição Admin');
-    }
-    return data;
-  };
-
-  const fetchUsers = async () => {
+  const fetchIdentities = async () => {
     setLoading(true);
     setError('');
-    try {
-      const data = await adminFetch('users');
-      setUsers(data.users || data || []);
-      setIsAuthenticated(true);
-      localStorage.setItem('blink_service_key', serviceKey);
-    } catch (err: any) {
-      setError(err.message);
-      setIsAuthenticated(false);
-      if (err.message.includes('Forbidden') || err.message.includes('Unauthorized')) {
-        localStorage.removeItem('blink_service_key');
+    
+    // Tentamos buscar da tabela blink_identities
+    const { data, error: err } = await supabase
+      .from('blink_identities')
+      .select('*')
+      .order('name', { ascending: true });
+
+    if (err) {
+      if (err.code === 'PGRST116' || err.message.includes('not found')) {
+        setError('Tabela "blink_identities" não encontrada no Supabase. Execute o SQL de criação primeiro.');
+      } else {
+        setError(err.message);
       }
+    } else {
+      setIdentities(data || []);
     }
     setLoading(false);
   };
 
   useEffect(() => {
-    if (serviceKey) {
-      fetchUsers();
-    }
+    fetchIdentities();
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleCreateNPC = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (serviceKey.trim()) {
-      fetchUsers();
-    }
-  };
-
-  const handleCreateUser = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newUserEmail || !newUserPass) return;
+    if (!newName) return;
     setLoading(true);
     setError('');
-    
-    const email = newUserEmail.includes('@') ? newUserEmail : `${newUserEmail.toLowerCase().replace(/[^a-z0-9]/g, '')}@blinkmotion.com`;
 
-    try {
-      await adminFetch('users', 'POST', {
-        email: email,
-        password: newUserPass,
-        email_confirm: true,
-      });
-      setNewUserEmail('');
-      setNewUserPass('');
-      fetchUsers();
-    } catch (err: any) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
+    const { error: err } = await supabase
+      .from('blink_identities')
+      .insert([
+        { 
+          name: newName, 
+          bio: newBio, 
+          avatar_url: newAvatar || `https://api.dicebear.com/7.x/bottts/svg?seed=${newName}`,
+          is_npc: true 
+        }
+      ]);
 
-  const handleDeleteUser = async (id: string) => {
-    if (!window.confirm('Tem certeza que deseja apagar este usuário?')) return;
-    setLoading(true);
-    try {
-      await adminFetch(`users/${id}`, 'DELETE');
-      fetchUsers();
-    } catch (err: any) {
+    if (err) {
       setError(err.message);
-      setLoading(false);
-    }
-  };
-
-  const handleChangePassword = async (id: string) => {
-    setLoading(true);
-    try {
-      await adminFetch(`users/${id}`, 'PUT', {
-        password: newPassword
-      });
-      setEditingUserId(null);
-      setNewPassword('');
-      alert('Senha alterada com sucesso!');
-    } catch (err: any) {
-      setError(err.message);
+    } else {
+      setNewName('');
+      setNewBio('');
+      setNewAvatar('');
+      fetchIdentities();
     }
     setLoading(false);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('blink_service_key');
-    setServiceKey('');
-    setIsAuthenticated(false);
-    setUsers([]);
-  };
+  const handleDeleteNPC = async (id: string) => {
+    if (!window.confirm('Deseja realmente apagar este NPC?')) return;
+    setLoading(true);
+    const { error: err } = await supabase
+      .from('blink_identities')
+      .delete()
+      .eq('id', id);
 
-  if (!isAuthenticated) {
-    return (
-      <div className="admin-container">
-        <h2>Acesso Administrativo Requerido</h2>
-        <p>Insira a <strong>Service Role Key</strong> do Supabase para gerenciar os usuários localmente.</p>
-        <form onSubmit={handleLogin} className="admin-form">
-          <input 
-            type="password" 
-            placeholder="Cole sua secret key aqui..." 
-            value={serviceKey}
-            onChange={e => setServiceKey(e.target.value)}
-            className="admin-input"
-          />
-          <button type="submit" className="admin-btn" disabled={loading}>
-            {loading ? 'Validando...' : 'Conectar'}
-          </button>
-        </form>
-        {error && <div className="admin-error">{error}</div>}
-        <style>{styles}</style>
-      </div>
-    );
-  }
+    if (err) setError(err.message);
+    else fetchIdentities();
+    setLoading(false);
+  };
 
   return (
     <div className="admin-container">
       <div className="admin-header">
-        <h2>Painel de Controle Interno</h2>
-        <button onClick={handleLogout} className="admin-btn-logout">Sair do Painel</button>
+        <h2>GAME MASTER DASHBOARD</h2>
+        <span className="badge-admin">ROOT_ACCESS</span>
       </div>
 
-      {error && <div className="admin-error">{error}</div>}
+      {error && (
+        <div className="admin-error">
+          <p>⚠️ {error}</p>
+          <pre style={{fontSize: '0.7rem', background: '#000', color: '#0f0', padding: '10px', marginTop: '10px'}}>
+{`CREATE TABLE blink_identities (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name TEXT NOT NULL,
+  avatar_url TEXT,
+  bio TEXT,
+  is_npc BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
 
-      <div className="admin-card">
-        <h3>Criar Novo Usuário</h3>
-        <form onSubmit={handleCreateUser} className="admin-form-row">
-          <input 
-            type="text" 
-            placeholder="Usuário (ex: marcos)" 
-            value={newUserEmail}
-            onChange={e => setNewUserEmail(e.target.value)}
-            className="admin-input"
-            required
-          />
-          <input 
-            type="text" 
-            placeholder="Senha" 
-            value={newUserPass}
-            onChange={e => setNewUserPass(e.target.value)}
-            className="admin-input"
-            required
-          />
-          <button type="submit" className="admin-btn" disabled={loading}>Criar</button>
-        </form>
-      </div>
+-- Habilite RLS e políticas de acesso no Supabase`}
+          </pre>
+        </div>
+      )}
 
-      <div className="admin-card">
-        <h3>Lista de Usuários ({users.length})</h3>
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>ID / Email</th>
-              <th>Criado em</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((u: any) => (
-              <tr key={u.id}>
-                <td>
-                  <strong>{u.email?.split('@')[0]}</strong><br/>
-                  <span style={{fontSize: '0.8rem', color: '#666'}}>{u.id}</span>
-                </td>
-                <td>{new Date(u.created_at).toLocaleDateString()}</td>
-                <td>
-                  {editingUserId === u.id ? (
-                    <div className="admin-action-row">
-                      <input 
-                        type="text" 
-                        placeholder="Nova senha" 
-                        value={newPassword}
-                        onChange={e => setNewPassword(e.target.value)}
-                        className="admin-input-small"
-                      />
-                      <button onClick={() => handleChangePassword(u.id)} className="admin-btn-small" disabled={loading}>Salvar</button>
-                      <button onClick={() => setEditingUserId(null)} className="admin-btn-small danger">X</button>
-                    </div>
-                  ) : (
-                    <div className="admin-action-row">
-                      <button onClick={() => { setEditingUserId(u.id); setNewPassword(''); }} className="admin-btn-small">Trocar Senha</button>
-                      <button onClick={() => handleDeleteUser(u.id)} className="admin-btn-small danger" disabled={loading}>Deletar</button>
-                    </div>
-                  )}
-                </td>
-              </tr>
+      <div className="admin-grid">
+        {/* Formulário de Criação */}
+        <div className="admin-card">
+          <h3>[+] CADASTRAR NOVA IDENTIDADE (NPC)</h3>
+          <form onSubmit={handleCreateNPC} className="admin-form">
+            <div className="input-group">
+              <label>NOME / ALIAS</label>
+              <input 
+                type="text" 
+                value={newName}
+                onChange={e => setNewName(e.target.value)}
+                placeholder="Ex: Zero_Cool"
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label>BIO / DESCRIÇÃO</label>
+              <textarea 
+                value={newBio}
+                onChange={e => setNewBio(e.target.value)}
+                placeholder="Descrição do personagem no sistema..."
+              />
+            </div>
+            <div className="input-group">
+              <label>AVATAR URL (OPCIONAL)</label>
+              <input 
+                type="text" 
+                value={newAvatar}
+                onChange={e => setNewAvatar(e.target.value)}
+                placeholder="https://..."
+              />
+            </div>
+            <button type="submit" className="btn-save" disabled={loading}>
+              {loading ? 'PROCESSANDO...' : 'EXECUTAR_CADASTRO'}
+            </button>
+          </form>
+        </div>
+
+        {/* Lista de NPCs */}
+        <div className="admin-card">
+          <h3>[#] IDENTIDADES ATIVAS NO SISTEMA ({identities.length})</h3>
+          <div className="npc-list">
+            {identities.map(npc => (
+              <div key={npc.id} className="npc-item">
+                <img src={npc.avatar_url} alt="avatar" className="npc-avatar" />
+                <div className="npc-info">
+                  <div className="npc-name">{npc.name}</div>
+                  <div className="npc-bio">{npc.bio || 'Sem biografia...'}</div>
+                </div>
+                <button onClick={() => handleDeleteNPC(npc.id)} className="btn-delete">APAGAR</button>
+              </div>
             ))}
-          </tbody>
-        </table>
+            {identities.length === 0 && !loading && (
+              <div className="empty-state">NENHUMA IDENTIDADE VIRTUAL ENCONTRADA.</div>
+            )}
+          </div>
+        </div>
       </div>
+
       <style>{styles}</style>
     </div>
   );
@@ -227,121 +169,139 @@ export const AdminPanel: React.FC = () => {
 
 const styles = `
   .admin-container {
-    background: #f4f4f9;
-    color: #333;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #050505;
+    color: #00ff00;
+    font-family: 'VT323', monospace;
     padding: 20px;
-    border-radius: 8px;
     height: 100%;
     overflow-y: auto;
+    border: 1px solid #00ff0033;
   }
   .admin-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #ddd;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #00ff00;
     padding-bottom: 10px;
   }
-  .admin-container h2, .admin-container h3 {
-    margin: 0;
-    color: #222;
+  .badge-admin {
+    background: #00ff00;
+    color: #000;
+    padding: 2px 10px;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  .admin-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
   }
   .admin-card {
-    background: white;
+    background: #111;
+    border: 1px solid #00ff0033;
     padding: 15px;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0,255,0,0.1);
+  }
+  .admin-card h3 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: #00ff00;
+    border-bottom: 1px solid #00ff0033;
+    padding-bottom: 10px;
   }
   .admin-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    max-width: 400px;
-    margin-top: 15px;
+    gap: 15px;
   }
-  .admin-form-row {
+  .input-group {
     display: flex;
-    gap: 10px;
-    margin-top: 10px;
-  }
-  .admin-input {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    flex-grow: 1;
-  }
-  .admin-input-small {
-    padding: 4px 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 12px;
-    width: 100px;
-  }
-  .admin-btn {
-    background: #0066cc;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  .admin-btn:hover { background: #0055aa; }
-  .admin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  
-  .admin-btn-logout {
-    background: #444;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .admin-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-  .admin-table th, .admin-table td {
-    text-align: left;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-  }
-  .admin-table th {
-    background: #f8f8f8;
-    font-weight: 600;
-  }
-  .admin-action-row {
-    display: flex;
+    flex-direction: column;
     gap: 5px;
   }
-  .admin-btn-small {
-    background: #e0e0e0;
-    border: 1px solid #ccc;
-    padding: 4px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
+  .input-group label {
+    font-size: 0.8rem;
+    color: #00ff00aa;
   }
-  .admin-btn-small:hover { background: #d0d0d0; }
-  .admin-btn-small.danger {
-    background: #ffecec;
-    color: #cc0000;
-    border-color: #ffcccc;
+  .input-group input, .input-group textarea {
+    background: #000;
+    border: 1px solid #00ff0066;
+    color: #00ff00;
+    padding: 8px;
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    outline: none;
   }
-  .admin-btn-small.danger:hover {
-    background: #ffdddd;
+  .input-group textarea {
+    height: 80px;
+    resize: none;
   }
-  .admin-error {
-    background: #ffeeee;
-    color: #cc0000;
+  .btn-save {
+    background: #00ff00;
+    color: #000;
+    border: none;
     padding: 10px;
-    border-radius: 4px;
-    margin: 10px 0;
-    border-left: 4px solid #cc0000;
+    font-family: 'VT323', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.1rem;
+  }
+  .btn-save:hover { background: #00cc00; }
+  
+  .npc-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  .npc-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #000;
+    padding: 10px;
+    border: 1px solid #00ff0022;
+  }
+  .npc-avatar {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #00ff00;
+    background: #222;
+  }
+  .npc-info {
+    flex-grow: 1;
+  }
+  .npc-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  .npc-bio {
+    font-size: 0.8rem;
+    color: #00ff0088;
+    line-height: 1;
+  }
+  .btn-delete {
+    background: transparent;
+    color: #ff3333;
+    border: 1px solid #ff3333;
+    padding: 2px 8px;
+    cursor: pointer;
+    font-family: 'VT323', monospace;
+  }
+  .btn-delete:hover { background: #ff333322; }
+  
+  .admin-error {
+    background: #330000;
+    color: #ff3333;
+    padding: 15px;
+    border: 1px solid #ff3333;
+    margin-bottom: 20px;
+  }
+  .empty-state {
+    text-align: center;
+    padding: 20px;
+    color: #00ff0044;
   }
 `;
