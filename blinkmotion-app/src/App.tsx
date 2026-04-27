@@ -1,5 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useBlinkAuth } from './hooks/useBlinkAuth';
+import { StatusHeader } from './components/SocialTerminal/StatusHeader';
+import { NavigationMenu } from './components/SocialTerminal/NavigationMenu';
+import { CommandConsole } from './components/SocialTerminal/CommandConsole';
+import { MainDisplay } from './components/SocialTerminal/MainDisplay';
+import { useTerminalNavigation } from './hooks/useTerminalNavigation';
 
 function App() {
   const { user, login, register, logout, isAuthenticated, loading, error } = useBlinkAuth();
@@ -7,6 +12,18 @@ function App() {
   const [password, setPassword] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
+
+  const { currentPath, logs, isProcessing, executeCommand, commands } = useTerminalNavigation();
+
+  // Watch for disconnect command
+  useEffect(() => {
+    if (currentPath === '/TERMINATING_SESSION...') {
+      const timer = setTimeout(() => {
+        logout();
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [currentPath, logout]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,26 +53,26 @@ function App() {
 
   if (isAuthenticated) {
     return (
-      <div className="terminal-container">
-        <div className="terminal-box">
-          <div className="ascii-logo">
-{` ██████╗ ██╗     ██╗███╗   ██╗██╗  ██╗███╗   ███╗ ██████╗ ████████╗██╗ ██████╗ ███╗   ██╗
- ██╔══██╗██║     ██║████╗  ██║██║ ██╔╝████╗ ████║██╔═══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
- ██████╔╝██║     ██║██╔██╗ ██║█████╔╝ ██╔████╔██║██║   ██║   ██║   ██║██║   ██║██╔██╗ ██║
- ██╔══██╗██║     ██║██║╚██╗██║██╔═██╗ ██║╚██╔╝██║██║   ██║   ██║   ██║██║   ██║██║╚██╗██║
- ██████╔╝███████╗██║██║ ╚████║██║  ██╗██║ ╚═╝ ██║╚██████╔╝   ██║   ██║╚██████╔╝██║ ╚████║
- ╚══════╝╚══════╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝    ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝`}
-          </div>
-          <h2 className="terminal-title">ACESSO CONCEDIDO</h2>
-          <div className="terminal-footer">
-            BEM-VINDO, {user?.email?.split('@')[0].toUpperCase()}.<br />
-            STATUS: CONECTADO À REDE BLiNKMOTiON.<br /><br />
-            [ REDE SOCIAL EM DESENVOLVIMENTO ]
-          </div>
-          <button className="btn-terminal" onClick={logout} style={{ width: 'auto', padding: '10px 40px', marginTop: '40px' }}>
-            desconectar
-          </button>
-        </div>
+      <div className="social-terminal-layout">
+        <StatusHeader />
+        <NavigationMenu items={commands} />
+        <CommandConsole 
+          currentPath={currentPath}
+          logs={logs}
+          onExecute={executeCommand}
+          isProcessing={isProcessing}
+        />
+        <MainDisplay />
+        
+        <style>{`
+          .social-terminal-layout {
+            min-height: 100vh;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+          }
+        `}</style>
       </div>
     );
   }
