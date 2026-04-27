@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
+import { useNews } from '../../hooks/useNews';
 
 export const AdminPanel: React.FC = () => {
   const [identities, setIdentities] = useState<any[]>([]);
@@ -9,6 +10,12 @@ export const AdminPanel: React.FC = () => {
   // Form states
   const [newName, setNewName] = useState('');
   const [newBio, setNewBio] = useState('');
+
+  // News states
+  const { news, createNews, deleteNews, loading: newsLoading, error: newsError } = useNews();
+  const [newsTitle, setNewsTitle] = useState('');
+  const [newsContent, setNewsContent] = useState('');
+  const [newsFile, setNewsFile] = useState<File | null>(null);
 
   const fetchIdentities = async () => {
     setLoading(true);
@@ -75,6 +82,15 @@ export const AdminPanel: React.FC = () => {
     setLoading(false);
   };
 
+  const handleCreateNews = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsTitle || !newsContent) return;
+    await createNews(newsTitle, newsContent, newsFile || undefined);
+    setNewsTitle('');
+    setNewsContent('');
+    setNewsFile(null);
+  };
+
   return (
     <div className="admin-container">
       <div className="admin-header">
@@ -82,9 +98,9 @@ export const AdminPanel: React.FC = () => {
         <span className="badge-admin">ROOT_ACCESS</span>
       </div>
 
-      {error && (
+      {error || newsError && (
         <div className="admin-error">
-          <p>⚠️ {error}</p>
+          <p>⚠️ {error || newsError}</p>
           <pre style={{fontSize: '0.7rem', background: '#000', color: '#0f0', padding: '10px', marginTop: '10px'}}>
 {`CREATE TABLE blink_identities (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -143,6 +159,64 @@ export const AdminPanel: React.FC = () => {
             ))}
             {identities.length === 0 && !loading && (
               <div className="empty-state">NENHUMA IDENTIDADE VIRTUAL ENCONTRADA.</div>
+            )}
+          </div>
+        </div>
+
+        {/* Gerenciamento de Notícias */}
+        <div className="admin-card">
+          <h3>[+] PUBLICAR NOTÍCIA SEMANAL</h3>
+          <form onSubmit={handleCreateNews} className="admin-form">
+            <div className="input-group">
+              <label>TÍTULO DA NOTÍCIA</label>
+              <input 
+                type="text" 
+                value={newsTitle}
+                onChange={e => setNewsTitle(e.target.value)}
+                placeholder="Título impactante..."
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label>CONTEÚDO / DESCRIÇÃO</label>
+              <textarea 
+                value={newsContent}
+                onChange={e => setNewsContent(e.target.value)}
+                placeholder="Detalhes da notícia..."
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label>ARQUIVO ASCII (.TXT)</label>
+              <input 
+                type="file" 
+                accept=".txt"
+                onChange={e => setNewsFile(e.target.files?.[0] || null)}
+                className="file-input"
+              />
+            </div>
+            <button type="submit" className="btn-save" disabled={newsLoading}>
+              {newsLoading ? 'ENVIANDO...' : 'PUBLICAR_NOTÍCIA'}
+            </button>
+          </form>
+        </div>
+
+        <div className="admin-card">
+          <h3>[#] NOTÍCIAS ATIVAS ({news.length})</h3>
+          <div className="npc-list">
+            {news.map(item => (
+              <div key={item.id} className="npc-item">
+                <div className="npc-info">
+                  <div className="npc-name">{item.title}</div>
+                  <div className="npc-date">{new Date(item.created_at).toLocaleDateString()}</div>
+                </div>
+                <button onClick={() => {
+                  if(window.confirm('Apagar notícia?')) deleteNews(item.id, item.ascii_url)
+                }} className="btn-delete">APAGAR</button>
+              </div>
+            ))}
+            {news.length === 0 && !newsLoading && (
+              <div className="empty-state">NENHUMA NOTÍCIA PUBLICADA.</div>
             )}
           </div>
         </div>
@@ -284,5 +358,13 @@ const styles = `
     text-align: center;
     padding: 20px;
     color: #00ff0044;
+  }
+  .file-input {
+    font-size: 0.8rem;
+    color: #00ff00;
+  }
+  .npc-date {
+    font-size: 0.7rem;
+    color: #00ff0066;
   }
 `;
