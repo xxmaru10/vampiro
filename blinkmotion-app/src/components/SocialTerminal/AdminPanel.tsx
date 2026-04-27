@@ -287,7 +287,7 @@ CREATE POLICY "Public Access Posts" ON blink_posts FOR ALL USING (true) WITH CHE
                     background: '#000', 
                     border: '1px solid #00ff0033', 
                     width: '100%', 
-                    height: 150, 
+                    height: 250, 
                     marginBottom: 10,
                     overflow: 'hidden', 
                     display: 'flex', 
@@ -306,16 +306,15 @@ CREATE POLICY "Public Access Posts" ON blink_posts FOR ALL USING (true) WITH CHE
                         const lineCount = lines.length || 1;
                         const safeMaxLen = maxLineLen || 1;
                         
-                        // Usamos um tamanho de fonte fixo e escalamos o container
-                        // Proporção aproximada do caractere monospaçado: 10px altura x 6px largura
                         const charWidth = 6;
                         const charHeight = 10;
                         const contentWidth = safeMaxLen * charWidth;
                         const contentHeight = lineCount * charHeight;
                         
-                        const scaleW = (400) / contentWidth; // box largo
-                        const scaleH = (140) / contentHeight;
-                        const scale = Math.min(1, Math.min(scaleW, scaleH));
+                        // Escala mais generosa para o dashboard
+                        const scaleW = 600 / contentWidth; 
+                        const scaleH = 240 / contentHeight;
+                        const scale = Math.min(2, Math.min(scaleW, scaleH));
                         
                         return {
                           transform: `scale(${scale})`,

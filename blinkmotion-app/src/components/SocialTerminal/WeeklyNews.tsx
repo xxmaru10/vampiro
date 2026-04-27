@@ -61,20 +61,21 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail,
           </div>
         ) : (
           <>
-            <div style={{ display: 'flex', gap: 20, padding: 18 }}>
+            <div style={{ display: 'flex', gap: 24, padding: 24 }}>
               {asciiContent && (
                 <div style={{ 
                   background: '#000', 
-                  border: '1px solid #00ff0022', 
-                  width: 200, 
-                  minWidth: 200, 
-                  height: 160, 
+                  border: '1px solid #00ff0033', 
+                  width: 300, 
+                  minWidth: 300, 
+                  height: 240, 
                   overflow: 'hidden', 
                   display: 'flex', 
                   alignItems: 'center', 
                   justifyContent: 'center', 
                   flexShrink: 0,
-                  position: 'relative'
+                  position: 'relative',
+                  boxShadow: 'inset 0 0 20px rgba(0,255,0,0.05)'
                 }}>
                   <div style={((): React.CSSProperties => {
                     const lines = asciiContent.split('\n');
@@ -91,16 +92,16 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail,
                     const contentWidth = safeMaxLen * charWidth;
                     const contentHeight = lineCount * charHeight;
                     
-                    const scaleW = 190 / contentWidth; 
-                    const scaleH = 150 / contentHeight;
-                    const scale = Math.min(1, Math.min(scaleW, scaleH));
+                    const scaleW = 290 / contentWidth; 
+                    const scaleH = 230 / contentHeight;
+                    const scale = Math.min(1.5, Math.min(scaleW, scaleH)); // Permite um pouco de zoom se for pequeno
 
                     return {
                       transform: `scale(${scale})`,
                       transformOrigin: 'center',
                       whiteSpace: 'pre',
                       color: '#00ff00',
-                      opacity: 0.9,
+                      opacity: 1,
                       lineHeight: `${charHeight}px`,
                       fontSize: '10px',
                       fontFamily: "'VT323', monospace",
@@ -112,14 +113,14 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail,
                   </div>
                 </div>
               )}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1, minWidth: 0 }}>
-                <div style={{ fontWeight: 'bold', fontSize: '1.4rem', color: '#00ff00', textTransform: 'uppercase', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', letterSpacing: 1 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12, flex: 1, minWidth: 0, paddingTop: 10 }}>
+                <div style={{ fontWeight: 'bold', fontSize: '1.8rem', color: '#00ff00', textTransform: 'uppercase', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', letterSpacing: 2, textShadow: '0 0 10px rgba(0,255,0,0.3)' }}>
                   {currentNews.title}
                 </div>
-                <div style={{ fontSize: '1rem', color: '#00ff00cc', lineHeight: 1.4, textAlign: 'justify' }}>
+                <div style={{ fontSize: '1.1rem', color: '#00ff00ee', lineHeight: 1.5, textAlign: 'justify', letterSpacing: 0.5 }}>
                   {currentNews.content}
                 </div>
-                <div style={{ fontSize: '0.8rem', color: '#00ff0055', textAlign: 'right', marginTop: 'auto', letterSpacing: 2 }}>
+                <div style={{ fontSize: '0.85rem', color: '#00ff0044', textAlign: 'right', marginTop: 'auto', letterSpacing: 3, fontFamily: 'monospace' }}>
                   DATA_REF: {currentNews.published_at
                     ? new Date(currentNews.published_at + 'T12:00:00').toLocaleDateString('pt-BR')
                     : new Date(currentNews.created_at).toLocaleDateString('pt-BR')}
