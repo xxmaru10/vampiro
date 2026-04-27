@@ -3830,6 +3830,16 @@ mark{
         <div class="cc-step-dot">V</div>
         <div class="cc-step-label">Criador</div>
       </div>
+      <div class="cc-step-connector" id="cc-conn-5"></div>
+      <div class="cc-step-item" data-cc-step="6" onclick="ccGoToStep(6)">
+        <div class="cc-step-dot">VI</div>
+        <div class="cc-step-label">Objetivos</div>
+      </div>
+      <div class="cc-step-connector" id="cc-conn-6"></div>
+      <div class="cc-step-item" data-cc-step="7" onclick="ccGoToStep(7)">
+        <div class="cc-step-dot">VII</div>
+        <div class="cc-step-label">Acesso</div>
+      </div>
     </div>
 
     <!-- ===== STEP 1: IDENTIDADE ===== -->
@@ -4074,7 +4084,61 @@ mark{
         <label class="cc-label">Relação com Você</label>
         <textarea class="cc-input cc-textarea" id="cc-creator-relation" rows="4" placeholder="Por que te abraçou? Como é a dinâmica entre vocês agora? Há afeto, ressentimento, obrigação, dívida?" oninput="ccSave()"></textarea>
       </div>
-      <div class="cc-divider"></div>
+      <div class="cc-nav-btns">
+        <button class="cc-btn-prev" onclick="ccGoToStep(4)">← Poderes</button>
+        <button class="cc-btn-next" onclick="ccNext(5)">Objetivos →</button>
+      </div>
+    </div>
+
+    <!-- ===== STEP 6: OBJETIVOS ===== -->
+    <div class="cc-page" id="cc-step-6">
+      <div class="cc-section-title">Objetivos e Laços</div>
+      <p style="color:var(--ink-soft);font-size:13px;line-height:1.75;margin-bottom:22px">
+        Responda as perguntas abaixo para dar profundidade ao seu personagem e ligá-lo ao mundo.
+      </p>
+
+      <div class="cc-field">
+        <label class="cc-label">1 - Qual o objetivo de curto prazo para seu personagem?</label>
+        <textarea class="cc-input cc-textarea" id="cc-obj-1" rows="3" oninput="ccSave()"></textarea>
+      </div>
+      <div class="cc-field">
+        <label class="cc-label">2 - Qual é o seu objetivo de médio prazo? (Um marco importante que exige investigação, viagens e planejamento. Ex: desmantelar uma guilda de ladrões local, comprar um navio, limpar o nome da sua família).</label>
+        <textarea class="cc-input cc-textarea" id="cc-obj-2" rows="3" oninput="ccSave()"></textarea>
+      </div>
+      <div class="cc-field">
+        <label class="cc-label">3 - Qual o objetivo de longo prazo? (da vida dele)</label>
+        <textarea class="cc-input cc-textarea" id="cc-obj-3" rows="3" oninput="ccSave()"></textarea>
+      </div>
+      <div class="cc-field">
+        <label class="cc-label">4 - Quais são as consequências se você falhar nesses objetivos para seu personagem?</label>
+        <textarea class="cc-input cc-textarea" id="cc-obj-4" rows="3" oninput="ccSave()"></textarea>
+      </div>
+      <div class="cc-field">
+        <label class="cc-label">5 - Quais obstáculos imediatos impedem seu personagem de conseguir isso agora?</label>
+        <textarea class="cc-input cc-textarea" id="cc-obj-5" rows="3" oninput="ccSave()"></textarea>
+      </div>
+      <div class="cc-field">
+        <label class="cc-label">6 - Por que o seu personagem precisa da ajuda desse grupo para alcançar isso? Ou ele não precisa?</label>
+        <textarea class="cc-input cc-textarea" id="cc-obj-6" rows="3" oninput="ccSave()"></textarea>
+      </div>
+      <div class="cc-field">
+        <label class="cc-label">7 - Existe algum personagem no mundo que você acha que quer acabar com você? Quem é ele?</label>
+        <textarea class="cc-input cc-textarea" id="cc-obj-7" rows="3" oninput="ccSave()"></textarea>
+      </div>
+      <div class="cc-field">
+        <label class="cc-label">8 - Existe algum personagem no mundo que te deve um grande favor? Quem?</label>
+        <textarea class="cc-input cc-textarea" id="cc-obj-8" rows="3" oninput="ccSave()"></textarea>
+      </div>
+
+      <div id="cc-error-6" class="cc-error">Preencha todos os campos antes de prosseguir.</div>
+      <div class="cc-nav-btns">
+        <button class="cc-btn-prev" onclick="ccGoToStep(5)">← Criador</button>
+        <button class="cc-btn-next" onclick="ccNext(6)">Acesso →</button>
+      </div>
+    </div>
+
+    <!-- ===== STEP 7: ACESSO SEGURO ===== -->
+    <div class="cc-page" id="cc-step-7">
       <div class="cc-section-title">Acesso Seguro (Blinkmotion)</div>
       <div class="cc-neonato-box" style="border-left-color:var(--gold); background:rgba(0,255,255,0.03)">
         <p style="color: #00ff00; font-family: 'VT323', monospace; font-size: 14px; margin-bottom: 15px; text-shadow: 0 0 5px #00ff00;">
@@ -4104,7 +4168,7 @@ mark{
       </div>
       <div id="cc-finish-message"></div>
       <div class="cc-nav-btns">
-        <button class="cc-btn-prev" onclick="ccGoToStep(4)">← Poderes</button>
+        <button class="cc-btn-prev" onclick="ccGoToStep(6)">← Objetivos</button>
         <button class="cc-btn-next" onclick="ccFinish()" style="background:rgba(0,255,255,0.08);border-color:var(--gold);color:var(--gold);text-shadow:0 0 8px var(--gold);box-shadow:0 0 10px rgba(0,255,255,0.2)">Finalizar ✦</button>
       </div>
     </div>
@@ -4599,6 +4663,7 @@ async function ccReadArchive() { console.log("DIAGNOSTICO: Busca iniciada no Sup
             personality: d.data?.creatorPersonality || d.data?.creator?.personality || '',
             relation: d.data?.creatorRelation || d.data?.creator?.relation || ''
           },
+          objectives: d.data?.objectives || {},
           lore: d.data?.lore || '',
           mortalSelf: d.data?.mortalSelf || '',
           updatedAt: d.created_at
@@ -4784,6 +4849,18 @@ function ccSelectArchiveByIndex(index, isCreator = false) {
 
         <div class="cc-label">História (Lore)</div>
         <div class="cc-archive-detail-lore">${entry.lore ? ccFormatHtml(entry.lore) : 'Sem lore registrada.'}</div>
+
+        <div class="cc-label" style="margin-top:15px">Objetivos e Laços</div>
+        <div class="cc-archive-detail-lore" style="font-size:12px">
+          ${entry.objectives?.q1 ? '<strong style="color:var(--blood)">Curto prazo:</strong> ' + ccEscapeHtml(entry.objectives.q1) + '<br>' : ''}
+          ${entry.objectives?.q2 ? '<strong style="color:var(--blood)">Médio prazo:</strong> ' + ccEscapeHtml(entry.objectives.q2) + '<br>' : ''}
+          ${entry.objectives?.q3 ? '<strong style="color:var(--blood)">Longo prazo:</strong> ' + ccEscapeHtml(entry.objectives.q3) + '<br>' : ''}
+          ${entry.objectives?.q4 ? '<strong style="color:var(--blood)">Consequências (Falha):</strong> ' + ccEscapeHtml(entry.objectives.q4) + '<br>' : ''}
+          ${entry.objectives?.q5 ? '<strong style="color:var(--blood)">Obstáculos Atuais:</strong> ' + ccEscapeHtml(entry.objectives.q5) + '<br>' : ''}
+          ${entry.objectives?.q6 ? '<strong style="color:var(--blood)">Dependência do Grupo:</strong> ' + ccEscapeHtml(entry.objectives.q6) + '<br>' : ''}
+          ${entry.objectives?.q7 ? '<strong style="color:var(--blood)">Inimigos:</strong> ' + ccEscapeHtml(entry.objectives.q7) + '<br>' : ''}
+          ${entry.objectives?.q8 ? '<strong style="color:var(--blood)">Devedor/Aliado:</strong> ' + ccEscapeHtml(entry.objectives.q8) : ''}
+        </div>
       </div>
     `;
   }
@@ -4941,6 +5018,16 @@ function ccBuildArchiveRecord() {
       personality: ccState.creatorPersonality || '',
       relation: ccState.creatorRelation || ''
     },
+    objectives: {
+      q1: ccState.obj1 || '',
+      q2: ccState.obj2 || '',
+      q3: ccState.obj3 || '',
+      q4: ccState.obj4 || '',
+      q5: ccState.obj5 || '',
+      q6: ccState.obj6 || '',
+      q7: ccState.obj7 || '',
+      q8: ccState.obj8 || ''
+    },
     blinkUsername: ccState.blinkUsername || '',
     blinkPassword: ccState.blinkPassword || ''
   };
@@ -5001,6 +5088,14 @@ function ccSave() {
   ccState.creatorLore = g('cc-creator-lore')?.value||'';
   ccState.creatorPersonality = g('cc-creator-personality')?.value||'';
   ccState.creatorRelation = g('cc-creator-relation')?.value||'';
+  ccState.obj1 = g('cc-obj-1')?.value||'';
+  ccState.obj2 = g('cc-obj-2')?.value||'';
+  ccState.obj3 = g('cc-obj-3')?.value||'';
+  ccState.obj4 = g('cc-obj-4')?.value||'';
+  ccState.obj5 = g('cc-obj-5')?.value||'';
+  ccState.obj6 = g('cc-obj-6')?.value||'';
+  ccState.obj7 = g('cc-obj-7')?.value||'';
+  ccState.obj8 = g('cc-obj-8')?.value||'';
   ccState.blinkUsername = g('cc-blink-user')?.value||'';
   ccState.blinkPassword = g('cc-blink-pass')?.value||'';
   localStorage.setItem('cc_draft_v2', JSON.stringify(ccState));
@@ -5013,6 +5108,8 @@ function ccRestoreForm() {
   set('cc-aspect-1',ccState.aspect1); set('cc-aspect-2',ccState.aspect2);
   set('cc-creator-name',ccState.creatorName); set('cc-creator-lore',ccState.creatorLore);
   set('cc-creator-personality',ccState.creatorPersonality); set('cc-creator-relation',ccState.creatorRelation);
+  set('cc-obj-1',ccState.obj1); set('cc-obj-2',ccState.obj2); set('cc-obj-3',ccState.obj3); set('cc-obj-4',ccState.obj4);
+  set('cc-obj-5',ccState.obj5); set('cc-obj-6',ccState.obj6); set('cc-obj-7',ccState.obj7); set('cc-obj-8',ccState.obj8);
   set('cc-blink-user', ccState.blinkUsername); set('cc-blink-pass', ccState.blinkPassword);
   if(ccState.bandRole){ const el=document.getElementById('cc-band-role'); if(el){ el.value=ccState.bandRole; ccSyncBandRoleToAspect(); } }
   if(ccState.clan){ const el=document.getElementById('cc-clan'); if(el){el.value=ccState.clan;ccUpdateClan(false);} }
@@ -5109,7 +5206,7 @@ function ccUpdateClan(autoSelectCreator=true) {
 }
 
 function ccGoToStep(n) {
-  if(n<1||n>5) return;
+  if(n<1||n>7) return;
   document.querySelectorAll('.cc-page').forEach(p=>p.classList.remove('active'));
   document.getElementById('cc-step-'+n).classList.add('active');
   document.querySelectorAll('[data-cc-step]').forEach(el=>{
@@ -5118,7 +5215,7 @@ function ccGoToStep(n) {
     if(s===n) el.classList.add('active');
     else if(s<n) el.classList.add('done');
   });
-  for(let i=1;i<=4;i++){ const c=document.getElementById('cc-conn-'+i); if(c) c.classList.toggle('done',i<n); }
+  for(let i=1;i<=6;i++){ const c=document.getElementById('cc-conn-'+i); if(c) c.classList.toggle('done',i<n); }
   ccCurrentStep=n;
   if(n===2) ccRefreshStep2();
   if(n===3) { ccRenderSkillsGrid(); ccUpdatePyramidCounters(); }
@@ -5136,6 +5233,11 @@ function ccNext(step) {
     }
   }
   if(step===3 && !ccIsPyramidComplete()){ if(err) err.classList.add('visible'); return; }
+  if(step===6){
+    const req = ['cc-obj-1','cc-obj-2','cc-obj-3','cc-obj-4','cc-obj-5','cc-obj-6','cc-obj-7','cc-obj-8'];
+    const ok = req.every(id => document.getElementById(id).value.trim() !== '');
+    if(!ok) { if(err) err.classList.add('visible'); return; }
+  }
   ccSave(); ccGoToStep(step+1);
 }
 
