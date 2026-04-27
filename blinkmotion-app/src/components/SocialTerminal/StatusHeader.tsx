@@ -10,6 +10,9 @@ export const StatusHeader: React.FC = () => {
         <span className="status-dot"></span>
         {message.toUpperCase()}
       </div>
+      <div className="status-location">
+        [ NODE: MIAMI_&_REGIÃO ]
+      </div>
       <style>{`
         .status-header {
           width: 100%;
@@ -22,6 +25,12 @@ export const StatusHeader: React.FC = () => {
           letter-spacing: 2px;
           display: flex;
           align-items: center;
+          justify-content: space-between;
+          box-sizing: border-box;
+        }
+        .status-location {
+          color: #00ff00cc;
+          text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
         }
         .status-message {
           display: flex;

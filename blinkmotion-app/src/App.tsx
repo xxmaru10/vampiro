@@ -111,6 +111,9 @@ function App() {
         </div>
         
         <h2 className="terminal-title">{isRegistering ? 'REGISTRO DE ACESSO' : 'TERMINAL DE ACESSO'}</h2>
+        <div style={{ color: '#00ff00', fontSize: '0.9rem', marginBottom: '20px', fontFamily: "'VT323', monospace", opacity: 0.6, textAlign: 'center' }}>
+          LOCAL_NODE: MIAMI_&_REGIÃO // SOUTH_FLORIDA_BROADCAST
+        </div>
         
         <form onSubmit={handleSubmit}>
           <div className="terminal-prompt">
