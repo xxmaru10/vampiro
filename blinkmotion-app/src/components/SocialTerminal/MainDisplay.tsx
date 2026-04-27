@@ -11,7 +11,7 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath }) => {
   const { news } = useNews();
 
   return (
-    <div className={`main-display ${currentPath === '/LOCAL_BROADCAST' ? 'feed-active' : ''}`}>
+    <div className={`main-display ${currentPath === '/LOCAL_BROADCAST' ? 'feed-active' : ''} ${currentPath === '/ROOT_ACCESS' ? 'admin-active' : ''}`}>
       {currentPath === '/ROOT_ACCESS' && (
         <AdminPanel />
       )}
@@ -39,7 +39,7 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath }) => {
           min-height: 300px;
           overflow-y: auto;
         }
-        .main-display.feed-active, .main-display:has(.admin-container) {
+        .main-display.feed-active, .main-display.admin-active {
           align-items: stretch;
           justify-content: flex-start;
           border-style: solid;

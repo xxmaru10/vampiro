@@ -298,35 +298,32 @@ const styles = `
   }
   .admin-tabs {
     display: flex;
-    gap: 0;
+    gap: 10px;
     margin-bottom: 25px;
-    border: 1px solid #00ff0044;
     padding: 0;
   }
   .admin-tabs button {
     flex: 1;
-    background: #000;
-    border: none;
-    border-right: 1px solid #00ff0044;
+    background: #111;
+    border: 1px solid #00ff00;
     color: #00ff00;
-    padding: 12px;
+    padding: 15px;
     font-family: 'VT323', monospace;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     transition: all 0.2s;
     text-transform: uppercase;
-  }
-  .admin-tabs button:last-child {
-    border-right: none;
+    box-shadow: 0 0 5px rgba(0,255,0,0.2);
   }
   .admin-tabs button:hover {
     background: #00ff0022;
+    box-shadow: 0 0 10px rgba(0,255,0,0.4);
   }
   .admin-tabs button.active {
     background: #00ff00;
     color: #000;
     font-weight: bold;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 15px #00ff00;
   }
   .badge-admin {
     background: #00ff00;
