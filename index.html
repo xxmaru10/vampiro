@@ -1185,15 +1185,18 @@ mark{
 
 @media (max-width: 720px) {
   .trailer-container {
-    padding: 20px 10px;
+    padding: 10px 0;
     justify-content: flex-start;
-    padding-top: 40px;
+    padding-top: 20px;
   }
   .video-wrapper {
     max-width: 100%;
+    aspect-ratio: 4/3; /* Maiores dimensões verticais no mobile */
     border-left: none;
     border-right: none;
-    box-shadow: 0 0 30px rgba(255, 0, 170, 0.3);
+    border-top: 1px solid var(--blood);
+    border-bottom: 1px solid var(--blood);
+    box-shadow: 0 0 40px rgba(255, 0, 170, 0.4);
   }
 }
   /* --- MOBILE HEADER DROPLIST --- */
