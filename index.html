@@ -4520,34 +4520,58 @@ function ccFormatHtml(value) {
   return ccEscapeHtml(value || '').replace(/\n/g, '<br>');
 }
 
-function ccReadArchive() {
+async function ccFetchOccupiedRoles() {
+  if (!supabaseClient) return [];
   try {
-    const saved = JSON.parse(localStorage.getItem(CC_ARCHIVE_KEY) || '[]');
-    if (!Array.isArray(saved)) return [];
-    return saved
-      .filter(entry => entry && typeof entry === 'object')
-      .map(entry => ({
-        id: entry.id || Date.now(),
-        savedAt: entry.savedAt || new Date(0).toISOString(),
-        photo: entry.photo || '',
-        name: entry.name || 'Sem nome',
-        playerName: entry.playerName || '',
-        clan: entry.clan || '',
-        lore: entry.lore || '',
-        concept: entry.concept || '',
-        creator: {
-          photo: entry.creator?.photo || '',
-          name: entry.creator?.name || '',
-          lore: entry.creator?.lore || '',
-          personality: entry.creator?.personality || '',
-          relation: entry.creator?.relation || ''
-        }
-      }))
-      .sort((a, b) => String(b.savedAt).localeCompare(String(a.savedAt)));
-  } catch (error) {
-    console.warn('Falha ao ler o arquivo local de vampiros:', error);
-    return [];
+    const { data, error } = await supabaseClient
+      .from('characters')
+      .select('band_role');
+    if (error) return [];
+    return data.map(d => d.band_role).filter(Boolean);
+  } catch (e) { return []; }
+}
+
+async function ccUpdateRoleAvailability() {
+  const occupied = await ccFetchOccupiedRoles();
+  const select = document.getElementById('cc-band-role');
+  if (!select) return;
+  Array.from(select.options).forEach(opt => {
+    if (opt.value === "" || opt.value === ccState.bandRole) {
+      opt.disabled = false;
+      opt.style.display = "block";
+    } else if (occupied.includes(opt.value)) {
+      opt.disabled = true;
+      opt.style.display = "none";
+    } else {
+      opt.disabled = false;
+      opt.style.display = "block";
+    }
+  });
+}
+
+async function ccReadArchive() {
+  if (supabaseClient) {
+    try {
+      const { data, error } = await supabaseClient.from('characters').select('*').order('updated_at', { ascending: false });
+      if (!error && data) {
+        return data.map(d => ({
+          id: d.id,
+          name: d.name,
+          playerName: d.player_name,
+          clan: d.clan,
+          bandRole: d.band_role,
+          concept: d.concept,
+          photo: d.data?.photo || '',
+          creator: d.data?.creator || {},
+          lore: d.data?.lore || '',
+          mortalSelf: d.data?.mortalSelf || '',
+          updatedAt: d.updated_at
+        }));
+      }
+    } catch(e) {}
   }
+  const raw = localStorage.getItem(CC_ARCHIVE_KEY);
+  try { return JSON.parse(raw || '[]'); } catch (e) { return []; }
 }
 
 function ccWriteArchive(archive) {
@@ -4639,7 +4663,10 @@ function ccRenderArchive() {
               <div class="cc-tree-node ${isActive ? 'active' : ''}" onclick="ccSelectArchiveByIndex(${item.index}, false)">
                 <div class="cc-tree-info">
                   <span class="cc-tree-name">${ccEscapeHtml(item.entry.name || 'Vampiro')}</span>
-                  <span class="cc-tree-clan">${ccEscapeHtml(item.entry.clan || 'Sem Cla')}</span>
+                  <span class="cc-tree-clan">
+                    <span style="color:var(--blood)">${ccEscapeHtml(item.entry.clan || 'Sem Cla')}</span>
+                    ${item.entry.bandRole ? `<span style="color:var(--gold); margin-left:5px">✦ ${ccEscapeHtml(item.entry.bandRole)}</span>` : ''}
+                  </span>
                 </div>
               </div>
             `;
@@ -4657,7 +4684,10 @@ function ccRenderArchive() {
           <div class="cc-tree-node ${isActive ? 'active' : ''}" onclick="ccSelectArchiveByIndex(${item.index}, false)">
             <div class="cc-tree-info">
               <span class="cc-tree-name">${ccEscapeHtml(item.entry.name || 'Vampiro')}</span>
-              <span class="cc-tree-clan">${ccEscapeHtml(item.entry.clan || 'Sem Cla')}</span>
+              <span class="cc-tree-clan">
+                <span style="color:var(--blood)">${ccEscapeHtml(item.entry.clan || 'Sem Cla')}</span>
+                ${item.entry.bandRole ? `<span style="color:var(--gold); margin-left:5px">✦ ${ccEscapeHtml(item.entry.bandRole)}</span>` : ''}
+              </span>
             </div>
           </div>
         </div>
@@ -4860,6 +4890,7 @@ function ccBuildArchiveRecord() {
     name: ccState.name || 'Sem nome',
     playerName: ccState.playerName || '',
     clan: ccState.clan || '',
+    bandRole: ccState.bandRole || '',
     lore: ccState.lore || '',
     concept: ccState.concept || '',
     creator: {
@@ -4885,8 +4916,33 @@ function ccPersistArchiveRecord() {
   return record;
 }
 
-function ccInit() {
-  ccArchive = ccReadArchive();
+async function ccReadArchive() {
+  if (supabaseClient) {
+    try {
+      const { data, error } = await supabaseClient.from('characters').select('*').order('updated_at', { ascending: false });
+      if (!error && data) {
+        return data.map(d => ({
+          id: d.id,
+          name: d.name,
+          playerName: d.player_name,
+          clan: d.clan,
+          bandRole: d.band_role,
+          concept: d.concept,
+          photo: d.data?.photo || '',
+          creator: d.data?.creator || {},
+          lore: d.data?.lore || '',
+          mortalSelf: d.data?.mortalSelf || '',
+          updatedAt: d.updated_at
+        }));
+      }
+    } catch(e) {}
+  }
+  const raw = localStorage.getItem(CC_ARCHIVE_KEY);
+  try { return JSON.parse(raw || '[]'); } catch (e) { return []; }
+}
+
+async function ccInit() {
+  ccArchive = await ccReadArchive();
   if (ccArchive.length) ccSelectedArchiveId = ccArchive[0].id;
   ccRenderSkillsGrid();
   const saved = localStorage.getItem('cc_draft_v2');
@@ -4895,12 +4951,15 @@ function ccInit() {
   }
   ccRestoreForm();
   ccRenderArchive();
+  ccUpdateRoleAvailability();
   if (!ccState.creatorName && !ccState.creatorLore && !ccState.creatorPersonality && !ccState.creatorPhoto && ccState.clan) {
     ccAutoSelectCreatorForClan();
     ccSave();
   } else {
     ccRenderCreatorMatch(ccFindArchiveRecordById(ccState.creatorSourceId) || ccGetCreatorRecordForClan(ccState.clan));
   }
+  // Atualiza cargos a cada 20 segundos
+  setInterval(ccUpdateRoleAvailability, 20000);
 }
 
 function ccSave() {
@@ -5481,12 +5540,18 @@ async function ccFinish() {
     // 2. Try to save data to Supabase table
     await ccSaveToSupabase(record);
 
-    // 3. NOVIDADE: Registrar no Supabase Auth para a rede social
+    // 3. Registrar no Supabase Auth para a rede social (Obrigatório)
     const blinkUser = document.getElementById('cc-blink-user').value.trim();
     const blinkPass = document.getElementById('cc-blink-pass').value.trim();
     const authStatus = document.getElementById('blink-auth-status');
 
-    if (supabaseClient && blinkUser && blinkPass) {
+    if (supabaseClient) {
+      if (!blinkUser || !blinkPass) {
+        if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:#ff4444">ERRO: PREENCHA LOGIN E SENHA DA REDE.</span>';
+        if (finishMsg) finishMsg.innerHTML = '';
+        return; // Interrompe
+      }
+
       if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:var(--gold)">SINCRONIZANDO CREDENCIAIS...</span>';
       
       try {
@@ -5504,30 +5569,42 @@ async function ccFinish() {
         });
 
         if (authError) {
-          console.warn("Aviso no registro Auth:", authError.message);
-          if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:#ff4444">FALHA (USUARIO EXISTENTE OU SENHA CURTA)</span>';
+          console.warn("Falha no registro Auth:", authError.message);
+          let errorMsg = 'FALHA NO REGISTRO';
+          if (authError.message.includes('already registered')) errorMsg = 'USUÁRIO JÁ EXISTENTE';
+          if (authError.message.includes('should be at least')) errorMsg = 'SENHA MUITO CURTA';
+          
+          if (authStatus) authStatus.innerHTML = `STATUS: <span style="color:#ff4444">${errorMsg}</span>`;
+          if (finishMsg) finishMsg.innerHTML = `<div class="cc-neonato-box" style="border-left-color:#ff4444"><h4>Erro de Acesso</h4><p>${authError.message}</p></div>`;
+          return; // Interrompe a finalização
         } else {
           if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:#00ff00">ACESSO VINCULADO COM SUCESSO.</span>';
         }
       } catch (e) {
         console.error("Erro fatal no registro:", e);
         if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:#ff4444">ERRO DE CONEXÃO.</span>';
+        if (finishMsg) finishMsg.innerHTML = '';
+        return; // Interrompe
       }
     }
 
     const name = ccState.name || 'Personagem';
     
-    // Limpa o cache local (arquivo e rascunho) para que tudo fique vazio
-    localStorage.removeItem(CC_ARCHIVE_KEY);
+    // Limpa apenas o rascunho da criação para o próximo personagem
     localStorage.removeItem('cc_draft_v2'); 
-    ccArchive = [];
-    ccRenderArchive();
+    
+    // Sincroniza com o arquivo global do Supabase
+    ccReadArchive().then(arch => {
+      ccArchive = arch;
+      ccRenderArchive();
+      ccUpdateRoleAvailability();
+    });
 
     if (finishMsg) {
       finishMsg.innerHTML = `
         <div class="cc-neonato-box" style="margin-top:24px;border-left-color:var(--gold);background:rgba(0,255,255,0.05);animation:fadeIn 0.5s ease">
           <h4 style="color:var(--gold)">✦ ${ccEscapeHtml(name)} foi imortalizado!</h4>
-          <p>Sua ficha foi salva com sucesso e sincronizada com a nuvem.</p>
+          <p>Sua ficha foi salva com sucesso e seu acesso à rede social foi criado.</p>
           <div style="display:flex;gap:10px;margin-top:15px">
             <button class="cc-btn-next" onclick="ccResetState(); switchMainSection('lore')" style="width:auto;padding:8px 20px">Ir para Geral →</button>
             <button class="cc-btn-prev" onclick="ccResetState(); location.reload();" style="width:auto;padding:8px 20px">Novo Personagem</button>
