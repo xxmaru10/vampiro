@@ -3745,16 +3745,29 @@ mark{
       <div class="cc-divider"></div>
       <div class="cc-section-title">Acesso Seguro (Blinkmotion)</div>
       <div class="cc-neonato-box" style="border-left-color:var(--gold); background:rgba(0,255,255,0.03)">
-        <p style="font-size:12px; color:var(--gold); margin-bottom:10px; font-family:'Montserrat',sans-serif">
-          Para sua segurança e anonimato no sistema, utilize um <strong>pseudônimo</strong> como login.
+        <p style="color: #00ff00; font-family: 'VT323', monospace; font-size: 14px; margin-bottom: 15px; text-shadow: 0 0 5px #00ff00;">
+          [ TERMINAL DE CRIPTOGRAFIA ATIVO ]<br>
+          Utilize um <strong>pseudônimo</strong> para sua identidade na rede BLiNKMOTiON.
         </p>
-        <div class="cc-field">
-          <label class="cc-label">Login (Pseudônimo)</label>
-          <input type="text" class="cc-input" id="cc-blink-user" placeholder="Ex: Ghost23..." oninput="ccSave()">
-        </div>
-        <div class="cc-field">
-          <label class="cc-label">Senha de Acesso</label>
-          <input type="password" class="cc-input" id="cc-blink-pass" placeholder="••••••••" oninput="ccSave()">
+        <div class="cc-field" style="background: #050505; border: 1px solid #00ff00; padding: 20px; box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);">
+          <div style="display: flex; align-items: center; margin-bottom: 15px;">
+            <span style="color: #00ff00; margin-right: 10px; font-family: 'VT323', monospace;">> LOGIN:</span>
+            <input type="text" class="cc-input" id="cc-blink-user" placeholder="USUARIO_01..." oninput="ccSave()" style="background: transparent; border: none; border-bottom: 1px solid #004400; color: #00ff00; font-family: 'VT323', monospace; font-size: 18px; width: 100%; outline: none;">
+          </div>
+          <div style="display: flex; align-items: center; margin-bottom: 20px;">
+            <span style="color: #00ff00; margin-right: 10px; font-family: 'VT323', monospace;">> SENHA:</span>
+            <input type="password" class="cc-input" id="cc-blink-pass" placeholder="********" oninput="ccSave()" style="background: transparent; border: none; border-bottom: 1px solid #004400; color: #00ff00; font-family: 'VT323', monospace; font-size: 18px; width: 100%; outline: none;">
+          </div>
+          
+          <div id="blink-auth-status" style="font-family: 'VT323', monospace; font-size: 12px; color: #00ff00; margin-top: 10px; min-height: 15px;">
+            STATUS: AGUARDANDO COMANDO...
+          </div>
+          
+          <div style="margin-top: 15px; text-align: right;">
+            <a href="#" onclick="event.preventDefault(); alert('SOLICITAÇÃO ENVIADA À CENTRAL. FINALIZE A FICHA PARA VALIDAR.')" style="color: #00ff00; text-decoration: none; font-family: 'VT323', monospace; font-size: 14px; border: 1px solid #00ff00; padding: 4px 10px; display: inline-block;">
+              [ SOLICITAR NOVO ACESSO ]
+            </a>
+          </div>
         </div>
       </div>
       <div id="cc-finish-message"></div>
@@ -4967,6 +4980,36 @@ async function ccFinish() {
     
     // 2. Try to save data to Supabase table
     await ccSaveToSupabase(record);
+
+    // 3. NOVIDADE: Registrar no Supabase Auth para a rede social
+    const blinkUser = document.getElementById('cc-blink-user').value;
+    const blinkPass = document.getElementById('cc-blink-pass').value;
+    const authStatus = document.getElementById('blink-auth-status');
+
+    if (supabaseClient && blinkUser && blinkPass) {
+      if (authStatus) authStatus.innerText = 'STATUS: SINCRONIZANDO CREDENCIAIS...';
+      
+      // Criamos um e-mail fake baseado no pseudônimo para o Supabase Auth aceitar
+      const systemEmail = `${blinkUser.toLowerCase().replace(/[^a-z0-9]/g, '')}@blinkmotion.com`;
+      
+      const { data: authData, error: authError } = await supabaseClient.auth.signUp({
+        email: systemEmail,
+        password: blinkPass,
+        options: {
+          data: {
+            username: blinkUser,
+            display_name: record.name
+          }
+        }
+      });
+
+      if (authError) {
+        console.warn("Aviso no registro Auth:", authError.message);
+        if (authStatus) authStatus.innerText = 'STATUS: USUARIO JÁ EXISTE OU SENHA CURTA.';
+      } else {
+        if (authStatus) authStatus.innerText = 'STATUS: ACESSO VINCULADO COM SUCESSO.';
+      }
+    }
 
     const name = ccState.name || 'Personagem';
     if (finishMsg) {
