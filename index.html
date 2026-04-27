@@ -4929,31 +4929,6 @@ function ccPersistArchiveRecord() {
   return record;
 }
 
-async function ccReadArchive() { console.log("DIAGNOSTICO: Busca iniciada no Supabase");
-  if (supabaseClient) {
-    try {
-      const { data, error } = await supabaseClient.from('characters').select('*');
-      if (!error && data) {
-        return data.map(d => ({
-          id: d.id,
-          name: d.name,
-          playerName: d.player_name,
-          clan: d.clan,
-          bandRole: d.band_role,
-          concept: d.concept,
-          photo: d.data?.photo || '',
-          creator: d.data?.creator || {},
-          lore: d.data?.lore || '',
-          mortalSelf: d.data?.mortalSelf || '',
-          updatedAt: d.created_at
-        }));
-      }
-    } catch(e) {}
-  }
-  const raw = localStorage.getItem(CC_ARCHIVE_KEY);
-  try { return JSON.parse(raw || '[]'); } catch (e) { return []; }
-}
-
 async function ccInit() {
   ccArchive = await ccReadArchive();
   if (ccArchive.length) ccSelectedArchiveId = ccArchive[0].id;
