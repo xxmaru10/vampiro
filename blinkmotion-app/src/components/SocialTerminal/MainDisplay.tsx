@@ -1,14 +1,17 @@
 import React from 'react';
+import type { User } from '@supabase/supabase-js';
 import { AdminPanel } from './AdminPanel';
 import { WeeklyNews } from './WeeklyNews';
 import { useNews } from '../../hooks/useNews';
 
 interface MainDisplayProps {
   currentPath: string;
+  user?: User | null;
 }
 
-export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath }) => {
+export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) => {
   const { news } = useNews();
+  const isAdmin = user?.email === 'admin@blinkmotion.com';
 
   return (
     <div className={`main-display ${currentPath === '/LOCAL_BROADCAST' ? 'feed-active' : ''} ${currentPath === '/ROOT_ACCESS' ? 'admin-active' : ''}`}>
@@ -18,8 +21,7 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath }) => {
       
       {currentPath === '/LOCAL_BROADCAST' && (
         <div className="feed-container">
-          <WeeklyNews news={news} />
-          {/* Outros componentes do feed aqui no futuro */}
+          <WeeklyNews news={news} userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
         </div>
       )}
 

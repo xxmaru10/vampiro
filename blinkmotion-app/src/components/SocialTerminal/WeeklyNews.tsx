@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Newspaper } from 'lucide-react';
 import type { NewsItem } from '../../hooks/useNews';
+import { CommentSection } from './CommentSection';
 
 interface WeeklyNewsProps {
   news: NewsItem[];
+  userId?: string;
+  userEmail?: string;
+  isAdmin?: boolean;
 }
 
-export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news }) => {
+export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail, isAdmin = false }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [asciiContent, setAsciiContent] = useState<string>('');
 
@@ -75,6 +79,18 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news }) => {
           </div>
         </div>
       </div>
+      )}
+
+      {/* Seção de comentários da notícia atual */}
+      {currentNews && (
+        <div style={{ padding: '0 12px 12px' }}>
+          <CommentSection
+            newsId={currentNews.id}
+            userId={userId}
+            userEmail={userEmail}
+            isAdmin={isAdmin}
+          />
+        </div>
       )}
 
       <style>{`

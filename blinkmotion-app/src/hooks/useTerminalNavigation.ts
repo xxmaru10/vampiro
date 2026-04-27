@@ -16,7 +16,7 @@ const COMMANDS: Record<string, TerminalCommand> = {
 };
 
 export const useTerminalNavigation = (userEmail?: string) => {
-  const [currentPath, setCurrentPath] = useState("/SYSTEM_READY");
+  const [currentPath, setCurrentPath] = useState("/LOCAL_BROADCAST");
   const [logs, setLogs] = useState<string[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
 

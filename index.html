@@ -1163,7 +1163,7 @@ mark{
 <header class="top-header">
   <nav class="top-nav">
     <div class="top-nav-item active" onclick="switchMainSection('lore')">Geral</div>
-    <div class="top-nav-item" onclick="switchMainSection('social')">BLiNKMOTiON</div>
+    <div class="top-nav-item" onclick="openBlinkSection()">BLiNKMOTiON</div>
     <div class="top-nav-item" onclick="switchMainSection('char-creator')">Criar Personagem</div>
   </nav>
   <button class="btn-export" onclick="downloadCharacterData()">Baixar Dados</button>
@@ -5052,6 +5052,23 @@ function ccBlinkRestoreLogin() {
     if (remEl) remEl.checked = !!(u && p);
   } catch (e) {}
 }
+
+async function openBlinkSection() {
+  // Se já há sessão ativa, vai direto pro app
+  if (supabaseClient) {
+    try {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (session) {
+        window.location.href = './blinkmotion-app/dist/index.html';
+        return;
+      }
+    } catch (e) {}
+  }
+  // Sem sessão: mostra o formulário de login
+  switchMainSection('social');
+  ccBlinkRestoreLogin();
+}
+
 document.addEventListener('DOMContentLoaded', ccBlinkRestoreLogin);
 
 async function ccBlinkRegister() {

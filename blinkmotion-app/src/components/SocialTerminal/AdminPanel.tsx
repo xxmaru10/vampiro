@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { useNews } from '../../hooks/useNews';
+import { BulkCommentModal } from './BulkCommentModal';
 
 export const AdminPanel: React.FC = () => {
-  console.log("[DEBUG] ADMIN_PANEL_V2_LOADED");
   const [identities, setIdentities] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -11,7 +11,8 @@ export const AdminPanel: React.FC = () => {
   // Form states
   const [newName, setNewName] = useState('');
   const [newBio, setNewBio] = useState('');
-  const [activeTab, setActiveTab] = useState<'npcs' | 'news'>('npcs');
+  const [activeTab, setActiveTab] = useState<'npcs' | 'news' | 'comments'>('npcs');
+  const [showBulkModal, setShowBulkModal] = useState(false);
 
   // News states
   const { news, createNews, deleteNews, loading: newsLoading, error: newsError } = useNews();
@@ -135,17 +136,14 @@ ALTER TABLE blink_news ADD COLUMN IF NOT EXISTS published_at DATE;
       )}
 
       <div className="admin-tabs">
-        <button 
-          className={activeTab === 'npcs' ? 'active' : ''} 
-          onClick={() => setActiveTab('npcs')}
-        >
+        <button className={activeTab === 'npcs' ? 'active' : ''} onClick={() => setActiveTab('npcs')}>
           [ GERENCIAR_NPCS ]
         </button>
-        <button 
-          className={activeTab === 'news' ? 'active' : ''} 
-          onClick={() => setActiveTab('news')}
-        >
+        <button className={activeTab === 'news' ? 'active' : ''} onClick={() => setActiveTab('news')}>
           [ GERENCIAR_NOTICIAS ]
+        </button>
+        <button className={activeTab === 'comments' ? 'active' : ''} onClick={() => setActiveTab('comments')}>
+          [ COMENTÁRIOS ]
         </button>
       </div>
 
@@ -275,7 +273,54 @@ ALTER TABLE blink_news ADD COLUMN IF NOT EXISTS published_at DATE;
             </div>
           </>
         )}
+
+        {activeTab === 'comments' && (
+          <div className="admin-card">
+            <h3>[⚡] INJEÇÃO EM MASSA DE COMENTÁRIOS</h3>
+            <p style={{ color: '#00ff0088', fontSize: '0.85rem', marginBottom: 16, lineHeight: 1.5 }}>
+              Insira um bloco de comentários pré-roteirizados em uma notícia com um único clique.
+              Suporta threads aninhadas ilimitadas, NPCs, curtidas artificiais e presets salvos no Supabase.
+            </p>
+            <button
+              onClick={() => setShowBulkModal(true)}
+              className="btn-save"
+              style={{ fontSize: '1rem', letterSpacing: 2 }}
+            >
+              [ ABRIR_INJEÇÃO_EM_MASSA ]
+            </button>
+
+            <div style={{ marginTop: 24, borderTop: '1px solid #00ff0022', paddingTop: 16 }}>
+              <h3 style={{ marginTop: 0 }}>[?] ESTRUTURA DO JSON</h3>
+              <pre style={{ fontSize: '0.72rem', background: '#000', color: '#00ff00', padding: 12, overflowX: 'auto', lineHeight: 1.4 }}>
+{`[
+  {
+    "author": "Zero_Cool",   // nome exibido
+    "is_npc": true,          // badge [NPC] + cor ciano
+    "content": "Mensagem...",
+    "likes": 5,              // curtidas artificiais
+    "replies": [             // aninhamento ilimitado
+      {
+        "author": "Ph4ntom",
+        "is_npc": true,
+        "content": "Resposta...",
+        "likes": 2,
+        "replies": [ ... ]
+      }
+    ]
+  }
+]`}
+              </pre>
+            </div>
+          </div>
+        )}
       </div>
+
+      {showBulkModal && (
+        <BulkCommentModal
+          news={news.map(n => ({ id: n.id, title: n.title }))}
+          onClose={() => setShowBulkModal(false)}
+        />
+      )}
     </div>
   );
 };
