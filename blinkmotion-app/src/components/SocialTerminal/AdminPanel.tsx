@@ -3,6 +3,7 @@ import { supabase } from '../../lib/supabaseClient';
 import { useNews } from '../../hooks/useNews';
 
 export const AdminPanel: React.FC = () => {
+  console.log("[DEBUG] ADMIN_PANEL_V2_LOADED");
   const [identities, setIdentities] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -94,8 +95,8 @@ export const AdminPanel: React.FC = () => {
 
   return (
     <div className="admin-container">
-      <div className="admin-header">
-        <h2>GAME MASTER DASHBOARD V2</h2>
+      <div className="admin-header" style={{border: '5px solid red'}}>
+        <h2>GAME MASTER DASHBOARD V2 - SYNC_TEST</h2>
         <span className="badge-admin">ROOT_ACCESS</span>
       </div>
 
