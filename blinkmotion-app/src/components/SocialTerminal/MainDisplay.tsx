@@ -34,12 +34,12 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath }) => {
           background: #000000;
           border: 1px dashed #333;
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           justify-content: center;
           min-height: 300px;
           overflow-y: auto;
         }
-        .main-display.feed-active {
+        .main-display.feed-active, .main-display:has(.admin-container) {
           align-items: stretch;
           justify-content: flex-start;
           border-style: solid;

@@ -44,12 +44,17 @@ export const useNews = () => {
     return data.publicUrl;
   };
 
-  const createNews = async (title: string, content: string, asciiFile?: File) => {
+  const createNews = async (title: string, content: string, asciiFile?: File, asciiText?: string) => {
     setLoading(true);
     try {
       let ascii_url = '';
+      
       if (asciiFile) {
         ascii_url = await uploadAsciiArt(asciiFile);
+      } else if (asciiText) {
+        const blob = new Blob([asciiText], { type: 'text/plain' });
+        const file = new File([blob], 'news_ascii.txt', { type: 'text/plain' });
+        ascii_url = await uploadAsciiArt(file);
       }
 
       const { error: err } = await supabase

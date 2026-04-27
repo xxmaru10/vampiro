@@ -128,14 +128,14 @@ function App() {
             />
           </div>
           
-          <div className="remember-me">
+          <div className="terminal-prompt checkbox-prompt">
             <input 
               type="checkbox" 
               id="remember" 
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
             />
-            <label htmlFor="remember">LEMBRAR_ACESSO</label>
+            <label htmlFor="remember">SALVAR_LOGIN_NA_SESSION</label>
           </div>
           
           <button type="submit" className="btn-terminal" disabled={loading}>
@@ -152,7 +152,7 @@ function App() {
           </a>
         </div>
         <style>{`
-          .remember-me {
+          .checkbox-prompt {
             margin: 15px 0;
             display: flex;
             align-items: center;
@@ -160,14 +160,24 @@ function App() {
             color: #00ff00;
             font-family: 'VT323', monospace;
             cursor: pointer;
+            border-bottom: none !important;
           }
-          .remember-me input {
-            accent-color: #00ff00;
+          .checkbox-prompt::before {
+            content: "[ ]" !important;
+            font-size: 1.2rem;
+          }
+          .checkbox-prompt:has(input:checked)::before {
+            content: "[X]" !important;
+          }
+          .checkbox-prompt input {
+            opacity: 0;
+            position: absolute;
             cursor: pointer;
           }
-          .remember-me label {
+          .checkbox-prompt label {
             cursor: pointer;
             font-size: 1.1rem;
+            margin-top: 2px;
           }
         `}</style>
       </div>

@@ -17,6 +17,7 @@ export const AdminPanel: React.FC = () => {
   const { news, createNews, deleteNews, loading: newsLoading, error: newsError } = useNews();
   const [newsTitle, setNewsTitle] = useState('');
   const [newsContent, setNewsContent] = useState('');
+  const [newsContentAscii, setNewsContentAscii] = useState('');
   const [newsFile, setNewsFile] = useState<File | null>(null);
 
   const fetchIdentities = async () => {
@@ -87,9 +88,10 @@ export const AdminPanel: React.FC = () => {
   const handleCreateNews = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newsTitle || !newsContent) return;
-    await createNews(newsTitle, newsContent, newsFile || undefined);
+    await createNews(newsTitle, newsContent, newsFile || undefined, newsContentAscii);
     setNewsTitle('');
     setNewsContent('');
+    setNewsContentAscii('');
     setNewsFile(null);
   };
 
@@ -218,11 +220,28 @@ CREATE TABLE blink_news (
                   />
                 </div>
                 <div className="input-group">
+                  <label>CONTEÚDO ASCII (OPCIONAL - COLE OU FAÇA UPLOAD)</label>
+                  <textarea 
+                    value={newsContentAscii}
+                    onChange={e => setNewsContentAscii(e.target.value)}
+                    placeholder="Cole sua arte ASCII aqui ou selecione um arquivo abaixo..."
+                    className="ascii-textarea"
+                  />
+                </div>
+                <div className="input-group">
                   <label>ARQUIVO ASCII (.TXT)</label>
                   <input 
                     type="file" 
                     accept=".txt"
-                    onChange={e => setNewsFile(e.target.files?.[0] || null)}
+                    onChange={e => {
+                      const file = e.target.files?.[0] || null;
+                      setNewsFile(file);
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (ev) => setNewsContentAscii(ev.target?.result as string);
+                        reader.readAsText(file);
+                      }
+                    }}
                     className="file-input"
                   />
                 </div>
@@ -430,5 +449,13 @@ const styles = `
   .npc-date {
     font-size: 0.7rem;
     color: #00ff0066;
+  }
+  .ascii-textarea {
+    height: 150px !important;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    line-height: 1;
+    white-space: pre;
+    overflow: auto;
   }
 `;
