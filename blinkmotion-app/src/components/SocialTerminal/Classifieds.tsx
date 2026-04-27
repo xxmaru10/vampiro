@@ -31,7 +31,7 @@ export const Classifieds: React.FC = () => {
         <form onSubmit={handleSubmit} className="code-form">
           <label htmlFor="access-code">INSIRA O CÓDIGO DE ACESSO:</label>
           <div className="input-wrapper">
-            <span className="cursor-prefix">></span>
+            <span className="cursor-prefix">{'>'}</span>
             <input 
               id="access-code"
               type="password" 

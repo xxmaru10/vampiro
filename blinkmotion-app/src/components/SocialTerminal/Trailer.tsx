@@ -16,13 +16,13 @@ export const Trailer: React.FC = () => {
           autoPlay 
           style={{ border: '1px solid #00ff0044', boxShadow: '0 0 20px rgba(0, 255, 0, 0.1)' }}
         >
-          <source src="/trailer.mp4" type="video/mp4" />
+          <source src="https://drive.google.com/uc?export=download&id=1ntIUwZV649X-8svwVF34zwGmerSoNQDS" type="video/mp4" />
           Seu navegador não suporta a tag de vídeo.
         </video>
       </div>
 
       <div className="trailer-footer">
-        [!] CERTIFIQUE-SE DE QUE O ARQUIVO 'trailer.mp4' ESTÁ NA PASTA /public DO APP.
+        [!] TRANSMISSÃO VIA GOOGLE_DRIVE_SERVER // STATUS: CONECTADO
       </div>
 
       <style>{`

@@ -65,6 +65,15 @@ export const usePosts = () => {
     await fetchPage(0, true);
   };
 
+  const deletePost = async (id: string) => {
+    const { error: err } = await supabase
+      .from('blink_posts')
+      .delete()
+      .eq('id', id);
+    if (err) throw err;
+    await fetchPage(0, true);
+  };
+
   const fetchUnapproved = async () => {
     setLoading(true);
     const { data, error: err } = await supabase

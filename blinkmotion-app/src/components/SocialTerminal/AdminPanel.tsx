@@ -23,7 +23,7 @@ export const AdminPanel: React.FC = () => {
   const [newsPublishedAt, setNewsPublishedAt] = useState('');
   
   // Post Approval states
-  const { posts: pendingPosts, loading: postsLoading, error: postsError, fetchUnapproved, approvePost, deletePost: rejectPost } = usePosts();
+  const { posts: pendingPosts, loading: postsLoading, fetchUnapproved, approvePost, deletePost: rejectPost } = usePosts();
 
   const fetchIdentities = async () => {
     setLoading(true);
