@@ -5387,6 +5387,10 @@ async function ccUploadImageToSupabase(dataUrl, path) {
 async function ccSaveToSupabase(record) {
   if (!supabaseClient) return null;
   try {
+    // Sanitize ccState to avoid circular references
+    let safeState = null;
+    try { safeState = JSON.parse(JSON.stringify(ccState)); } catch(e) { safeState = {}; }
+
     const { data, error } = await supabaseClient
       .from('characters')
       .upsert({
@@ -5396,9 +5400,8 @@ async function ccSaveToSupabase(record) {
         clan: record.clan,
         band_role: record.bandRole,
         concept: record.concept,
-        data: ccState, // Store full state as JSONB
-        created_at: new Date().toISOString()
-      });
+        data: safeState
+      }, { onConflict: 'id' });
       
     if (error) throw error;
     console.log("Salvo no Supabase:", record.name, record.bandRole);
