@@ -47,13 +47,11 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news }) => {
       <div className="news-header">
         <Newspaper size={16} />
         <span>NOTÍCIAS_DA_SEMANA_V.1.0</span>
-        {news.length > 1 && (
-          <div className="news-nav">
-            <button onClick={prevSlide}><ChevronLeft size={14} /></button>
-            <span>{currentIndex + 1}/{news.length}</span>
-            <button onClick={nextSlide}><ChevronRight size={14} /></button>
-          </div>
-        )}
+        <div className="news-nav">
+          <button onClick={prevSlide} disabled={news.length <= 1}><ChevronLeft size={14} /></button>
+          <span>{news.length > 0 ? `${currentIndex + 1}/${news.length}` : '0/0'}</span>
+          <button onClick={nextSlide} disabled={news.length <= 1}><ChevronRight size={14} /></button>
+        </div>
       </div>
 
       {!currentNews ? (
