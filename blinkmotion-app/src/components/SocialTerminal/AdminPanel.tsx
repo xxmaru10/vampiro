@@ -106,7 +106,8 @@ export const AdminPanel: React.FC = () => {
         <div className="admin-error">
           <p>⚠️ {error || newsError}</p>
           <pre style={{fontSize: '0.7rem', background: '#000', color: '#0f0', padding: '10px', marginTop: '10px', overflowX: 'auto'}}>
-{`CREATE TABLE blink_identities (
+{`-- TABELAS
+CREATE TABLE IF NOT EXISTS blink_identities (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
   bio TEXT,
@@ -114,13 +115,22 @@ export const AdminPanel: React.FC = () => {
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
-CREATE TABLE blink_news (
+CREATE TABLE IF NOT EXISTS blink_news (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   title TEXT NOT NULL,
   content TEXT NOT NULL,
   ascii_url TEXT,
+  content_ascii TEXT,            -- ASCII inline (sem precisar de bucket)
   created_at TIMESTAMPTZ DEFAULT now()
 );
+ALTER TABLE blink_news ADD COLUMN IF NOT EXISTS content_ascii TEXT;
+
+-- (OPCIONAL) BUCKET DE STORAGE — só necessário p/ UPLOAD de arquivo .txt
+-- Dashboard > Storage > New bucket > nome: news_assets > Public: ON
+-- Ou via SQL:
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('news_assets', 'news_assets', true)
+ON CONFLICT (id) DO NOTHING;
 
 -- Habilite RLS e políticas de acesso no Supabase`}
           </pre>

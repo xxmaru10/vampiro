@@ -6,6 +6,7 @@ export interface NewsItem {
   title: string;
   content: string;
   ascii_url: string;
+  content_ascii?: string | null;
   created_at: string;
 }
 
@@ -46,22 +47,43 @@ export const useNews = () => {
 
   const createNews = async (title: string, content: string, asciiFile?: File, asciiText?: string) => {
     setLoading(true);
+    setError(null);
     try {
       let ascii_url = '';
-      
+      const content_ascii = asciiText && asciiText.trim().length > 0 ? asciiText : null;
+
+      // Só faz upload pra Storage se o usuário enviou um ARQUIVO.
+      // Texto colado é gravado direto em `content_ascii` (sem dependência de bucket).
       if (asciiFile) {
-        ascii_url = await uploadAsciiArt(asciiFile);
-      } else if (asciiText) {
-        const blob = new Blob([asciiText], { type: 'text/plain' });
-        const file = new File([blob], 'news_ascii.txt', { type: 'text/plain' });
-        ascii_url = await uploadAsciiArt(file);
+        try {
+          ascii_url = await uploadAsciiArt(asciiFile);
+        } catch (uploadErr: any) {
+          throw new Error(
+            `Upload do arquivo ASCII falhou: ${uploadErr.message || uploadErr}. ` +
+            `Crie o bucket "news_assets" no Supabase Storage ou cole o ASCII no campo de texto.`
+          );
+        }
       }
 
-      const { error: err } = await supabase
+      // Tenta inserir com content_ascii. Se a coluna não existir, faz fallback sem ela.
+      let insertErr = (await supabase
         .from('blink_news')
-        .insert([{ title, content, ascii_url }]);
+        .insert([{ title, content, ascii_url, content_ascii }])).error;
 
-      if (err) throw err;
+      if (insertErr && /content_ascii/i.test(insertErr.message)) {
+        const fallback = await supabase
+          .from('blink_news')
+          .insert([{ title, content, ascii_url }]);
+        insertErr = fallback.error;
+        if (!insertErr) {
+          setError(
+            'Notícia publicada, mas a coluna content_ascii não existe. ' +
+            'Rode: ALTER TABLE blink_news ADD COLUMN content_ascii TEXT;'
+          );
+        }
+      }
+
+      if (insertErr) throw insertErr;
       await fetchNews();
     } catch (err: any) {
       setError(err.message);

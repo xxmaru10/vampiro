@@ -19,8 +19,19 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news }) => {
   };
 
   useEffect(() => {
-    if (news.length > 0 && news[currentIndex]?.ascii_url) {
-      fetch(news[currentIndex].ascii_url)
+    if (news.length === 0) {
+      setAsciiContent('');
+      return;
+    }
+    const item = news[currentIndex];
+    // 1) Preferir conteúdo inline (sem dependência de Storage)
+    if (item?.content_ascii) {
+      setAsciiContent(item.content_ascii);
+      return;
+    }
+    // 2) Fallback: buscar do bucket via URL pública
+    if (item?.ascii_url) {
+      fetch(item.ascii_url)
         .then(res => res.text())
         .then(text => setAsciiContent(text))
         .catch(() => setAsciiContent('ERROR_LOADING_ASCII'));
