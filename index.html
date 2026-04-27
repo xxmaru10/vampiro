@@ -1084,7 +1084,8 @@ mark{
 .cc-disc-card h5 { color: var(--gold); font-family: 'Cinzel Decorative', serif; font-size: 11px; margin: 0 0 10px; }
 .cc-disc-level-dots { display: flex; justify-content: center; gap: 6px; margin-bottom: 10px; }
 .cc-disc-dot { width: 13px; height: 13px; border-radius: 50%; border: 1px solid var(--blood-dark); background: transparent; transition: all 0.2s; }
-.cc-disc-dot.filled { background: var(--blood); border-color: var(--blood); box-shadow: 0 0 6px rgba(255,0,170,0.5); }
+.cc-disc-dot.filled { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 6px rgba(0,255,255,0.5); }
+.cc-disc-dot.extra { background: var(--blood); border-color: var(--blood); box-shadow: 0 0 6px rgba(255,0,170,0.5); }
 .cc-disc-controls { display: flex; align-items: center; justify-content: center; gap: 10px; }
 .cc-disc-btn { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--blood-dark); background: transparent; color: var(--ink-soft); font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; padding: 0; }
 .cc-disc-btn:hover { border-color: var(--blood); color: var(--blood); }
@@ -5104,24 +5105,38 @@ function ccRenderDiscNative() {
   const total=Object.values(ccState.discFree).reduce((a,b)=>a+b,0);
   grid.innerHTML=discs.map(disc=>{
     const lv=ccState.discFree[disc]||0;
-    const dots=[1,2,3].map(i=>`<div class="cc-disc-dot ${i<=lv?'filled':''}"></div>`).join('');
-    return `<div class="cc-disc-card"><h5>${disc}</h5>
+    const extraPoints = ccState.discExtra.filter(d => d.disc === disc).reduce((s, d) => s + d.levels, 0);
+    const totalLv = lv + extraPoints;
+    const dots=[1,2,3].map(i=>`<div class="cc-disc-dot ${i<=totalLv?'filled':''} ${i>lv && i<=totalLv ? 'extra' : ''}"></div>`).join('');
+    
+    return `<div class="cc-disc-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px">
+        <h5 style="margin:0">${disc}</h5>
+        <span class="cc-clan-tag" style="font-size:8px">CLÃ</span>
+      </div>
       <div class="cc-disc-level-dots">${dots}</div>
       <div class="cc-disc-controls">
         <button class="cc-disc-btn" onclick="ccDiscFreeChange('${disc}',-1)">−</button>
-        <span class="cc-disc-count">${lv}</span>
-        <button class="cc-disc-btn" onclick="ccDiscFreeChange('${disc}',1)">+</button>
-      </div></div>`;
+        <span class="cc-disc-count">${lv}${extraPoints > 0 ? `<small style="font-size:10px;opacity:0.6">+${extraPoints}</small>` : ''}</span>
+        <button class="cc-disc-btn" onclick="ccDiscFreeChange('${disc}',1)" ${totalLv >= 3 ? 'disabled style="opacity:0.3"' : ''}>+</button>
+      </div>
+      ${totalLv >= 3 && lv < 3 ? '<div style="font-size:9px;color:var(--gold);margin-top:4px;text-align:center">Limite (3) atingido com extras</div>' : ''}
+    </div>`;
   }).join('');
 }
 
 function ccDiscFreeChange(disc,delta) {
   const cur=ccState.discFree[disc]||0, nv=cur+delta;
   if(nv<0||nv>3) return;
+  
+  // Verifica total (nativo + extra)
+  const extraPoints = ccState.discExtra.filter(d => d.disc === disc).reduce((s, d) => s + d.levels, 0);
+  if(delta > 0 && cur + extraPoints >= 3) return;
+
   const total=Object.values(ccState.discFree).reduce((a,b)=>a+b,0);
   if(delta>0&&total>=3) return;
   ccState.discFree[disc]=nv;
-  ccRenderDiscNative(); ccSave();
+  ccRenderDiscNative(); ccRenderExtraDiscs(); ccSave();
 }
 
 // ---- DESTINY POINTS ----
@@ -5150,48 +5165,78 @@ function ccRemoveExtraDisc(id) {
 
 function ccRenderExtraDiscs() {
   const list=document.getElementById('cc-extra-discs-list'); if(!list) return;
-  list.innerHTML=ccState.discExtra.map(d=>`
+  const clanDiscs = (ccState.clan && CC_CLANS[ccState.clan]) ? CC_CLANS[ccState.clan].disciplines : [];
+
+  list.innerHTML=ccState.discExtra.map(d=> {
+    const isClan = clanDiscs.includes(d.disc);
+    const nativePoints = ccState.discFree[d.disc] || 0;
+    // Soma outros extras da mesma disciplina se houver (raro mas possível no modelo atual)
+    const otherExtras = ccState.discExtra.filter(x => x.id !== d.id && x.disc === d.disc).reduce((s, x) => s + x.levels, 0);
+    const totalPoints = nativePoints + otherExtras + d.levels;
+    
+    return `
     <div class="cc-extra-disc">
-      <div class="cc-extra-disc-header"><h5>Disciplina Extra (custo: ${d.cost} pts)</h5>
-        <button class="cc-stunt-remove" onclick="ccRemoveExtraDisc(${d.id})">Remover</button></div>
+      <div class="cc-extra-disc-header">
+        <h5>
+          ${d.disc || 'Nova Disciplina'} 
+          ${isClan ? '<span class="cc-clan-tag" style="font-size:8px;margin-left:5px">DO CLÃ</span>' : ''}
+          ${nativePoints > 0 ? `<span style="color:var(--gold);font-size:9px;margin-left:5px">(Possui ${nativePoints} nativo)</span>` : ''}
+        </h5>
+        <button class="cc-stunt-remove" onclick="ccRemoveExtraDisc(${d.id})">Remover</button>
+      </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div><div class="cc-label" style="font-size:9px">Disciplina</div>
+        <div>
+          <div class="cc-label" style="font-size:9px">Disciplina</div>
           <select class="cc-input cc-select" onchange="ccUpdateExtraDisc(${d.id},'disc',this.value)">
             <option value="">— Escolha —</option>
-            ${CC_ALL_DISCIPLINES.map(x=>`<option value="${x}" ${d.disc===x?'selected':''}>${x}</option>`).join('')}
-          </select></div>
-        <div><div class="cc-label" style="font-size:9px">Custo por Nível</div>
-          <select class="cc-input cc-select" onchange="ccUpdateExtraDisc(${d.id},'inClan',this.value==='clan')">
-            <option value="clan" ${d.inClan?'selected':''}>Do Clã — 1 pt/nível</option>
-            <option value="outside" ${!d.inClan?'selected':''}>Fora do Clã — 2 pts/nível</option>
-          </select></div>
+            ${CC_ALL_DISCIPLINES.map(x=>{
+              const isXClan = clanDiscs.includes(x);
+              return `<option value="${x}" ${d.disc===x?'selected':''}>${x}${isXClan ? ' [CLÃ]' : ''}</option>`;
+            }).join('')}
+          </select>
+        </div>
+        <div>
+          <div class="cc-label" style="font-size:9px">Custo por Nível</div>
+          <div class="cc-input" style="background:rgba(0,0,0,0.2); border-color:rgba(255,255,255,0.05); color:var(--ink-dim); font-size:12px; padding:10px; height:44px; display:flex; align-items:center">
+            ${d.disc ? (d.inClan ? '1 pt (Do Clã)' : '2 pts (Fora do Clã)') : '—'}
+          </div>
+        </div>
       </div>
-      <div style="margin-top:10px"><div class="cc-label" style="font-size:9px">Níveis</div>
+      <div style="margin-top:10px">
+        <div class="cc-label" style="font-size:9px">Níveis Adicionais ${d.disc ? `(Total: ${totalPoints}/3)` : ''}</div>
         <div style="display:flex;align-items:center;gap:12px;margin-top:6px">
           <button class="cc-disc-btn" onclick="ccUpdateExtraDisc(${d.id},'levels',${Math.max(1,d.levels-1)})">−</button>
           <span style="color:var(--blood);font-size:17px;font-weight:700">${d.levels}</span>
-          <button class="cc-disc-btn" onclick="ccUpdateExtraDisc(${d.id},'levels',${d.levels+1})">+</button>
-        </div></div>
-    </div>`).join('');
+          <button class="cc-disc-btn" onclick="ccUpdateExtraDisc(${d.id},'levels',${d.levels+1})" ${!d.disc || totalPoints >= 3 ? 'disabled style="opacity:0.3"' : ''}>+</button>
+        </div>
+        ${totalPoints >= 3 && d.disc ? '<div style="color:var(--gold);font-size:10px;margin-top:4px">Limite máximo de 3 pontos atingido.</div>' : ''}
+      </div>
+    </div>`;
+  }).join('');
 }
 
 function ccUpdateExtraDisc(id,field,value) {
   const d=ccState.discExtra.find(x=>x.id===id); if(!d) return;
   const old={...d};
-  
-  if(field==='levels') {
-    value = Math.min(3, parseInt(value));
-  }
+  const clanDiscs = (ccState.clan && CC_CLANS[ccState.clan]) ? CC_CLANS[ccState.clan].disciplines : [];
   
   if(field==='disc') {
     d.disc = value;
     // Auto-detect if in clan
-    const clanDiscs = (ccState.clan && CC_CLANS[ccState.clan]) ? CC_CLANS[ccState.clan].disciplines : [];
     d.inClan = clanDiscs.includes(value);
   } else if(field==='inClan') {
     d.inClan=(value===true||value==='true'||value==='clan');
   } else {
     d[field]=value;
+  }
+
+  // Enforce Limit of 3 (Native + All Extras of same disc)
+  if(d.disc) {
+    const nativePoints = ccState.discFree[d.disc] || 0;
+    const otherExtras = ccState.discExtra.filter(x => x.id !== id && x.disc === d.disc).reduce((s, x) => s + x.levels, 0);
+    if(nativePoints + otherExtras + d.levels > 3) {
+      d.levels = Math.max(0, 3 - (nativePoints + otherExtras));
+    }
   }
   
   d.cost=d.levels*(d.inClan?1:2);
@@ -5202,7 +5247,7 @@ function ccUpdateExtraDisc(id,field,value) {
     d.cost=old.cost; 
   }
   
-  ccRenderExtraDiscs(); ccRenderDestinyDots(); ccSave();
+  ccRenderExtraDiscs(); ccRenderDiscNative(); ccRenderDestinyDots(); ccSave();
 }
 
 function ccAddStunt() {
