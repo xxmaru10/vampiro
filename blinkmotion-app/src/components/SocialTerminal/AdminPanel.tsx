@@ -95,7 +95,7 @@ export const AdminPanel: React.FC = () => {
   return (
     <div className="admin-container">
       <div className="admin-header">
-        <h2>GAME MASTER DASHBOARD</h2>
+        <h2>GAME MASTER DASHBOARD V2</h2>
         <span className="badge-admin">ROOT_ACCESS</span>
       </div>
 

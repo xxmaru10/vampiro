@@ -12,7 +12,7 @@ interface NavigationMenuProps {
 export const NavigationMenu: React.FC<NavigationMenuProps> = ({ items }) => {
   return (
     <div className="nav-menu">
-      <h1 className="brand-name">BLINKMOTION // SOCIAL_NET</h1>
+      <h1 className="brand-name">BLINKMOTION // UPDATED_TEST</h1>
       <div className="nav-items">
         {items.map((item) => (
           <div key={item.key} className="nav-item">
