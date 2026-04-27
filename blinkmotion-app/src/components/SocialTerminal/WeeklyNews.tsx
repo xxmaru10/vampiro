@@ -64,17 +64,31 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail,
             <div style={{ display: 'flex', gap: 12, padding: 12 }}>
               {asciiContent && (
                 <div style={{ background: '#000', border: '1px solid #111', width: 110, minWidth: 110, height: 90, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <pre style={{ 
-                    margin: 0, 
-                    color: '#00ff00', 
-                    opacity: 0.8, 
-                    whiteSpace: 'pre',
-                    fontSize: `${Math.min(6, Math.min(104 / (Math.max(...asciiContent.split('\n').map(l => l.trimEnd().length)) || 1) / 0.55, 84 / (asciiContent.split('\n').filter(l => l.trim().length > 0).length || 1)))}px`,
-                    lineHeight: 1,
-                    letterSpacing: 0,
-                    textAlign: 'center',
-                    display: 'inline-block'
-                  }}>
+                  <pre style={((): React.CSSProperties => {
+                    const lines = asciiContent.split('\n');
+                    let maxLineLen = 0;
+                    for (let i = 0; i < lines.length; i++) {
+                      const len = lines[i].trimEnd().length;
+                      if (len > maxLineLen) maxLineLen = len;
+                    }
+                    const lineCount = lines.length || 1;
+                    const safeMaxLen = maxLineLen || 1;
+                    // Cálculo idêntico ao AdminPanel para consistência
+                    const fontSize = Math.min(8, Math.min(104 / (safeMaxLen * 0.55), 84 / lineCount));
+
+                    return {
+                      margin: 0,
+                      color: '#00ff00',
+                      opacity: 0.8,
+                      whiteSpace: 'pre',
+                      fontSize: `${fontSize}px`,
+                      lineHeight: 1,
+                      letterSpacing: 0,
+                      textAlign: 'center',
+                      display: 'inline-block',
+                      fontFamily: "'VT323', monospace"
+                    };
+                  })()}>
                     {asciiContent}
                   </pre>
                 </div>

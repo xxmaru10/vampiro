@@ -305,15 +305,29 @@ CREATE POLICY "Public Access Posts" ON blink_posts FOR ALL USING (true) WITH CHE
                       marginTop: 0
                     }}>
                       {newsContentAscii ? (
-                        <pre style={{ 
-                          margin: 0, 
-                          color: '#00ff00', 
-                          whiteSpace: 'pre',
-                          fontSize: `${Math.min(6, Math.min(104 / (Math.max(...newsContentAscii.split('\n').map(l => l.trimEnd().length)) || 1) / 0.55, 84 / (newsContentAscii.split('\n').filter(l => l.length > 0).length || 1)))}px`,
-                          lineHeight: 1,
-                          letterSpacing: 0,
-                          textAlign: 'center'
-                        }}>
+                        <pre style={((): React.CSSProperties => {
+                          const lines = newsContentAscii.split('\n');
+                          let maxLineLen = 0;
+                          for (let i = 0; i < lines.length; i++) {
+                            const len = lines[i].trimEnd().length;
+                            if (len > maxLineLen) maxLineLen = len;
+                          }
+                          const lineCount = lines.length || 1;
+                          const safeMaxLen = maxLineLen || 1;
+                          // Cálculo seguro de font-size para caber em 104x84
+                          const fontSize = Math.min(8, Math.min(104 / (safeMaxLen * 0.55), 84 / lineCount));
+                          
+                          return {
+                            margin: 0,
+                            color: '#00ff00',
+                            whiteSpace: 'pre',
+                            fontSize: `${fontSize}px`,
+                            lineHeight: 1,
+                            letterSpacing: 0,
+                            textAlign: 'center',
+                            fontFamily: "'VT323', monospace"
+                          };
+                        })()}>
                           {newsContentAscii}
                         </pre>
                       ) : (
