@@ -32,8 +32,12 @@ export const ForumFeed: React.FC<ForumFeedProps> = ({ userId, userEmail, isAdmin
     }
   }, [isAdmin]);
 
+  const [customName, setCustomName] = useState('');
+
   const resolveAuthor = (): { name: string; isNpc: boolean } => {
-    if (!isAdmin || selectedIdentity === '__self__') return { name: authorName, isNpc: false };
+    if (!isAdmin) return { name: authorName, isNpc: false };
+    if (selectedIdentity === '__self__') return { name: authorName, isNpc: false };
+    if (selectedIdentity === '__custom__') return { name: customName.toUpperCase() || 'ANON', isNpc: true };
     const found = identities.find(i => i.id === selectedIdentity);
     return found ? { name: found.name, isNpc: true } : { name: authorName, isNpc: false };
   };
@@ -87,7 +91,17 @@ export const ForumFeed: React.FC<ForumFeedProps> = ({ userId, userEmail, isAdmin
               >
                 <option value="__self__">[ {authorName} ]</option>
                 {identities.map(id => <option key={id.id} value={id.id}>{id.name}</option>)}
+                <option value="__custom__">[ NOME_PERSONALIZADO... ]</option>
               </select>
+              {selectedIdentity === '__custom__' && (
+                <input 
+                  type="text"
+                  value={customName}
+                  onChange={e => setCustomName(e.target.value)}
+                  placeholder="Digite o nome..."
+                  style={{ flex: 1, background: '#000', border: '1px solid #00ff00', color: '#00ff00', fontFamily: "'VT323', monospace", fontSize: '0.82rem', padding: '2px 6px' }}
+                />
+              )}
             </div>
           )}
           <input

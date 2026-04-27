@@ -5,18 +5,21 @@ import { WeeklyNews } from './WeeklyNews';
 import { ForumFeed } from './ForumFeed';
 import { MessagesView } from './MessagesView';
 import { Classifieds } from './Classifieds';
+import { NotificationsView } from './NotificationsView';
 import { useNews } from '../../hooks/useNews';
+import { useNotifications } from '../../hooks/useNotifications';
 
 interface MainDisplayProps {
   currentPath: string;
   user?: User | null;
 }
 
-const ACTIVE_PATHS = ['/LOCAL_BROADCAST', '/ROOT_ACCESS', '/SECURE_COMMS', '/CLASSIFIEDS'];
+const ACTIVE_PATHS = ['/LOCAL_BROADCAST', '/ROOT_ACCESS', '/SECURE_COMMS', '/CLASSIFIEDS', '/NOTIFICATIONS'];
 
 export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) => {
   const { news, createNews, deleteNews, loading: newsLoading, error: newsError } = useNews();
   const isAdmin = user?.email === 'admin@blinkmotion.com';
+  const { notifications, unreadCount, loading: notifLoading, markAllAsRead } = useNotifications(user?.id, isAdmin);
   const isActive = ACTIVE_PATHS.includes(currentPath);
 
   return (
@@ -49,6 +52,16 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) =
       {currentPath === '/CLASSIFIEDS' && (
         <div className="feed-container" style={{ height: '100%' }}>
           <Classifieds />
+        </div>
+      )}
+      
+      {currentPath === '/NOTIFICATIONS' && (
+        <div className="feed-container" style={{ height: '100%' }}>
+          <NotificationsView 
+            notifications={notifications} 
+            loading={notifLoading} 
+            onMarkRead={markAllAsRead} 
+          />
         </div>
       )}
 

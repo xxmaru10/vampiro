@@ -8,6 +8,7 @@ export type TerminalCommand = {
 };
 
 const COMMANDS: Record<string, TerminalCommand> = {
+  '0': { id: 'notifications', label: 'NOTIFICAÇÕES', path: '/NOTIFICATIONS' },
   '1': { id: 'feed', label: 'FEED', path: '/LOCAL_BROADCAST' },
   '2': { id: 'messages', label: 'MENSAGENS', path: '/SECURE_COMMS' },
   '3': { id: 'blackmarket', label: 'CLASSIFICADOS', path: '/CLASSIFIEDS' },

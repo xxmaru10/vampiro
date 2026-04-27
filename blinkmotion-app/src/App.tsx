@@ -5,6 +5,7 @@ import { NavigationMenu } from './components/SocialTerminal/NavigationMenu';
 import { CommandConsole } from './components/SocialTerminal/CommandConsole';
 import { MainDisplay } from './components/SocialTerminal/MainDisplay';
 import { useTerminalNavigation } from './hooks/useTerminalNavigation';
+import { useNotifications } from './hooks/useNotifications';
 
 function App() {
   const { user, login, register, logout, isAuthenticated, loading, error } = useBlinkAuth();
@@ -15,6 +16,8 @@ function App() {
   const [rememberMe, setRememberMe] = useState(false);
 
   const { currentPath, logs, isProcessing, executeCommand, commands } = useTerminalNavigation(user?.email);
+  const isAdmin = user?.email === 'admin@blinkmotion.com';
+  const { unreadCount } = useNotifications(user?.id, isAdmin);
 
   // Load saved credentials
   useEffect(() => {
@@ -77,7 +80,7 @@ function App() {
     return (
       <div className="social-terminal-layout">
         <StatusHeader />
-        <NavigationMenu items={commands} />
+        <NavigationMenu items={commands} unreadCount={unreadCount} />
         <CommandConsole 
           currentPath={currentPath}
           logs={logs}

@@ -7,6 +7,7 @@ interface NavItem {
 
 interface NavigationMenuProps {
   items: NavItem[];
+  unreadCount?: number;
 }
 
 export const NavigationMenu: React.FC<NavigationMenuProps> = ({ items }) => {
@@ -17,7 +18,12 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ items }) => {
         {items.map((item) => (
           <div key={item.key} className="nav-item">
             <span className="nav-key">[{item.key}]</span>
-            <span className="nav-label">{item.label}</span>
+            <span className="nav-label">
+              {item.label}
+              {item.key === '0' && unreadCount !== undefined && unreadCount > 0 && (
+                <span className="notif-badge">{unreadCount}</span>
+              )}
+            </span>
           </div>
         ))}
       </div>
@@ -51,6 +57,25 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ items }) => {
         }
         .nav-label {
           letter-spacing: 2px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .notif-badge {
+          background: #ff0000;
+          color: #fff;
+          font-size: 0.7rem;
+          padding: 1px 6px;
+          border-radius: 10px;
+          font-family: sans-serif;
+          font-weight: bold;
+          box-shadow: 0 0 10px #ff0000;
+          animation: blink-notif 1s infinite;
+        }
+        @keyframes blink-notif {
+          0% { opacity: 0.7; }
+          50% { opacity: 1; transform: scale(1.1); }
+          100% { opacity: 0.7; }
         }
       `}</style>
     </div>
