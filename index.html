@@ -937,6 +937,40 @@ mark{
 .terminal-input:focus {
   border-bottom-color: #00ff00;
 }
+.checkbox-prompt {
+  margin: 15px 0 5px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #00ff00;
+  font-family: 'VT323', monospace;
+  cursor: pointer;
+  user-select: none;
+}
+.checkbox-prompt input { display: none; }
+.checkbox-box {
+  width: 18px;
+  height: 18px;
+  border: 1px solid #00ff00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  flex-shrink: 0;
+}
+.checkbox-box::after {
+  content: "X";
+  display: none;
+  color: #00ff00;
+  font-weight: bold;
+  font-size: 14px;
+}
+.checkbox-prompt input:checked + .checkbox-box::after { display: block; }
+.checkbox-prompt label {
+  cursor: pointer;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
 .btn-terminal {
   background: #00ff00;
   color: #000;
@@ -3801,6 +3835,11 @@ mark{
         <div class="terminal-prompt">
           <input type="password" id="terminal-pass" class="terminal-input" placeholder="SENHA">
         </div>
+        <label class="checkbox-prompt" for="terminal-remember">
+          <input type="checkbox" id="terminal-remember">
+          <span class="checkbox-box"></span>
+          <span>LEMBRAR_LOGIN_E_SENHA</span>
+        </label>
         <button type="submit" class="btn-terminal">conectar</button>
       </form>
       <div id="terminal-status" style="font-family: 'VT323', monospace; color: #00ff00; margin-top: 10px; font-size: 14px;"></div>
@@ -4960,6 +4999,7 @@ async function ccSaveToSupabase(record) {
 async function ccBlinkConnect() {
   const user = document.getElementById('terminal-user').value.trim();
   const pass = document.getElementById('terminal-pass').value.trim();
+  const remember = document.getElementById('terminal-remember');
   const status = document.getElementById('terminal-status');
 
   if (!user || !pass) {
@@ -4969,9 +5009,9 @@ async function ccBlinkConnect() {
 
   if (supabaseClient) {
     if (status) status.innerText = 'NEGOCIANDO ACESSO...';
-    
+
     const systemEmail = `${user.toLowerCase().replace(/[^a-z0-9]/g, '')}@blinkmotion.com`;
-    
+
     const { data, error } = await supabaseClient.auth.signInWithPassword({
       email: systemEmail,
       password: pass
@@ -4980,14 +5020,39 @@ async function ccBlinkConnect() {
     if (error) {
       if (status) status.innerText = 'ERRO: ' + error.message.toUpperCase();
     } else {
+      if (remember && remember.checked) {
+        try {
+          localStorage.setItem('blink_remember_user', user);
+          localStorage.setItem('blink_remember_pass', pass);
+        } catch (e) { console.warn('Falha ao salvar credenciais', e); }
+      } else {
+        try {
+          localStorage.removeItem('blink_remember_user');
+          localStorage.removeItem('blink_remember_pass');
+        } catch (e) {}
+      }
       if (status) status.innerText = 'ACESSO CONCEDIDO. REDIRECIONANDO...';
       // Redireciona para o app da rede social compilado
       setTimeout(() => {
-        window.location.href = './blinkmotion-app/dist/index.html'; 
+        window.location.href = './blinkmotion-app/dist/index.html';
       }, 1000);
     }
   }
 }
+
+function ccBlinkRestoreLogin() {
+  try {
+    const u = localStorage.getItem('blink_remember_user');
+    const p = localStorage.getItem('blink_remember_pass');
+    const userEl = document.getElementById('terminal-user');
+    const passEl = document.getElementById('terminal-pass');
+    const remEl = document.getElementById('terminal-remember');
+    if (u && userEl) userEl.value = u;
+    if (p && passEl) passEl.value = p;
+    if (remEl) remEl.checked = !!(u && p);
+  } catch (e) {}
+}
+document.addEventListener('DOMContentLoaded', ccBlinkRestoreLogin);
 
 async function ccBlinkRegister() {
   const blinkUser = document.getElementById('cc-blink-user').value.trim();
