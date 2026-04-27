@@ -279,30 +279,35 @@ const styles = `
   }
   .admin-tabs {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #00ff0022;
-    padding-bottom: 10px;
+    gap: 0;
+    margin-bottom: 25px;
+    border: 1px solid #00ff0044;
+    padding: 0;
   }
   .admin-tabs button {
-    background: transparent;
-    border: 1px solid #00ff0044;
-    color: #00ff00aa;
-    padding: 5px 15px;
+    flex: 1;
+    background: #000;
+    border: none;
+    border-right: 1px solid #00ff0044;
+    color: #00ff00;
+    padding: 12px;
     font-family: 'VT323', monospace;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 1.2rem;
     transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .admin-tabs button:last-child {
+    border-right: none;
   }
   .admin-tabs button:hover {
-    background: #00ff0011;
-    color: #00ff00;
+    background: #00ff0022;
   }
   .admin-tabs button.active {
     background: #00ff00;
     color: #000;
-    border-color: #00ff00;
     font-weight: bold;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
   }
   .badge-admin {
     background: #00ff00;

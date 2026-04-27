@@ -12,8 +12,18 @@ function App() {
   const [password, setPassword] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
 
   const { currentPath, logs, isProcessing, executeCommand, commands } = useTerminalNavigation(user?.email);
+
+  // Load saved email
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('blink_remember_email');
+    if (savedEmail) {
+      setEmail(savedEmail);
+      setRememberMe(true);
+    }
+  }, []);
 
   // Watch for disconnect command
   useEffect(() => {
@@ -35,6 +45,11 @@ function App() {
         setIsRegistering(false);
       } else {
         await login(email, password);
+        if (rememberMe) {
+          localStorage.setItem('blink_remember_email', email);
+        } else {
+          localStorage.removeItem('blink_remember_email');
+        }
       }
     } catch (err) {
       console.error(err);
@@ -113,6 +128,16 @@ function App() {
             />
           </div>
           
+          <div className="remember-me">
+            <input 
+              type="checkbox" 
+              id="remember" 
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
+            <label htmlFor="remember">LEMBRAR_ACESSO</label>
+          </div>
+          
           <button type="submit" className="btn-terminal" disabled={loading}>
             {loading ? 'PROCESSANDO...' : isRegistering ? 'registrar' : 'conectar'}
           </button>
@@ -126,6 +151,25 @@ function App() {
             {isRegistering ? '[ VOLTAR AO LOGIN ]' : '[ SOLICITAR NOVO ACESSO ]'}
           </a>
         </div>
+        <style>{`
+          .remember-me {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #00ff00;
+            font-family: 'VT323', monospace;
+            cursor: pointer;
+          }
+          .remember-me input {
+            accent-color: #00ff00;
+            cursor: pointer;
+          }
+          .remember-me label {
+            cursor: pointer;
+            font-size: 1.1rem;
+          }
+        `}</style>
       </div>
     </div>
   );
