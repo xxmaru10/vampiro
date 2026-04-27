@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { useNews } from '../../hooks/useNews';
+import { usePosts } from '../../hooks/usePosts';
+import { BulkCommentModal } from './BulkCommentModal';
 
 export const AdminPanel: React.FC = () => {
-  console.log("[DEBUG] ADMIN_PANEL_V2_LOADED");
   const [identities, setIdentities] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -11,13 +12,18 @@ export const AdminPanel: React.FC = () => {
   // Form states
   const [newName, setNewName] = useState('');
   const [newBio, setNewBio] = useState('');
-  const [activeTab, setActiveTab] = useState<'npcs' | 'news'>('npcs');
+  const [activeTab, setActiveTab] = useState<'npcs' | 'news' | 'comments' | 'approval'>('npcs');
+  const [showBulkModal, setShowBulkModal] = useState(false);
 
   // News states
   const { news, createNews, deleteNews, loading: newsLoading, error: newsError } = useNews();
   const [newsTitle, setNewsTitle] = useState('');
   const [newsContent, setNewsContent] = useState('');
-  const [newsFile, setNewsFile] = useState<File | null>(null);
+  const [newsContentAscii, setNewsContentAscii] = useState('');
+  const [newsPublishedAt, setNewsPublishedAt] = useState('');
+  
+  // Post Approval states
+  const { posts: pendingPosts, loading: postsLoading, fetchUnapproved, approvePost, deletePost: rejectPost } = usePosts();
 
   const fetchIdentities = async () => {
     setLoading(true);
@@ -44,6 +50,12 @@ export const AdminPanel: React.FC = () => {
   useEffect(() => {
     fetchIdentities();
   }, []);
+
+  useEffect(() => {
+    if (activeTab === 'approval') {
+      fetchUnapproved();
+    }
+  }, [activeTab]);
 
   const handleCreateNPC = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,10 +99,11 @@ export const AdminPanel: React.FC = () => {
   const handleCreateNews = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newsTitle || !newsContent) return;
-    await createNews(newsTitle, newsContent, newsFile || undefined);
+    await createNews(newsTitle, newsContent, newsContentAscii, newsPublishedAt);
     setNewsTitle('');
     setNewsContent('');
-    setNewsFile(null);
+    setNewsContentAscii('');
+    setNewsPublishedAt('');
   };
 
   return (
@@ -104,7 +117,8 @@ export const AdminPanel: React.FC = () => {
         <div className="admin-error">
           <p>⚠️ {error || newsError}</p>
           <pre style={{fontSize: '0.7rem', background: '#000', color: '#0f0', padding: '10px', marginTop: '10px', overflowX: 'auto'}}>
-{`CREATE TABLE blink_identities (
+{`-- TABELAS
+CREATE TABLE IF NOT EXISTS blink_identities (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
   bio TEXT,
@@ -112,31 +126,59 @@ export const AdminPanel: React.FC = () => {
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
-CREATE TABLE blink_news (
+CREATE TABLE IF NOT EXISTS blink_news (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   title TEXT NOT NULL,
   content TEXT NOT NULL,
   ascii_url TEXT,
+  content_ascii TEXT,
+  published_at DATE,
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
--- Habilite RLS e políticas de acesso no Supabase`}
+-- Se a tabela já existe, adicione as colunas:
+ALTER TABLE blink_news ADD COLUMN IF NOT EXISTS content_ascii TEXT;
+ALTER TABLE blink_news ADD COLUMN IF NOT EXISTS published_at DATE;
+
+CREATE TABLE IF NOT EXISTS blink_posts (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  author_name TEXT NOT NULL,
+  user_id uuid,
+  is_npc BOOLEAN DEFAULT false,
+  title TEXT NOT NULL,
+  content TEXT NOT NULL,
+  approved BOOLEAN DEFAULT false,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+ALTER TABLE blink_posts ADD COLUMN IF NOT EXISTS approved BOOLEAN DEFAULT false;
+
+-- Habilite RLS e políticas de acesso (CORRIGE ERRO DE ENVIO)
+ALTER TABLE blink_messages ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public Access" ON blink_messages FOR ALL USING (true) WITH CHECK (true);
+
+ALTER TABLE blink_posts ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public Access Posts" ON blink_posts FOR ALL USING (true) WITH CHECK (true);
+
+-- Se preferir restrito (apenas logados):
+-- CREATE POLICY "Authenticated Access" ON blink_messages FOR ALL TO authenticated USING (true);
+`}
           </pre>
         </div>
       )}
 
       <div className="admin-tabs">
-        <button 
-          className={activeTab === 'npcs' ? 'active' : ''} 
-          onClick={() => setActiveTab('npcs')}
-        >
+        <button className={activeTab === 'npcs' ? 'active' : ''} onClick={() => setActiveTab('npcs')}>
           [ GERENCIAR_NPCS ]
         </button>
-        <button 
-          className={activeTab === 'news' ? 'active' : ''} 
-          onClick={() => setActiveTab('news')}
-        >
+        <button className={activeTab === 'news' ? 'active' : ''} onClick={() => setActiveTab('news')}>
           [ GERENCIAR_NOTICIAS ]
+        </button>
+        <button className={activeTab === 'comments' ? 'active' : ''} onClick={() => setActiveTab('comments')}>
+          [ COMENTÁRIOS ]
+        </button>
+        <button className={activeTab === 'approval' ? 'active' : ''} onClick={() => setActiveTab('approval')}>
+          [ APROVAR_POSTS {pendingPosts.length > 0 ? `(${pendingPosts.length})` : ''} ]
         </button>
       </div>
 
@@ -181,7 +223,7 @@ CREATE TABLE blink_news (
                       <div className="npc-name">ID: {npc.name}</div>
                       <div className="npc-bio">{npc.bio || 'Sem biografia...'}</div>
                     </div>
-                    <button onClick={() => handleDeleteNPC(npc.id)} className="btn-delete">APAGAR</button>
+                    <button onClick={() => handleDeleteNPC(npc.id)} className="btn-delete">🗑</button>
                   </div>
                 ))}
                 {identities.length === 0 && !loading && (
@@ -218,12 +260,21 @@ CREATE TABLE blink_news (
                   />
                 </div>
                 <div className="input-group">
-                  <label>ARQUIVO ASCII (.TXT)</label>
-                  <input 
-                    type="file" 
-                    accept=".txt"
-                    onChange={e => setNewsFile(e.target.files?.[0] || null)}
-                    className="file-input"
+                  <label>DATA DE PUBLICAÇÃO</label>
+                  <input
+                    type="date"
+                    value={newsPublishedAt}
+                    onChange={e => setNewsPublishedAt(e.target.value)}
+                    style={{ colorScheme: 'dark' }}
+                  />
+                </div>
+                <div className="input-group">
+                  <label>ARTE ASCII (OPCIONAL)</label>
+                  <textarea
+                    value={newsContentAscii}
+                    onChange={e => setNewsContentAscii(e.target.value)}
+                    placeholder="Cole sua arte ASCII aqui..."
+                    className="ascii-textarea"
                   />
                 </div>
                 <button type="submit" className="btn-save" disabled={newsLoading}>
@@ -239,11 +290,15 @@ CREATE TABLE blink_news (
                   <div key={item.id} className="npc-item">
                     <div className="npc-info">
                       <div className="npc-name">{item.title}</div>
-                      <div className="npc-date">{new Date(item.created_at).toLocaleDateString()}</div>
+                      <div className="npc-date">
+                        {item.published_at
+                          ? new Date(item.published_at + 'T12:00:00').toLocaleDateString('pt-BR')
+                          : new Date(item.created_at).toLocaleDateString('pt-BR')}
+                      </div>
                     </div>
                     <button onClick={() => {
-                      if(window.confirm('Apagar notícia?')) deleteNews(item.id, item.ascii_url)
-                    }} className="btn-delete">APAGAR</button>
+                      if (window.confirm('Apagar notícia?')) deleteNews(item.id);
+                    }} className="btn-delete">🗑</button>
                   </div>
                 ))}
                 {news.length === 0 && !newsLoading && (
@@ -253,182 +308,99 @@ CREATE TABLE blink_news (
             </div>
           </>
         )}
+
+        {activeTab === 'comments' && (
+          <div className="admin-card">
+            <h3>[⚡] INJEÇÃO EM MASSA DE COMENTÁRIOS</h3>
+            <p style={{ color: '#00ff0088', fontSize: '0.85rem', marginBottom: 16, lineHeight: 1.5 }}>
+              Insira um bloco de comentários pré-roteirizados em uma notícia com um único clique.
+              Suporta threads aninhadas ilimitadas, NPCs, curtidas artificiais e presets salvos no Supabase.
+            </p>
+            <button
+              onClick={() => setShowBulkModal(true)}
+              className="btn-save"
+              style={{ fontSize: '1rem', letterSpacing: 2 }}
+            >
+              [ ABRIR_INJEÇÃO_EM_MASSA ]
+            </button>
+
+            <div style={{ marginTop: 24, borderTop: '1px solid #00ff0022', paddingTop: 16 }}>
+              <h3 style={{ marginTop: 0 }}>[?] ESTRUTURA DO JSON</h3>
+              <pre style={{ fontSize: '0.72rem', background: '#000', color: '#00ff00', padding: 12, overflowX: 'auto', lineHeight: 1.4 }}>
+{`[
+  {
+    "author": "Zero_Cool",   // nome exibido
+    "is_npc": true,          // badge [NPC] + cor ciano
+    "content": "Mensagem...",
+    "likes": 5,              // curtidas artificiais
+    "replies": [             // aninhamento ilimitado
+      {
+        "author": "Ph4ntom",
+        "is_npc": true,
+        "content": "Resposta...",
+        "likes": 2,
+        "replies": [ ... ]
+      }
+    ]
+  }
+]`}
+              </pre>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'approval' && (
+          <div className="admin-card" style={{ gridColumn: '1 / -1' }}>
+            <h3>[🛡️] MODERAÇÃO DE TÓPICOS PENDENTES</h3>
+            <p style={{ color: '#00ff0088', fontSize: '0.85rem', marginBottom: 16 }}>
+              Analise e aprove posts de jogadores antes que eles fiquem visíveis no feed global.
+            </p>
+
+            <div className="npc-list">
+              {pendingPosts.map(post => (
+                <div key={post.id} className="npc-item" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 10 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', borderBottom: '1px solid #00ff0022', paddingBottom: 6 }}>
+                    <div className="npc-name">TÍTULO: {post.title}</div>
+                    <div style={{ fontSize: '0.75rem', color: '#00ff0066' }}>AUTOR: {post.author_name} // {new Date(post.created_at).toLocaleString('pt-BR')}</div>
+                  </div>
+                  <div style={{ fontSize: '0.85rem', color: '#ccffcc', background: '#000', padding: 10, width: '100%', boxSizing: 'border-box', border: '1px solid #00ff0011' }}>
+                    {post.content}
+                  </div>
+                  <div style={{ display: 'flex', gap: 10, alignSelf: 'flex-end', marginTop: 5 }}>
+                    <button 
+                      onClick={() => { if (window.confirm('Rejeitar e apagar este post?')) rejectPost(post.id).then(fetchUnapproved); }} 
+                      className="btn-delete" 
+                      style={{ padding: '4px 12px', fontSize: '0.8rem' }}
+                    >
+                      [ REJEITAR ]
+                    </button>
+                    <button 
+                      onClick={() => approvePost(post.id).then(fetchUnapproved)} 
+                      className="btn-save" 
+                      style={{ padding: '4px 20px', fontSize: '0.8rem', marginTop: 0 }}
+                    >
+                      [ APROVAR_POSTAGEM ]
+                    </button>
+                  </div>
+                </div>
+              ))}
+              {pendingPosts.length === 0 && !postsLoading && (
+                <div className="empty-state">NENHUM POST AGUARDANDO APROVAÇÃO.</div>
+              )}
+              {postsLoading && (
+                <div className="empty-state">CARREGANDO...</div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
-      <style>{styles}</style>
+      {showBulkModal && (
+        <BulkCommentModal
+          news={news.map(n => ({ id: n.id, title: n.title }))}
+          onClose={() => setShowBulkModal(false)}
+        />
+      )}
     </div>
   );
 };
-
-const styles = `
-  .admin-container {
-    background: #050505;
-    color: #00ff00;
-    font-family: 'VT323', monospace;
-    padding: 20px;
-    height: 100%;
-    border: 1px solid #00ff0033;
-  }
-  .admin-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    border-bottom: 2px solid #00ff00;
-    padding-bottom: 10px;
-  }
-  .admin-tabs {
-    display: flex;
-    gap: 0;
-    margin-bottom: 25px;
-    border: 1px solid #00ff0044;
-    padding: 0;
-  }
-  .admin-tabs button {
-    flex: 1;
-    background: #000;
-    border: none;
-    border-right: 1px solid #00ff0044;
-    color: #00ff00;
-    padding: 12px;
-    font-family: 'VT323', monospace;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: all 0.2s;
-    text-transform: uppercase;
-  }
-  .admin-tabs button:last-child {
-    border-right: none;
-  }
-  .admin-tabs button:hover {
-    background: #00ff0022;
-  }
-  .admin-tabs button.active {
-    background: #00ff00;
-    color: #000;
-    font-weight: bold;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-  }
-  .badge-admin {
-    background: #00ff00;
-    color: #000;
-    padding: 2px 10px;
-    font-weight: bold;
-    font-size: 0.9rem;
-  }
-  .admin-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-  }
-  .admin-card {
-    background: #080808;
-    border: 1px solid #00ff0044;
-    padding: 20px;
-    box-shadow: 0 0 15px rgba(0,255,0,0.05);
-  }
-  .admin-card h3 {
-    margin-top: 0;
-    font-size: 1.2rem;
-    color: #00ff00;
-    border-bottom: 1px solid #00ff0033;
-    padding-bottom: 10px;
-  }
-  .admin-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  .input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  .input-group label {
-    font-size: 0.8rem;
-    color: #00ff00aa;
-  }
-  .input-group input, .input-group textarea {
-    background: #000;
-    border: 1px solid #00ff0066;
-    color: #00ff00;
-    padding: 8px;
-    font-family: 'VT323', monospace;
-    font-size: 1rem;
-    outline: none;
-  }
-  .input-group textarea {
-    height: 100px;
-    resize: none;
-  }
-  .btn-save {
-    background: #00ff00;
-    color: #000;
-    border: none;
-    padding: 10px;
-    font-family: 'VT323', monospace;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1.1rem;
-  }
-  .btn-save:hover { background: #00cc00; }
-  
-  .npc-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-height: 400px;
-    overflow-y: auto;
-  }
-  .npc-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background: #000;
-    padding: 10px;
-    border: 1px solid #00ff0022;
-  }
-  .npc-info {
-    flex-grow: 1;
-  }
-  .npc-name {
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: #00ff00;
-  }
-  .npc-bio {
-    font-size: 0.8rem;
-    color: #00ff0088;
-    line-height: 1.2;
-  }
-  .btn-delete {
-    background: transparent;
-    color: #ff3333;
-    border: 1px solid #ff3333;
-    padding: 2px 8px;
-    cursor: pointer;
-    font-family: 'VT323', monospace;
-  }
-  .btn-delete:hover { background: #ff333322; }
-  
-  .admin-error {
-    background: #330000;
-    color: #ff3333;
-    padding: 15px;
-    border: 1px solid #ff3333;
-    margin-bottom: 20px;
-  }
-  .empty-state {
-    text-align: center;
-    padding: 20px;
-    color: #00ff0044;
-  }
-  .file-input {
-    font-size: 0.8rem;
-    color: #00ff00;
-  }
-  .npc-date {
-    font-size: 0.7rem;
-    color: #00ff0066;
-  }
-`;

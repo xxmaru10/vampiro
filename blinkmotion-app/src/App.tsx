@@ -16,20 +16,25 @@ function App() {
 
   const { currentPath, logs, isProcessing, executeCommand, commands } = useTerminalNavigation(user?.email);
 
-  // Load saved email
+  // Load saved credentials
   useEffect(() => {
     const savedEmail = localStorage.getItem('blink_remember_email');
+    const savedPassword = localStorage.getItem('blink_remember_password');
     if (savedEmail) {
       setEmail(savedEmail);
       setRememberMe(true);
+    }
+    if (savedPassword) {
+      setPassword(savedPassword);
     }
   }, []);
 
   // Watch for disconnect command
   useEffect(() => {
     if (currentPath === '/TERMINATING_SESSION...') {
-      const timer = setTimeout(() => {
-        logout();
+      const timer = setTimeout(async () => {
+        await logout();
+        window.location.href = '../../index.html';
       }, 1500);
       return () => clearTimeout(timer);
     }
@@ -47,8 +52,10 @@ function App() {
         await login(email, password);
         if (rememberMe) {
           localStorage.setItem('blink_remember_email', email);
+          localStorage.setItem('blink_remember_password', password);
         } else {
           localStorage.removeItem('blink_remember_email');
+          localStorage.removeItem('blink_remember_password');
         }
       }
     } catch (err) {
@@ -77,7 +84,7 @@ function App() {
           onExecute={executeCommand}
           isProcessing={isProcessing}
         />
-        <MainDisplay currentPath={currentPath} />
+        <MainDisplay currentPath={currentPath} user={user} />
         
         <style>{`
           .social-terminal-layout {
@@ -85,7 +92,6 @@ function App() {
             background-color: #000;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
           }
         `}</style>
       </div>
@@ -128,14 +134,15 @@ function App() {
             />
           </div>
           
-          <div className="remember-me">
+          <div className="checkbox-prompt">
             <input 
               type="checkbox" 
               id="remember" 
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
             />
-            <label htmlFor="remember">LEMBRAR_ACESSO</label>
+            <div className="checkbox-box"></div>
+            <label htmlFor="remember">LEMBRAR_LOGIN_E_SENHA</label>
           </div>
           
           <button type="submit" className="btn-terminal" disabled={loading}>
@@ -151,25 +158,6 @@ function App() {
             {isRegistering ? '[ VOLTAR AO LOGIN ]' : '[ SOLICITAR NOVO ACESSO ]'}
           </a>
         </div>
-        <style>{`
-          .remember-me {
-            margin: 15px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #00ff00;
-            font-family: 'VT323', monospace;
-            cursor: pointer;
-          }
-          .remember-me input {
-            accent-color: #00ff00;
-            cursor: pointer;
-          }
-          .remember-me label {
-            cursor: pointer;
-            font-size: 1.1rem;
-          }
-        `}</style>
       </div>
     </div>
   );

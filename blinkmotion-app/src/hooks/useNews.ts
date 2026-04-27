@@ -6,6 +6,8 @@ export interface NewsItem {
   title: string;
   content: string;
   ascii_url: string;
+  content_ascii?: string | null;
+  published_at?: string | null;
   created_at: string;
 }
 
@@ -26,37 +28,23 @@ export const useNews = () => {
     setLoading(false);
   };
 
-  const uploadAsciiArt = async (file: File) => {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Math.random()}.${fileExt}`;
-    const filePath = `ascii/${fileName}`;
-
-    const { error: uploadError } = await supabase.storage
-      .from('news_assets')
-      .upload(filePath, file);
-
-    if (uploadError) throw uploadError;
-
-    const { data } = supabase.storage
-      .from('news_assets')
-      .getPublicUrl(filePath);
-
-    return data.publicUrl;
-  };
-
-  const createNews = async (title: string, content: string, asciiFile?: File) => {
+  const createNews = async (
+    title: string,
+    content: string,
+    asciiText?: string,
+    publishedAt?: string
+  ) => {
     setLoading(true);
+    setError(null);
     try {
-      let ascii_url = '';
-      if (asciiFile) {
-        ascii_url = await uploadAsciiArt(asciiFile);
-      }
+      const content_ascii = asciiText && asciiText.trim().length > 0 ? asciiText : null;
+      const published_at = publishedAt && publishedAt.trim().length > 0 ? publishedAt : null;
 
-      const { error: err } = await supabase
+      const { error: insertErr } = await supabase
         .from('blink_news')
-        .insert([{ title, content, ascii_url }]);
+        .insert([{ title, content, ascii_url: '', content_ascii, published_at }]);
 
-      if (err) throw err;
+      if (insertErr) throw insertErr;
       await fetchNews();
     } catch (err: any) {
       setError(err.message);
@@ -65,27 +53,15 @@ export const useNews = () => {
     }
   };
 
-  const deleteNews = async (id: string, asciiUrl?: string) => {
+  const deleteNews = async (id: string) => {
     setLoading(true);
     try {
-      // 1. Deletar do banco
       const { error: err } = await supabase
         .from('blink_news')
         .delete()
         .eq('id', id);
 
       if (err) throw err;
-
-      // 2. Deletar do storage se existir URL
-      if (asciiUrl) {
-        const path = asciiUrl.split('/').pop();
-        if (path) {
-          await supabase.storage
-            .from('news_assets')
-            .remove([`ascii/${path}`]);
-        }
-      }
-
       await fetchNews();
     } catch (err: any) {
       setError(err.message);

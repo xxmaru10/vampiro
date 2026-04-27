@@ -1,29 +1,52 @@
 import React from 'react';
+import type { User } from '@supabase/supabase-js';
 import { AdminPanel } from './AdminPanel';
 import { WeeklyNews } from './WeeklyNews';
+import { ForumFeed } from './ForumFeed';
+import { MessagesView } from './MessagesView';
+import { Classifieds } from './Classifieds';
 import { useNews } from '../../hooks/useNews';
 
 interface MainDisplayProps {
   currentPath: string;
+  user?: User | null;
 }
 
-export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath }) => {
+const ACTIVE_PATHS = ['/LOCAL_BROADCAST', '/ROOT_ACCESS', '/SECURE_COMMS', '/CLASSIFIEDS'];
+
+export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) => {
   const { news } = useNews();
+  const isAdmin = user?.email === 'admin@blinkmotion.com';
+  const isActive = ACTIVE_PATHS.includes(currentPath);
 
   return (
-    <div className={`main-display ${currentPath === '/LOCAL_BROADCAST' ? 'feed-active' : ''}`}>
+    <div className={`main-display ${isActive ? 'feed-active' : ''}`}>
       {currentPath === '/ROOT_ACCESS' && (
         <AdminPanel />
       )}
-      
+
       {currentPath === '/LOCAL_BROADCAST' && (
         <div className="feed-container">
-          <WeeklyNews news={news} />
-          {/* Outros componentes do feed aqui no futuro */}
+          <WeeklyNews news={news} userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
+          <div style={{ borderTop: '2px dashed #00ff0022', marginTop: 8, paddingTop: 16 }}>
+            <ForumFeed userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
+          </div>
         </div>
       )}
 
-      {!['/ROOT_ACCESS', '/LOCAL_BROADCAST'].includes(currentPath) && (
+      {currentPath === '/SECURE_COMMS' && (
+        <div className="feed-container" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <MessagesView userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
+        </div>
+      )}
+
+      {currentPath === '/CLASSIFIEDS' && (
+        <div className="feed-container" style={{ height: '100%' }}>
+          <Classifieds />
+        </div>
+      )}
+
+      {!isActive && (
         <div className="empty-indicator">SYSTEM_IDLE... WAITING_FOR_CONTENT</div>
       )}
 
@@ -34,7 +57,7 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath }) => {
           background: #000000;
           border: 1px dashed #333;
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           justify-content: center;
           min-height: 300px;
           overflow-y: auto;
