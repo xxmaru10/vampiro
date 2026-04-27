@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { createClient } from '@supabase/supabase-js';
 
 const SUPABASE_URL = 'https://srajipjjlhevdniujwod.supabase.co';
+const SERVICE_KEY = 'sb_secret_nPs0eXN0W6k7A19DDHB1-g_mnM1FzaH';
 
 export const AdminPanel: React.FC = () => {
-  const [serviceKey, setServiceKey] = useState(localStorage.getItem('blink_service_key') || '');
-  const [isAuthenticated, setIsAuthenticated] = useState(!!serviceKey);
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -17,130 +15,95 @@ export const AdminPanel: React.FC = () => {
   const [editingUserId, setEditingUserId] = useState<string | null>(null);
   const [newPassword, setNewPassword] = useState('');
 
-  const getAdminClient = () => {
-    return createClient(SUPABASE_URL, serviceKey, {
-      auth: {
-        autoRefreshToken: false,
-        persistSession: false,
+  const adminFetch = async (endpoint: string, method: string = 'GET', body?: any) => {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/admin/${endpoint}`, {
+      method,
+      headers: {
+        'apikey': SERVICE_KEY,
+        'Authorization': `Bearer ${SERVICE_KEY}`,
+        'Content-Type': 'application/json'
       },
+      body: body ? JSON.stringify(body) : undefined
     });
+    
+    const data = await res.json().catch(() => null);
+    if (!res.ok) {
+      throw new Error(data?.message || data?.error || 'Erro na requisição Admin');
+    }
+    return data;
   };
 
   const fetchUsers = async () => {
     setLoading(true);
     setError('');
-    const adminAuth = getAdminClient().auth.admin;
-    
-    const { data, error } = await adminAuth.listUsers();
-    
-    if (error) {
-      setError(error.message);
-      setIsAuthenticated(false);
-      localStorage.removeItem('blink_service_key');
-    } else {
-      setUsers(data.users || []);
-      if (!isAuthenticated) {
-        setIsAuthenticated(true);
-        localStorage.setItem('blink_service_key', serviceKey);
-      }
+    try {
+      const data = await adminFetch('users');
+      setUsers(data.users || data || []);
+    } catch (err: any) {
+      setError(err.message);
     }
     setLoading(false);
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
-      fetchUsers();
-    }
-  }, [isAuthenticated]);
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (serviceKey.trim()) {
-      fetchUsers();
-    }
-  };
+    fetchUsers();
+  }, []);
 
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newUserEmail || !newUserPass) return;
     setLoading(true);
+    setError('');
     
     const email = newUserEmail.includes('@') ? newUserEmail : `${newUserEmail.toLowerCase().replace(/[^a-z0-9]/g, '')}@blinkmotion.com`;
 
-    const { error } = await getAdminClient().auth.admin.createUser({
-      email: email,
-      password: newUserPass,
-      email_confirm: true,
-    });
-
-    if (error) setError(error.message);
-    else {
+    try {
+      await adminFetch('users', 'POST', {
+        email: email,
+        password: newUserPass,
+        email_confirm: true,
+      });
       setNewUserEmail('');
       setNewUserPass('');
       fetchUsers();
+    } catch (err: any) {
+      setError(err.message);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const handleDeleteUser = async (id: string) => {
     if (!window.confirm('Tem certeza que deseja apagar este usuário?')) return;
     setLoading(true);
-    const { error } = await getAdminClient().auth.admin.deleteUser(id);
-    if (error) setError(error.message);
-    else fetchUsers();
-    setLoading(false);
+    try {
+      await adminFetch(`users/${id}`, 'DELETE');
+      fetchUsers();
+    } catch (err: any) {
+      setError(err.message);
+      setLoading(false);
+    }
   };
 
   const handleChangePassword = async (id: string) => {
     setLoading(true);
-    const { error } = await getAdminClient().auth.admin.updateUserById(id, {
-      password: newPassword
-    });
-    
-    if (error) setError(error.message);
-    else {
+    try {
+      await adminFetch(`users/${id}`, 'PUT', {
+        password: newPassword
+      });
       setEditingUserId(null);
       setNewPassword('');
       alert('Senha alterada com sucesso!');
+    } catch (err: any) {
+      setError(err.message);
     }
     setLoading(false);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('blink_service_key');
-    setServiceKey('');
-    setIsAuthenticated(false);
-    setUsers([]);
-  };
-
-  if (!isAuthenticated) {
-    return (
-      <div className="admin-container">
-        <h2>Acesso Administrativo Requerido</h2>
-        <p>Insira a <strong>Service Role Key</strong> do Supabase para gerenciar os usuários.</p>
-        <form onSubmit={handleLogin} className="admin-form">
-          <input 
-            type="password" 
-            placeholder="eyJhbGciOiJIUzI1NiIs..." 
-            value={serviceKey}
-            onChange={e => setServiceKey(e.target.value)}
-            className="admin-input"
-          />
-          <button type="submit" className="admin-btn" disabled={loading}>
-            {loading ? 'Validando...' : 'Conectar'}
-          </button>
-        </form>
-        {error && <div className="admin-error">{error}</div>}
-        <style>{styles}</style>
-      </div>
-    );
-  }
-
   return (
     <div className="admin-container">
       <div className="admin-header">
-        <h2>Painel de Controle</h2>
-        <button onClick={handleLogout} className="admin-btn-logout">Sair do Painel</button>
+        <h2>Painel de Controle Interno</h2>
+        <span style={{fontSize: '0.8rem', color: '#666'}}>Acesso Root (Bypass)</span>
       </div>
 
       {error && <div className="admin-error">{error}</div>}
@@ -179,7 +142,7 @@ export const AdminPanel: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map(u => (
+            {users.map((u: any) => (
               <tr key={u.id}>
                 <td>
                   <strong>{u.email?.split('@')[0]}</strong><br/>
