@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 const SUPABASE_URL = 'https://srajipjjlhevdniujwod.supabase.co';
-const SERVICE_KEY = 'sb_secret_nPs0eXN0W6k7A19DDHB1-g_mnM1FzaH';
 
 export const AdminPanel: React.FC = () => {
+  const [serviceKey, setServiceKey] = useState(localStorage.getItem('blink_service_key') || '');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -19,8 +20,8 @@ export const AdminPanel: React.FC = () => {
     const res = await fetch(`${SUPABASE_URL}/auth/v1/admin/${endpoint}`, {
       method,
       headers: {
-        'apikey': SERVICE_KEY,
-        'Authorization': `Bearer ${SERVICE_KEY}`,
+        'apikey': serviceKey,
+        'Authorization': `Bearer ${serviceKey}`,
         'Content-Type': 'application/json'
       },
       body: body ? JSON.stringify(body) : undefined
@@ -39,15 +40,30 @@ export const AdminPanel: React.FC = () => {
     try {
       const data = await adminFetch('users');
       setUsers(data.users || data || []);
+      setIsAuthenticated(true);
+      localStorage.setItem('blink_service_key', serviceKey);
     } catch (err: any) {
       setError(err.message);
+      setIsAuthenticated(false);
+      if (err.message.includes('Forbidden') || err.message.includes('Unauthorized')) {
+        localStorage.removeItem('blink_service_key');
+      }
     }
     setLoading(false);
   };
 
   useEffect(() => {
-    fetchUsers();
+    if (serviceKey) {
+      fetchUsers();
+    }
   }, []);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (serviceKey.trim()) {
+      fetchUsers();
+    }
+  };
 
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,11 +115,41 @@ export const AdminPanel: React.FC = () => {
     setLoading(false);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('blink_service_key');
+    setServiceKey('');
+    setIsAuthenticated(false);
+    setUsers([]);
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="admin-container">
+        <h2>Acesso Administrativo Requerido</h2>
+        <p>Insira a <strong>Service Role Key</strong> do Supabase para gerenciar os usuários localmente.</p>
+        <form onSubmit={handleLogin} className="admin-form">
+          <input 
+            type="password" 
+            placeholder="Cole sua secret key aqui..." 
+            value={serviceKey}
+            onChange={e => setServiceKey(e.target.value)}
+            className="admin-input"
+          />
+          <button type="submit" className="admin-btn" disabled={loading}>
+            {loading ? 'Validando...' : 'Conectar'}
+          </button>
+        </form>
+        {error && <div className="admin-error">{error}</div>}
+        <style>{styles}</style>
+      </div>
+    );
+  }
+
   return (
     <div className="admin-container">
       <div className="admin-header">
         <h2>Painel de Controle Interno</h2>
-        <span style={{fontSize: '0.8rem', color: '#666'}}>Acesso Root (Bypass)</span>
+        <button onClick={handleLogout} className="admin-btn-logout">Sair do Painel</button>
       </div>
 
       {error && <div className="admin-error">{error}</div>}
