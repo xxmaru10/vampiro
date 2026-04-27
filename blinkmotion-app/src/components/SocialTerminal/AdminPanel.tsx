@@ -9,7 +9,6 @@ export const AdminPanel: React.FC = () => {
   // Form states
   const [newName, setNewName] = useState('');
   const [newBio, setNewBio] = useState('');
-  const [newAvatar, setNewAvatar] = useState('');
 
   const fetchIdentities = async () => {
     setLoading(true);
@@ -49,7 +48,6 @@ export const AdminPanel: React.FC = () => {
         { 
           name: newName, 
           bio: newBio, 
-          avatar_url: newAvatar || `https://api.dicebear.com/7.x/bottts/svg?seed=${newName}`,
           is_npc: true 
         }
       ]);
@@ -59,7 +57,6 @@ export const AdminPanel: React.FC = () => {
     } else {
       setNewName('');
       setNewBio('');
-      setNewAvatar('');
       fetchIdentities();
     }
     setLoading(false);
@@ -92,7 +89,6 @@ export const AdminPanel: React.FC = () => {
 {`CREATE TABLE blink_identities (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
-  avatar_url TEXT,
   bio TEXT,
   is_npc BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT now()
@@ -126,15 +122,6 @@ export const AdminPanel: React.FC = () => {
                 placeholder="Descrição do personagem no sistema..."
               />
             </div>
-            <div className="input-group">
-              <label>AVATAR URL (OPCIONAL)</label>
-              <input 
-                type="text" 
-                value={newAvatar}
-                onChange={e => setNewAvatar(e.target.value)}
-                placeholder="https://..."
-              />
-            </div>
             <button type="submit" className="btn-save" disabled={loading}>
               {loading ? 'PROCESSANDO...' : 'EXECUTAR_CADASTRO'}
             </button>
@@ -147,9 +134,8 @@ export const AdminPanel: React.FC = () => {
           <div className="npc-list">
             {identities.map(npc => (
               <div key={npc.id} className="npc-item">
-                <img src={npc.avatar_url} alt="avatar" className="npc-avatar" />
                 <div className="npc-info">
-                  <div className="npc-name">{npc.name}</div>
+                  <div className="npc-name">ID: {npc.name}</div>
                   <div className="npc-bio">{npc.bio || 'Sem biografia...'}</div>
                 </div>
                 <button onClick={() => handleDeleteNPC(npc.id)} className="btn-delete">APAGAR</button>
@@ -234,7 +220,7 @@ const styles = `
     outline: none;
   }
   .input-group textarea {
-    height: 80px;
+    height: 100px;
     resize: none;
   }
   .btn-save {
@@ -264,23 +250,18 @@ const styles = `
     padding: 10px;
     border: 1px solid #00ff0022;
   }
-  .npc-avatar {
-    width: 40px;
-    height: 40px;
-    border: 1px solid #00ff00;
-    background: #222;
-  }
   .npc-info {
     flex-grow: 1;
   }
   .npc-name {
     font-weight: bold;
     font-size: 1.1rem;
+    color: #00ff00;
   }
   .npc-bio {
     font-size: 0.8rem;
     color: #00ff0088;
-    line-height: 1;
+    line-height: 1.2;
   }
   .btn-delete {
     background: transparent;
