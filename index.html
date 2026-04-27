@@ -1218,6 +1218,7 @@ mark{
     .top-nav { display: none; }
     .mobile-nav-toggle { display: block; }
     .btn-export { display: none; }
+    .brand-text-desktop { display: none; }
   }
 </style>
 </head>
@@ -1226,17 +1227,17 @@ mark{
 <header class="top-header">
   <div class="header-logo" style="display: flex; align-items: center; gap: 12px; cursor: pointer; flex-shrink: 0;" onclick="switchMainSection('trailer')">
     <img src="logo.png" alt="Logo" style="height: 40px; width: auto; filter: drop-shadow(0 0 5px var(--blood));">
-    <span style="font-family: 'Damion', cursive; font-size: 24px; color: #fff; text-shadow: 0 0 5px var(--blood); margin-top: -5px; transform: skewX(-10deg);">Miami Nights</span>
+    <span class="brand-text-desktop" style="font-family: 'Damion', cursive; font-size: 24px; color: #fff; text-shadow: 0 0 5px var(--blood); margin-top: -5px; transform: skewX(-10deg);">Miami Nights</span>
   </div>
   
+  <button class="mobile-nav-toggle" onclick="toggleMobileDropdown()" style="margin-left: 10px;">☰ MENU</button>
+
   <nav class="top-nav">
     <div class="top-nav-item active" onclick="switchMainSection('trailer')">Trailer</div>
     <div class="top-nav-item" onclick="switchMainSection('lore')">Geral</div>
     <div class="top-nav-item" onclick="openBlinkSection()">BLiNKMOTiON</div>
     <div class="top-nav-item" onclick="switchMainSection('char-creator')">Criar Personagem</div>
   </nav>
-
-  <button class="mobile-nav-toggle" onclick="toggleMobileDropdown()">☰</button>
 
   <div style="display: flex; gap: 10px;" class="desktop-only">
     <button class="btn-export" onclick="downloadCharacterData()">Baixar Dados</button>
