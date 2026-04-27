@@ -111,6 +111,15 @@ export const useComments = (newsId: string, userId?: string) => {
     await fetchComments();
   };
 
+  const updateComment = async (commentId: string, newContent: string) => {
+    const { error: err } = await supabase
+      .from('blink_comments')
+      .update({ content: newContent })
+      .eq('id', commentId);
+    if (err) throw err;
+    await fetchComments();
+  };
+
   const deleteComment = async (commentId: string) => {
     await supabase.from('blink_comments').delete().eq('id', commentId);
     await fetchComments();
@@ -175,7 +184,7 @@ export const useComments = (newsId: string, userId?: string) => {
 
   return {
     comments, loading, error,
-    addComment, toggleLike, setExtraLikes, deleteComment,
+    addComment, toggleLike, setExtraLikes, updateComment, deleteComment,
     bulkInsert, fetchPresets, savePreset, deletePreset,
     refresh: fetchComments,
   };

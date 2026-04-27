@@ -22,7 +22,7 @@ export const useTerminalNavigation = (userEmail?: string) => {
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Filtra os comandos visíveis baseados no papel do usuário
-  const isAdmin = userEmail === 'admin@blinkmotion.com';
+  const isAdmin = userEmail?.toLowerCase() === 'admin@blinkmotion.com';
   
   const availableCommands = Object.entries(COMMANDS).filter(
     ([, cmd]) => !cmd.adminOnly || isAdmin

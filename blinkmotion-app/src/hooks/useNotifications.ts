@@ -11,20 +11,20 @@ export interface Notification {
   link?: string;
 }
 
-export const useNotifications = (userId?: string, isAdmin: boolean = false) => {
+export const useNotifications = (userId?: string, isAdminParam: boolean = false) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const fetchNotifications = async () => {
-    if (!userId && !isAdmin) return;
+    if (!userId && !isAdminParam) return;
     setLoading(true);
 
     try {
       const allNotifs: Notification[] = [];
 
       // 1. ADMIN: Postagens pendentes de aprovação
-      if (isAdmin) {
+      if (isAdminParam) {
         const { data: pendingPosts } = await supabase
           .from('blink_posts')
           .select('id, author_name, title, created_at')

@@ -12,6 +12,7 @@ interface CommentItemProps {
   onToggleLike: (id: string, liked: boolean) => void;
   onReply: (content: string, authorName: string, isNpc: boolean, parentId: string) => Promise<void>;
   onDelete: (id: string) => void;
+  onEdit: (id: string, content: string) => Promise<void>;
   onSetExtraLikes: (id: string, count: number) => void;
   onBulkReply?: (parentId: string, items: BulkItem[]) => Promise<void>;
   parseBulkInput?: (text: string) => BulkItem[];
@@ -20,7 +21,7 @@ interface CommentItemProps {
 export const CommentItem: React.FC<CommentItemProps> = ({
   comment, depth, isAdmin, currentUserId, currentUserName,
   identities, selectedIdentity,
-  onToggleLike, onReply, onDelete, onSetExtraLikes,
+  onToggleLike, onReply, onDelete, onEdit, onSetExtraLikes,
   onBulkReply, parseBulkInput,
 }) => {
   const [replying, setReplying] = useState(false);
@@ -32,6 +33,9 @@ export const CommentItem: React.FC<CommentItemProps> = ({
   const [injectDone, setInjectDone] = useState(false);
   const [editingLikes, setEditingLikes] = useState(false);
   const [likesInput, setLikesInput] = useState(String(comment.extra_likes));
+  const [editing, setEditing] = useState(false);
+  const [editContent, setEditContent] = useState(comment.content);
+  const [editLoading, setEditLoading] = useState(false);
 
   const totalLikes = (comment.extra_likes ?? 0) + (comment.real_like_count ?? 0);
   const ts = new Date(comment.created_at);
@@ -78,6 +82,19 @@ export const CommentItem: React.FC<CommentItemProps> = ({
     setEditingLikes(false);
   };
 
+  const handleSaveEdit = async () => {
+    if (!editContent.trim()) return;
+    setEditLoading(true);
+    try {
+      await onEdit(comment.id, editContent.trim());
+      setEditing(false);
+    } catch (e: any) {
+      alert('Erro ao editar: ' + e.message);
+    } finally {
+      setEditLoading(false);
+    }
+  };
+
   const indent = depth * 16;
   const borderColor = depth === 0 ? '#00ff0022' : '#00ff0011';
 
@@ -95,9 +112,28 @@ export const CommentItem: React.FC<CommentItemProps> = ({
         </div>
 
         {/* Content */}
-        <div style={{ color: '#ccffcc', fontSize: '0.85rem', lineHeight: 1.4, whiteSpace: 'pre-wrap', marginBottom: 8 }}>
-          {comment.content}
-        </div>
+        {editing ? (
+          <div style={{ marginBottom: 10 }}>
+            <textarea
+              value={editContent}
+              onChange={e => setEditContent(e.target.value)}
+              rows={3}
+              style={{ width: '100%', background: '#000', border: '1px solid #00ff0088', color: '#00ff00', fontFamily: "'VT323', monospace", fontSize: '0.85rem', padding: 6, resize: 'vertical', outline: 'none', boxSizing: 'border-box' }}
+            />
+            <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
+              <button onClick={handleSaveEdit} disabled={editLoading} style={{ background: '#00ff00', color: '#000', border: 'none', padding: '2px 10px', fontFamily: "'VT323', monospace", fontSize: '0.8rem', fontWeight: 'bold', cursor: 'pointer' }}>
+                {editLoading ? '...' : '[ SALVAR ]'}
+              </button>
+              <button onClick={() => { setEditing(false); setEditContent(comment.content); }} style={{ background: 'transparent', border: '1px solid #ff333366', color: '#ff3333', padding: '2px 10px', fontFamily: "'VT323', monospace", fontSize: '0.8rem', cursor: 'pointer' }}>
+                [ CANCELAR ]
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div style={{ color: '#ccffcc', fontSize: '0.85rem', lineHeight: 1.4, whiteSpace: 'pre-wrap', marginBottom: 8 }}>
+            {comment.content}
+          </div>
+        )}
 
         {/* Actions */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
@@ -125,6 +161,16 @@ export const CommentItem: React.FC<CommentItemProps> = ({
           >
             [ RESPONDER ]
           </button>
+
+          {/* Edit (Admin) */}
+          {isAdmin && !editing && (
+            <button
+              onClick={() => { setEditContent(comment.content); setEditing(true); }}
+              style={{ background: 'transparent', border: 'none', color: '#00ff0066', cursor: 'pointer', fontFamily: "'VT323', monospace", fontSize: '0.85rem', padding: 0 }}
+            >
+              [ EDITAR ]
+            </button>
+          )}
 
           {/* Admin: edit extra likes + delete */}
           {isAdmin && (
@@ -239,6 +285,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({
               onToggleLike={onToggleLike}
               onReply={onReply}
               onDelete={onDelete}
+              onEdit={onEdit}
               onSetExtraLikes={onSetExtraLikes}
               onBulkReply={onBulkReply}
               parseBulkInput={parseBulkInput}

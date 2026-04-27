@@ -16,7 +16,7 @@ function App() {
   const [rememberMe, setRememberMe] = useState(false);
 
   const { currentPath, logs, isProcessing, executeCommand, commands } = useTerminalNavigation(user?.email);
-  const isAdmin = user?.email === 'admin@blinkmotion.com';
+  const isAdmin = user?.email?.toLowerCase() === 'admin@blinkmotion.com';
   const { unreadCount } = useNotifications(user?.id, isAdmin);
 
   // Load saved credentials
@@ -80,7 +80,7 @@ function App() {
     return (
       <div className="social-terminal-layout">
         <StatusHeader />
-        <NavigationMenu items={commands} unreadCount={unreadCount} />
+        <NavigationMenu items={commands} unreadCount={unreadCount} onSelect={executeCommand} />
         <CommandConsole 
           currentPath={currentPath}
           logs={logs}

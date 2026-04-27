@@ -8,15 +8,21 @@ interface NavItem {
 interface NavigationMenuProps {
   items: NavItem[];
   unreadCount?: number;
+  onSelect?: (key: string) => void;
 }
 
-export const NavigationMenu: React.FC<NavigationMenuProps> = ({ items }) => {
+export const NavigationMenu: React.FC<NavigationMenuProps> = ({ items, unreadCount, onSelect }) => {
   return (
     <div className="nav-menu">
       <h1 className="brand-name">BLINKMOTION // SOCIAL_NET</h1>
       <div className="nav-items">
         {items.map((item) => (
-          <div key={item.key} className="nav-item">
+          <div 
+            key={item.key} 
+            className="nav-item" 
+            onClick={() => onSelect?.(item.key)}
+            style={{ cursor: onSelect ? 'pointer' : 'default' }}
+          >
             <span className="nav-key">[{item.key}]</span>
             <span className="nav-label">
               {item.label}
