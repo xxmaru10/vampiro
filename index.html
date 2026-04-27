@@ -3795,7 +3795,7 @@ mark{
     <h1 class="cc-title">Desperte seu Sangue</h1>
     <p class="cc-subtitle">Inicie sua jornada nas sombras da noite</p>
     <div class="cc-archive-shell">
-      <div class="cc-archive-kicker">Rede da noite</div>
+      <div class="cc-archive-kicker">Coterie</div>
       <div class="cc-archive-copy">Vampiros salvos neste navegador aparecem aqui como referencia compartilhada. Clique em um nome para ver a ficha rápida.</div>
       <div class="cc-archive-empty" id="cc-archive-empty">
         Nenhum vampiro salvo ainda. Finalize uma ficha para criar a primeira referencia compartilhada.
@@ -4000,9 +4000,11 @@ mark{
     <div class="cc-page" id="cc-step-4">
       <div class="cc-section-title">3 Níveis Grátis de Disciplina do Clã</div>
       <p style="color:var(--ink-soft);font-size:13px;line-height:1.75;margin-bottom:18px">
-        Distribua <strong style="color:var(--blood)">3 níveis</strong> entre as Disciplinas nativas (1/1/1, 2/1/0 ou 3/0/0).
+        <strong>O que são?</strong> Disciplinas são os poderes sobrenaturais concedidos pelo Sangue Vampírico. Cada Clã possui três disciplinas nativas nas quais possuem afinidade natural.<br><br>
+        Distribua <strong style="color:var(--blood)">3 níveis</strong> iniciais entre as Disciplinas nativas do seu clã (podendo ser 1/1/1, 2/1/0 ou 3/0/0).
       </p>
       <div class="cc-disc-native" id="cc-disc-native-grid"></div>
+
 
       <div class="cc-divider"></div>
       <div class="cc-section-title">5 Pontos de Destino</div>
@@ -4022,6 +4024,9 @@ mark{
       <button class="cc-add-btn" onclick="ccAddExtraDisc()" id="cc-add-disc-btn" style="margin-bottom:22px">+ Adicionar Disciplina Extra</button>
 
       <div class="cc-section-title" style="font-size:9px;margin-bottom:10px">Façanhas</div>
+      <p style="color:var(--ink-soft);font-size:12px;line-height:1.6;margin-bottom:14px;background:rgba(0,255,0,0.05);padding:10px;border-left:2px solid var(--gold)">
+        <strong>O que são?</strong> Façanhas (Stunts) representam truques únicos, táticas exclusivas, itens mágicos ou laços raros que seu personagem possui. Em jogo, elas permitem "quebrar as regras" normais ou receber um bônus especial em situações muito específicas.
+      </p>
       <div id="cc-stunts-list"></div>
       <button class="cc-add-btn" onclick="ccAddStunt()" id="cc-add-stunt-btn">+ Criar Façanha (1 ponto)</button>
 
@@ -4489,6 +4494,29 @@ const CC_CLANS = {
 const CC_ALL_DISCIPLINES = ['Animalismo','Auspícios','Celeridade','Dominação','Fortitude','Ofuscação','Potência','Presença','Dementação','Obtenebração','Proteu','Quimerismo','Quietus','Serpentis','Taumaturgia','Necromancia','Temporis','Vicissitude','Visceratika','Valeren'];
 
 const CC_SKILLS = ['Atletismo','Carisma','Contatos','Dirigir','Empatia','Expressão','Lutar','Investigar','Conhecimento','Manipulação','Percepção','Ocultismo','Fisiologia','Recursos','Atirar','Furtividade','Ruídos','Sobrevivência','Tecnologia','Vontade'];
+
+const CC_SKILL_DESCRIPTIONS = {
+  'Atletismo': 'Capacidade física, corrida, escalada e acrobacias.',
+  'Carisma': 'Charme natural, magnetismo pessoal, liderança e lábia.',
+  'Contatos': 'Rede de informantes e conexões no mundo mortal ou vampírico.',
+  'Dirigir': 'Habilidade ao volante, desde fugas até perseguições.',
+  'Empatia': 'Perceber emoções, intenções, mentiras e ler o estado de espírito.',
+  'Expressão': 'Atuação, oratória, arte, persuasão pública e comunicação.',
+  'Lutar': 'Combate corpo a corpo, brigas de rua, ou uso de armas brancas.',
+  'Investigar': 'Encontrar pistas escondidas, deduções e busca atenta.',
+  'Conhecimento': 'Educação formal, acadêmica, história, ciências e burocracia.',
+  'Manipulação': 'Lábia, enganação, sedução para vantagem e jogos mentais.',
+  'Percepção': 'Atenção aos detalhes, audição aguçada e visão atenta.',
+  'Ocultismo': 'Conhecimento teórico sobre magia, lendas e o sobrenatural.',
+  'Fisiologia': 'Anatomia, medicina, primeiros socorros ou alteração corporal.',
+  'Recursos': 'Dinheiro, posses, influência financeira e poder aquisitivo.',
+  'Atirar': 'Uso de armas de fogo, arcos, bestas e precisão balística.',
+  'Furtividade': 'Mover-se em silêncio, esconder-se nas sombras e evitar detecção.',
+  'Ruídos': 'Manha das ruas, submundo criminoso, gangues e sobrevivência urbana.',
+  'Sobrevivência': 'Sobreviver em ambientes hostis, rastrear presas e caçar.',
+  'Tecnologia': 'Hacking, uso de computadores, conserto e sistemas eletrônicos.',
+  'Vontade': 'Força mental, determinação e resistência contra poderes mentais.'
+};
 
 const CC_ARCHIVE_KEY = 'cc_character_archive_v1';
 let ccPyramidLeft = {'4':1,'3':2,'2':3,'1':4,'-1':1};
@@ -5131,7 +5159,10 @@ function ccRenderSkillsGrid() {
     const cls=val>0?'positive':val<0?'negative':'';
     const rowCls=val<0?'is-negative':val!==0?'has-value':'';
     return `<div class="cc-skill-row ${rowCls}" id="cc-skill-row-${skill}">
-      <span class="cc-skill-name">${skill}</span>
+      <div style="flex:1">
+        <span class="cc-skill-name" style="display:block">${skill}</span>
+        <span style="display:block;font-size:10px;color:var(--ink-soft);margin-top:2px;line-height:1.3;padding-right:10px">${CC_SKILL_DESCRIPTIONS[skill] || ''}</span>
+      </div>
       <div class="cc-skill-controls">
         <button class="cc-skill-btn" onclick="ccSkillChange('${skill}',-1)">−</button>
         <span class="cc-skill-val ${cls}" id="cc-skill-val-${skill}">${disp}</span>
