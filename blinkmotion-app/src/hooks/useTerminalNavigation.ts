@@ -10,7 +10,7 @@ export type TerminalCommand = {
 const COMMANDS: Record<string, TerminalCommand> = {
   '1': { id: 'feed', label: 'FEED', path: '/LOCAL_BROADCAST' },
   '2': { id: 'messages', label: 'MENSAGENS', path: '/SECURE_COMMS' },
-  '3': { id: 'blackmarket', label: 'MERCADO_NEGRO', path: '/CLASSIFIEDS' },
+  '3': { id: 'blackmarket', label: 'CLASSIFICADOS', path: '/CLASSIFIEDS' },
   '4': { id: 'disconnect', label: 'DESCONECTAR', path: '/TERMINATING_SESSION...' },
   '5': { id: 'admin', label: 'ADMINISTRAÇÃO', path: '/ROOT_ACCESS', adminOnly: true },
 };

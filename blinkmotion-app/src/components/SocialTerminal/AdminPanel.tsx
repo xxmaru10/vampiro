@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { useNews } from '../../hooks/useNews';
+import { usePosts } from '../../hooks/usePosts';
 import { BulkCommentModal } from './BulkCommentModal';
 
 export const AdminPanel: React.FC = () => {
@@ -11,7 +12,7 @@ export const AdminPanel: React.FC = () => {
   // Form states
   const [newName, setNewName] = useState('');
   const [newBio, setNewBio] = useState('');
-  const [activeTab, setActiveTab] = useState<'npcs' | 'news' | 'comments'>('npcs');
+  const [activeTab, setActiveTab] = useState<'npcs' | 'news' | 'comments' | 'approval'>('npcs');
   const [showBulkModal, setShowBulkModal] = useState(false);
 
   // News states
@@ -20,6 +21,9 @@ export const AdminPanel: React.FC = () => {
   const [newsContent, setNewsContent] = useState('');
   const [newsContentAscii, setNewsContentAscii] = useState('');
   const [newsPublishedAt, setNewsPublishedAt] = useState('');
+  
+  // Post Approval states
+  const { posts: pendingPosts, loading: postsLoading, error: postsError, fetchUnapproved, approvePost, deletePost: rejectPost } = usePosts();
 
   const fetchIdentities = async () => {
     setLoading(true);
@@ -46,6 +50,12 @@ export const AdminPanel: React.FC = () => {
   useEffect(() => {
     fetchIdentities();
   }, []);
+
+  useEffect(() => {
+    if (activeTab === 'approval') {
+      fetchUnapproved();
+    }
+  }, [activeTab]);
 
   const handleCreateNPC = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -130,6 +140,19 @@ CREATE TABLE IF NOT EXISTS blink_news (
 ALTER TABLE blink_news ADD COLUMN IF NOT EXISTS content_ascii TEXT;
 ALTER TABLE blink_news ADD COLUMN IF NOT EXISTS published_at DATE;
 
+CREATE TABLE IF NOT EXISTS blink_posts (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  author_name TEXT NOT NULL,
+  user_id uuid,
+  is_npc BOOLEAN DEFAULT false,
+  title TEXT NOT NULL,
+  content TEXT NOT NULL,
+  approved BOOLEAN DEFAULT false,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+ALTER TABLE blink_posts ADD COLUMN IF NOT EXISTS approved BOOLEAN DEFAULT false;
+
 -- Habilite RLS e políticas de acesso no Supabase`}
           </pre>
         </div>
@@ -144,6 +167,9 @@ ALTER TABLE blink_news ADD COLUMN IF NOT EXISTS published_at DATE;
         </button>
         <button className={activeTab === 'comments' ? 'active' : ''} onClick={() => setActiveTab('comments')}>
           [ COMENTÁRIOS ]
+        </button>
+        <button className={activeTab === 'approval' ? 'active' : ''} onClick={() => setActiveTab('approval')}>
+          [ APROVAR_POSTS {pendingPosts.length > 0 ? `(${pendingPosts.length})` : ''} ]
         </button>
       </div>
 
@@ -310,6 +336,51 @@ ALTER TABLE blink_news ADD COLUMN IF NOT EXISTS published_at DATE;
   }
 ]`}
               </pre>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'approval' && (
+          <div className="admin-card" style={{ gridColumn: '1 / -1' }}>
+            <h3>[🛡️] MODERAÇÃO DE TÓPICOS PENDENTES</h3>
+            <p style={{ color: '#00ff0088', fontSize: '0.85rem', marginBottom: 16 }}>
+              Analise e aprove posts de jogadores antes que eles fiquem visíveis no feed global.
+            </p>
+
+            <div className="npc-list">
+              {pendingPosts.map(post => (
+                <div key={post.id} className="npc-item" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 10 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', borderBottom: '1px solid #00ff0022', paddingBottom: 6 }}>
+                    <div className="npc-name">TÍTULO: {post.title}</div>
+                    <div style={{ fontSize: '0.75rem', color: '#00ff0066' }}>AUTOR: {post.author_name} // {new Date(post.created_at).toLocaleString('pt-BR')}</div>
+                  </div>
+                  <div style={{ fontSize: '0.85rem', color: '#ccffcc', background: '#000', padding: 10, width: '100%', boxSizing: 'border-box', border: '1px solid #00ff0011' }}>
+                    {post.content}
+                  </div>
+                  <div style={{ display: 'flex', gap: 10, alignSelf: 'flex-end', marginTop: 5 }}>
+                    <button 
+                      onClick={() => { if (window.confirm('Rejeitar e apagar este post?')) rejectPost(post.id).then(fetchUnapproved); }} 
+                      className="btn-delete" 
+                      style={{ padding: '4px 12px', fontSize: '0.8rem' }}
+                    >
+                      [ REJEITAR ]
+                    </button>
+                    <button 
+                      onClick={() => approvePost(post.id).then(fetchUnapproved)} 
+                      className="btn-save" 
+                      style={{ padding: '4px 20px', fontSize: '0.8rem', marginTop: 0 }}
+                    >
+                      [ APROVAR_POSTAGEM ]
+                    </button>
+                  </div>
+                </div>
+              ))}
+              {pendingPosts.length === 0 && !postsLoading && (
+                <div className="empty-state">NENHUM POST AGUARDANDO APROVAÇÃO.</div>
+              )}
+              {postsLoading && (
+                <div className="empty-state">CARREGANDO...</div>
+              )}
             </div>
           </div>
         )}

@@ -9,6 +9,7 @@ export interface Post {
   title: string;
   content: string;
   created_at: string;
+  approved: boolean;
   comment_count?: number;
 }
 
@@ -30,6 +31,7 @@ export const usePosts = () => {
     const { data, error: err } = await supabase
       .from('blink_posts')
       .select('*')
+      .eq('approved', true)
       .order('created_at', { ascending: false })
       .range(from, to);
 
@@ -49,15 +51,32 @@ export const usePosts = () => {
   const createPost = async (title: string, content: string, authorName: string, userId?: string, isNpc = false) => {
     const { error: err } = await supabase
       .from('blink_posts')
-      .insert([{ title, content, author_name: authorName, user_id: userId ?? null, is_npc: isNpc }]);
+      .insert([{ title, content, author_name: authorName, user_id: userId ?? null, is_npc: isNpc, approved: isNpc }]);
     if (err) throw err;
     await fetchPage(0, true);
   };
 
-  const deletePost = async (id: string) => {
-    await supabase.from('blink_posts').delete().eq('id', id);
+  const approvePost = async (id: string) => {
+    const { error: err } = await supabase
+      .from('blink_posts')
+      .update({ approved: true })
+      .eq('id', id);
+    if (err) throw err;
     await fetchPage(0, true);
   };
 
-  return { posts, loading, hasMore, error, fetchPage, loadMore, refresh, createPost, deletePost };
+  const fetchUnapproved = async () => {
+    setLoading(true);
+    const { data, error: err } = await supabase
+      .from('blink_posts')
+      .select('*')
+      .eq('approved', false)
+      .order('created_at', { ascending: true });
+    
+    if (err) setError(err.message);
+    else setPosts(data ?? []);
+    setLoading(false);
+  };
+
+  return { posts, loading, hasMore, error, fetchPage, loadMore, refresh, createPost, deletePost, approvePost, fetchUnapproved };
 };

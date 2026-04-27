@@ -4,6 +4,7 @@ import { AdminPanel } from './AdminPanel';
 import { WeeklyNews } from './WeeklyNews';
 import { ForumFeed } from './ForumFeed';
 import { MessagesView } from './MessagesView';
+import { Classifieds } from './Classifieds';
 import { useNews } from '../../hooks/useNews';
 
 interface MainDisplayProps {
@@ -11,7 +12,7 @@ interface MainDisplayProps {
   user?: User | null;
 }
 
-const ACTIVE_PATHS = ['/LOCAL_BROADCAST', '/ROOT_ACCESS', '/SECURE_COMMS'];
+const ACTIVE_PATHS = ['/LOCAL_BROADCAST', '/ROOT_ACCESS', '/SECURE_COMMS', '/CLASSIFIEDS'];
 
 export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) => {
   const { news } = useNews();
@@ -36,6 +37,12 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) =
       {currentPath === '/SECURE_COMMS' && (
         <div className="feed-container" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
           <MessagesView userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
+        </div>
+      )}
+
+      {currentPath === '/CLASSIFIEDS' && (
+        <div className="feed-container" style={{ height: '100%' }}>
+          <Classifieds />
         </div>
       )}
 

@@ -30,6 +30,7 @@ const S = {
   btnSendDis: { background: '#003300', color: '#005500', border: 'none', padding: '6px 14px', fontFamily: "'VT323', monospace", fontSize: '0.88rem', fontWeight: 'bold', cursor: 'default', whiteSpace: 'nowrap', alignSelf: 'flex-end' } as React.CSSProperties,
   empty: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#00ff0022', fontSize: '0.82rem', letterSpacing: 3 } as React.CSSProperties,
   searchResult: { padding: '4px 7px', cursor: 'pointer', fontSize: '0.82rem', color: '#00ff0077', borderBottom: '1px solid #00ff0011' } as React.CSSProperties,
+  btnConnect: { width: '100%', background: '#00ff0011', color: '#00ff00', border: '1px solid #00ff0044', padding: '6px', fontFamily: "'VT323', monospace", fontSize: '0.85rem', cursor: 'pointer', marginBottom: 8, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 } as React.CSSProperties,
 };
 
 const convItem = (active: boolean): React.CSSProperties => ({
@@ -70,18 +71,17 @@ export const MessagesView: React.FC<MessagesViewProps> = ({ userEmail, isAdmin }
   const [openConv, setOpenConv] = useState<string | null>(null);
   const [msgText, setMsgText] = useState('');
   const [sending, setSending] = useState(false);
+  const [showConnectList, setShowConnectList] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const { conversations, chat, loading, chatLoading, error, fetchConversations, fetchChat, sendMessage, searchContacts } = useMessages(activeName);
 
-  // Admin: carregar identidades
+  // Carregar identidades para todos (para permitir conectar)
   useEffect(() => {
-    if (isAdmin) {
-      supabase.from('blink_identities').select('id, name').order('name')
-        .then(({ data }) => setIdentities(data ?? []));
-    }
-  }, [isAdmin]);
+    supabase.from('blink_identities').select('id, name').order('name')
+      .then(({ data }) => setIdentities(data ?? []));
+  }, []);
 
   // Quando admin muda identidade
   useEffect(() => {
@@ -178,6 +178,52 @@ export const MessagesView: React.FC<MessagesViewProps> = ({ userEmail, isAdmin }
       <div style={S.body}>
         {/* Sidebar */}
         <div style={S.sidebar}>
+          {/* Botão de Conectar */}
+          <button 
+            style={S.btnConnect} 
+            onClick={() => setShowConnectList(!showConnectList)}
+          >
+            <span style={{ fontSize: '1.1rem' }}>{showConnectList ? '⛌' : '🌐'}</span>
+            [ {showConnectList ? 'CANCELAR' : 'CONECTAR A USUÁRIO'} ]
+          </button>
+
+          {/* Lista de Identidades para Conectar */}
+          {showConnectList && (
+            <div style={{ 
+              background: '#001a00', 
+              border: '1px solid #00ff0033', 
+              marginBottom: 10, 
+              maxHeight: 200, 
+              overflowY: 'auto',
+              boxShadow: 'inset 0 0 10px #000'
+            }}>
+              <div style={{ padding: '5px 8px', fontSize: '0.7rem', color: '#00ff0044', borderBottom: '1px solid #00ff0022', letterSpacing: 1 }}>
+                IDENTIDADES DISPONÍVEIS:
+              </div>
+              {identities
+                .filter(i => i.name.toUpperCase() !== activeName)
+                .map(i => (
+                <div 
+                  key={i.id} 
+                  style={S.searchResult} 
+                  onClick={() => {
+                    openChat(i.name.toUpperCase());
+                    setShowConnectList(false);
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = '#00ff0011')}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                >
+                  ▶ {i.name.toUpperCase()}
+                </div>
+              ))}
+              {identities.length === 0 && (
+                <div style={{ padding: '10px', fontSize: '0.75rem', color: '#00ff0033', textAlign: 'center' }}>
+                  NENHUMA IDENTIDADE_DETECTADA
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Campo de busca */}
           <input
             type="text"
