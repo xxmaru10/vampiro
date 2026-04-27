@@ -29,29 +29,33 @@ export function useBlinkAuth() {
   const login = async (identifier: string, password: string) => {
     setError(null);
     setLoading(true);
-    const email = formatEmail(identifier);
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) {
-      setError(error.message);
+    try {
+      const email = formatEmail(identifier);
+      const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password });
+      if (authError) throw authError;
       setLoading(false);
-      throw error;
+      return data;
+    } catch (err: any) {
+      setError(err.message || 'Erro desconhecido ao conectar');
+      setLoading(false);
+      throw err;
     }
-    setLoading(false);
-    return data;
   };
 
   const register = async (identifier: string, password: string) => {
     setError(null);
     setLoading(true);
-    const email = formatEmail(identifier);
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if (error) {
-      setError(error.message);
+    try {
+      const email = formatEmail(identifier);
+      const { data, error: authError } = await supabase.auth.signUp({ email, password });
+      if (authError) throw authError;
       setLoading(false);
-      throw error;
+      return data;
+    } catch (err: any) {
+      setError(err.message || 'Erro desconhecido ao registrar');
+      setLoading(false);
+      throw err;
     }
-    setLoading(false);
-    return data;
   };
 
   const logout = async () => {

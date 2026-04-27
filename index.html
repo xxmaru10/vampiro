@@ -3764,7 +3764,7 @@ mark{
           </div>
           
           <div style="margin-top: 15px; text-align: right;">
-            <a href="#" onclick="event.preventDefault(); alert('SOLICITAÇÃO ENVIADA À CENTRAL. FINALIZE A FICHA PARA VALIDAR.')" style="color: #00ff00; text-decoration: none; font-family: 'VT323', monospace; font-size: 14px; border: 1px solid #00ff00; padding: 4px 10px; display: inline-block;">
+            <a href="#" onclick="event.preventDefault(); ccBlinkRegister();" style="color: #00ff00; text-decoration: none; font-family: 'VT323', monospace; font-size: 14px; border: 1px solid #00ff00; padding: 4px 10px; display: inline-block;">
               [ SOLICITAR NOVO ACESSO ]
             </a>
           </div>
@@ -4956,6 +4956,43 @@ async function ccSaveToSupabase(record) {
   }
 }
 
+async function ccBlinkRegister() {
+  const blinkUser = document.getElementById('cc-blink-user').value.trim();
+  const blinkPass = document.getElementById('cc-blink-pass').value.trim();
+  const authStatus = document.getElementById('blink-auth-status');
+
+  if (!blinkUser || !blinkPass) {
+    if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:#ff4444">PREENCHA LOGIN E SENHA.</span>';
+    return;
+  }
+
+  if (supabaseClient) {
+    if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:var(--gold)">REGISTRANDO NA REDE...</span>';
+    
+    try {
+      const systemEmail = `${blinkUser.toLowerCase().replace(/[^a-z0-9]/g, '')}@blinkmotion.com`;
+      
+      const { data, error } = await supabaseClient.auth.signUp({
+        email: systemEmail,
+        password: blinkPass,
+        options: {
+          data: {
+            username: blinkUser
+          }
+        }
+      });
+
+      if (error) {
+        if (authStatus) authStatus.innerHTML = `STATUS: <span style="color:#ff4444">${error.message.toUpperCase()}</span>`;
+      } else {
+        if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:#00ff00">ACESSO CONCEDIDO. BEM-VINDO.</span>';
+      }
+    } catch (e) {
+      if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:#ff4444">ERRO DE CONEXÃO.</span>';
+    }
+  }
+}
+
 async function ccFinish() {
   const finishMsg = document.getElementById('cc-finish-message');
   if (finishMsg) {
@@ -4982,32 +5019,36 @@ async function ccFinish() {
     await ccSaveToSupabase(record);
 
     // 3. NOVIDADE: Registrar no Supabase Auth para a rede social
-    const blinkUser = document.getElementById('cc-blink-user').value;
-    const blinkPass = document.getElementById('cc-blink-pass').value;
+    const blinkUser = document.getElementById('cc-blink-user').value.trim();
+    const blinkPass = document.getElementById('cc-blink-pass').value.trim();
     const authStatus = document.getElementById('blink-auth-status');
 
     if (supabaseClient && blinkUser && blinkPass) {
-      if (authStatus) authStatus.innerText = 'STATUS: SINCRONIZANDO CREDENCIAIS...';
+      if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:var(--gold)">SINCRONIZANDO CREDENCIAIS...</span>';
       
-      // Criamos um e-mail fake baseado no pseudônimo para o Supabase Auth aceitar
-      const systemEmail = `${blinkUser.toLowerCase().replace(/[^a-z0-9]/g, '')}@blinkmotion.com`;
-      
-      const { data: authData, error: authError } = await supabaseClient.auth.signUp({
-        email: systemEmail,
-        password: blinkPass,
-        options: {
-          data: {
-            username: blinkUser,
-            display_name: record.name
+      try {
+        const systemEmail = `${blinkUser.toLowerCase().replace(/[^a-z0-9]/g, '')}@blinkmotion.com`;
+        
+        const { data: authData, error: authError } = await supabaseClient.auth.signUp({
+          email: systemEmail,
+          password: blinkPass,
+          options: {
+            data: {
+              username: blinkUser,
+              display_name: record.name
+            }
           }
-        }
-      });
+        });
 
-      if (authError) {
-        console.warn("Aviso no registro Auth:", authError.message);
-        if (authStatus) authStatus.innerText = 'STATUS: USUARIO JÁ EXISTE OU SENHA CURTA.';
-      } else {
-        if (authStatus) authStatus.innerText = 'STATUS: ACESSO VINCULADO COM SUCESSO.';
+        if (authError) {
+          console.warn("Aviso no registro Auth:", authError.message);
+          if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:#ff4444">FALHA (USUARIO EXISTENTE OU SENHA CURTA)</span>';
+        } else {
+          if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:#00ff00">ACESSO VINCULADO COM SUCESSO.</span>';
+        }
+      } catch (e) {
+        console.error("Erro fatal no registro:", e);
+        if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:#ff4444">ERRO DE CONEXÃO.</span>';
       }
     }
 
