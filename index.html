@@ -1158,6 +1158,67 @@ mark{
   .cc-creator-match-photo { width: 110px; }
   .cc-genealogy-line { margin-left: 88px; }
 }
+  /* --- MOBILE HEADER DROPLIST --- */
+  .mobile-nav-toggle {
+    display: none;
+    background: rgba(255, 0, 170, 0.1);
+    border: 1px solid var(--blood);
+    color: #fff;
+    font-size: 24px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s;
+    text-shadow: 0 0 5px var(--blood);
+    box-shadow: 0 0 10px rgba(255, 0, 170, 0.2);
+  }
+  .mobile-nav-toggle:hover {
+    background: var(--blood);
+    box-shadow: 0 0 15px var(--blood);
+  }
+  .mobile-nav-dropdown {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: rgba(10, 2, 22, 0.98);
+    border-bottom: 2px solid var(--blood);
+    z-index: 1000;
+    flex-direction: column;
+    padding: 10px 0;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,0,170,0.2);
+  }
+  .mobile-nav-dropdown.active {
+    display: flex;
+  }
+  .mobile-nav-item-link {
+    padding: 18px 24px;
+    color: var(--ink-soft);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255,0,170,0.05);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .mobile-nav-item-link:hover, .mobile-nav-item-link.active {
+    color: #fff;
+    background: rgba(255, 0, 170, 0.1);
+    padding-left: 30px;
+    border-left: 3px solid var(--blood);
+  }
+
+  @media (max-width: 950px) {
+    .top-nav { display: none; }
+    .mobile-nav-toggle { display: block; }
+    .btn-export { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -1167,18 +1228,29 @@ mark{
     <img src="logo.png" alt="Logo" style="height: 40px; width: auto; filter: drop-shadow(0 0 5px var(--blood));">
     <span style="font-family: 'Damion', cursive; font-size: 24px; color: #fff; text-shadow: 0 0 5px var(--blood); margin-top: -5px; transform: skewX(-10deg);">Miami Nights</span>
   </div>
+  
   <nav class="top-nav">
     <div class="top-nav-item active" onclick="switchMainSection('trailer')">Trailer</div>
     <div class="top-nav-item" onclick="switchMainSection('lore')">Geral</div>
     <div class="top-nav-item" onclick="openBlinkSection()">BLiNKMOTiON</div>
     <div class="top-nav-item" onclick="switchMainSection('char-creator')">Criar Personagem</div>
   </nav>
-  <div style="display: flex; gap: 10px;">
+
+  <button class="mobile-nav-toggle" onclick="toggleMobileDropdown()">☰</button>
+
+  <div style="display: flex; gap: 10px;" class="desktop-only">
     <button class="btn-export" onclick="downloadCharacterData()">Baixar Dados</button>
+  </div>
+
+  <div id="mobileDropdown" class="mobile-nav-dropdown">
+    <a href="#" class="mobile-nav-item-link" onclick="switchMainSection('trailer'); toggleMobileDropdown(); return false;">Trailer</a>
+    <a href="#" class="mobile-nav-item-link" onclick="switchMainSection('lore'); toggleMobileDropdown(); return false;">Geral</a>
+    <a href="#" class="mobile-nav-item-link" onclick="openBlinkSection(); toggleMobileDropdown(); return false;">BLiNKMOTiON</a>
+    <a href="#" class="mobile-nav-item-link" onclick="switchMainSection('char-creator'); toggleMobileDropdown(); return false;">Criar Personagem</a>
   </div>
 </header>
 
-<button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+<button class="menu-toggle" id="sidebar-toggle" style="display: none;" onclick="toggleMenu()">☰ Menu</button>
 
 <div id="section-trailer" class="main-section active">
   <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: calc(100vh - 64px); padding: 40px; background: #000; position: relative; overflow: hidden;">
@@ -4028,25 +4100,27 @@ function switchMainSection(sectionId) {
   // Update nav items
   document.querySelectorAll('.top-nav-item').forEach(item => {
     item.classList.remove('active');
-    if (item.getAttribute('onclick').includes(sectionId)) {
+    if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(sectionId)) {
       item.classList.add('active');
     }
   });
 
-  // Handle menu toggle visibility
-  const menuToggle = document.querySelector('.menu-toggle');
-  if (sectionId === 'lore') {
-    // Only show if mobile
-    if (window.innerWidth <= 900) {
+  // Handle menu toggle visibility (Sidebar Toggle)
+  const menuToggle = document.getElementById('sidebar-toggle');
+  if (menuToggle) {
+    if (sectionId === 'lore' && window.innerWidth <= 950) {
       menuToggle.style.display = 'block';
     } else {
       menuToggle.style.display = 'none';
     }
-  } else {
-    menuToggle.style.display = 'none';
   }
 
   scrollToTop();
+}
+
+function toggleMobileDropdown() {
+  const drop = document.getElementById('mobileDropdown');
+  if (drop) drop.classList.toggle('active');
 }
 
 // ============ PERSISTÊNCIA DE PERSONAGENS ============
