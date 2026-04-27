@@ -4565,7 +4565,7 @@ async function ccReadArchive() { console.log("DIAGNOSTICO: Busca iniciada no Sup
           creator: d.data?.creator || {},
           lore: d.data?.lore || '',
           mortalSelf: d.data?.mortalSelf || '',
-          updatedAt: d.updated_at
+          updatedAt: d.created_at
         }));
       }
     } catch(e) {}
@@ -4935,7 +4935,7 @@ async function ccReadArchive() { console.log("DIAGNOSTICO: Busca iniciada no Sup
           creator: d.data?.creator || {},
           lore: d.data?.lore || '',
           mortalSelf: d.data?.mortalSelf || '',
-          updatedAt: d.updated_at
+          updatedAt: d.created_at
         }));
       }
     } catch(e) {}
@@ -5397,7 +5397,7 @@ async function ccSaveToSupabase(record) {
         band_role: record.bandRole,
         concept: record.concept,
         data: ccState, // Store full state as JSONB
-        updated_at: new Date().toISOString()
+        created_at: new Date().toISOString()
       });
       
     if (error) throw error;
