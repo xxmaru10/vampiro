@@ -282,59 +282,65 @@ CREATE POLICY "Public Access Posts" ON blink_posts FOR ALL USING (true) WITH CHE
                   />
                 </div>
                 <div className="input-group">
-                  <label>ARTE ASCII (OPCIONAL)</label>
-                  <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                    <textarea
-                      value={newsContentAscii}
-                      onChange={e => setNewsContentAscii(e.target.value)}
-                      placeholder="Cole sua arte ASCII aqui..."
-                      className="ascii-textarea"
-                      style={{ flex: 1 }}
-                    />
-                    <div style={{ 
-                      background: '#000', 
-                      border: '1px solid #00ff0044', 
-                      width: 110, 
-                      minWidth: 110, 
-                      height: 90, 
-                      overflow: 'hidden', 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center', 
-                      flexShrink: 0,
-                      marginTop: 0
-                    }}>
-                      {newsContentAscii ? (
-                        <pre style={((): React.CSSProperties => {
-                          const lines = newsContentAscii.split('\n');
-                          let maxLineLen = 0;
-                          for (let i = 0; i < lines.length; i++) {
-                            const len = lines[i].trimEnd().length;
-                            if (len > maxLineLen) maxLineLen = len;
-                          }
-                          const lineCount = lines.length || 1;
-                          const safeMaxLen = maxLineLen || 1;
-                          // Cálculo seguro de font-size para caber em 104x84
-                          const fontSize = Math.min(8, Math.min(104 / (safeMaxLen * 0.55), 84 / lineCount));
-                          
-                          return {
-                            margin: 0,
-                            color: '#00ff00',
-                            whiteSpace: 'pre',
-                            fontSize: `${fontSize}px`,
-                            lineHeight: 1,
-                            letterSpacing: 0,
-                            textAlign: 'center',
-                            fontFamily: "'VT323', monospace"
-                          };
-                        })()}>
-                          {newsContentAscii}
-                        </pre>
-                      ) : (
-                        <span style={{ fontSize: '0.6rem', color: '#00ff0033', letterSpacing: 2 }}>PREVIEW</span>
-                      )}
-                    </div>
+                  <label>ARTE ASCII (OPCIONAL) - [ PREVIEW EM TEMPO REAL ABAIXO ]</label>
+                  <div style={{ 
+                    background: '#000', 
+                    border: '1px solid #00ff0033', 
+                    width: '100%', 
+                    height: 150, 
+                    marginBottom: 10,
+                    overflow: 'hidden', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    position: 'relative'
+                  }}>
+                    {newsContentAscii ? (
+                      <div style={((): React.CSSProperties => {
+                        const lines = newsContentAscii.split('\n');
+                        let maxLineLen = 0;
+                        for (let i = 0; i < lines.length; i++) {
+                          const len = lines[i].trimEnd().length;
+                          if (len > maxLineLen) maxLineLen = len;
+                        }
+                        const lineCount = lines.length || 1;
+                        const safeMaxLen = maxLineLen || 1;
+                        
+                        // Usamos um tamanho de fonte fixo e escalamos o container
+                        // Proporção aproximada do caractere monospaçado: 10px altura x 6px largura
+                        const charWidth = 6;
+                        const charHeight = 10;
+                        const contentWidth = safeMaxLen * charWidth;
+                        const contentHeight = lineCount * charHeight;
+                        
+                        const scaleW = (400) / contentWidth; // box largo
+                        const scaleH = (140) / contentHeight;
+                        const scale = Math.min(1, Math.min(scaleW, scaleH));
+                        
+                        return {
+                          transform: `scale(${scale})`,
+                          transformOrigin: 'center',
+                          whiteSpace: 'pre',
+                          color: '#00ff00',
+                          lineHeight: `${charHeight}px`,
+                          fontSize: '10px',
+                          fontFamily: "'VT323', monospace",
+                          textAlign: 'center'
+                        };
+                      })()}>
+                        {newsContentAscii}
+                      </div>
+                    ) : (
+                      <span style={{ fontSize: '0.8rem', color: '#00ff0033', letterSpacing: 5 }}>AGUARDANDO_INPUT_ASCII...</span>
+                    )}
                   </div>
+                  <textarea 
+                    value={newsContentAscii}
+                    onChange={e => setNewsContentAscii(e.target.value)}
+                    placeholder="Cole sua arte ASCII aqui (será redimensionada automaticamente)..."
+                    className="ascii-textarea"
+                    style={{ width: '100%', minHeight: '120px' }}
+                  />
                 </div>
                 <button type="submit" className="btn-save" disabled={newsLoading}>
                   {newsLoading ? 'ENVIANDO...' : 'PUBLICAR_NOTÍCIA'}
