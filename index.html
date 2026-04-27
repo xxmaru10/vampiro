@@ -4549,7 +4549,7 @@ async function ccUpdateRoleAvailability() {
   });
 }
 
-async function ccReadArchive() {
+async function ccReadArchive() { console.log("DIAGNOSTICO: Busca iniciada no Supabase");
   if (supabaseClient) {
     try {
       const { data, error } = await supabaseClient.from('characters').select('*').order('updated_at', { ascending: false });
@@ -4734,7 +4734,10 @@ function ccSelectArchiveByIndex(index, isCreator = false) {
       </div>
       <div>
         <div class="cc-archive-detail-title">${ccEscapeHtml(entry.name || 'Sem Nome')}</div>
-        <div class="cc-archive-detail-clan">${ccEscapeHtml(entry.clan || 'Sem Cla')}</div>
+        <div class="cc-archive-detail-clan">
+          <span style="color:var(--blood)">${ccEscapeHtml(entry.clan || 'Sem Cla')}</span> 
+          <span style="color:var(--gold); margin-left:5px">✦ ${ccEscapeHtml(entry.bandRole || 'Sem Cargo')}</span>
+        </div>
         
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:20px">
           <div><div class="cc-label">Conceito</div><div style="font-size:13px">${ccEscapeHtml(entry.concept || '—')}</div></div>
@@ -4916,7 +4919,7 @@ function ccPersistArchiveRecord() {
   return record;
 }
 
-async function ccReadArchive() {
+async function ccReadArchive() { console.log("DIAGNOSTICO: Busca iniciada no Supabase");
   if (supabaseClient) {
     try {
       const { data, error } = await supabaseClient.from('characters').select('*').order('updated_at', { ascending: false });
@@ -4966,6 +4969,8 @@ function ccSave() {
   const g = id => document.getElementById(id);
   ccState.name = g('cc-name')?.value||'';
   ccState.playerName = g('cc-player-name')?.value||'';
+  ccState.clan = g('cc-clan')?.value||'';
+  ccState.bandRole = g('cc-band-role')?.value||'';
   ccState.lore = g('cc-lore')?.value||'';
   ccState.concept = g('cc-concept')?.value||'';
   ccState.difficulty = g('cc-difficulty')?.value||'';
@@ -4989,6 +4994,7 @@ function ccRestoreForm() {
   set('cc-creator-name',ccState.creatorName); set('cc-creator-lore',ccState.creatorLore);
   set('cc-creator-personality',ccState.creatorPersonality); set('cc-creator-relation',ccState.creatorRelation);
   set('cc-blink-user', ccState.blinkUsername); set('cc-blink-pass', ccState.blinkPassword);
+  if(ccState.bandRole){ const el=document.getElementById('cc-band-role'); if(el){el.value=ccState.bandRole;} }
   if(ccState.clan){ const el=document.getElementById('cc-clan'); if(el){el.value=ccState.clan;ccUpdateClan(false);} }
   if(ccState.photo){ const p=document.getElementById('cc-photo-preview'); if(p){p.src=ccState.photo;p.style.display='block';document.getElementById('cc-photo-placeholder').style.display='none';} }
   ccSyncCreatorPreview();
@@ -5395,7 +5401,7 @@ async function ccSaveToSupabase(record) {
       });
       
     if (error) throw error;
-    console.log("Salvo no Supabase com sucesso!");
+    console.log("Salvo no Supabase:", record.name, record.bandRole);
     return data;
   } catch (err) {
     console.error("Erro ao salvar na tabela characters:", err);
@@ -5637,7 +5643,7 @@ async function ccFinish() {
 function ccResetState() {
   ccState = {
     recordId:null,
-    photo:null, name:'', playerName:'', clan:'', lore:'', concept:'', difficulty:'', mortalSelf:'',
+    photo:null, name:'', playerName:'', clan:'', bandRole:'', lore:'', concept:'', difficulty:'', mortalSelf:'',
     aspect1:'', aspect2:'', skills:{}, discFree:{}, discExtra:[], stunts:[],
     creatorPhoto:null, creatorName:'', creatorLore:'', creatorPersonality:'', creatorRelation:'',
     creatorSourceId:null,
@@ -5668,10 +5674,8 @@ function ccResetState() {
   ccGoToStep(1);
 }
 
-// Init when section is activated — hook into switchMainSection
-const _origSwitch = typeof switchMainSection === 'function' ? switchMainSection : null;
-// We patch switchMainSection after definition to init CC when entering char-creator
-window.addEventListener('load', () => { ccInit(); });
+// Patch switchMainSection after definition to init CC when entering char-creator
+// ccInit agora é chamado após a inicialização do SupabaseClient abaixo.
 
 // ============ SUPABASE CONNECTION ============
 // ATENÇÃO: A chave 'Px7RZwjEGnwh6gRD' parece ser a SENHA do banco de dados.
@@ -5689,11 +5693,15 @@ if (window.supabase && typeof window.supabase.createClient === 'function') {
   try {
     supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
     console.log("Supabase client inicializado:", supabaseClient);
+    // Inicializa o Character Creator APÓS o client estar pronto
+    ccInit();
   } catch (error) {
     console.warn("Falha ao inicializar o cliente Supabase:", error);
+    ccInit(); // Tenta inicializar mesmo com erro (fallback local)
   }
 } else {
-  console.warn("Supabase JS nÃ£o foi carregado; seguindo sem integraÃ§Ã£o remota.");
+  console.warn("Supabase JS não foi carregado; seguindo sem integração remota.");
+  ccInit();
 }
 
 // ============ INICIALIZAÇÃO DA PÁGINA ============
