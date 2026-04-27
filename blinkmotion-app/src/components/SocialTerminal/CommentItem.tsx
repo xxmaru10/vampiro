@@ -198,13 +198,13 @@ export const CommentItem: React.FC<CommentItemProps> = ({
               </div>
             ) : (
               <div>
-                <div style={{ color: '#00ff0044', fontSize: '0.7rem', marginBottom: 4, fontFamily: 'Courier New, monospace' }}>
-                  {'Texto simples ou JSON com replies aninhados'}
+                <div style={{ color: '#00ff0044', fontSize: '0.7rem', marginBottom: 4, fontFamily: 'Courier New, monospace', whiteSpace: 'pre', lineHeight: 1.6 }}>
+                  {'Nome / Mensagem / Curtidas\n> Resposta  >> MaisAninhado'}
                 </div>
                 <textarea
                   value={injectText}
                   onChange={e => { setInjectText(e.target.value); setInjectError(''); setInjectDone(false); }}
-                  placeholder={'Nome\nMensagem\nCurtidas\n\nou JSON: [{"author":"X","content":"...","replies":[...]}]'}
+                  placeholder={'Ph4ntom\nVi. Parecia codificado.\n2\n\n> Nyx\n> Sim, estive lá.\n1'}
                   rows={5}
                   style={{ width: '100%', background: '#000', border: `1px solid ${injectError ? '#ff3333' : '#00ff0033'}`, color: '#00ff00', fontFamily: 'Courier New, monospace', fontSize: '0.78rem', padding: 6, resize: 'vertical', outline: 'none', boxSizing: 'border-box', marginBottom: 6 }}
                 />

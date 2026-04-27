@@ -3,6 +3,7 @@ import type { User } from '@supabase/supabase-js';
 import { AdminPanel } from './AdminPanel';
 import { WeeklyNews } from './WeeklyNews';
 import { ForumFeed } from './ForumFeed';
+import { MessagesView } from './MessagesView';
 import { useNews } from '../../hooks/useNews';
 
 interface MainDisplayProps {
@@ -10,16 +11,19 @@ interface MainDisplayProps {
   user?: User | null;
 }
 
+const ACTIVE_PATHS = ['/LOCAL_BROADCAST', '/ROOT_ACCESS', '/SECURE_COMMS'];
+
 export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) => {
   const { news } = useNews();
   const isAdmin = user?.email === 'admin@blinkmotion.com';
+  const isActive = ACTIVE_PATHS.includes(currentPath);
 
   return (
-    <div className={`main-display ${currentPath === '/LOCAL_BROADCAST' ? 'feed-active' : ''} ${currentPath === '/ROOT_ACCESS' ? 'admin-active' : ''}`}>
+    <div className={`main-display ${isActive ? 'feed-active' : ''}`}>
       {currentPath === '/ROOT_ACCESS' && (
         <AdminPanel />
       )}
-      
+
       {currentPath === '/LOCAL_BROADCAST' && (
         <div className="feed-container">
           <WeeklyNews news={news} userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
@@ -29,7 +33,13 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) =
         </div>
       )}
 
-      {!['/ROOT_ACCESS', '/LOCAL_BROADCAST'].includes(currentPath) && (
+      {currentPath === '/SECURE_COMMS' && (
+        <div className="feed-container" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <MessagesView userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
+        </div>
+      )}
+
+      {!isActive && (
         <div className="empty-indicator">SYSTEM_IDLE... WAITING_FOR_CONTENT</div>
       )}
 
@@ -45,7 +55,7 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) =
           min-height: 300px;
           overflow-y: auto;
         }
-        .main-display.feed-active, .main-display.admin-active {
+        .main-display.feed-active {
           align-items: stretch;
           justify-content: flex-start;
           border-style: solid;

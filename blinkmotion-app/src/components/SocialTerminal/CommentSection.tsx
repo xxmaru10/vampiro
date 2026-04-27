@@ -10,24 +10,60 @@ interface CommentSectionProps {
   isAdmin: boolean;
 }
 
-function parseBulkText(text: string): BulkItem[] {
-  const blocks = text.trim().split(/\n\s*\n/);
-  const results: BulkItem[] = [];
-  for (const block of blocks) {
-    const lines = block.trim().split('\n').map(l => l.trim()).filter(Boolean);
-    if (lines.length < 2) continue;
-    const author = lines[0];
-    const lastLine = lines[lines.length - 1];
-    const likes = /^\d+$/.test(lastLine) ? parseInt(lastLine, 10) : 0;
-    const contentFinal = /^\d+$/.test(lastLine) && lines.length > 2
-      ? lines.slice(1, lines.length - 1).join('\n')
-      : lines.slice(1).join('\n');
-    results.push({ author, content: contentFinal, likes, is_npc: true });
+function parseBulkSimple(text: string): BulkItem[] {
+  const blocks = text.trim().split(/\n[ \t]*\n/);
+
+  interface ParsedBlock {
+    depth: number;
+    author: string;
+    content: string;
+    likes: number;
   }
-  return results;
+
+  const parsed: ParsedBlock[] = [];
+
+  for (const block of blocks) {
+    const lines = block.trim().split('\n').map(l => l.trimEnd()).filter(Boolean);
+    if (lines.length === 0) continue;
+
+    const depthMatch = lines[0].match(/^(>+)\s*/);
+    const depth = depthMatch ? depthMatch[1].length : 0;
+    const stripped = lines.map(l => l.replace(/^>+\s*/, '').trimStart());
+
+    const author = stripped[0];
+    if (!author) continue;
+
+    const lastLine = stripped[stripped.length - 1];
+    const hasLikes = stripped.length > 1 && /^\d+$/.test(lastLine);
+    const likes = hasLikes ? parseInt(lastLine, 10) : 0;
+    const contentLines = hasLikes ? stripped.slice(1, -1) : stripped.slice(1);
+    const content = contentLines.join('\n').trim();
+    if (!content) continue;
+
+    parsed.push({ depth, author, content, likes });
+  }
+
+  const roots: BulkItem[] = [];
+  const stack: Array<{ depth: number; item: BulkItem }> = [];
+
+  for (const p of parsed) {
+    const item: BulkItem = { author: p.author, content: p.content, likes: p.likes, is_npc: true, replies: [] };
+
+    while (stack.length > 0 && stack[stack.length - 1].depth >= p.depth) stack.pop();
+
+    if (stack.length === 0) {
+      roots.push(item);
+    } else {
+      (stack[stack.length - 1].item.replies ??= []).push(item);
+    }
+
+    stack.push({ depth: p.depth, item });
+  }
+
+  return roots;
 }
 
-function parseBulkInput(text: string): BulkItem[] {
+export function parseBulkInput(text: string): BulkItem[] {
   const trimmed = text.trim();
   if (trimmed.startsWith('[') || trimmed.startsWith('{')) {
     try {
@@ -35,7 +71,7 @@ function parseBulkInput(text: string): BulkItem[] {
       return Array.isArray(parsed) ? parsed : [parsed];
     } catch {}
   }
-  return parseBulkText(text);
+  return parseBulkSimple(text);
 }
 
 export const CommentSection: React.FC<CommentSectionProps> = ({ newsId, userId, userEmail, isAdmin }) => {
@@ -198,15 +234,15 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ newsId, userId, 
       {isAdmin && bulkOpen && (
         <div style={{ marginTop: 10, background: '#050505', border: '1px solid #00ff0033', padding: 12 }}>
           <div style={{ color: '#00ff0077', fontSize: '0.78rem', marginBottom: 8, letterSpacing: 1 }}>
-            INJEÇÃO_EM_MASSA — texto simples ou JSON com replies aninhados:
+            INJEÇÃO_EM_MASSA — use &gt; para respostas aninhadas:
           </div>
-          <div style={{ color: '#00ff0044', fontSize: '0.72rem', marginBottom: 8, fontFamily: 'Courier New, monospace', lineHeight: 1.6 }}>
-            {'Texto: Nome / Mensagem / Curtidas (bloco por linha em branco)\nJSON: [{"author":"X","content":"...","likes":3,"replies":[{"author":"Y","content":"..."}]}]'}
+          <div style={{ color: '#00ff0044', fontSize: '0.72rem', marginBottom: 8, fontFamily: 'Courier New, monospace', lineHeight: 1.8, whiteSpace: 'pre' }}>
+            {'Nome\nMensagem\nCurtidas\n\n> NomeResposta\n> Mensagem\nCurtidas\n\n>> NomeMaisAninhado\n>> Mensagem'}
           </div>
           <textarea
             value={bulkText}
             onChange={e => { setBulkText(e.target.value); setBulkDone(false); setBulkError(''); }}
-            placeholder={'Zero_Cool\nAlguém notou o sinal no setor 7?\n3\n\nPh4ntom\nSim, parece codificado.\n1'}
+            placeholder={'Zero_Cool\nAlguém viu o sinal no setor 7?\n4\n\n> Ph4ntom\n> Vi. Parecia codificado.\n2\n\n>> Nyx\n>> Sim, estive lá.\n1'}
             rows={10}
             style={{ width: '100%', background: '#000', border: `1px solid ${bulkError ? '#ff3333' : '#00ff0033'}`, color: '#00ff00', fontFamily: 'Courier New, monospace', fontSize: '0.78rem', padding: 8, resize: 'vertical', outline: 'none', boxSizing: 'border-box', marginBottom: 8 }}
           />
