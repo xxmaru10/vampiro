@@ -4554,6 +4554,7 @@ async function ccReadArchive() { console.log("DIAGNOSTICO: Busca iniciada no Sup
     try {
       const { data, error } = await supabaseClient.from('characters').select('*');
       if (!error && data) {
+        console.log("Dados brutos do Supabase:", data.map(d => ({ id: d.id, name: d.name, data_keys: d.data ? Object.keys(d.data) : 'SEM DATA', creatorName: d.data?.creatorName })));
         return data.map(d => ({
           id: d.id,
           name: d.name,
@@ -4574,7 +4575,7 @@ async function ccReadArchive() { console.log("DIAGNOSTICO: Busca iniciada no Sup
           updatedAt: d.created_at
         }));
       }
-    } catch(e) {}
+    } catch(e) { console.error("Erro ao ler Supabase:", e); }
   }
   const raw = localStorage.getItem(CC_ARCHIVE_KEY);
   try { return JSON.parse(raw || '[]'); } catch (e) { return []; }
