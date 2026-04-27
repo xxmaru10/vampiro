@@ -48,7 +48,7 @@ export const ForumFeed: React.FC<ForumFeedProps> = ({ userId, userEmail, isAdmin
     setFormError('');
     try {
       const { name, isNpc } = resolveAuthor();
-      await createPost(title.trim(), content.trim(), name, userId, isNpc);
+      await createPost(title.trim(), content.trim(), name, userId, isNpc, isAdmin);
       setTitle(''); setContent(''); setShowForm(false);
     } catch (e: any) {
       setFormError(e.message);

@@ -48,10 +48,17 @@ export const usePosts = () => {
 
   const refresh = () => fetchPage(0, true);
 
-  const createPost = async (title: string, content: string, authorName: string, userId?: string, isNpc = false) => {
+  const createPost = async (title: string, content: string, authorName: string, userId?: string, isNpc = false, forceApprove = false) => {
     const { error: err } = await supabase
       .from('blink_posts')
-      .insert([{ title, content, author_name: authorName, user_id: userId ?? null, is_npc: isNpc, approved: isNpc }]);
+      .insert([{ 
+        title, 
+        content, 
+        author_name: authorName, 
+        user_id: userId ?? null, 
+        is_npc: isNpc, 
+        approved: isNpc || forceApprove 
+      }]);
     if (err) throw err;
     await fetchPage(0, true);
   };

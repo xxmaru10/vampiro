@@ -18,7 +18,7 @@ const ACTIVE_PATHS = ['/LOCAL_BROADCAST', '/ROOT_ACCESS', '/SECURE_COMMS', '/CLA
 
 export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) => {
   const { news, createNews, deleteNews, loading: newsLoading, error: newsError } = useNews();
-  const isAdmin = user?.email === 'admin@blinkmotion.com';
+  const isAdmin = user?.email?.toLowerCase() === 'admin@blinkmotion.com';
   const { notifications, unreadCount, loading: notifLoading, markAllAsRead } = useNotifications(user?.id, isAdmin);
   const isActive = ACTIVE_PATHS.includes(currentPath);
 
