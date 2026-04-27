@@ -4565,11 +4565,11 @@ async function ccReadArchive() { console.log("DIAGNOSTICO: Busca iniciada no Sup
           concept: d.concept,
           photo: d.data?.photo || '',
           creator: {
-            name: d.data?.creatorName || '',
-            photo: d.data?.creatorPhoto || '',
-            lore: d.data?.creatorLore || '',
-            personality: d.data?.creatorPersonality || '',
-            relation: d.data?.creatorRelation || ''
+            name: d.data?.creatorName || d.data?.creator?.name || '',
+            photo: d.data?.creatorPhoto || d.data?.creator?.photo || '',
+            lore: d.data?.creatorLore || d.data?.creator?.lore || '',
+            personality: d.data?.creatorPersonality || d.data?.creator?.personality || '',
+            relation: d.data?.creatorRelation || d.data?.creator?.relation || ''
           },
           lore: d.data?.lore || '',
           mortalSelf: d.data?.mortalSelf || '',
