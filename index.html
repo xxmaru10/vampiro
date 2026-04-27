@@ -4971,10 +4971,7 @@ async function ccInit() {
   setInterval(ccUpdateRoleAvailability, 20000);
 }
 
-function ccSyncBandRoleToAspect() {
-  const role = document.getElementById('cc-band-role')?.value || '';
-  const asp = document.getElementById('cc-aspect-1');
-  if (asp) asp.value = role ? Cargo na Banda: ${role} : '';
+function ccSyncBandRoleToAspect() { var role = document.getElementById('cc-band-role') ? document.getElementById('cc-band-role').value : ''; var asp = document.getElementById('cc-aspect-1'); if (asp) asp.value = role ? 'Cargo na Banda: ' + role : ''; ccState.aspect1 = asp ? asp.value : ''; } : '';
   ccState.aspect1 = asp?.value || '';
 }
 
@@ -5007,7 +5004,7 @@ function ccRestoreForm() {
   set('cc-creator-name',ccState.creatorName); set('cc-creator-lore',ccState.creatorLore);
   set('cc-creator-personality',ccState.creatorPersonality); set('cc-creator-relation',ccState.creatorRelation);
   set('cc-blink-user', ccState.blinkUsername); set('cc-blink-pass', ccState.blinkPassword);
-  if(ccState.bandRole){ const el=document.getElementById('cc-band-role'); if(el){el.value=ccState.bandRole;} }
+  if(ccState.bandRole){ const el=document.getElementById('cc-band-role'); if(el){ el.value=ccState.bandRole; ccSyncBandRoleToAspect(); } }
   if(ccState.clan){ const el=document.getElementById('cc-clan'); if(el){el.value=ccState.clan;ccUpdateClan(false);} }
   if(ccState.photo){ const p=document.getElementById('cc-photo-preview'); if(p){p.src=ccState.photo;p.style.display='block';document.getElementById('cc-photo-placeholder').style.display='none';} }
   ccSyncCreatorPreview();
