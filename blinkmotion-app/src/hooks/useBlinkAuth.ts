@@ -21,9 +21,15 @@ export function useBlinkAuth() {
     return () => subscription.unsubscribe();
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const formatEmail = (identifier: string) => {
+    if (identifier.includes('@')) return identifier;
+    return `${identifier.toLowerCase().replace(/[^a-z0-9]/g, '')}@blinkmotion.com`;
+  };
+
+  const login = async (identifier: string, password: string) => {
     setError(null);
     setLoading(true);
+    const email = formatEmail(identifier);
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       setError(error.message);
@@ -34,9 +40,10 @@ export function useBlinkAuth() {
     return data;
   };
 
-  const register = async (email: string, password: string) => {
+  const register = async (identifier: string, password: string) => {
     setError(null);
     setLoading(true);
+    const email = formatEmail(identifier);
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) {
       setError(error.message);
