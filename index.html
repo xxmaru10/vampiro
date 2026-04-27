@@ -5516,11 +5516,18 @@ async function ccFinish() {
     }
 
     const name = ccState.name || 'Personagem';
+    
+    // Limpa o cache local (arquivo e rascunho) para que tudo fique vazio
+    localStorage.removeItem(CC_ARCHIVE_KEY);
+    localStorage.removeItem('cc_draft_v2'); 
+    ccArchive = [];
+    ccRenderArchive();
+
     if (finishMsg) {
       finishMsg.innerHTML = `
         <div class="cc-neonato-box" style="margin-top:24px;border-left-color:var(--gold);background:rgba(0,255,255,0.05);animation:fadeIn 0.5s ease">
           <h4 style="color:var(--gold)">✦ ${ccEscapeHtml(name)} foi imortalizado!</h4>
-          <p>Sua ficha foi salva com sucesso. Os dados agora ocupam menos espaço e foram replicados na nuvem.</p>
+          <p>Sua ficha foi salva com sucesso e sincronizada com a nuvem.</p>
           <div style="display:flex;gap:10px;margin-top:15px">
             <button class="cc-btn-next" onclick="ccResetState(); switchMainSection('lore')" style="width:auto;padding:8px 20px">Ir para Geral →</button>
             <button class="cc-btn-prev" onclick="ccResetState(); location.reload();" style="width:auto;padding:8px 20px">Novo Personagem</button>
