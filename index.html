@@ -4552,7 +4552,7 @@ async function ccUpdateRoleAvailability() {
 async function ccReadArchive() { console.log("DIAGNOSTICO: Busca iniciada no Supabase");
   if (supabaseClient) {
     try {
-      const { data, error } = await supabaseClient.from('characters').select('*').order('updated_at', { ascending: false });
+      const { data, error } = await supabaseClient.from('characters').select('*');
       if (!error && data) {
         return data.map(d => ({
           id: d.id,
@@ -4922,7 +4922,7 @@ function ccPersistArchiveRecord() {
 async function ccReadArchive() { console.log("DIAGNOSTICO: Busca iniciada no Supabase");
   if (supabaseClient) {
     try {
-      const { data, error } = await supabaseClient.from('characters').select('*').order('updated_at', { ascending: false });
+      const { data, error } = await supabaseClient.from('characters').select('*');
       if (!error && data) {
         return data.map(d => ({
           id: d.id,
