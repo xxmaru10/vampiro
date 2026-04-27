@@ -4553,6 +4553,7 @@ async function ccReadArchive() { console.log("DIAGNOSTICO: Busca iniciada no Sup
   if (supabaseClient) {
     try {
       const { data, error } = await supabaseClient.from('characters').select('*');
+      console.log("Retorno Supabase:", JSON.stringify({ error: error?.message, dataLength: Array.isArray(data) ? data.length : data }));
       if (!error && data) {
         console.log("Dados brutos do Supabase:", data.map(d => ({ id: d.id, name: d.name, data_keys: d.data ? Object.keys(d.data) : 'SEM DATA', creatorName: d.data?.creatorName })));
         return data.map(d => ({
