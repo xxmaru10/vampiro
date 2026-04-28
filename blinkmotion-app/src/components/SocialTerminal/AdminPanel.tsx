@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { usePosts } from '../../hooks/usePosts';
 import { BulkCommentModal } from './BulkCommentModal';
-import { NewsItem } from '../../hooks/useNews';
+import type { NewsItem } from '../../hooks/useNews';
 
 interface AdminPanelProps {
   news: NewsItem[];

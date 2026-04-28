@@ -11,7 +11,7 @@ export interface Notification {
   link?: string;
 }
 
-export const useNotifications = (userId?: string, isAdminParam: boolean = false) => {
+export const useNotifications = (userId?: string, isAdminParam: boolean = false, userEmail?: string) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -65,25 +65,34 @@ export const useNotifications = (userId?: string, isAdminParam: boolean = false)
       }
 
       // 3. JOGADOR: Respostas de NPCs em seus posts ou comentários
-      if (userId && !isAdmin) {
-        // Buscamos comentários de NPCs que são respostas a comentários ou posts do usuário
-        // Nota: Para precisão total, precisaríamos que blink_comments tivesse user_id.
-        // Por enquanto, faremos uma busca simplificada ou apenas simularemos se a tabela não permitir.
+      if (userId && !isAdminParam && userEmail) {
+        // O username/author_name na rede social é derivado do email
+        const playerUsername = userEmail.split('@')[0];
         
-        // Exemplo: Comentários marcados como NPC em threads recentes
+        // Simulação mais próxima: pegamos os últimos comentários de NPCs e vemos se mencionam o jogador (na vida real faríamos um join)
+        // Como o supabaseClient permite text search:
         const { data: npcInteractions } = await supabase
           .from('blink_comments')
           .select('id, author_name, content, created_at')
           .eq('is_npc', true)
           .order('created_at', { ascending: false })
-          .limit(5);
+          .limit(15);
 
-        (npcInteractions ?? []).forEach(interaction => {
+        // Filtra localmente se o conteúdo menciona o jogador de alguma forma ou se é pra ele
+        // Para garantir que haja notificações, vamos simular que qualquer NPC reply é relevante se tivermos poucas
+        let relevant = (npcInteractions ?? []).filter(c => c.content.toLowerCase().includes(playerUsername.toLowerCase()));
+        
+        // Fallback para dar a sensação de rede ativa
+        if (relevant.length === 0 && npcInteractions && npcInteractions.length > 0) {
+           relevant = [npcInteractions[0]];
+        }
+
+        relevant.forEach(interaction => {
           allNotifs.push({
             id: `npc_${interaction.id}`,
             type: 'reply',
-            title: 'RESPOSTA DE NPC',
-            content: `${interaction.author_name} respondeu na rede.`,
+            title: 'NOVA MENSAGEM RECEBIDA',
+            content: `${interaction.author_name} interagiu: "${interaction.content.substring(0, 30)}..."`,
             created_at: interaction.created_at,
             read: false,
             link: '/LOCAL_BROADCAST'
@@ -115,7 +124,7 @@ export const useNotifications = (userId?: string, isAdminParam: boolean = false)
     // Refresh a cada 1 minuto
     const interval = setInterval(fetchNotifications, 60000);
     return () => clearInterval(interval);
-  }, [userId, isAdmin]);
+  }, [userId, isAdminParam]);
 
   return { notifications, unreadCount, loading, markAllAsRead, refresh: fetchNotifications };
 };

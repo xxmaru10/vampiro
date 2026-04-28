@@ -31,7 +31,14 @@ export const useTerminalNavigation = (userEmail?: string) => {
   const availableCommandsMap = Object.fromEntries(availableCommands);
 
   const executeCommand = (input: string) => {
-    const cmd = availableCommandsMap[input.trim()];
+    // Pode receber o ID numérico ('1', '5') ou o caminho ('/LOCAL_BROADCAST')
+    let cmd = availableCommandsMap[input.trim()];
+    
+    if (!cmd) {
+      // Tentar buscar por path
+      const found = availableCommands.find(([, c]) => c.path === input.trim());
+      if (found) cmd = found[1];
+    }
     
     if (cmd) {
       setIsProcessing(true);

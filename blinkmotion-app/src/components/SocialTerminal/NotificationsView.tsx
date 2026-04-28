@@ -1,14 +1,15 @@
 import React from 'react';
-import { Notification } from '../../hooks/useNotifications';
+import type { Notification } from '../../hooks/useNotifications';
 import { Bell, MessageSquare, Heart, FileClock } from 'lucide-react';
 
 interface NotificationsViewProps {
   notifications: Notification[];
   loading: boolean;
   onMarkRead: () => void;
+  onNavigate?: (path: string) => void;
 }
 
-export const NotificationsView: React.FC<NotificationsViewProps> = ({ notifications, loading, onMarkRead }) => {
+export const NotificationsView: React.FC<NotificationsViewProps> = ({ notifications, loading, onMarkRead, onNavigate }) => {
   React.useEffect(() => {
     // Marcar como lido ao abrir a página
     onMarkRead();
@@ -37,7 +38,12 @@ export const NotificationsView: React.FC<NotificationsViewProps> = ({ notificati
       ) : (
         <div className="notif-list">
           {notifications.map((n) => (
-            <div key={n.id} className={`notif-item ${n.type}`}>
+            <div 
+              key={n.id} 
+              className={`notif-item ${n.type}`}
+              style={{ cursor: n.link ? 'pointer' : 'default' }}
+              onClick={() => n.link && onNavigate?.(n.link)}
+            >
               <div className="notif-icon">{getIcon(n.type)}</div>
               <div className="notif-content">
                 <div className="notif-title">{n.title}</div>

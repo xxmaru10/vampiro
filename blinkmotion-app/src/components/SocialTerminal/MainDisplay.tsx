@@ -12,14 +12,15 @@ import { useNotifications } from '../../hooks/useNotifications';
 interface MainDisplayProps {
   currentPath: string;
   user?: User | null;
+  onNavigate?: (path: string) => void;
 }
 
 const ACTIVE_PATHS = ['/LOCAL_BROADCAST', '/ROOT_ACCESS', '/SECURE_COMMS', '/CLASSIFIEDS', '/NOTIFICATIONS'];
 
-export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) => {
+export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user, onNavigate }) => {
   const { news, createNews, deleteNews, loading: newsLoading, error: newsError } = useNews();
   const isAdmin = user?.email?.toLowerCase() === 'admin@blinkmotion.com';
-  const { notifications, unreadCount, loading: notifLoading, markAllAsRead } = useNotifications(user?.id, isAdmin);
+  const { notifications, loading: notifLoading, markAllAsRead } = useNotifications(user?.id, isAdmin, user?.email);
   const isActive = ACTIVE_PATHS.includes(currentPath);
 
   return (
@@ -61,6 +62,7 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) =
             notifications={notifications} 
             loading={notifLoading} 
             onMarkRead={markAllAsRead} 
+            onNavigate={onNavigate}
           />
         </div>
       )}
