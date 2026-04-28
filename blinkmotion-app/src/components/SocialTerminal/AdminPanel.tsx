@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { usePosts } from '../../hooks/usePosts';
 import { BulkCommentModal } from './BulkCommentModal';
-import { NewsItem } from '../../hooks/useNews';
+import type { NewsItem } from '../../hooks/useNews';
 
 interface AdminPanelProps {
   news: NewsItem[];
@@ -10,6 +10,7 @@ interface AdminPanelProps {
   deleteNews: (id: string) => Promise<void>;
   newsLoading: boolean;
   newsError: string | null;
+  currentPath?: string;
 }
 
 export const AdminPanel: React.FC<AdminPanelProps> = ({ 
@@ -17,7 +18,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   createNews, 
   deleteNews, 
   newsLoading, 
-  newsError 
+  newsError,
+  currentPath = ''
 }) => {
   const [identities, setIdentities] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -69,6 +71,14 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
       fetchUnapproved();
     }
   }, [activeTab]);
+
+  useEffect(() => {
+    const query = currentPath.includes('?') ? currentPath.split('?')[1].split('#')[0] : '';
+    const tab = new URLSearchParams(query).get('tab');
+    if (tab === 'approval' || tab === 'comments' || tab === 'news' || tab === 'npcs') {
+      setActiveTab(tab);
+    }
+  }, [currentPath]);
 
   const handleCreateNPC = async (e: React.FormEvent) => {
     e.preventDefault();

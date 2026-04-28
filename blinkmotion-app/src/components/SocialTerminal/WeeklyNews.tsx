@@ -8,15 +8,43 @@ interface WeeklyNewsProps {
   userId?: string;
   userEmail?: string;
   isAdmin?: boolean;
+  currentPath?: string;
 }
 
-export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail, isAdmin = false }) => {
+export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail, isAdmin = false, currentPath = '' }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [asciiContent, setAsciiContent] = useState<string>('');
   const [commentsOpen, setCommentsOpen] = useState(false);
 
   // Fecha os comentários ao trocar de notícia
   useEffect(() => { setCommentsOpen(false); }, [currentIndex]);
+
+  // Navegação direta via newsId e scroll para comentário
+  useEffect(() => {
+    const query = currentPath.includes('?') ? currentPath.split('?')[1].split('#')[0] : '';
+    const hash = currentPath.includes('#') ? `#${currentPath.split('#')[1]}` : '';
+    const params = new URLSearchParams(query);
+    const newsId = params.get('newsId');
+    if (newsId && news.length > 0) {
+      const index = news.findIndex(n => n.id === newsId);
+      if (index !== -1) {
+        setCurrentIndex(index);
+        setCommentsOpen(true);
+        
+        // Se houver hash de comentário, aguarda o render e scrolla
+        if (hash.startsWith('#comment-')) {
+          setTimeout(() => {
+            const el = document.getElementById(hash.substring(1));
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              el.style.backgroundColor = 'rgba(0, 255, 0, 0.2)';
+              setTimeout(() => { el.style.backgroundColor = '#050505'; }, 2000);
+            }
+          }, 500);
+        }
+      }
+    }
+  }, [currentPath, news]);
 
   useEffect(() => {
     if (news.length === 0) { setAsciiContent(''); return; }

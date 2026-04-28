@@ -12,55 +12,64 @@ import { useNotifications } from '../../hooks/useNotifications';
 interface MainDisplayProps {
   currentPath: string;
   user?: User | null;
+  onNavigate?: (path: string) => void;
 }
 
 const ACTIVE_PATHS = ['/LOCAL_BROADCAST', '/ROOT_ACCESS', '/SECURE_COMMS', '/CLASSIFIEDS', '/NOTIFICATIONS'];
 
-export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user }) => {
+export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user, onNavigate }) => {
   const { news, createNews, deleteNews, loading: newsLoading, error: newsError } = useNews();
   const isAdmin = user?.email?.toLowerCase() === 'admin@blinkmotion.com';
-  const { notifications, unreadCount, loading: notifLoading, markAllAsRead } = useNotifications(user?.id, isAdmin);
-  const isActive = ACTIVE_PATHS.includes(currentPath);
+  const { notifications, loading: notifLoading, markAsRead, markAllAsRead } = useNotifications(user?.id, isAdmin, user?.email);
+  // Extrai apenas o path base para as verificações de renderização
+  const safePath = currentPath || '';
+  console.log('MainDisplay - currentPath:', safePath);
+  const basePath = safePath.split('?')[0].split('#')[0];
+  const isActive = ACTIVE_PATHS.includes(basePath);
+  console.log('MainDisplay - basePath:', basePath, 'isActive:', isActive);
 
   return (
     <div className={`main-display ${isActive ? 'feed-active' : ''}`}>
-      {currentPath === '/ROOT_ACCESS' && (
+      {basePath === '/ROOT_ACCESS' && (
         <AdminPanel 
           news={news} 
           createNews={createNews} 
           deleteNews={deleteNews} 
           newsLoading={newsLoading} 
-          newsError={newsError} 
+          newsError={newsError}
+          currentPath={safePath}
         />
       )}
 
-      {currentPath === '/LOCAL_BROADCAST' && (
+      {basePath === '/LOCAL_BROADCAST' && (
         <div className="feed-container">
-          <WeeklyNews news={news} userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
+          <WeeklyNews news={news} userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} currentPath={safePath} />
           <div style={{ borderTop: '2px dashed #00ff0022', marginTop: 8, paddingTop: 16 }}>
-            <ForumFeed userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
+            <ForumFeed userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} currentPath={safePath} />
           </div>
         </div>
       )}
 
-      {currentPath === '/SECURE_COMMS' && (
+      {basePath === '/SECURE_COMMS' && (
         <div className="feed-container" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-          <MessagesView userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
+          <MessagesView userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} currentPath={safePath} />
         </div>
       )}
 
-      {currentPath === '/CLASSIFIEDS' && (
+      {basePath === '/CLASSIFIEDS' && (
         <div className="feed-container" style={{ height: '100%' }}>
           <Classifieds />
         </div>
       )}
       
-      {currentPath === '/NOTIFICATIONS' && (
+      {basePath === '/NOTIFICATIONS' && (
         <div className="feed-container" style={{ height: '100%' }}>
           <NotificationsView 
             notifications={notifications} 
             loading={notifLoading} 
-            onMarkRead={markAllAsRead} 
+            onMarkRead={markAsRead} 
+            onMarkAllRead={markAllAsRead}
+            onNavigate={onNavigate}
           />
         </div>
       )}

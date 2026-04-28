@@ -17,7 +17,7 @@ function App() {
 
   const { currentPath, logs, isProcessing, executeCommand, commands } = useTerminalNavigation(user?.email);
   const isAdmin = user?.email?.toLowerCase() === 'admin@blinkmotion.com';
-  const { unreadCount } = useNotifications(user?.id, isAdmin);
+  const { unreadCount } = useNotifications(user?.id, isAdmin, user?.email);
 
   // Load saved credentials
   useEffect(() => {
@@ -87,7 +87,7 @@ function App() {
           onExecute={executeCommand}
           isProcessing={isProcessing}
         />
-        <MainDisplay currentPath={currentPath} user={user} />
+        <MainDisplay currentPath={currentPath} user={user} onNavigate={executeCommand} />
         
         <style>{`
           .social-terminal-layout {

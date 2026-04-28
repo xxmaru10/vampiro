@@ -98,13 +98,19 @@ export const CommentItem: React.FC<CommentItemProps> = ({
   const indent = depth * 16;
   const borderColor = depth === 0 ? '#00ff0022' : '#00ff0011';
 
+  // Regra de identificação de jogador cadastrado (apenas admin atualmente)
+  const displayName = comment.is_npc ? comment.author_name.toUpperCase() : `${comment.author_name.toUpperCase()}**`;
+
   return (
-    <div style={{ marginLeft: indent, borderLeft: depth > 0 ? '2px solid #00ff0033' : 'none', paddingLeft: depth > 0 ? 10 : 0, marginBottom: 8 }}>
+    <div 
+      id={`comment-${comment.id}`}
+      style={{ marginLeft: indent, borderLeft: depth > 0 ? '2px solid #00ff0033' : 'none', paddingLeft: depth > 0 ? 10 : 0, marginBottom: 8 }}
+    >
       <div style={{ background: '#050505', border: `1px solid ${borderColor}`, padding: '8px 12px' }}>
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4, flexWrap: 'wrap' }}>
           <span style={{ color: '#00ff00', fontWeight: 'bold', fontSize: '0.95rem' }}>
-            [{comment.author_name.toUpperCase()}]
+            [{displayName}]
           </span>
           <span style={{ color: '#00ff0044', fontSize: '0.7rem', marginLeft: 'auto' }}>
             {timestamp}

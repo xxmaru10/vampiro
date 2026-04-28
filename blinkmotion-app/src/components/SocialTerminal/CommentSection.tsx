@@ -76,7 +76,7 @@ export function parseBulkInput(text: string): BulkItem[] {
 
 export const CommentSection: React.FC<CommentSectionProps> = ({ newsId, userId, userEmail, isAdmin }) => {
   const currentUserName = userEmail ? userEmail.split('@')[0].toUpperCase() : 'ANON';
-  const { comments, loading, error, addComment, toggleLike, setExtraLikes, deleteComment, bulkInsert } = useComments(newsId, userId);
+  const { comments, loading, error, addComment, toggleLike, setExtraLikes, deleteComment, bulkInsert, updateComment } = useComments(newsId, userId);
 
   const [newComment, setNewComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -207,6 +207,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ newsId, userId, 
               onSetExtraLikes={setExtraLikes}
               onBulkReply={handleBulkReply}
               parseBulkInput={parseBulkInput}
+              onEdit={updateComment}
             />
           ))}
         </div>

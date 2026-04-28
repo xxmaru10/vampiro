@@ -31,9 +31,24 @@ export const useTerminalNavigation = (userEmail?: string) => {
   const availableCommandsMap = Object.fromEntries(availableCommands);
 
   const executeCommand = (input: string) => {
-    const cmd = availableCommandsMap[input.trim()];
+    // Pode receber o ID numérico ('1', '5') ou o caminho ('/LOCAL_BROADCAST')
+    const trimmedInput = (input || '').trim();
+    if (!trimmedInput) return;
+    let cmd = availableCommandsMap[trimmedInput];
+    
+    // Se não for um ID numérico, tenta casar o início do path
+    if (!cmd) {
+      const found = availableCommands.find(([, c]) => {
+        // Verifica se o input é exatamente o path ou se começa com o path seguido de ? ou #
+        return trimmedInput === c.path || 
+               trimmedInput.startsWith(c.path + '?') || 
+               trimmedInput.startsWith(c.path + '#');
+      });
+      if (found) cmd = found[1];
+    }
     
     if (cmd) {
+      const targetPath = availableCommandsMap[trimmedInput] ? cmd.path : trimmedInput;
       setIsProcessing(true);
       setLogs([]);
       
@@ -42,7 +57,7 @@ export const useTerminalNavigation = (userEmail?: string) => {
         `> Origin: ${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.1.12`,
         `> Bypassing security node ${Math.random().toString(16).substring(2, 8).toUpperCase()}...`,
         `> Connection established.`,
-        `> Navigating to ${cmd.path}`
+        `> Navigating to ${targetPath}`
       ];
 
       // Simulate log stream
@@ -50,10 +65,12 @@ export const useTerminalNavigation = (userEmail?: string) => {
         setTimeout(() => {
           setLogs(prev => [...prev, log]);
           if (index === newLogs.length - 1) {
-            setCurrentPath(cmd.path);
+            // Comentado temporariamente para debugar tela preta
+            // window.history.pushState({}, '', targetPath);
+            setCurrentPath(targetPath);
             setIsProcessing(false);
           }
-        }, (index + 1) * 300);
+        }, (index + 1) * 200); // Acelerado um pouco para melhor UX
       });
     } else {
       setLogs(prev => [...prev, `> Unknown command: ${input}`]);
