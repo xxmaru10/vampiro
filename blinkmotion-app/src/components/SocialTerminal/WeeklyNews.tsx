@@ -8,9 +8,10 @@ interface WeeklyNewsProps {
   userId?: string;
   userEmail?: string;
   isAdmin?: boolean;
+  currentPath?: string;
 }
 
-export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail, isAdmin = false }) => {
+export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail, isAdmin = false, currentPath = '' }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [asciiContent, setAsciiContent] = useState<string>('');
   const [commentsOpen, setCommentsOpen] = useState(false);
@@ -20,7 +21,9 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail,
 
   // Navegação direta via newsId e scroll para comentário
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const query = currentPath.includes('?') ? currentPath.split('?')[1].split('#')[0] : '';
+    const hash = currentPath.includes('#') ? `#${currentPath.split('#')[1]}` : '';
+    const params = new URLSearchParams(query);
     const newsId = params.get('newsId');
     if (newsId && news.length > 0) {
       const index = news.findIndex(n => n.id === newsId);
@@ -29,7 +32,6 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail,
         setCommentsOpen(true);
         
         // Se houver hash de comentário, aguarda o render e scrolla
-        const hash = window.location.hash;
         if (hash.startsWith('#comment-')) {
           setTimeout(() => {
             const el = document.getElementById(hash.substring(1));
@@ -42,7 +44,7 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail,
         }
       }
     }
-  }, [news]);
+  }, [currentPath, news]);
 
   useEffect(() => {
     if (news.length === 0) { setAsciiContent(''); return; }

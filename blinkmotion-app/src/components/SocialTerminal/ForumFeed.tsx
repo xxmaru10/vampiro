@@ -7,9 +7,10 @@ interface ForumFeedProps {
   userId?: string;
   userEmail?: string;
   isAdmin?: boolean;
+  currentPath?: string;
 }
 
-export const ForumFeed: React.FC<ForumFeedProps> = ({ userId, userEmail, isAdmin = false }) => {
+export const ForumFeed: React.FC<ForumFeedProps> = ({ userId, userEmail, isAdmin = false, currentPath = '' }) => {
   const { posts, loading, hasMore, error, fetchPage, loadMore, createPost, deletePost } = usePosts();
 
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -24,6 +25,29 @@ export const ForumFeed: React.FC<ForumFeedProps> = ({ userId, userEmail, isAdmin
   const authorName = userEmail ? userEmail.split('@')[0].toUpperCase() : 'ANON';
 
   useEffect(() => { fetchPage(0, true); }, []);
+
+  useEffect(() => {
+    const query = currentPath.includes('?') ? currentPath.split('?')[1].split('#')[0] : '';
+    const hash = currentPath.includes('#') ? `#${currentPath.split('#')[1]}` : '';
+    const params = new URLSearchParams(query);
+    const targetPostId = params.get('postId') || params.get('topicId');
+    const fallbackId = params.get('newsId');
+    const postId = targetPostId || (fallbackId && posts.some(p => p.id === fallbackId) ? fallbackId : null);
+
+    if (postId && posts.some(p => p.id === postId)) {
+      setExpandedId(postId);
+      if (hash.startsWith('#comment-')) {
+        setTimeout(() => {
+          const el = document.getElementById(hash.substring(1));
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            el.style.backgroundColor = 'rgba(0, 255, 0, 0.2)';
+            setTimeout(() => { el.style.backgroundColor = 'transparent'; }, 2000);
+          }
+        }, 600);
+      }
+    }
+  }, [currentPath, posts]);
 
   useEffect(() => {
     if (isAdmin) {

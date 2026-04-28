@@ -6,6 +6,7 @@ interface MessagesViewProps {
   userId?: string;
   userEmail?: string;
   isAdmin?: boolean;
+  currentPath?: string;
 }
 
 const S = {
@@ -57,7 +58,7 @@ function fmtTime(iso: string) {
   return `${d.toLocaleDateString('pt-BR')} ${d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`;
 }
 
-export const MessagesView: React.FC<MessagesViewProps> = ({ userEmail, isAdmin }) => {
+export const MessagesView: React.FC<MessagesViewProps> = ({ userEmail, isAdmin, currentPath = '' }) => {
   const baseName = userEmail ? userEmail.split('@')[0].toUpperCase() : 'ANON';
 
   const [selectedIdentity, setSelectedIdentity] = useState('__self__');
@@ -109,6 +110,14 @@ export const MessagesView: React.FC<MessagesViewProps> = ({ userEmail, isAdmin }
     setSearchResults([]);
     fetchChat(activeName, otherName);
   };
+
+  useEffect(() => {
+    const query = currentPath.includes('?') ? currentPath.split('?')[1].split('#')[0] : '';
+    const chatName = new URLSearchParams(query).get('chat');
+    if (chatName && chatName !== openConv) {
+      openChat(chatName);
+    }
+  }, [currentPath, activeName]);
 
   // Scroll para baixo quando chat atualiza
   useEffect(() => {

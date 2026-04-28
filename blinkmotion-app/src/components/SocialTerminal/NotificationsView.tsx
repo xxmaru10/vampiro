@@ -20,6 +20,7 @@ export const NotificationsView: React.FC<NotificationsViewProps> = ({
   const getIcon = (type: string) => {
     switch (type) {
       case 'reply': return <MessageSquare size={16} />;
+      case 'message': return <MessageSquare size={16} />;
       case 'like': return <Heart size={16} />;
       case 'post_pending': return <FileClock size={16} />;
       default: return <Bell size={16} />;
@@ -71,7 +72,10 @@ export const NotificationsView: React.FC<NotificationsViewProps> = ({
               key={n.id} 
               className={`notif-item ${n.type} ${n.read ? 'read' : 'unread'}`}
               style={{ cursor: n.link ? 'pointer' : 'default' }}
-              onClick={() => n.link && onNavigate?.(n.link)}
+              onClick={() => {
+                if (!n.read) onMarkRead(n.id);
+                if (n.link) onNavigate?.(n.link);
+              }}
             >
               <div className="notif-icon">{getIcon(n.type)}</div>
               <div className="notif-content">

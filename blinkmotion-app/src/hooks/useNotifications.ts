@@ -3,7 +3,7 @@ import { supabase } from '../lib/supabaseClient';
 
 export interface Notification {
   id: string;
-  type: 'reply' | 'like' | 'post_pending' | 'mention';
+  type: 'reply' | 'like' | 'post_pending' | 'mention' | 'message';
   title: string;
   content: string;
   created_at: string;
@@ -61,7 +61,7 @@ export const useNotifications = (userId?: string, isAdminParam: boolean = false,
               content: `${post.author_name || 'ANÔNIMO'} enviou "${post.title || 'SEM TÍTULO'}" para aprovação.`,
               created_at: post.created_at,
               read: readIds.includes(id),
-              link: '/ROOT_ACCESS',
+              link: '/ROOT_ACCESS?tab=approval',
               is_npc: false
             });
           });
@@ -95,6 +95,30 @@ export const useNotifications = (userId?: string, isAdminParam: boolean = false,
       // 3. JOGADOR: Respostas de NPCs em seus posts ou comentários
       if (userId && userEmail) {
         const playerUsername = userEmail.split('@')[0];
+        const playerName = playerUsername.toUpperCase();
+
+        const { data: directMessages, error: messageErr } = await supabase
+          .from('blink_messages')
+          .select('id, sender_name, receiver_name, content, is_npc_sender, created_at')
+          .eq('receiver_name', playerName)
+          .order('created_at', { ascending: false })
+          .limit(10);
+
+        if (!messageErr && directMessages) {
+          directMessages.forEach(message => {
+            const id = `message_${message.id}`;
+            allNotifs.push({
+              id,
+              type: 'message',
+              title: 'MENSAGEM PRIVADA',
+              content: `${message.sender_name || 'ANON'} enviou: "${(message.content || '').substring(0, 30)}..."`,
+              created_at: message.created_at,
+              read: readIds.includes(id),
+              link: `/SECURE_COMMS?chat=${encodeURIComponent(message.sender_name || '')}`,
+              is_npc: message.is_npc_sender
+            });
+          });
+        }
         
         const { data: npcInteractions, error: npcErr } = await supabase
           .from('blink_comments')

@@ -36,22 +36,23 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user, onN
           createNews={createNews} 
           deleteNews={deleteNews} 
           newsLoading={newsLoading} 
-          newsError={newsError} 
+          newsError={newsError}
+          currentPath={safePath}
         />
       )}
 
       {basePath === '/LOCAL_BROADCAST' && (
         <div className="feed-container">
-          <WeeklyNews news={news} userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
+          <WeeklyNews news={news} userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} currentPath={safePath} />
           <div style={{ borderTop: '2px dashed #00ff0022', marginTop: 8, paddingTop: 16 }}>
-            <ForumFeed userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
+            <ForumFeed userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} currentPath={safePath} />
           </div>
         </div>
       )}
 
       {basePath === '/SECURE_COMMS' && (
         <div className="feed-container" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-          <MessagesView userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
+          <MessagesView userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} currentPath={safePath} />
         </div>
       )}
 
