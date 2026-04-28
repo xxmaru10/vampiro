@@ -18,6 +18,32 @@ export const WeeklyNews: React.FC<WeeklyNewsProps> = ({ news, userId, userEmail,
   // Fecha os comentários ao trocar de notícia
   useEffect(() => { setCommentsOpen(false); }, [currentIndex]);
 
+  // Navegação direta via newsId e scroll para comentário
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const newsId = params.get('newsId');
+    if (newsId && news.length > 0) {
+      const index = news.findIndex(n => n.id === newsId);
+      if (index !== -1) {
+        setCurrentIndex(index);
+        setCommentsOpen(true);
+        
+        // Se houver hash de comentário, aguarda o render e scrolla
+        const hash = window.location.hash;
+        if (hash.startsWith('#comment-')) {
+          setTimeout(() => {
+            const el = document.getElementById(hash.substring(1));
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              el.style.backgroundColor = 'rgba(0, 255, 0, 0.2)';
+              setTimeout(() => { el.style.backgroundColor = '#050505'; }, 2000);
+            }
+          }, 500);
+        }
+      }
+    }
+  }, [news]);
+
   useEffect(() => {
     if (news.length === 0) { setAsciiContent(''); return; }
     const item = news[currentIndex];

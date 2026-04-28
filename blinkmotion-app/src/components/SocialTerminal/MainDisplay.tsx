@@ -20,7 +20,7 @@ const ACTIVE_PATHS = ['/LOCAL_BROADCAST', '/ROOT_ACCESS', '/SECURE_COMMS', '/CLA
 export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user, onNavigate }) => {
   const { news, createNews, deleteNews, loading: newsLoading, error: newsError } = useNews();
   const isAdmin = user?.email?.toLowerCase() === 'admin@blinkmotion.com';
-  const { notifications, loading: notifLoading, markAllAsRead } = useNotifications(user?.id, isAdmin, user?.email);
+  const { notifications, loading: notifLoading, markAsRead, markAllAsRead } = useNotifications(user?.id, isAdmin, user?.email);
   const isActive = ACTIVE_PATHS.includes(currentPath);
 
   return (
@@ -61,7 +61,8 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user, onN
           <NotificationsView 
             notifications={notifications} 
             loading={notifLoading} 
-            onMarkRead={markAllAsRead} 
+            onMarkRead={markAsRead} 
+            onMarkAllRead={markAllAsRead}
             onNavigate={onNavigate}
           />
         </div>
