@@ -48,6 +48,7 @@ export const useTerminalNavigation = (userEmail?: string) => {
     }
     
     if (cmd) {
+      const targetPath = availableCommandsMap[trimmedInput] ? cmd.path : trimmedInput;
       setIsProcessing(true);
       setLogs([]);
       
@@ -56,7 +57,7 @@ export const useTerminalNavigation = (userEmail?: string) => {
         `> Origin: ${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.1.12`,
         `> Bypassing security node ${Math.random().toString(16).substring(2, 8).toUpperCase()}...`,
         `> Connection established.`,
-        `> Navigating to ${trimmedInput}`
+        `> Navigating to ${targetPath}`
       ];
 
       // Simulate log stream
@@ -65,8 +66,8 @@ export const useTerminalNavigation = (userEmail?: string) => {
           setLogs(prev => [...prev, log]);
           if (index === newLogs.length - 1) {
             // Comentado temporariamente para debugar tela preta
-            // window.history.pushState({}, '', trimmedInput);
-            setCurrentPath(trimmedInput);
+            // window.history.pushState({}, '', targetPath);
+            setCurrentPath(targetPath);
             setIsProcessing(false);
           }
         }, (index + 1) * 200); // Acelerado um pouco para melhor UX
