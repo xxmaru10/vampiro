@@ -21,10 +21,12 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user, onN
   const { news, createNews, deleteNews, loading: newsLoading, error: newsError } = useNews();
   const isAdmin = user?.email?.toLowerCase() === 'admin@blinkmotion.com';
   const { notifications, loading: notifLoading, markAsRead, markAllAsRead } = useNotifications(user?.id, isAdmin, user?.email);
-  
   // Extrai apenas o path base para as verificações de renderização
-  const basePath = currentPath.split(/[?#]/)[0];
+  const safePath = currentPath || '';
+  console.log('MainDisplay - currentPath:', safePath);
+  const basePath = safePath.split('?')[0].split('#')[0];
   const isActive = ACTIVE_PATHS.includes(basePath);
+  console.log('MainDisplay - basePath:', basePath, 'isActive:', isActive);
 
   return (
     <div className={`main-display ${isActive ? 'feed-active' : ''}`}>

@@ -32,7 +32,8 @@ export const useTerminalNavigation = (userEmail?: string) => {
 
   const executeCommand = (input: string) => {
     // Pode receber o ID numérico ('1', '5') ou o caminho ('/LOCAL_BROADCAST')
-    const trimmedInput = input.trim();
+    const trimmedInput = (input || '').trim();
+    if (!trimmedInput) return;
     let cmd = availableCommandsMap[trimmedInput];
     
     // Se não for um ID numérico, tenta casar o início do path
@@ -63,8 +64,8 @@ export const useTerminalNavigation = (userEmail?: string) => {
         setTimeout(() => {
           setLogs(prev => [...prev, log]);
           if (index === newLogs.length - 1) {
-            // Atualiza a URL do navegador para que componentes possam ler params
-            window.history.pushState({}, '', trimmedInput);
+            // Comentado temporariamente para debugar tela preta
+            // window.history.pushState({}, '', trimmedInput);
             setCurrentPath(trimmedInput);
             setIsProcessing(false);
           }

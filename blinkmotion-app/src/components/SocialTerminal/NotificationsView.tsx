@@ -27,6 +27,7 @@ export const NotificationsView: React.FC<NotificationsViewProps> = ({
   };
 
   const formatTitle = (notif: Notification) => {
+    if (!notif.title) return '';
     // Se não é NPC, adiciona ** (conforme solicitado para jogadores cadastrados)
     if (notif.is_npc === false) {
       return notif.title.replace(/ JOGADOR| USUÁRIO/g, (match) => match + '**');
@@ -35,6 +36,7 @@ export const NotificationsView: React.FC<NotificationsViewProps> = ({
   };
 
   const formatContent = (notif: Notification) => {
+     if (!notif.content) return '';
      if (notif.is_npc === false) {
        // Tenta extrair o nome do autor do início do conteúdo (ex: "ph4ntom comentou...")
        const parts = notif.content.split(' ');

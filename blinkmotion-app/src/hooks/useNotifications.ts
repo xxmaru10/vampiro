@@ -46,78 +46,84 @@ export const useNotifications = (userId?: string, isAdminParam: boolean = false,
 
       // 1. ADMIN: Postagens pendentes de aprovação
       if (isAdminParam) {
-        const { data: pendingPosts } = await supabase
+        const { data: pendingPosts, error: postErr } = await supabase
           .from('blink_posts')
           .select('id, author_name, title, created_at')
           .eq('approved', false);
 
-        (pendingPosts ?? []).forEach(post => {
-          const id = `post_${post.id}`;
-          allNotifs.push({
-            id,
-            type: 'post_pending',
-            title: 'POSTAGEM PENDENTE',
-            content: `${post.author_name} enviou "${post.title}" para aprovação.`,
-            created_at: post.created_at,
-            read: readIds.includes(id),
-            link: '/ROOT_ACCESS',
-            is_npc: false
+        if (!postErr && pendingPosts) {
+          pendingPosts.forEach(post => {
+            const id = `post_${post.id}`;
+            allNotifs.push({
+              id,
+              type: 'post_pending',
+              title: 'POSTAGEM PENDENTE',
+              content: `${post.author_name || 'ANÔNIMO'} enviou "${post.title || 'SEM TÍTULO'}" para aprovação.`,
+              created_at: post.created_at,
+              read: readIds.includes(id),
+              link: '/ROOT_ACCESS',
+              is_npc: false
+            });
           });
-        });
+        }
 
         // 2. ADMIN: Interações de Jogadores (is_npc = false) em Comentários
-        const { data: playerComments } = await supabase
+        const { data: playerComments, error: commentErr } = await supabase
           .from('blink_comments')
           .select('id, news_id, author_name, content, created_at')
           .eq('is_npc', false)
           .order('created_at', { ascending: false })
           .limit(10);
 
-        (playerComments ?? []).forEach(comment => {
-          const id = `comment_${comment.id}`;
-          allNotifs.push({
-            id,
-            type: 'reply',
-            title: 'INTERAÇÃO DE JOGADOR',
-            content: `${comment.author_name} comentou: "${comment.content.substring(0, 30)}..."`,
-            created_at: comment.created_at,
-            read: readIds.includes(id),
-            link: `/LOCAL_BROADCAST?newsId=${comment.news_id}#comment-${comment.id}`,
-            is_npc: false
+        if (!commentErr && playerComments) {
+          playerComments.forEach(comment => {
+            const id = `comment_${comment.id}`;
+            allNotifs.push({
+              id,
+              type: 'reply',
+              title: 'INTERAÇÃO DE JOGADOR',
+              content: `${comment.author_name || 'ANÔNIMO'} comentou: "${(comment.content || '').substring(0, 30)}..."`,
+              created_at: comment.created_at,
+              read: readIds.includes(id),
+              link: `/LOCAL_BROADCAST?newsId=${comment.news_id}#comment-${comment.id}`,
+              is_npc: false
+            });
           });
-        });
+        }
       }
 
       // 3. JOGADOR: Respostas de NPCs em seus posts ou comentários
       if (userId && userEmail) {
         const playerUsername = userEmail.split('@')[0];
         
-        const { data: npcInteractions } = await supabase
+        const { data: npcInteractions, error: npcErr } = await supabase
           .from('blink_comments')
           .select('id, news_id, author_name, content, created_at')
           .eq('is_npc', true)
           .order('created_at', { ascending: false })
           .limit(15);
 
-        let relevant = (npcInteractions ?? []).filter(c => c.content.toLowerCase().includes(playerUsername.toLowerCase()));
-        
-        if (relevant.length === 0 && npcInteractions && npcInteractions.length > 0) {
-           relevant = [npcInteractions[0]];
-        }
+        if (!npcErr && npcInteractions) {
+          let relevant = (npcInteractions ?? []).filter(c => (c.content || '').toLowerCase().includes(playerUsername.toLowerCase()));
+          
+          if (relevant.length === 0 && npcInteractions.length > 0) {
+             relevant = [npcInteractions[0]];
+          }
 
-        relevant.forEach(interaction => {
-          const id = `npc_${interaction.id}`;
-          allNotifs.push({
-            id,
-            type: 'reply',
-            title: 'NOVA MENSAGEM RECEBIDA',
-            content: `${interaction.author_name} interagiu: "${interaction.content.substring(0, 30)}..."`,
-            created_at: interaction.created_at,
-            read: readIds.includes(id),
-            link: `/LOCAL_BROADCAST?newsId=${interaction.news_id}#comment-${interaction.id}`,
-            is_npc: true
+          relevant.forEach(interaction => {
+            const id = `npc_${interaction.id}`;
+            allNotifs.push({
+              id,
+              type: 'reply',
+              title: 'NOVA MENSAGEM RECEBIDA',
+              content: `${interaction.author_name || 'NPC'} interagiu: "${(interaction.content || '').substring(0, 30)}..."`,
+              created_at: interaction.created_at,
+              read: readIds.includes(id),
+              link: `/LOCAL_BROADCAST?newsId=${interaction.news_id}#comment-${interaction.id}`,
+              is_npc: true
+            });
           });
-        });
+        }
       }
 
       const sorted = allNotifs.sort((a, b) => 
