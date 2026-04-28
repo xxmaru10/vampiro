@@ -13,6 +13,7 @@ export interface Notification {
 }
 
 const READ_NOTIFS_KEY = 'blink_read_notifications';
+const READ_NOTIFS_EVENT = 'blink_notifications_read_changed';
 
 export const useNotifications = (userId?: string, isAdminParam: boolean = false, userEmail?: string) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -34,6 +35,10 @@ export const useNotifications = (userId?: string, isAdminParam: boolean = false,
     if (!ids.includes(id)) {
       localStorage.setItem(READ_NOTIFS_KEY, JSON.stringify([...ids, id]));
     }
+  };
+
+  const notifyReadIdsChanged = () => {
+    window.dispatchEvent(new Event(READ_NOTIFS_EVENT));
   };
 
   const fetchNotifications = async () => {
@@ -166,20 +171,28 @@ export const useNotifications = (userId?: string, isAdminParam: boolean = false,
   const markAsRead = (id: string) => {
     saveReadId(id);
     setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
-    setUnreadCount(prev => Math.max(0, prev - 1));
+    setUnreadCount(prev => notifications.some(n => n.id === id && !n.read) ? Math.max(0, prev - 1) : prev);
+    notifyReadIdsChanged();
   };
 
   const markAllAsRead = () => {
     notifications.forEach(n => saveReadId(n.id));
     setNotifications(prev => prev.map(n => ({ ...n, read: true })));
     setUnreadCount(0);
+    notifyReadIdsChanged();
   };
 
   useEffect(() => {
     fetchNotifications();
     const interval = setInterval(fetchNotifications, 60000);
-    return () => clearInterval(interval);
-  }, [userId, isAdminParam]);
+    window.addEventListener(READ_NOTIFS_EVENT, fetchNotifications);
+    window.addEventListener('storage', fetchNotifications);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener(READ_NOTIFS_EVENT, fetchNotifications);
+      window.removeEventListener('storage', fetchNotifications);
+    };
+  }, [userId, isAdminParam, userEmail]);
 
   return { notifications, unreadCount, loading, markAsRead, markAllAsRead, refresh: fetchNotifications };
 };
