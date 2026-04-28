@@ -21,11 +21,14 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user, onN
   const { news, createNews, deleteNews, loading: newsLoading, error: newsError } = useNews();
   const isAdmin = user?.email?.toLowerCase() === 'admin@blinkmotion.com';
   const { notifications, loading: notifLoading, markAsRead, markAllAsRead } = useNotifications(user?.id, isAdmin, user?.email);
-  const isActive = ACTIVE_PATHS.includes(currentPath);
+  
+  // Extrai apenas o path base para as verificações de renderização
+  const basePath = currentPath.split(/[?#]/)[0];
+  const isActive = ACTIVE_PATHS.includes(basePath);
 
   return (
     <div className={`main-display ${isActive ? 'feed-active' : ''}`}>
-      {currentPath === '/ROOT_ACCESS' && (
+      {basePath === '/ROOT_ACCESS' && (
         <AdminPanel 
           news={news} 
           createNews={createNews} 
@@ -35,7 +38,7 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user, onN
         />
       )}
 
-      {currentPath === '/LOCAL_BROADCAST' && (
+      {basePath === '/LOCAL_BROADCAST' && (
         <div className="feed-container">
           <WeeklyNews news={news} userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
           <div style={{ borderTop: '2px dashed #00ff0022', marginTop: 8, paddingTop: 16 }}>
@@ -44,19 +47,19 @@ export const MainDisplay: React.FC<MainDisplayProps> = ({ currentPath, user, onN
         </div>
       )}
 
-      {currentPath === '/SECURE_COMMS' && (
+      {basePath === '/SECURE_COMMS' && (
         <div className="feed-container" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
           <MessagesView userId={user?.id} userEmail={user?.email} isAdmin={isAdmin} />
         </div>
       )}
 
-      {currentPath === '/CLASSIFIEDS' && (
+      {basePath === '/CLASSIFIEDS' && (
         <div className="feed-container" style={{ height: '100%' }}>
           <Classifieds />
         </div>
       )}
       
-      {currentPath === '/NOTIFICATIONS' && (
+      {basePath === '/NOTIFICATIONS' && (
         <div className="feed-container" style={{ height: '100%' }}>
           <NotificationsView 
             notifications={notifications} 

@@ -109,12 +109,9 @@ export const CommentItem: React.FC<CommentItemProps> = ({
       <div style={{ background: '#050505', border: `1px solid ${borderColor}`, padding: '8px 12px' }}>
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4, flexWrap: 'wrap' }}>
-          <span style={{ color: comment.is_npc ? '#00ffff' : '#00ff00', fontWeight: 'bold', fontSize: '0.95rem' }}>
+          <span style={{ color: '#00ff00', fontWeight: 'bold', fontSize: '0.95rem' }}>
             [{displayName}]
           </span>
-          {comment.is_npc && (
-            <span style={{ color: '#00ffff', fontSize: '0.65rem', border: '1px solid #00ffff44', padding: '0 4px', borderRadius: 2 }}>NPC</span>
-          )}
           <span style={{ color: '#00ff0044', fontSize: '0.7rem', marginLeft: 'auto' }}>
             {timestamp}
           </span>

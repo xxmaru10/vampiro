@@ -68,20 +68,20 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ items, unreadCou
           gap: 8px;
         }
         .notif-badge {
-          background: #ff0000;
-          color: #fff;
+          background: #00ff00;
+          color: #000;
           font-size: 0.7rem;
           padding: 1px 6px;
           border-radius: 10px;
-          font-family: sans-serif;
+          font-family: 'VT323', monospace;
           font-weight: bold;
-          box-shadow: 0 0 10px #ff0000;
+          box-shadow: 0 0 10px #00ff00;
           animation: blink-notif 1s infinite;
         }
         @keyframes blink-notif {
-          0% { opacity: 0.7; }
-          50% { opacity: 1; transform: scale(1.1); }
-          100% { opacity: 0.7; }
+          0% { opacity: 0.7; box-shadow: 0 0 5px #00ff00; }
+          50% { opacity: 1; transform: scale(1.1); box-shadow: 0 0 15px #00ff00; }
+          100% { opacity: 0.7; box-shadow: 0 0 5px #00ff00; }
         }
       `}</style>
     </div>
