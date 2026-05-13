@@ -1,0 +1,4229 @@
+============================================================
+    VAMPIRO: A MÁSCARA — ADAPTAÇÃO FATE CORE
+    GUIA COMPLETO DE REGRAS
+    (Documento de referência — Crônicas de Miami excluídas)
+============================================================
+
+Este documento reúne todas as regras e mecânicas da adaptação
+de Vampiro: A Máscara para o sistema Fate Core.
+
+
+############################################################
+
+PRINCÍPIOS DA ADAPTAÇÃO
+
+############################################################
+
+
+id="page-principios" data-page="principios">
+
+
+============================================================
+Princípios da Adaptação
+============================================================
+
+
+Como este sistema foi pensado, e por quê
+
+
+--------------------------------------------------
+Objetivos do design
+--------------------------------------------------
+
+
+O autor original tinha metas claras. Vale conhecê-las para entender as escolhas:
+
+
+• Jogar online com amigos. Online pede regras mais ágeis do que o d10 tradicional.
+
+• Manter a tensão nas cenas de conflito. As regras antigas de VtM ficam lentas justamente onde deveriam ficar intensas.
+
+• Colocar Fome e Caça no centro. Não é tema de fundo — é a primeira coisa que o Narrador fala toda sessão.
+
+• Modelar Disciplinas como Extras. Inspiração direta do Venture City (cenário de super-heróis para Fate Core).
+
+• "Super-heróis com presas" é aceitável. O sistema deixa vampiros mais poderosos que no VtM clássico, e isso é uma escolha consciente.
+
+
+--------------------------------------------------
+O que mudou em relação ao VtM tradicional
+--------------------------------------------------
+
+
+Elemento | VtM Clássico | Nesta adaptação
+--- | --- | ---
+
+
+Sistema de dados | Pool de d10s contra dificuldade | 4dF + perícia contra obstáculo |
+
+Níveis de Disciplina | 5 pontos | 4 níveis (o 4º só para anciões) |
+
+Níveis 1-3 aqui equivalem a | — | Aprox. pontos 1 a 5 do VtM |
+
+Fome | Pool de Sangue | Condição narrativa que escala |
+
+Atributos | 9 atributos + habilidades | 20 perícias customizadas |
+
+Poder inicial | Neonato padrão | Neonato ≈ Ancilla do VtM |
+
+
+--------------------------------------------------
+Filosofia narrativa
+--------------------------------------------------
+
+
+Três princípios guiam como as regras são aplicadas na mesa:
+
+
+Fome sempre presente
+
+
+Cada noite começa com "Você acorda com fome". Não é uma ameaça — é um fato. Repita até virar mantra.
+
+
+Conflitos curtos e intensos
+
+
+Combates devem terminar em 3-5 rodadas. Consequências moldam a história mais do que HP.
+
+
+Aspectos pesam
+
+
+Clã, Trilha, Laços, Máscara — todos são aspectos invocáveis e compeláveis. Use-os.
+
+
+<section class="page"
+
+
+############################################################
+
+COMO USAR ESTE GUIA
+
+############################################################
+
+
+id="page-como-usar" data-page="como-usar">
+
+
+============================================================
+Como Usar Este Guia
+============================================================
+
+
+Para tirar proveito na mesa e na preparação
+
+
+--------------------------------------------------
+Navegação
+--------------------------------------------------
+
+
+• Barra lateral — clique em qualquer tópico para abrir a página
+
+• Busca — digite qualquer termo no campo de busca do topo da lateral. Ele filtra todas as páginas em tempo real
+
+• Links internos — onde uma regra depende de outra, há atalhos clicáveis
+
+• Tabelas e cards — informação visual compacta para consulta na mesa
+
+
+--------------------------------------------------
+Fluxo recomendado para aprender
+--------------------------------------------------
+
+
+• Leia Princípios para entender o tom
+
+• Leia Perícias e Aspectos para entender a ficha
+
+• Passe pelos passos de criação
+
+• Consulte as Disciplinas do seu clã
+
+• Durante o jogo, use a busca ou a seção Referência
+
+
+--------------------------------------------------
+Fluxo recomendado para consulta de mesa
+--------------------------------------------------
+
+
+[Atalhos de mesa]
+
+
+Mantenha o guia aberto em **Referência Rápida** durante a sessão. Use Ctrl+F no navegador _ou_ o campo de busca do guia — ambos funcionam.
+
+
+<section class="page"
+
+
+############################################################
+
+CRIAÇÃO DE PERSONAGEM
+
+############################################################
+
+
+id="page-criacao" data-page="criacao">
+
+
+============================================================
+Criação de Personagem
+============================================================
+
+
+Do conceito à ficha pronta em sete passos
+
+
+--------------------------------------------------
+Passo a passo
+--------------------------------------------------
+
+
+• Escolha o Clã — define as Disciplinas nativas e o tom do personagem
+
+• Escreva o Conceito Principal — o aspecto mais importante; deve incluir o clã
+
+• Escolha o Aspecto-Problema — o Defeito do clã ou algo pessoal
+
+• Escreva o Aspecto Mortal — quem você era antes do Abraço
+
+• Preencha os outros 2 Aspectos — opcionais (pode deixar em branco para preencher em jogo)
+
+• Distribua Perícias na pirâmide conforme seu tipo de personagem
+
+• Gaste Recarga em Disciplinas, Façanhas e Extras
+
+
+--------------------------------------------------
+Tipos de personagem
+--------------------------------------------------
+
+[Original]
+
+
+Tipo | Perícia máx. | Pirâmide | Disciplinas | Recarga | Estresse
+--- | --- | --- | --- | --- | ---
+
+
+Mortal |
++3 |
+Pirâmide +3 |
+Nenhuma |
+— (2 Façanhas/Extras) |
+2 Físico / 2 Mental |
+
+
+Ghoul |
++3 |
+Pirâmide +3 |
+Potência Básica grátis |
+— (2 Façanhas/Extras) |
+3 Físico / 2 Mental |
+
+
+Neonato |
++4 |
+Pirâmide +4 |
+3 níveis no Clã (grátis) |
+5 |
+3 Físico / 3 Mental / 3 Sangue |
+
+
+Ancião |
++5 |
+Pirâmide +5 |
+6 níveis |
+3 |
+3 Físico / 3 Mental / 4 Sangue |
+
+
+Antigo |
++6 |
+Pirâmide +6 |
+9 níveis |
+1 |
+3 Físico / 3 Mental / 5 Sangue |
+
+
+[O que é a "Pirâmide +N"?]
+
+
+Você tem 1 perícia no nível máximo, 2 no nível abaixo, 3 abaixo, e assim por diante, formando uma pirâmide. Exemplo para Neonato (pirâmide +4): 1 perícia em +4, 2 em +3, 3 em +2, 4 em +1. Resto das perícias fica em +0 (Medíocre).
+
+
+--------------------------------------------------
+Disciplinas iniciais — sim, você ganha de graça
+--------------------------------------------------
+
+[Original (com esclarecimento meu)]
+
+
+[A regra em uma frase]
+
+
+Um **Neonato** ganha **3 níveis grátis** de Disciplina, e esses 3 níveis **devem ser gastos em Disciplinas do Clã**. Ancião ganha 6 grátis, Antigo ganha 9 — mesma regra. Caitiff/Pander não têm Clã, então escolhem livremente.
+
+
+>> Como funcionam os "níveis grátis"
+
+
+Seu Clã tem **três Disciplinas nativas** (por exemplo Toreador = Auspícios, Celeridade, Presença). Os 3 níveis iniciais podem ser distribuídos **entre as três nativas, como o jogador preferir**. Três distribuições típicas:
+
+
+• Espalhado: 1 nível em cada nativa (tenho o Básico das três)
+
+• Focado: 3 níveis em uma só (vou até o Avançado de uma Disciplina)
+
+• Misto: 2 níveis em uma + 1 em outra (Intermediário em uma, Básico em outra)
+
+
+>> Níveis além dos grátis — aí entra a Recarga
+
+
+Depois dos 3 níveis iniciais, qualquer Disciplina adicional — **dentro ou fora do Clã** — custa **2 de recarga por nível**. É aqui que a escolha pesa:
+
+
+O que você quer | Pode pegar? | Custo
+--- | --- | ---
+
+
+Disciplina do meu Clã, até 3 níveis | Sim | Grátis (vem do pacote do Neonato) |
+
+4º nível de Disciplina do meu Clã (Ancião) | Só se for Ancião+ | 2 de recarga (fora dos 3 grátis) |
+
+Disciplina fora do meu Clã | Sim, se o Narrador aprovar a justificativa na ficção | 2 de recarga por nível |
+
+Disciplina exclusiva de outro Clã (Dementação fora de Malk., Vicissitude fora de Tzimisce, etc.) | Muito difícil — exige gancho narrativo forte | 2 de recarga por nível + aspecto-problema associado |
+
+
+[Disciplinas exclusivas]
+
+
+Algumas Disciplinas são **tão amarradas** ao Clã que aprendê-las fora dele pede reviravolta narrativa (ter sido ghoul de um Tzimisce, ter roubado um livro de rituais, ter sido abraçado duas vezes). Na página de Disciplinas elas aparecem na aba "Por Clã (completo)" — veja lá as nativas de cada Clã e quais são exclusivas. Converse com o Narrador antes de gastar recarga em Disciplinas exclusivas.
+
+
+>> O que significa na prática para um Neonato (recarga 5)
+
+
+Você começa com **3 níveis do Clã grátis + 5 de recarga para gastar**. Algumas combinações comuns:
+
+
+• Vampiro equilibrado: 3 grátis do Clã + 1 nível fora (2 de recarga) + 3 façanhas = 0 de recarga livre. Ruim — você fica sem Pontos de Destino.
+
+• Vampiro equilibrado consertado: 3 grátis do Clã + 1 nível fora (2 de recarga) + 2 façanhas = 1 de recarga livre. Esta é a versão jogável.
+
+• Especialista em Disciplina: 3 grátis do Clã (concentrados em duas) + 1 nível extra do Clã (2 de recarga) + 1 façanha = 2 de recarga livre. 4 níveis totais, um deles forte.
+
+• Polivalente social: 3 grátis do Clã (1 em cada nativa) + 3 façanhas = 2 de recarga livre. Menos poder bruto, mais recursos de cena.
+
+• Caçador implacável: 3 grátis do Clã (todos na mesma, até Avançado) + Façanha Herd (1 de recarga) + 1 nível de Fortitude/Potência fora do Clã (2 de recarga) = 2 de recarga livre.
+
+
+[Regra de bolso]
+
+
+Vampiro começa forte nesta adaptação — os 3 níveis grátis já bastam para fazer diferença. Se estiver em dúvida entre "mais Disciplina" e "mais Façanha/Extra", escolha Façanha. O personagem fica mais versátil, e Pontos de Destino são mais valiosos do que um +2 extra em uma rolagem específica.
+
+
+--------------------------------------------------
+Gastando Recarga (resumo)
+--------------------------------------------------
+
+[Original]
+
+
+• Cada nível extra de Disciplina (dentro ou fora do Clã, além dos grátis) custa 2 de recarga
+
+• Façanhas custam 1 de recarga cada
+
+• Extras têm custo variável (geralmente 1-2 de recarga)
+
+
+[Recarga mínima]
+
+
+Um personagem deve terminar com pelo menos **1 de recarga** para ter Pontos de Destino na sessão. Se gastar tudo, não tem pontos — e isso é punitivo demais no Fate.
+
+
+--------------------------------------------------
+Caitiff e Pander
+--------------------------------------------------
+
+[Original]
+
+Clãs sem clã escolhem seus 3 níveis iniciais **livremente** entre qualquer Disciplina, com aprovação do Narrador. É uma vantagem real da liberdade — e uma das razões pelas quais Caitiff são olhados de lado pela Camarilla (flexíveis demais, imprevisíveis demais).
+
+
+[Variante opcional para Caitiff/Pander Adaptação minha]
+
+
+Se quiser equilibrar a flexibilidade com uma desvantagem mecânica, considere: Caitiff/Pander podem escolher livremente, _mas_ ganham um aspecto-problema obrigatório "Caitiff — todo Cainita suspeita de mim" que o Narrador pode compelir em qualquer contexto social da Camarilla. Fica forte nos poderes, fraco na política — exatamente como o lore descreve.
+
+
+--------------------------------------------------
+Exemplo de criação
+--------------------------------------------------
+
+
+[Ash, a Toreador Neonata]
+
+
+**Conceito:** "Toreador fascinada pela noite underground de São Paulo"
+
+
+**Problema:** "Prisioneira da beleza fugidia" (Defeito Toreador)
+
+
+**Mortal:** "Ex-DJ de clube eletrônico"
+
+
+**Outro 1:** "Conheço todas as festas que importam"
+
+
+**Outro 2:** _(em branco, preencherá em jogo)_
+
+
+**Perícias (pirâmide +4):** Carisma +4; Empatia +3, Expressão +3; Percepção +2, Manipulação +2, Fisiologia +2; Contatos +1, Ocultismo +1, Ruídos +1, Vontade +1
+
+
+**Disciplinas grátis do Clã Toreador (3 níveis):** Auspícios Básico (1) + Celeridade Básica (1) + Presença Básica (1) — ficou com o Básico das três nativas, perfil "espalhado".
+
+
+**Recarga 5, gasto:** Façanha "Herd" (1) + Façanha "Inofensivo" (1) + Extra "Ponto Quente" (1) + Extra "Retentor" (1) = 4 de recarga. **Resta 1 de recarga livre** para Pontos de Destino na sessão.
+
+
+**Resultado:** Ash sabe farejar sobrenatural, correr mais rápido que um olho pode seguir, e encantar qualquer um. Tem uma boate dela, um ghoul, uma rede de caça pela noite underground, e a cara de quem parece inofensiva demais para ser ameaça.
+
+
+[Variante "focada"]
+
+
+Se Ash preferisse ser _especialista em Presença_, trocaria a distribuição: 3 níveis grátis todos em Presença (Básico, Intermediário, Avançado). Ficaria devastadora socialmente mas sem Auspícios nem Celeridade — teria que comprar gastando recarga se quisesse.
+
+
+<section class="page"
+
+
+############################################################
+
+PERÍCIAS
+
+############################################################
+
+
+id="page-pericias" data-page="pericias">
+
+
+============================================================
+Perícias
+============================================================
+
+
+As 20 perícias do Fate Core adaptadas para o Mundo das Trevas
+
+
+A lista padrão do Fate Core foi reformulada para refletir as competências importantes em Vampiro. Algumas perícias originais foram combinadas, outras subdivididas, e nomes familiares aos leitores de VtM foram trazidos.
+
+[Original]
+
+
+--------------------------------------------------
+Lista completa (20 perícias)
+--------------------------------------------------
+
+
+Perícia | Uso | Substitui / vem de
+--- | --- | ---
+
+
+Atletismo | Correr, saltar, escalar, esquivar | Fate Core padrão |
+
+Carisma | Convencer, liderar, inspirar, seduzir | Provocar + Empatia social (VtM: Carisma) |
+
+Contatos | Encontrar pessoas, informações, rede de favores | Fate Core padrão |
+
+Dirigir | Conduzir veículos, perseguições | Fate Core padrão |
+
+Empatia | Ler intenções, detectar mentiras, primeira impressão | Fate Core padrão |
+
+Expressão | Arte, música, performance, ofícios criativos | Parte de Ofícios (VtM: Expressão) |
+
+Lutar | Combate corpo-a-corpo | Fate Core padrão |
+
+Investigar | Encontrar pistas, pesquisar, deduzir | Fate Core padrão |
+
+Conhecimento | Saber acadêmico, história, ciência, línguas | Parte de Saber (VtM: Academia) |
+
+Manipulação | Enganar, intimidar, chantagear, coagir | Enganar + Provocar (VtM: Manipulação) |
+
+Percepção | Sentidos alertas, notar detalhes | Fate Core padrão |
+
+Ocultismo | Saber sobrenatural, rituais, criaturas | Parte de Saber (VtM: Ocultismo) |
+
+Fisiologia | Força, vigor, resistência | Fate Core padrão (Physique) |
+
+Recursos | Dinheiro, posses, influência material | Fate Core padrão |
+
+Atirar | Armas de longo alcance | Fate Core padrão |
+
+Furtividade | Esconder-se, mover-se em silêncio | Fate Core padrão |
+
+Ruídos | Conhecer a rua, submundo, crime urbano | Nova (VtM: Manha) |
+
+Sobrevivência | Ermo, rastreamento, lidar com animais | Fate Core + Empatia Animal (VtM: Empatia Animal) |
+
+Tecnologia | Informática, mecânica, ofícios técnicos | Parte de Ofícios |
+
+Vontade | Resistir mentalmente, focar, superar medo | Fate Core padrão |
+
+
+--------------------------------------------------
+Escala de bônus
+--------------------------------------------------
+
+
+Valor | Nome | Interpretação
+--- | --- | ---
+
+
++0 | Medíocre | Sem treinamento |
+
++1 | Razoável | Treinamento básico |
+
++2 | Bom | Competente |
+
++3 | Ótimo | Profissional |
+
++4 | Excelente | Expert |
+
++5 | Fantástico | Mestre |
+
++6 | Épico | Lenda viva (morta) |
+
+
+--------------------------------------------------
+Escala de dificuldade (Obstáculos)
+--------------------------------------------------
+
+
+Obstáculo | Dificuldade
+--- | ---
+
+
++0 | Trivial |
+
++2 | Razoável (Fome leve; caça normal) |
+
++4 | Boa (Fome moderada) |
+
++6 | Ótima (Fome severa; violar a Máscara) |
+
++8 | Lendária (feitos sobre-humanos) |
+
+
+<section class="page"
+
+
+############################################################
+
+ASPECTOS
+
+############################################################
+
+
+id="page-aspectos" data-page="aspectos">
+
+
+============================================================
+Aspectos
+============================================================
+
+
+Os 5 aspectos obrigatórios e como escrevê-los
+
+
+[Original]
+
+Cada personagem tem **5 aspectos**: Conceito Principal, Problema, Mortal, e dois livres. Os três primeiros são obrigatórios e servem de base narrativa; os outros dois podem ficar em branco para serem definidos em jogo.
+
+
+--------------------------------------------------
+1. Conceito Principal
+--------------------------------------------------
+
+
+Define quem o personagem é em uma frase. **Deve incluir o clã ou linhagem**.
+
+
+[Exemplos]
+
+
+• "Ventrue corporativo que perdeu o estômago para o sangue"
+
+• "Brujah punk que virou a fúria em arma"
+
+• "Nosferatu informante do submundo digital"
+
+
+--------------------------------------------------
+2. Problema (Trouble)
+--------------------------------------------------
+
+
+A maior vulnerabilidade ou complicação narrativa. Costuma derivar do **Defeito do Clã** ou de um Defeito específico do VtM.
+
+
+>> Sugestões por clã (Camarilla)
+
+
+Clã | Pergunta que guia o problema
+--- | ---
+
+
+Brujah | O que te deixa furioso? |
+
+Caitiff | Quem ressente a sua existência? |
+
+Gangrel | Quais são suas marcas bestiais? |
+
+Malkaviano | Como você vê diferente? |
+
+Nosferatu | Como você é horripilante? |
+
+Toreador | Qual beleza é irresistível? |
+
+Tremere | A quem você é ligado? |
+
+Ventrue | De quem é o sangue mais fino? |
+
+
+>> Defeitos de VtM úteis como Problemas
+
+
+Qualquer um destes pode virar aspecto-problema, com adaptação ou não:
+
+
+Físicos
+
+
+Sangue Fraco · Mordida Embotada · Criança · Monstruoso · Cheiro de Cova · Vulnerável a Banimentos
+
+
+Mentais
+
+
+Coração Mole · Assombrado · Culpa Devastadora · Presença Estranha
+
+
+Sociais
+
+
+Sires Rivais · Caçado Como um Cão · Dormindo com o Inimigo · Inimizade de Clã · Membro em Provação
+
+
+Sobrenaturais
+
+
+Amaldiçoado · Farol do Impuro · Identidade Trocada · Alvo de Recrutamento · Destino Sombrio
+
+
+--------------------------------------------------
+3. Mortal
+--------------------------------------------------
+
+
+Algo da vida antes do Abraço. Excelente fonte para _compels_ (complicações) e para demonstrar competências antigas.
+
+
+[Exemplos]
+
+
+• "Jornalista investigativa que cutucava a máfia"
+
+• "Ex-militar com família que ainda visita no cemitério"
+
+• "Cantora de clube que nunca chegou ao topo"
+
+
+--------------------------------------------------
+4 e 5. Aspectos Livres
+--------------------------------------------------
+
+
+Qualquer coisa que enriqueça o personagem: relacionamento importante, item significativo, crença, dívida, virtude ou vício. Deixe em branco se quiser preencher em jogo.
+
+
+--------------------------------------------------
+Invocação e Compulsão (revisão rápida)
+--------------------------------------------------
+
+
+Ação | Custa | Efeito
+--- | --- | ---
+
+
+Invocar | 1 Ponto de Destino | +2 na rolagem OU rerrolar os 4dF |
+
+Compulsão aceita | Grátis | Jogador recebe 1 Ponto de Destino; complicação acontece |
+
+Compulsão recusada | 1 Ponto de Destino | Evita a complicação |
+
+
+<section class="page"
+
+
+############################################################
+
+FAÇANHAS E EXTRAS
+
+############################################################
+
+
+id="page-stunts" data-page="stunts">
+
+
+============================================================
+Façanhas & Extras
+============================================================
+
+
+Talentos, Méritos de VtM e recursos de cenário adaptados
+
+
+[Original]
+
+Façanhas custam 1 de recarga. Extras (posses, retentores, havens) têm custos variáveis. As façanhas genéricas do _Fate Core_ continuam válidas — estas aqui são **específicas de Vampiro**, adaptadas dos Méritos do V20.
+
+
+Gerais
+Por Perícia
+Backgrounds (Extras)
+
+
+>> Façanhas Gerais
+
+
+• Brilho da Saúde: Gaste 1 PD para parecer vivo por uma cena (pulsação, respiração, suor, função sexual).
+
+• Come Comida: Você consegue comer sem desconforto, embora depois precise vomitar em privado.
+
+• Memória Eidética: Gaste 1 PD para recordar perfeitamente uma cena passada. Com aval do Narrador, adiciona um aspecto que você "acabou de lembrar".
+
+• Ouvido do Ancião: Você tem acesso a um Ancião influente na cidade (Príncipe, Primogen, Bispo). Ele te atende se pedir.
+
+• Amigo do Subterrâneo: Não é Nosferatu, mas tem respeito deles. Pode usar esgotos e sistemas similares sem interferir.
+
+• Inofensivo: +2 em rolagens de Carisma para convencer que você não representa ameaça.
+
+• Toque Curador: Não precisa lamber ferimentos das presas para fechá-los — um toque basta.
+
+• Rebanho: Escolha Contatos. Você pode caçar socialmente usando Contatos em vez de Empatia + Manipulação, uma vez por noite (2ª vez: 1 PD).
+
+• Humano: Ganha 1 caixa extra de estresse mental, mas não pode ignorar consequência entrando em frenesi.
+
+• Inofensivo a Animais: Animais não reagem negativamente a você.
+
+• Poliglota: 3 línguas extras além da nativa e do inglês. Línguas antigas usam Conhecimento.
+
+• Sono Leve: +2 em rolagens para acordar ou permanecer acordado durante o dia (Percepção ou Vontade).
+
+• Precoce: No fim da sessão, pode trocar duas perícias em vez de uma.
+
+• Inligável: Você não pode ser alvo de Laço de Sangue. Tremere pagam 2 de recarga por esta façanha. Sabbat ritualistas considerem bem.
+
+
+>> Façanhas por Perícia
+
+
+> Contatos
+
+
+• Harpia: Você é Harpia da Camarilla na cidade. +2 em Contatos com vampiros influentes.
+
+• Influência: Escolha uma área (acadêmica, mídia, ocultismo, crime). +2 em Contatos nela.
+
+• Mentor: Um membro experiente do seu Clã te ensina.
+
+• Infiltrado: Tem um espião numa facção rival que te alimenta com informação.
+
+• Retentor: Ghoul leal. Bom (+3) em uma coisa, Razoável (+2) em duas. Uma fraqueza notável.
+
+• Mentor Espírito: Como Mentor, mas é um fantasma.
+
+
+> Manipulação
+
+
+• Identidade Alternativa: Alias bem-estabelecida. +2 para manter a fachada.
+
+
+> Ocultismo
+
+
+• Habilidade Oracular: Uma vez por sessão, role Ocultismo para adicionar um aspecto relacionado a destino/presságio. Pode usar mais vezes gastando PDs. Sempre tem um invoke gratuito — mas o aspecto pode não se realizar como você imagina…
+
+• Estudioso dos Inimigos: Escolha uma facção oposta (Garou, Sabbat, Caçadores, etc.). +2 em Ocultismo sobre eles.
+
+
+> Recursos
+
+
+• Refúgio: Investiu muito em abrigos. +2 em Recursos para melhorar ou reparar havens.
+
+
+> Ruídos
+
+
+• Mercado Negro: Pode usar Ruídos em lugar de Recursos quando lidar com o submundo.
+
+
+> Vontade
+
+
+• Resistência Mágica: +2 em Vontade para resistir a Taumaturgia e poderes similares.
+
+
+>> Backgrounds como Extras
+
+
+Custo em parênteses; sem indicação = 1 de recarga.
+
+
+• Veículo Blindado: Fechado, armadura 4 contra armas de fogo, 2 contra outras fontes.
+
+• Veículo Customizado: Racer, motoca, RV-haven, etc.
+
+• Arma de Assalto: AK full-auto, M-16, etc. Dano +2, pode atingir todos numa zona.
+
+• Espada Antiga: Forjada em sangue, rúnica, meteórica. Dano +2 e fere espíritos.
+
+• Refúgio de Elite (2): Bunker, cobertura ou setor fortificado de esgoto. Traz equipe básica e duas características especiais definidas agora ou em jogo.
+
+• Gangue/Músculos: Meia dúzia de mortais armados. Total 6 caixas de estresse e +2 em Lutar. Não são Seal Team 6.
+
+• Ghoul: NPC ghoulificado. +3 em uma perícia, +2 em duas outras, tem Potência Básica, está ligado a você por sangue.
+
+• Refúgio: Haven melhor do que seus Recursos indicariam. +2 em Recursos para melhorar ou definir recursos dele.
+
+• Território de Caça: Território oficial na cidade. Manutenção é sua responsabilidade mas caça fica muito mais fácil. Primeira caça da noite no seu território: rerrola um dado.
+
+• Ponto Quente: Um bar, boate ou strip club é seu.
+
+• Refúgio Compartilhado: [Adaptação minha] Múltiplos PJs rateiam o custo (1 de recarga cada PJ envolvido, mínimo 2). Cada PJ contribui define uma característica do lugar. Benefícios e riscos são compartilhados — e se um quebra a Máscara no haven, todos sofrem.
+
+• Título: Pode usar Título em lugar de Contatos ou Carisma ao lidar com vampiros. Traz responsabilidades também. (1) Harpia, Whip, Deputy, Líder de Matilha, Sacerdote de Matilha, Mão Negra
+
+• (2) Primogen, Bispo, Xerife, Alastor, Barão, Flagelo
+
+• (3) Arcebispo, Príncipe
+
+• (4) Regente, Justicar
+
+
+[Regra alternativa para Títulos]
+
+
+Em vez dos custos escalonados, cada título custa 1 de recarga fixa — porque cargos maiores atraem inimigos mais perigosos e cobram mais obrigações. Use a regra que fizer mais sentido para seu grupo.
+
+
+<section class="page"
+
+
+############################################################
+
+DISCIPLINAS
+
+############################################################
+
+
+id="page-disciplinas" data-page="disciplinas">
+
+
+============================================================
+Disciplinas
+============================================================
+
+
+Os poderes do sangue — cada nível é um Extra de 2 de recarga
+
+
+[Como funcionam]
+
+
+Cada **Disciplina** tem 4 níveis. Cada nível é um Extra separado que custa **2 de recarga**. O nível 4 é _exclusivo de Anciões_ — Neonatos não têm acesso. Muitas Disciplinas têm um _efeito passivo_ sempre ativo, descrito no topo.
+
+
+**Custo de ativação** — cada nível indica seu custo com um badge colorido:
+
+
+Gratuito Sem custo — efeito passivo ou sempre ativo.
+1 Sangue Gasta do seu Pool de Sangue.
+1 PD Gasta um Ponto de Destino (vontade).
+1 Sangue + 1 PD Gasta os dois.
+2 PD Dois Pontos de Destino.
+1 Estresse próprio Você aceita dano para ativar.
+
+
+Ver Pool de Sangue para quantos pontos de sangue seu vampiro tem por geração.
+
+
+[O que foi preenchido por mim]
+
+
+O documento original tinha **lacunas importantes**: Animalismo veio truncado (só tinha o nível 4), Auspícios não aparecia, e três níveis de Ancião estavam em branco (Dementação 4, Ofuscação 4, Temporis 4). Completei todos baseado no V20 e no espírito da adaptação. Cada seção foi marcada.
+
+
+Físicas
+Mentais
+Sociais
+Sobrenaturais
+Por Clã (completo)
+
+
+>> Celeridade [Original]
+
+
+Passivo: Gratuito Um personagem com Celeridade que tira sucesso com estilo em combate pode usar o boost para uma ação adicional.
+
+
+1
+
+Básico: Gratuito +2 em Atletismo para velocidade e defesa física. Permanece sempre ativo — não exige ativação.
+
+
+2
+
+Intermediário: 1 Sangue +2 adicional em velocidade e defesa (total +4). Gaste 1 Sangue para ativar esta camada (ou qualquer superior que você possua) por uma cena.
+
+
+3
+
+Avançado: 1 Sangue Mais +2 (total +6). Incluído na mesma ativação do Intermediário — se já pagou 1 Sangue para ativar a Celeridade nessa cena, usa o nível máximo que tiver.
+
+
+4
+
+Flor da MorteAncião 1 Sangue + 1 PD Faça um ataque corpo-a-corpo contra _todos_ os adversários na zona.
+
+
+>> Fortitude [Original]
+
+
+Passivo: Gratuito Qualquer personagem com Fortitude pode usar Fisiologia em lugar de Atletismo para defender-se de ataques físicos.
+
+
+1
+
+Básico: Gratuito Armadura 2 contra estresse físico. Sempre ativa — sem custo de ativação.
+
+
+2
+
+Intermediário: Gratuito +2 em Fisiologia quando usada para defender. Sempre ativo.
+
+
+3
+
+Avançado: Gratuito Ganha uma caixa extra de consequência moderada. Permanente.
+
+
+4
+
+Resistência LendáriaAncião 1 PD Gaste 1 PD para cancelar todo o dano de um ataque. Adicionalmente, quando se defender com sucesso usando Fisiologia, _destrói a arma que te atingiu_.
+
+
+>> Potência [Original]
+
+
+Passivo: Gratuito Fisiologia mapeia bem a Força do VtM. Os bônus de Potência são sempre ativos — não exigem ativação. Consulte V20 pg. 261 para feitos de força exemplificados.
+
+
+1
+
+Básico: Gratuito +2 em Fisiologia para força bruta, +1 de dano desarmado ou com arma branca. Sempre ativo.
+
+
+2
+
+Intermediário: Gratuito +4 em Fisiologia, +2 de dano. Sempre ativo.
+
+
+3
+
+Avançado: Gratuito +6 em Fisiologia, +3 de dano. Sempre ativo.
+
+
+4
+
+Palma TrovejanteAncião 1 Sangue Gaste 1 Sangue e bata as mãos para criar uma onda de choque que ataca todos na zona. Usa Lutar, com o bônus de dano +3 da Potência.
+
+
+>> Visceratika [Parcial]
+
+
+Passivo: Gratuito "Pele do Camaleão" dá +2 em Furtividade para evitar ser visto (Gárgulas). Sempre ativo.
+
+
+1
+
+Escrutinar a Pedra: 1 Sangue Gaste 1 Sangue e use Percepção para detectar qualquer movimento dentro de um edifício por até uma noite.
+
+
+2
+
+Vínculo com a Montanha: 1 Sangue Como Fundir-se à Terra de Proteu, mas funciona em pedra e concreto. Gaste 1 Sangue para ativar.
+
+
+3
+
+Armadura de Terra: Gratuito A Gárgula ganha 2 caixas de estresse adicionais (total 5, antes de Fisiologia), pois seu corpo endurece como pedra. Permanente.
+
+
+4
+
+Fúria PetrificadaAncião [Adaptação minha] 1 Sangue + 1 PD Gaste 1 Sangue + 1 PD. Transforme-se em uma forma bestial de pedra animada para uma cena: armadura 3, Fisiologia +4, dano natural +3, imune a fogo não-mágico. Durante esse tempo, mover-se exige uma rolagem de Atletismo contra +2 ou você fica parado na zona.
+
+
+>> Auspícios [Adaptação minha]
+
+
+Passivo: Gratuito +1 em Percepção sempre ativo. Você percebe o sobrenatural ao redor de maneira intuitiva, mesmo quando não sabe identificar o quê.
+
+
+1
+
+Sentidos Intensificados: 1 PD Gaste 1 PD para ganhar +4 em Percepção numa cena — pode ouvir batidas de coração a zonas de distância, ler cartas de cabeça para baixo, sentir feromônios, etc. Você pode ser sobrecarregado: em ambientes ruidosos/intensos, aceite uma Compulsão grátis para um problema sensorial.
+
+
+2
+
+Sintonia da Aura: Gratuito Role Empatia contra a Vontade do alvo para ler sua aura. Cada sucesso revela uma coisa: emoção dominante, se é sobrenatural (e qual tipo), se há Laço de Sangue, e semelhantes. Um sucesso com estilo revela até um aspecto escondido do alvo.
+
+
+3
+
+Toque do Espírito: Gratuito Tocando um objeto, role Ocultismo para "ler" eventos passados ligados a ele. Cada sucesso revela uma cena. Consequências emocionais podem ser transferidas para você — Narrador pode impor consequência mental leve se a cena foi traumática.
+
+
+4
+
+PresciênciaAncião 1 PD Uma vez por sessão, declare que você "sabia que isso ia acontecer" e adicione um aspecto de cena relacionado a um evento iminente. Ganha um invoke gratuito. Alternativamente, gaste 1 PD e role Ocultismo para prever as 5 ações mais prováveis de um alvo na próxima cena — ganhe +2 em defesas contra ele.
+
+
+>> Dementação [Parcial]
+
+
+Passivo: Gratuito Personagens com Dementação podem contar com "falhar para frente" em rolagens mentais/sociais, à custa de agravar temporariamente suas derangements (perturbações).
+
+
+1
+
+A Assombração: Gratuito Role Manipulação +2 contra a Vontade da vítima para causar estresse mental — manifesta-se como alucinações durante uma cena.
+
+
+2
+
+Olhos do Caos: Gratuito Role Ocultismo para entender qualquer sistema complexo, substituindo Investigar ou mesmo Empatia/Conhecimento a critério do Narrador.
+
+
+3
+
+Insanidade Total: 1 PD Gaste 1 PD e role Vontade contra Vontade para atacar mentalmente todos na sua zona.
+
+
+4
+
+Flagelo PessoalAncião [Adaptação minha] 1 Sangue + 1 PD Gaste 1 Sangue + 1 PD. Role Manipulação +2 contra a Vontade da vítima. Se bem-sucedido, implante uma perturbação persistente...
+
+
+>> Dominação [Original]
+
+
+Passivo: Gratuito Dominação permite criar vantagem através de condicionamento. Exige ao menos uma cena de ameaças e abuso. A vantagem é "Condicionado a X" — X deve ser algo específico, não apenas "obedecer".
+
+
+1
+
+Comando: Gratuito Role Manipulação +2 contra a Vontade para um comando único e curto. Se a vítima resiste, toma estresse mental. Comandos que impliquem dano pessoal ou violação moral dão +2 na resistência. Comandos suicidas _falham automaticamente_.
+
+
+2
+
+Mente Esquecida: Gratuito Role Carisma contra Vontade para reescrever memórias da vítima, começando pela cena mais recente e indo mais longe com maiores graus de sucesso.
+
+
+3
+
+Possessão: 1 PD Gaste 1 PD e role Manipulação contra Vontade para assumir o corpo de um mortal.
+
+
+4
+
+Manipulação em MassaAncião 1 Sangue + 1 PD Gaste 1 Sangue + 1 PD. Comando e Mente Esquecida podem ser usados contra todos na sua zona. Role contra a Vontade mais alta, ou +2 como padrão.
+
+
+>> Presença [Original]
+
+
+Passivo: Gratuito "Assombrosidade" — +2 em Carisma quando se dirige a uma multidão. Sempre ativo.
+
+
+1
+
+Olhar Aterrorizante: Gratuito Revela sua natureza vampírica por um instante. Role Manipulação +2 contra Vontade. Sucesso: a vítima deve fugir da sua presença ou sofrer estresse mental.
+
+
+2
+
+Encantamento: 1 PD Gaste 1 PD e role Carisma +2 contra Vontade. Vítima te vê como amiga próxima e aliada durante a duração:
+
+
+• +1: uma hora
+• +2: uma noite
+• +3: uma semana
+• +4: um mês
+• +5: um ano
+
+
+3
+
+Majestade: 1 PD Gaste 1 PD para ativar por uma cena. Enquanto ativa, quem tentar te causar estresse na sua zona ou adjacente precisa rolar Vontade contra seu Carisma primeiro. Só pode agir se tiver sucesso. Só age no mesmo turno com sucesso _com estilo_, gastando the boost.
+
+
+4
+
+ConvocaçãoAncião 1 Sangue + 1 PD Gaste 1 Sangue + 1 PD e role Contatos +2 contra Vontade. Vítima deve vir até você com toda a velocidade possível ou sofrer estresse mental igual ao grau de sucesso. Falhando, não pode invocá-la de novo naquela noite.
+
+
+>> Animalismo [Parcial] [Preenchi níveis 1-3]
+
+
+Passivo: Gratuito Animais reagem à sua presença com cautela natural mas não hostilidade. Você pode se aproximar de qualquer besta sem assustá-la.
+
+
+1
+
+Acalmar a Besta [Adaptação minha]: Gratuito Role Carisma ou Empatia contra Vontade para comunicar-se com um animal e dar-lhe uma ordem simples. Sucesso com estilo permite perguntas básicas — o que ele viu, cheirou, ouviu.
+
+
+2
+
+Ira Voraz [Adaptação minha]: 1 PD Gaste 1 PD. Role Manipulação para despertar a fúria de um animal (ou vampiro em frenesi), direcionando-a a um alvo específico. Contra vampiros, é Vontade contra Vontade; uma falha simples atrasa o frenesi para mais tarde naquela noite.
+
+
+3
+
+Partilha do Espírito [Adaptação minha]: 1 PD Gaste 1 PD e role Ocultismo contra +2. Sua mente entra no corpo de um animal próximo, abandonando seu próprio corpo, que fica em torpor. Você age através do animal com seus sentidos e movimentos, mas usa sua Mente/Vontade para escolhas. Sair a qualquer momento.
+
+
+4
+
+Reflexo EspelhadoAncião Gratuito Use Empatia em lugar de Atletismo _ou_ de Lutar (escolha) para defesa em combate. Você lê o oponente como um predador lê sua presa.
+
+
+>> Quimerismo [Original]
+
+
+Passivo: Gratuito Você pode criar pequenas ilusões incidentais à vontade, apenas como cor narrativa.
+
+
+1
+
+Fata Morgana: Gratuito Role Expressão para criar uma ilusão em uma cena. Quem interagir diretamente deve rolar Vontade contra sua Manipulação para ver através.
+
+
+2
+
+Permanência: 1 PD Gaste 1 PD para a ilusão persistir mesmo depois que você sair da zona — a ilusão permanece naquela zona.
+
+
+3
+
+Realidade Horrenda: 1 PD Role Carisma para causar estresse físico contra uma vítima através da ilusão. Custa 1 PD a não ser que já tenha gasto em Permanência nessa cena. Defesa com Atletismo, Fisiologia ou Vontade (o maior).
+
+
+4
+
+Pesadelo CompartilhadoAncião 1 Sangue + 1 PD Gaste 1 Sangue + 1 PD. Realidade Horrenda afeta todos em uma zona simultaneamente.
+
+
+>> Ofuscação [Parcial]
+
+
+Passivo: Gratuito +1 por nível de Ofuscação para resistir a ser visto por Auspícios. 1 PD Pode tentar desaparecer mesmo sendo observado: gaste 1 PD e role Furtividade contra a maior Percepção observando. Falha causa estresse mental.
+
+
+1
+
+Presença Oculta: Gratuito Pode ficar invisível se não estiver sendo observado. Role Furtividade contra Percepção para interagir com o ambiente e continuar invisível.
+
+
+2
+
+Máscara de Mil Faces: Gratuito Role Manipulação contra Empatia para se disfarçar como outra pessoa.
+
+
+3
+
+Encobrir a Reunião: 1 PD Gaste 1 PD. Estende seus poderes de Ofuscação para um aliado por grau de sucesso (1 aliado por +1).
+
+
+4
+
+Amigo AntigoAncião [Adaptação minha] 1 PD Gaste 1 PD e role Manipulação contra Vontade. Quem te observar começa a vê-lo como alguém familiar e de confiança — um velho amigo, um parente, até um reflexo. Efeito dura a cena. Se você agir agressivamente, o alvo rola Vontade contra sua Manipulação para ver através, com +2 se a agressão foi contra ele. Diferente de Presença Oculta, você _é visto_ — apenas não é identificado como ameaça.
+
+
+>> Obtenebração [Original]
+
+
+Passivo: Gratuito "Jogo de Sombras" — pode usar Ocultismo para criar vantagens relacionadas a manipulação de sombras.
+
+
+1
+
+Véu da Noite: 1 Sangue Gaste 1 Sangue para invocar uma nuvem de escuridão contorcida: barreira +4 contra Percepção dentro e através da zona. _OU_ a zona ganha os aspectos "Escuridão" e "Sufocante", com um invoke grátis em cada.
+
+
+2
+
+Braços do Abismo: Gratuito Role Vontade contra +1 para convocar tentáculos de sombra. Cada boost, um tentáculo extra. Cada tentáculo: Fisiologia +3, Lutar +2, 3 caixas físicas.
+
+
+3
+
+Forma Tenebrosa: 1 Sangue Gaste 1 Sangue para se tornar um monstro-sombra-tentacular por uma cena. Pode usar Ocultismo +2 em lugar de Lutar. Tentáculos causam dano 2. Sucesso com estilo: ataque extra. +2 em Carisma para aterrorizar.
+
+
+4
+
+Sombra GêmeaAncião 1 Sangue + 1 PD Gaste 1 Sangue + 1 PD para animar sua sombra que se ergue e luta por você durante uma cena. Tem uma perícia igual ao seu Ocultismo e duas iguais à sua Manipulação. Você _e_ sua sombra agem a cada turno.
+
+
+>> Proteu [Original]
+
+
+Passivo: Gratuito A qualquer momento, pode ativar "Olhos da Besta" — seus olhos brilham vermelho-laranja e você elimina penalidades/obstáculos por escuridão. Proteu também dificulta que Garou farejem a mácula do Wyrm em você.
+
+
+1
+
+Garras Ferais: 1 Sangue Gaste 1 Sangue para ativar por uma cena. Ataques desarmados ganham +2 de dano que _não pode ser resistido com Fisiologia_ a menos que a vítima tenha Fortitude. (Ver Dano Agravado.)
+
+
+2
+
+Fundir-se à Terra: 1 Sangue Gaste 1 Sangue. Você mergulha em qualquer pedaço de terra e dorme ali pela noite.
+
+
+3
+
+Forma da Besta: 1 Sangue Gaste 1 Sangue para se transformar em lobo ou morcego por uma cena. Morcego: voa, +2 em Atletismo para voar e +2 em Percepção (audição). Lobo: +2 em Atletismo para correr, +2 em Lutar mordendo, mordida +2 dano (não cumulativo com Garras Ferais).
+
+
+4
+
+Controle da TerraAncião 1 Sangue + 1 PD Gaste 1 Sangue + 1 PD (além do custo de Fundir-se à Terra). Após se fundir, pode nadar pelo solo à velocidade semelhante à de natação em água. Metal, água e concreto te impedem.
+
+
+>> Quietus [Original]
+
+
+Passivo: 1 PD Gaste 1 PD para adicionar "Silêncio da Morte" como aspecto de cena, com um invoke grátis.
+
+
+1
+
+Toque do Escorpião: 1 Estresse próprio Aceite 1 estresse físico (cura no fim da cena) para envenenar seu toque e aumentar o dano de qualquer arma cortante em +2 pela cena.
+
+
+2
+
+Chamado de Dagon: 1 Sangue Por uma cena após tocar a vítima, gaste 1 Sangue para iniciar ataques contra ela. Role Vontade contra Fisiologia — vítima se afoga no próprio sangue.
+
+
+3
+
+Sabor da Morte: 1 Sangue Gaste 1 Sangue para cuspir sangue cáustico. Use Atirar até uma zona de distância. Dano 4.
+
+
+4
+
+Envenenar o Poço da VidaAncião 1 Sangue + 1 PD Gaste 1 Sangue + 1 PD para envenenar o sangue de um mortal. Qualquer vampiro que beber dele sofre 6 de estresse físico, que pode ser absorvido por uma consequência "Envenenado".
+
+
+>> Serpentis [Original]
+
+
+Passivo: Gratuito "Língua da Áspide" — pode estender sua língua bifurcada até ~45 cm, usando-a como arma de +1 dano ou para beber sangue como se fosse uma presa.
+
+
+1
+
+Olhos da Serpente: Gratuito Pode paralisar temporariamente qualquer mortal que encontre seu olhar. Se ameaçado ou atacado, o mortal rola Vontade contra seu Carisma para se soltar, +2 se sofrer estresse físico ou mental.
+
+
+2
+
+Forma da Serpente: 1 Sangue Gaste 1 Sangue para se transformar por uma cena. Sua pele concede armadura 1 contra estresse físico. Mordida +2 de dano e venenosa fatal para mortais. Pode passar por qualquer abertura em que a cabeça caiba.
+
+
+3
+
+Coração das Trevas: 1 Sangue Ritual único: gaste 1 Sangue para remover seu coração e escondê-lo num vaso canópico. Concede armadura 2 contra estresse mental, imunidade a estaca e uma _baita_ vulnerabilidade. Não precisa ser repetido — o efeito é permanente enquanto o vaso estiver intacto.
+
+
+4
+
+Ladrão de CoraçõesAncião 1 Sangue Gaste 1 Sangue. Ataque com Lutar contra Fisiologia. Sucesso com estilo: arranca o coração do oponente. De qualquer forma, o ataque causa estresse físico.
+
+
+>> Temporis [Parcial]
+
+
+Passivo: Gratuito Qualquer vampiro com Temporis tem um relógio interno perfeito e pode colocar múltiplos alarmes mentais.
+
+
+1
+
+Contemplação Recorrente: Gratuito Role Manipulação contra Vontade da vítima em linha de visão. Sucesso: ela vive uma recorrência mental, experimentando os mesmos poucos minutos de novo e de novo, até a cena acabar ou algo dramático interromper.
+
+
+2
+
+Momento de Chumbo: 1 Sangue Gaste 1 Sangue e role Ocultismo contra Vontade para congelar um alvo vivo (objetos muito mais fácil). Uma rodada por grau de sucesso.
+
+
+3
+
+Dons de Cloto: 1 Sangue Gaste 1 Sangue e role Ocultismo contra +0. Ganhe uma ação extra neste turno, mais uma por boost. Na próxima rodada, gaste outro Sangue para repetir o mesmo número de ações bônus.
+
+
+4
+
+Fenda no TempoAncião [Adaptação minha] 1 Sangue + 1 PD Gaste 1 Sangue + 1 PD. Você "volta" 1 rodada no tempo — desfaz as ações feitas contra você na rodada anterior, mas mantém qualquer descoberta/informação. Alternativamente, gaste 1 Sangue + 1 PD no início de uma cena para saber exatamente quem estará lá e em que estado — o Narrador compartilha um aspecto de situação e uma dificuldade, e você já pode se preparar.
+
+
+>> Vicissitude [Original]
+
+
+Passivo: Gratuito Pode rolar Expressão para impor mudança temporária de aparência em vítima contida ou voluntária, ou em si mesmo, por uma cena.
+
+
+1
+
+Moldar a Carne: 1 Sangue Gaste 1 Sangue. Use Conhecimento em lugar de Lutar por uma cena, torcendo a carne do oponente. Ataques causam +2 de dano.
+
+
+2
+
+Moldar os Ossos: 1 Sangue Gaste 1 Sangue para causar +3 em vez de +2 usando Conhecimento como Lutar. Também pode se alterar para causar +2 desarmado pela noite (esporões ósseos). E fazer alterações mais duradouras em voluntários, convertendo Fisiologia em armadura ou bônus de dano.
+
+
+3
+
+Forma Horrenda: 1 Sangue Gaste 1 Sangue para assumir a Forma Horrenda: armadura 2 contra estresse físico, +2 em Fisiologia, +2 de dano desarmado por garras.
+
+
+4
+
+Quiróptero PredatórioAncião 1 Sangue + 1 PD Gaste 1 Sangue + 1 PD. Como Forma Horrenda, mas também pode voar usando Atletismo e é forte o bastante para agarrar alguém com os pés e carregar pelo ar.
+
+
+>> Necromancia [Original]
+
+
+_Ver página dedicada — cada caminho tem seus próprios níveis._
+
+
+>> Taumaturgia [Original]
+
+
+_Ver página dedicada — cada caminho tem seus próprios níveis, mais os rituais._
+
+
+>> Disciplinas nativas de cada Clã
+
+
+Esta é a referência para **escolher seus 3 níveis iniciais**. Cada Clã tem três Disciplinas nativas, e você distribui os 3 níveis grátis entre elas (1/1/1, 2/1/0 ou 3/0/0). Disciplinas fora do Clã exigem gastar recarga (2 por nível) e aprovação do Narrador.
+
+
+> Camarilla
+
+
+Clã | Disciplinas nativas | Defeito do Clã
+--- | --- | ---
+
+
+Brujah | Celeridade, Potência, Presença | Tendência ao frenesi de Ira (facilmente provocado) |
+
+Gangrel | Animalismo, Fortitude, Proteu | A cada frenesi, ganha uma característica animal permanente |
+
+Malkaviano | Auspícios, Dementação, Ofuscação | Todos sofrem de perturbação mental incurável |
+
+Nosferatu | Animalismo, Ofuscação, Potência | Aparência monstruosa inocultável; autom. quebra Máscara em público |
+
+Toreador | Auspícios, Celeridade, Presença | Presos pela beleza — difícil desviar o olhar de algo belo |
+
+Tremere | Auspícios, Dominação, Taumaturgia | Ligados pelo sangue à hierarquia Tremere (Laço triplo com o Conselho) |
+
+Ventrue | Dominação, Fortitude, Presença | Dieta restrita — só bebe de um tipo muito específico de vítima |
+
+
+> Sabbat
+
+
+Clã | Disciplinas nativas | Defeito do Clã
+--- | --- | ---
+
+
+Lasombra | Dominação, Obtenebração, Potência | Não possui reflexo; dificulta fotos, espelhos, vigilância |
+
+Tzimisce | Animalismo, Auspícios, Vicissitude | Precisa dormir com terra da sua pátria abaixo do corpo |
+
+
+_Muitos Sabbat também são de clãs antirribalhistas (Brujah Antitribu, Toreador Antitribu, etc.): usam as mesmas Disciplinas do clã-mãe mas com Humanidade substituída por outro Caminho._
+
+
+> Independentes
+
+
+Clã | Disciplinas nativas | Defeito do Clã
+--- | --- | ---
+
+
+Assamita | Celeridade, Ofuscação, Quietus | Obsessão pelo sangue Kindred (compulsão de diablerie) |
+
+Followers of Set | Ofuscação, Presença, Serpentis | Vulnerabilidade a luz intensa, mesmo não-solar |
+
+Giovanni | Dominação, Potência, Necromancia | Mordida monstruosa que causa dano extra e não adormece |
+
+Ravnos | Animalismo, Ofuscação, Quimerismo | Cada Ravnos tem um vício/crime obrigatório ligado ao seu sangue |
+
+
+> Clãs sem clã
+
+
+Clã | Disciplinas nativas | Defeito
+--- | --- | ---
+
+
+Caitiff | Escolha qualquer 3 níveis iniciais | Desprezado pela Camarilla; suspeito por toda sociedade Kindred |
+
+Pander | Escolha qualquer 3 níveis iniciais | Equivalente Sabbat do Caitiff; respeitado internamente mas suspeito fora |
+
+
+> Linhagens (Bloodlines) comuns
+
+
+Linhagem | Clã-mãe | Disciplinas nativas
+--- | --- | ---
+
+
+Gárgulas | Criada pelos Tremere | Fortitude, Potência, Visceratika |
+
+Salubri | Clã extinto/caçado | Auspícios, Fortitude, Valeren (cura) |
+
+True Brujah | Ramo antigo | Potência, Presença, Temporis |
+
+Daughters of Cacophony | Linhagem independente | Fortitude, Melpominee (canto), Presença |
+
+Samedi | Linhagem caribenha | Fortitude, Obeah (necromancia variante), Thanatosis |
+
+Kiasyd | Ramo Lasombra | Dominação, Mytherceria, Obtenebração |
+
+
+[Linhagens com Disciplinas raras]
+
+
+Valeren, Melpominee, Obeah, Thanatosis e Mytherceria não aparecem na página de Disciplinas deste guia — são obscuras demais. Se quiser jogar uma linhagem, combine com o Narrador para adaptar ou use uma Disciplina próxima (Valeren ≈ Auspícios + habilidade de cura; Mytherceria ≈ Obtenebração com sabor feérico; etc.).
+
+
+>> Quais Disciplinas são "exclusivas" de um Clã?
+
+
+Estas só aparecem em _uma_ linhagem e são muito difíceis de aprender fora dela (exigem diabolerie, roubo de tomos ou gancho narrativo forte):
+
+
+Disciplina | Clã único
+--- | ---
+
+
+Dementação | Malkaviano |
+
+Obtenebração | Lasombra |
+
+Proteu | Gangrel |
+
+Quietus | Assamita |
+
+Quimerismo | Ravnos |
+
+Serpentis | Followers of Set |
+
+Taumaturgia | Tremere |
+
+Necromancia | Giovanni (e alguns Sabbat) |
+
+Temporis | True Brujah |
+
+Vicissitude | Tzimisce |
+
+Visceratika | Gárgulas |
+
+
+>> Quais Disciplinas qualquer um pode aprender?
+
+
+Estas são as Disciplinas "comuns" — aparecem em múltiplos Clãs e são mais fáceis de justificar aprender fora do Clã com um bom conceito:
+
+
+**Animalismo, Auspícios, Celeridade, Dominação, Fortitude, Ofuscação, Potência, Presença.**
+
+
+<section class="page"
+
+
+############################################################
+
+TAUMATURGIA
+
+############################################################
+
+
+id="page-taumaturgia" data-page="taumaturgia">
+
+
+============================================================
+Taumaturgia
+============================================================
+
+
+Os caminhos e rituais da magia de sangue Tremere
+
+
+[Regra base]
+
+
+Taumaturgia funciona em **caminhos**. Cada personagem escolhe um caminho primário e pode aprender outros. Cada nível de caminho é um Extra de 2 de recarga (como uma Disciplina normal). Além disso, para cada nível de Taumaturgia, o personagem **recebe um ritual de mesmo nível** — rituais adicionais custam recarga.
+
+
+Caminho do Sangue
+Atração das Chamas
+Movimento da Mente
+Controle do Clima
+Rituais
+
+
+>> Caminho do Sangue [Original]
+
+
+1
+
+Gosto de Sangue: Se puder provar o sangue, role Ocultismo. Descobre o Clã ou um aspecto relacionado ao clã, ou responde uma pergunta — uma por grau de sucesso (1 em +1, 2 em +2, etc.). Perguntas precisam ser sobre sangue.
+
+
+2
+
+Roubo de Vitae: Role Vontade contra Fisiologia para arrancar sangue de um alvo em linha de visão, até 2 zonas. Causa estresse físico e restaura igual em estresse mental ou físico seu. Dano 2: trata consequência leve. Dano 4: trata consequência moderada. O dano deve ocorrer em um único ataque.
+
+
+3
+
+Caldeirão de Sangue: Tocando a vítima, role Ocultismo +2 contra Fisiologia para ferver o sangue dela. Mortal: qualquer dano mata. Vampiro: trate como arma +2 de dano.
+
+
+4
+
+Sangue de PotênciaAncião [Adaptação minha] Gaste 1 PD. Por uma cena, quando você gasta sangue para fazer efeitos (por ex. aumentar perícia — ver Gastar Sangue), o custo em Fome é pago pela sua vítima mais próxima (contato ou linha de visão). Ela agrava uma consequência de fome/dor relacionada.
+
+
+>> Atração das Chamas [Original]
+
+
+Passivo: Qualquer falha causa estresse mental igual ao grau da falha. Qualquer nível deixa acender chamas pequenas à vontade (rolagem simples de Vontade).
+
+
+1
+
+Básico: Use Vontade em lugar de Atirar para lançar chamas a até 2 zonas. Defesa: Atletismo ou Vontade. Arma +3 dano. Pelo menos 1 ponto do estresse deve ser mental.
+
+
+2
+
+Intermediário: +2 em Vontade para o ataque.
+
+
+3
+
+Avançado: As chamas agora são arma +4 de dano. 2 pontos de estresse devem ser mentais.
+
+
+4
+
+InfernoAncião [Adaptação minha] Gaste 1 PD. Incendeia toda uma zona: o aspecto "Inferno" é adicionado. Todos dentro sofrem dano 4 por rodada (mínimo 1 mental) até saírem. Fogo dura a cena. Pelo menos 1 PD adicional deve ser gasto por rodada para mantê-lo sob controle — sem isso, vira aspecto persistente da cena até ser apagado naturalmente.
+
+
+>> Movimento da Mente [Original]
+
+
+1
+
+Básico: Use Vontade em lugar de Fisiologia para levantar objetos e pessoas. Vítimas resistem com Vontade. Levantar pessoa média: obstáculo +2.
+
+
+2
+
+Intermediário: +2 em Vontade substituindo Fisiologia — permite feitos sobre-humanos de telecinese.
+
+
+3
+
+Avançado: +4 em Vontade substituindo Fisiologia.
+
+
+4
+
+Mão do MestreAncião [Adaptação minha] Pode agir em multiplas "mãos" telecinéticas simultâneas. Gaste 1 PD para ter 2 ações telecinéticas por turno (ataque/manipulação/defesa), cada qual rolada separadamente.
+
+
+>> Controle do Clima [Original]
+
+
+1
+
+Névoa, Chuva ou Neve: Role Vontade para adicionar um aspecto à cena, como uma vantagem. O aspecto pode ser qualquer coisa relacionada a névoa, chuva, neve, ou ao clima natural do local e estação.
+
+
+2
+
+Ventos Fortes ou Tempestade: Role Vontade para empurrar todos numa zona com uma rajada. Quem está na zona resiste com Fisiologia ou é lançado a uma zona adjacente, levando estresse físico. Se já criou vantagem climática, gaste 1 PD para invocar uma tempestade séria apropriada ao clima.
+
+
+3
+
+Raio: Role Vontade para um ataque físico à distância. Arma +4 dano. Defesa: Fisiologia ou Vontade.
+
+
+4
+
+Fúria CelestialAncião [Adaptação minha] Gaste 2 PD. Invoca uma tempestade catastrófica em uma área urbana inteira. A cidade ganha por uma noite o aspecto "Tempestade Monumental" com 3 invokes grátis. Quebrar este poder publicamente é quebra automática da Máscara.
+
+
+>> Rituais de Taumaturgia [Original]
+
+
+Rituais são magias preparadas. Você recebe 1 ritual grátis por nível de Taumaturgia em um caminho. Rituais adicionais custam recarga (1 por ritual, ou um Extra coletivo "Biblioteca de Rituais" por 2 de recarga dando 5 rituais).
+
+
+> Básicos
+
+
+• Laço da Língua Acusadora: Vontade contra Vontade do taumaturgo. Se a vítima falar algo negativo sobre ele durante a cena, fica marcada.
+
+• Onda de Sangue: Após o ritual, conta uma consequência leve relacionada à Besta como "tratada". OU permite rolagem de Ocultismo para tratar consequências bestiais: +2 leve, +4 moderada, +6 severa.
+
+• Caminhada Sanguínea: Versão limitada de Gosto de Sangue que revela linhagem do vampiro — uma geração para trás por grau de sucesso.
+
+• Comunicação com o Sire Kindred: Basicamente um telefonema ocultista. Muitos anciões Tremere nem têm celular, o que complica.
+
+• Defesa da Perdição de Madeira: A próxima estaca que te atingir ainda causa dano, mas não paralisa. Você precisa manter um pedaço de madeira na boca o tempo todo.
+
+• Toque do Demônio: Amaldiçoa um mortal escondendo algo sobre ele discretamente.
+
+• Olhos do Falcão Noturno: Replica efeitos básicos de Proteu.
+
+• Iluminar a Trilha da Presa: Após o ritual, pode usar Ocultismo em lugar de Investigar para seguir um rastro durante uma cena.
+
+• Relâmpago Mecânico: Role Ocultismo para atacar uma máquina, causando estresse e mal-funcionamento.
+
+• Foco Principal da Infusão de Vitae: Aceite estresse mental para infundir vitae em um objeto. Depois pode reduzi-lo aos elementos para limpar caixas de estresse mental ou tratar consequência de fome, 1 por 1.
+
+• Cura da Pátria: Rolagem de Vontade com terra da pátria marca uma consequência física como tratada.
+
+• Proteção contra Ghouls: Vontade do Ghoul contra seu Ocultismo (oposta) para cruzar a área vedada. Se falhar e forçar passagem, toma dano físico igual à sua rolagem para ativar o ritual.
+
+
+> Intermediários
+
+
+• Osso das Mentiras: Role Ocultismo em lugar de Empatia contra a Manipulação da vítima, fazendo um osso escurecer se ela mentir.
+
+• Passagem Incorpórea: Permite que o taumaturgo passe de uma zona para adjacente, mesmo através de barreira.
+
+• Espelho da Segunda Visão: Uma vez preparado, por uma cena você pode olhar reflexos nele e rolar Percepção para determinar se são sobrenaturais e de que tipo.
+
+• Pavese da Presença Repulsiva: Na primeira vez que um uso de Presença contra você causaria estresse numa noite, esse estresse ricocheteia para o atacante.
+
+• Assistente Sanguinário: Role Ocultismo em lugar de Contatos para criar um assistente sinistro alimentado por sangue, durante uma noite.
+
+• Flecha do Descanso Retardado: Após atacar com estaca, uma lasca se quebra e se arrasta rumo ao coração da vítima. Ataque secundário com seu Ocultismo, e de novo se alguém tentar tirar.
+
+• Proteção contra Lupinos: Como Proteção contra Ghouls.
+
+
+> Avançados [Adaptação minha]
+
+
+O documento original não completou esta seção. Aqui vão alguns essenciais do V20 adaptados:
+
+
+• Chamado do Sangue de Caim: Roll Ocultismo contra +6. Uma vez por noite, liberte o poder ancestral: ganhe +2 em todas as perícias relacionadas a Disciplinas pela cena. Aceite uma consequência moderada "Sangue Fervente" ao fim.
+
+• Controle do Sangue do Meste: O taumaturgo pode forçar um efeito de Dominação nível 3 em qualquer um de quem tenha tocado o sangue na última semana. Vontade contra Vontade, +6 de obstáculo base, mas ilimitado em distância.
+
+• Selo da Máscara: Por uma noite, uma zona inteira fica protegida da quebra de Máscara: qualquer testemunha mortal automaticamente racionaliza o sobrenatural. Custa 1 consequência severa mental para o taumaturgo.
+
+• Separação Alma-Corpo (Viagem Astral): A alma abandona o corpo (que entra em torpor) e pode se mover livremente pelo mundo material como espírito invisível por até uma noite.
+
+
+<section class="page"
+
+
+############################################################
+
+NECROMANCIA
+
+############################################################
+
+
+id="page-necromancia" data-page="necromancia">
+
+
+============================================================
+Necromancia
+============================================================
+
+
+A arte proibida Giovanni — conversa com os mortos, comando sobre os corpos
+
+
+Como a Taumaturgia, a Necromancia tem caminhos. Na adaptação original, os caminhos V20 foram combinados por terem muita sobreposição, resultando em dois caminhos principais. Os demais caminhos recebem aqui uma adaptação minha.
+
+
+Caminho das Cinzas
+Caminho dos Ossos
+Caminho do Sepulcro
+Caminho Vítreo
+
+
+>> O Caminho das Cinzas (reformulado) [Original]
+
+
+Passivo: Vampiros com qualquer nível deste caminho podem usar Percepção para detectar fantasmas e outros espíritos ligados à morte.
+
+
+1
+
+Línguas Sem Vida: O necromante pode usar Carisma e Manipulação em espíritos depois de detectá-los.
+
+
+2
+
+Ex Nihilo: Gaste 1 PD e estenda-se através da Mortalha. Use Lutar e Fisiologia contra fantasmas durante uma cena, _ou_ puxe um objeto das terras dos mortos para o mundo dos vivos.
+
+
+3
+
+Maestria da Mortalha: Pode aumentar ou reduzir a Mortalha em sua zona e zonas adjacentes, afetando drasticamente a dificuldade para fantasmas e necromancia. A Mortalha urbana média é +6; cada grau de sucesso em Ocultismo reduz em 1.
+
+
+4
+
+Porta dos MortosAncião [Adaptação minha] Gaste 2 PD. Abre um portal para as terras dos mortos que dura uma cena. Corpos vivos e mortos podem atravessar em ambas direções. Consequências graves: atenção de poderes maiores. Todo uso gera uma consequência moderada sobre a zona local — "Mortalha Rasgada" — que pode ser compelida por uma sessão.
+
+
+>> Caminho dos Ossos [Original]
+
+
+Passivo: "Tremens" — Vampiros com qualquer nível podem rolar Vontade para fazer um cadáver realizar um único movimento sinistro.
+
+
+1
+
+Vassouras Aprendizes: Gaste 1 PD e role Ocultismo. Cada +1 anima um servo morto-vivo. Não têm habilidade notável, mas executam tarefas menores.
+
+**Servo Cadáver:** Uma perícia em +1, 4 caixas de estresse físico.
+
+
+2
+
+Hordas Cambaleantes: Gaste 1 PD e role Ocultismo. Cada +1 ergue um zumbi. Seguem comandos simples e duram uma cena.
+
+**Zumbi:** Fisiologia +2, Lutar +1, Percepção +1, 4 caixas de estresse físico.
+
+
+3
+
+Possessão Demoníaca: O necromante pode remover a alma de um vivo ou restaurar alma em corpo morto. Gaste 1 PD e toque a vítima. Role Ocultismo +2 contra Vontade. Para remover alma, precisa tirá-la com estresse mental. Para implantar alma, gaste 1 PD e role Ocultismo — cria um revenant, criatura morta-viva que fica corporal até sua única tarefa ser cumprida. O necromante define a tarefa como seu único aspecto.
+
+**Revenant:** +3 em uma perícia, +2 em duas, +1 em três. Um aspecto representando a tarefa. 4 caixas de estresse mental e físico, uma consequência moderada física.
+
+
+4
+
+Legião dos OssosAncião [Adaptação minha] Gaste 2 PD e role Ocultismo contra +4. Ergue um pequeno exército de mortos no cemitério — 2d6 zumbis + 1 revenant líder. O grupo funciona como uma única unidade com estresse coletivo de 8 caixas e Lutar +3.
+
+
+>> Caminho do Sepulcro [Adaptação minha]
+
+
+Passivo: Pode ver fantasmas com clareza e falar com eles diretamente sem precisar de medium.
+
+
+1
+
+Compele a Alma: Role Manipulação contra Vontade do espírito para forçá-lo a responder uma pergunta por grau de sucesso.
+
+
+2
+
+Sentir a Morte: Rolagem de Percepção para saber como uma pessoa vai morrer (morte próxima: visão clara; morte distante: só dica).
+
+
+3
+
+Haunt: Gaste 1 PD e role Ocultismo para prender um fantasma a um lugar ou objeto — ele não pode sair sem sua permissão.
+
+
+4
+
+Torpor dos VivosAncião Toque um mortal e role Ocultismo +2 contra Fisiologia. Sucesso: o alvo entra num sono parecido com a morte por até 24h. Sucesso com estilo: vai até 1 semana.
+
+
+>> Caminho Vítreo [Adaptação minha]
+
+
+Passivo: Espíritos próximos se sentem compelidos a se manifestar na sua presença — bom para obter respostas, ruim para a Máscara.
+
+
+1
+
+Prisão Fantasmática: Role Ocultismo contra Vontade do fantasma para prendê-lo em um objeto. Duração: até a lua cheia.
+
+
+2
+
+Possessão: Force um fantasma aliado a possuir um alvo mortal (Manipulação contra Vontade da vítima).
+
+
+3
+
+Retorno Temporário: Traga de volta um fantasma à forma corpórea por uma cena, gastando 1 PD.
+
+
+4
+
+RevivescênciaAncião Gaste 3 PD. Traz uma alma morta de volta para um novo corpo (construído com magia, carne fresca ou um morto recente). O "ressuscitado" mantém todas as memórias mas adquire um aspecto-problema "Voltou dos Mortos". Dura até ser destruído.
+
+
+--------------------------------------------------
+Rituais de Necromancia
+--------------------------------------------------
+
+[Original]
+
+O autor notou que estes rituais são deliberadamente deixados sem mecânica rígida. Trate como rituais de Taumaturgia — 1 grátis por nível + compra gastando recarga.
+
+
+[Dica de Narrador]
+
+
+Rituais necromânticos funcionam melhor como ganchos de história do que como mecânicas fechadas. "Chamado de Paparruçio" chama um fantasma específico se você souber o nome dele — sem rolagem, com dificuldade narrativa. Deixe Rituais movimentarem a ficção, não a mesa.
+
+
+<section class="page"
+
+
+############################################################
+
+FOME E CAÇA
+
+############################################################
+
+
+id="page-fome" data-page="fome">
+
+
+============================================================
+Fome & Caça
+============================================================
+
+
+A engrenagem central do jogo — vampiros sempre têm fome
+
+
+[A mais importante das regras]
+
+
+Toda noite, quando seu personagem acorda, o Narrador diz antes de qualquer outra coisa: **"Você acorda com fome."** Deve soar como um mantra incessante. É a primeira fala da noite, sempre.
+
+
+[Fome & Pool de Sangue]
+
+
+A Fome reflete o nível do seu Pool de Sangue. Quanto menos sangue armazenado, maior a Fome. Ao gastar Sangue em Disciplinas ou outros usos, o pool diminui — e a Fome pode escalar. Ver Pool de Sangue para reservas por geração e o que cada nível do pool representa.
+
+
+--------------------------------------------------
+A condição Fome
+--------------------------------------------------
+
+[Original]
+
+"Fome" é uma consequência narrativa que **escala** se não for tratada:
+
+
+Noite | Nível | Obstáculo para caçar | Consequência se falhar
+--- | --- | --- | ---
+
+
+1 | Leve | +2 | Vira moderada |
+
+2 | Moderada | +4 | Vira severa |
+
+3+ | Severa | +6 | Quase certo que vai matar alguém |
+
+
+--------------------------------------------------
+Como caçar (fluxo de 2 rolagens)
+--------------------------------------------------
+
+
+1
+
+
+Encontrar a presa
+
+
+Escolha a perícia que reflete _como_ você caça
+
+
+→
+
+
+2
+
+
+Convencer/Dominar
+
+
+Ganhe o sangue sem escândalo
+
+
+→
+
+
+3
+
+
+Limpa o Sangue
+
+
+Se ambas bem-sucedidas, limpa o Pool e pode tratar Sede
+
+
+--------------------------------------------------
+Perícias comuns por abordagem
+--------------------------------------------------
+
+
+Estilo de caça | Rolagem 1 (encontrar) | Rolagem 2 (alimentar)
+--- | --- | ---
+
+
+Prostituta paga | Recursos | Empatia (para escolher alguém seguro) |
+
+Dominação | Percepção ou Empatia | Manipulação via Dominate |
+
+Sedução | Empatia (achar vítima) | Carisma |
+
+Predador do submundo | Ruídos | Lutar |
+
+Social (com Façanha Herd) | Contatos (1×/noite) | — |
+
+
+--------------------------------------------------
+Resultados possíveis
+--------------------------------------------------
+
+
+• Sucesso nas duas: Fome tratada, cura ao fim da cena.
+
+• Falha: Fome permanece e evolui para o próximo nível na noite seguinte.
+
+• Sucesso com custo/concessão: Frequentemente relacionado a quebrar a Máscara, encontrar rival, ou deixar testemunha.
+
+
+[A saída extrema]
+
+
+Você _sempre_ pode tratar a condição Fome **matando alguém e drenando todo o sangue**. Isso limpa todas as consequências de fome de uma vez. É poderoso, é horrível, e praticamente garante um atentado à Máscara e consequências para a Humanidade — ver Humanidade & Trilhas.
+
+
+--------------------------------------------------
+Exemplos narrados
+--------------------------------------------------
+
+
+Hap, o Ventrue
+
+
+Caça com dinheiro. **Recursos** para encontrar prostituta disposta, **Empatia** para garantir que seja do tipo que não vai falar.
+
+
+Patrick, o Tremere
+
+
+Caça via Dominação. Mas ainda precisa rolar **Percepção** ou **Empatia** para garantir que a vítima não será sentida falta e tem Vontade fraca.
+
+
+Ash, a Toreador
+
+
+Caça com sexo. **Empatia** para achar o parceiro dançante perfeito, **Carisma** para fechar a noite.
+
+
+Ellis, o Brujah
+
+
+Caça quem merece. **Ruídos** ou **Percepção** para encontrar um predador humano, depois **Lutar** para subjugá-lo.
+
+
+<section class="page"
+
+
+############################################################
+
+COMBATE
+
+############################################################
+
+
+id="page-combate" data-page="combate">
+
+
+============================================================
+Combate
+============================================================
+
+
+Violência rápida entre mortos-vivos e seus inimigos
+
+
+--------------------------------------------------
+Defesa contra armas de fogo
+--------------------------------------------------
+
+[Original]
+
+Porque vampiros são vampiros, eles normalmente **podem se defender de balas tanto com Atletismo quanto com Fisiologia**. Isso reflete a resistência sobrenatural do morto-vivo.
+
+
+--------------------------------------------------
+Mordida em combate próximo
+--------------------------------------------------
+
+[Original]
+
+Para morder em combate direto:
+
+
+• Primeiro, agarre a vítima com Fisiologia (manobra de agarrar, cria aspecto "Agarrado").
+
+• Então, morda com Lutar — as presas causam +1 de dano.
+
+
+--------------------------------------------------
+Zonas e movimento
+--------------------------------------------------
+
+[Resumo do Fate Core base]
+
+O Fate Core divide espaços em **zonas**. Mover-se dentro de uma zona é livre; entre zonas adjacentes consome uma ação ou uma rolagem de Atletismo se houver obstáculos. Ataques em close combat (Lutar) precisam estar na mesma zona; ataques com arma de fogo (Atirar) podem ser entre zonas.
+
+
+--------------------------------------------------
+Armas — dano adicional
+--------------------------------------------------
+
+
+Arma | Dano extra | Notas
+--- | --- | ---
+
+
+Punho/mordida | +0 | Presas dão +1 |
+
+Faca | +1 | |
+
+Espada | +2 | |
+
+Pistola | +2 | |
+
+Rifle | +3 | |
+
+Arma de assalto | +2 | Atinge todos numa zona |
+
+Estaca | +0 | Desajeitada; efeito especial — ver Torpor & Estaca |
+
+
+--------------------------------------------------
+Taken Out ("Derrubado") em combate entre vampiros
+--------------------------------------------------
+
+
+Quando um vampiro é "derrubado" em combate contra outro vampiro, o atacante pode escolher:
+
+
+• Morte definitiva (queimar, decepar, expor ao sol)
+
+• Torpor (ver página dedicada)
+
+• Estacar (ver página dedicada)
+
+• Diablerie (ver página dedicada)
+
+
+<section class="page"
+
+
+############################################################
+
+DANO AGRAVADO
+
+############################################################
+
+
+id="page-dano-agravado" data-page="dano-agravado">
+
+
+============================================================
+Dano Agravado
+============================================================
+
+
+A diferença entre "foi ruim" e "pode te matar de verdade"
+
+
+[Nota de autoria]
+
+
+O documento original diz explicitamente: _"atualmente não tenho regras de dano agravado"_. As regras abaixo são **minha adaptação** — completamente substituível se você preferir outra abordagem.
+
+
+--------------------------------------------------
+Fontes de dano agravado
+--------------------------------------------------
+
+[Original (identificadas no documento)]
+
+
+• Fogo (comum ou sobrenatural)
+
+• Luz solar
+
+• Garras de Proteu (Feral Claws) — exceto contra alvos com Fortitude
+
+• Presas vampíricas em outro vampiro
+
+[Adaptado por mim]
+
+
+• Armas abençoadas
+
+• Magia sagrada
+
+• Garras de Garou (se forem jogadas)
+
+• Sangue de outro vampiro mais velho (diablerie)
+
+
+--------------------------------------------------
+Como funciona mecanicamente
+--------------------------------------------------
+
+[Adaptação minha]
+
+
+>> 1. Representação na ficha
+
+
+Quando você recebe estresse/consequência de fonte agravada, marque-a com um **asterisco (*)** na ficha. Visualmente assim:
+
+
+Leve: **Queimadura Séria*** — mesmo slot que uma consequência leve normal, mas marcada como agravada.
+
+
+>> 2. Regra do dano dobrado
+
+
+Fogo e luz solar têm uma regra adicional vinda do documento original:
+
+
+[Regra original]
+
+
+Fogo e luz solar causam **dano dobrado** a vampiros: tanto estresse físico quanto estresse mental iguais. Se você tomaria 3 de dano físico, também toma 3 de dano mental — simultaneamente.
+
+
+>> 3. Defesa limitada
+
+[Original]
+
+Vampiros **não podem usar Fisiologia** para defender contra:
+
+
+• Garras de Proteu
+
+• Presas vampíricas
+
+• Fogo
+
+• Luz solar
+
+
+Só **Atletismo** (esquivar) e **armadura de Fortitude** funcionam. Mesmo assim, Fortitude fornece armadura reduzida pela metade contra fontes agravadas (arredonde para baixo, mínimo 1).
+
+
+>> 4. Cura agravada [Adaptação minha]
+
+
+Consequências agravadas curam **muito mais devagar** do que as normais:
+
+
+Tipo | Cura normal (Fate Core) | Cura agravada (adaptação)
+--- | --- | ---
+
+
+Leve (*) | Final de cena | Final da sessão, se tratada |
+
+Moderada (*) | Final de sessão | Final da próxima sessão, se tratada |
+
+Severa (*) | Uma sessão longa dedicada | Exige ritual especial, cena dedicada com tratamento Tremere, ou beber sangue de vampiro mais velho |
+
+
+>> 5. Tratar estresse agravado
+
+[Adaptação minha]
+
+Beber sangue normal **não** trata consequência agravada. Você precisa de pelo menos uma destas:
+
+
+• Gastar um Ritual específico (por exemplo um adaptado de "Cura da Pátria")
+
+• Beber vitae de um vampiro com geração mais baixa que você (um ato político/custoso, não casual)
+
+• Retornar à terra natal e cumprir o Ritual "Cura da Pátria"
+
+• Um Fate Point e uma cena narrativa pesada dedicada (aceite um aspecto secundário "Marcado pelo fogo/pelo sol")
+
+
+[Princípio de design]
+
+
+O objetivo é que queimaduras e sol **importem**. Se um ferimento agravado pode ser tratado como qualquer outro, o gênero perde força. Por isso: a cura é lenta, a defesa é limitada e a marca persiste.
+
+
+<section class="page"
+
+
+############################################################
+
+FRENESI
+
+############################################################
+
+
+id="page-frenesi" data-page="frenesi">
+
+
+============================================================
+Frenesi
+============================================================
+
+
+Quando a Besta toma o volante
+
+
+[Original]
+
+
+--------------------------------------------------
+Os três tipos
+--------------------------------------------------
+
+
+Medo (Rötschreck)
+
+
+Fogo, luz solar, coisas aterrorizantes. A reação é fugir.
+
+
+Fome
+
+
+Disparado por sangue fresco ou fome extrema. A reação é atacar e alimentar-se.
+
+
+Ira
+
+
+Provocação extrema ou desafio à dignidade. A reação é matar.
+
+
+--------------------------------------------------
+Frenesi como escolha
+--------------------------------------------------
+
+
+Um vampiro **sempre pode escolher frenesiar em vez de tomar uma consequência mental**:
+
+
+• Frenesi breve em lugar de consequência leve
+
+• Frenesi moderado em lugar de moderada
+
+• Frenesi severo em lugar de severa
+
+
+--------------------------------------------------
+Durante o frenesi
+--------------------------------------------------
+
+
+Efeito | Explicação
+--- | ---
+
+
+Todo estresse físico é limpo | A Besta ignora dor |
+
+Armadura 1 | Pele se endurece |
+
++1 de dano em melee | Força primal |
+
+Compulsões livres | Narrador compele sem oferecer PD; jogador ainda precisa de 1 PD para resistir |
+
+Se beber sangue... | Pode tratar consequência relacionada à fome durante o frenesi |
+
+
+--------------------------------------------------
+Frenesi involuntário
+--------------------------------------------------
+
+
+Quando um personagem é "derrubado" por estresse mental, ele **entra em frenesi contra a vontade**. Esse frenesi será **sempre severo**. Por isso "surfar a onda" — escolher o frenesi — pode ser preferível.
+
+
+--------------------------------------------------
+Depois do frenesi
+--------------------------------------------------
+
+
+Após uma sessão em que você frenesiou, considere:
+
+
+• Mudar um aspecto para refletir o que aconteceu
+
+• Reduzir Empatia ou Vontade e aumentar outra perícia no lugar
+
+
+[Exemplo de compulsão de frenesi]
+
+
+Ellis frenesia de Ira num bar. Na próxima cena, o Narrador diz: _"Ellis, esse garçom que derramou a bebida em você... a Besta quer sangue. Você ataca."_ Ellis aceita (sem receber PD por isso, porque está em frenesi) ou gasta 1 PD para resistir.
+
+
+<section class="page"
+
+
+############################################################
+
+HUMANIDADE E TRILHAS
+
+############################################################
+
+
+id="page-humanidade" data-page="humanidade">
+
+
+============================================================
+Humanidade & Trilhas
+============================================================
+
+
+O que resta da sua alma quando você não precisa respirar
+
+
+[Nota de autoria]
+
+
+O documento original **não desenvolveu mecânicas para Humanidade e Trilhas** — apenas listou como algo que queria cobrir. Toda esta página é **minha adaptação**, fazendo Humanidade funcionar no espírito do Fate Core (como aspecto que degrada) em vez de escala numérica.
+
+
+--------------------------------------------------
+Filosofia geral
+--------------------------------------------------
+
+
+No Fate Core, Humanidade **não é uma escala de 1 a 10**. É um **aspecto contínuo** com consequências narrativas. O personagem começa com uma **Trilha** (Humanidade ou um dos Caminhos do Sabbat), expressa como aspecto, e ações que violam a Trilha geram **consequências específicas de degradação**.
+
+
+--------------------------------------------------
+A Trilha como aspecto
+--------------------------------------------------
+
+
+Cada personagem tem um **aspecto de Trilha**, geralmente como um dos cinco aspectos livres (ou incorporado ao Conceito Principal). Exemplos:
+
+
+• "Humanidade: ainda tenta ser gente boa"
+
+• "Caminho da Noite: caçador moral dos perversos"
+
+• "Caminho do Sangue: o poder é tudo o que importa"
+
+• "Caminho dos Ossos: aprendi a amar a morte"
+
+
+--------------------------------------------------
+Testes de Humanidade
+--------------------------------------------------
+
+
+Quando um personagem comete um ato que contradiz sua Trilha, ele faz um **Teste de Trilha**:
+
+
+• O Narrador declara o ato como contraste com a Trilha (matar inocente se for Humanidade; mostrar piedade se for Via do Sangue).
+
+• O jogador rola Vontade contra uma dificuldade baseada na gravidade: +0 — imoral leve (roubar, mentir grave)
+
+• +2 — crime pessoal (ferir inocente, beber até quase matar)
+
+• +4 — atrocidade (matar, torturar)
+
+• +6 — imperdoável (massacrar família, diablerie)
+
+
+• Se falhar, aceite uma consequência de Trilha correspondente à severidade.
+
+
+--------------------------------------------------
+Tabela de Humanidade (Níveis 0-10)
+--------------------------------------------------
+
+
+Nível | Rótulo do Aspecto | Comportamento | Ações que Ameaçam
+--- | --- | --- | ---
+**10** | "Anjo de Vestes Manchadas" | Altruísta, culpa intensa | Ferir inocentes intencionalmente
+**9** | "Cidadão de Boa Fé" | Segue a moral mortal, remorso | Roubo ou mentira grave
+**8** | "Em Busca de Redenção" | Ainda vê valor na vida humana | Assalto, violência premeditada
+**7** | "Código de Honra Torto" | Justifica seus atos, tem limites | Assassinato por impulso
+**6** | "Linha Tênue" | Já mata sem remorso, mas sem prazer | Assassinato calculado
+**5** | "Negócios São Negócios" | Vê humanos como recursos | Estupro ou tortura
+**4** | "Besta Racional" | Crueldade por diversão ou poder | Matar por diversão
+**3** | "Monstro que se Entende" | Prazer na dor alheia, sadismo | Atos bárbaros em série
+**2** | "Coisa" | Age só por instintos bestiais | Canibalismo, mutilação
+**1** | "A Besta" | Sem controle, frenesi constante | —
+**0** | "Sanguinário" | Vira Wight (NPC) | —
+
+
+--------------------------------------------------
+Cura de Trilha
+--------------------------------------------------
+
+
+As consequências de Trilha **não curam automaticamente**. Requerem:
+
+
+• Um arco de redenção (ou descida) envolvendo ato significativo contrário à consequência
+
+• Uma cena de confissão/reflexão com PNJ importante (mentor, sire, amado)
+
+• Consumir um Marco (ver Avanço)
+
+
+--------------------------------------------------
+Mudar de Trilha
+--------------------------------------------------
+
+
+Em crônicas longas, um personagem pode **trocar de Trilha** — um Humanidade caindo para o Caminho da Noite, por exemplo. Exige:
+
+
+• Declaração ao Narrador com pelo menos uma sessão de antecedência
+
+• Um evento catalisador pesado
+
+• Aceitar uma consequência severa "Transformação Espiritual"
+
+• Substituir o aspecto de Trilha
+
+
+--------------------------------------------------
+Trilhas comuns do Sabbat
+--------------------------------------------------
+
+
+Trilha | Princípio central | Ato contrário
+--- | --- | ---
+
+
+Caminho do Sangue | Poder sobre tudo | Mostrar piedade |
+
+Caminho da Noite | Punir os ímpios | Ferir inocentes |
+
+Caminho dos Ossos | Abraçar a morte | Apegar-se à vida |
+
+Caminho da Tirania | Ordem por dominação | Aceitar igualdade |
+
+Caminho de Cathari | Paixão carnal | Negar o desejo |
+
+Caminho do Leviatã | Vingança perpétua | Perdoar |
+
+
+<section class="page"
+
+
+############################################################
+
+GASTAR SANGUE (POOL DE SANGUE)
+
+############################################################
+
+
+id="page-sangue" data-page="sangue">
+
+
+============================================================
+Pool de Sangue & Sede
+============================================================
+
+
+Como vampiros queimam vitae — e pagam o preço
+
+
+[Duas moedas distintas]
+
+
+Vampiros têm dois recursos internos de poder:
+
+
+• Sangue Pontos de Sangue — vitae armazenada no corpo. Alimenta poderes físicos e sobrenaturais.
+
+• PD Pontos de Destino — força de vontade. Alimenta poderes mentais e sociais, e invoca aspectos. Invocar aspectos em qualquer rolagem custa apenas 1 PD — sem sangue.
+
+
+O custo de cada Disciplina está indicado no próprio nível com um badge colorido — ver Disciplinas.
+
+
+--------------------------------------------------
+Pool de Sangue — funciona como Estresse
+--------------------------------------------------
+
+
+Sangue não é contado em pontos abstratos. Funciona **exatamente como a trilha de Estresse Físico**: você tem **caixas de pool** que absorvem os gastos, e quando elas acabam, aceita **consequências de Sede** — cada uma mais grave que a anterior.
+
+
+[A trilha de Sangue na ficha]
+
+
+**Caixas de Pool:** Gastar 1 Sangue = marcar 1 caixa. Quando todas estiverem marcadas e o vampiro precisar gastar mais, aceita uma consequência de Sede na ordem abaixo:
+
+
+• Sede Leve — consequência leve. Aspecto "Faminto" — compelível pelo Narrador.
+
+• Sede Moderada — consequência moderada. Aspecto "Dominado pela Sede" — ações sociais e de autocontrole sofrem -2.
+
+• Sede Grave — consequência severa. Aspecto "À Beira do Frenesi" — qualquer estímulo de sangue ou emoção intensa exige rolar Vontade ou entrar em Frenesi.
+
+
+Se as três consequências estiverem marcadas e o vampiro gastar mais Sangue: **Frenesi automático**.
+
+
+--------------------------------------------------
+Caixas de Pool por tipo de vampiro
+--------------------------------------------------
+
+
+Vampiros mais antigos armazenam mais sangue — mais caixas antes de precisar aceitar sede. As 3 consequências de Sede são iguais para todos.
+
+
+Tipo | Geração típica | Caixas de Pool | Consequências de Sede
+--- | --- | --- | ---
+
+
+Sangue Fraco | 14ª–16ª | 2 caixas | Sede LeveSede ModeradaSede Grave |
+
+Neonato | 13ª–11ª | 3 caixas |
+
+Ancião | 10ª–8ª | 4 caixas |
+
+Antigo | 7ª–5ª | 5 caixas |
+
+Metusela / Antediluviano | 4ª–3ª | 6+ caixas |
+
+
+[Todo vampiro acorda com fome]
+
+
+No início de cada noite, marque 1 caixa de pool como consumida — o sangue queimado dormindo. Sangue Fraco marca 2. É o mantra do Narrador: _"Você acorda com fome."_ Vampiros nunca iniciam a noite no pico da reserva.
+
+
+--------------------------------------------------
+O que custa Sangue — Extensões [Original] [+ Extensões]
+--------------------------------------------------
+
+
+Além de ativar Disciplinas físicas e sobrenaturais, sangue pode ser gasto para os usos abaixo. Todas as extensões originais foram mantidas.
+
+
+Uso | Custo | Efeito
+--- | --- | ---
+
+
+Bônus a perícia física | 1 Sangue | +2 em Atletismo, Lutar ou Fisiologia por cena |
+
+Curar estresse físico | 1 Sangue | Limpa todas as caixas de estresse físico |
+
+Tratar consequência física leve | 1 Sangue | Marca a consequência leve como tratada |
+
+Tratar consequência física moderada | 2 Sangue | Marca a consequência moderada como tratada |
+
+Aparência humana (Blush of Life) | 1 Sangue | Parece vivo por uma cena (sem a façanha grátis) |
+
+
+[Com o pool vazio]
+
+
+Quando todas as caixas estão marcadas, o vampiro ainda pode usar poderes que custem apenas PD ou Gratuito — esses não drenam sangue. Para usar qualquer poder que custe Sangue, precisa aceitar a próxima consequência de Sede. Ao atingir Sede Grave com as 3 caixas cheias e tentar gastar mais: **Frenesi**.
+
+
+--------------------------------------------------
+Recuperar Sangue (Caçar)
+--------------------------------------------------
+
+
+Ver Fome & Caça para o fluxo completo.
+
+
+Fonte | Recupera | Notas
+--- | --- | ---
+
+
+Mortal (alimentação normal, sem matar) | Todas as caixas de pool | Não remove consequências de Sede; só as caixas |
+
+Mortal (drenagem completa — matar) | Caixas + trata 1 consequência de Sede | Mata; risco grave à Máscara e à Humanidade |
+
+Animal grande (cavalo, vaca) | 2 caixas | Menos potente que humano |
+
+Animal pequeno (cachorro, gato) | 1 caixa | Insuficiente para Anciões e acima |
+
+Sangue vampírico (por gole) | Caixas + trata 1 consequência de Sede | Potente; alto risco de Laço de Sangue |
+
+
+[Recuperar consequências de Sede]
+
+
+Consequências de Sede seguem as mesmas regras de recuperação do Fate Core, mas exigem alimentação:
+
+
+• Sede Leve: tratada ao fim da cena em que o vampiro se alimentar normalmente.
+
+• Sede Moderada: tratada ao fim da sessão, após pelo menos uma caça bem-sucedida.
+
+• Sede Grave: tratada entre sessões, após drenar completamente um mortal ou receber sangue vampírico.
+
+
+<section class="page"
+
+
+############################################################
+
+LAÇO DE SANGUE
+
+############################################################
+
+
+id="page-laco" data-page="laco">
+
+
+============================================================
+Laço de Sangue
+============================================================
+
+
+O vínculo mais íntimo e mais perigoso entre mortos-vivos
+
+
+[Original]
+
+
+Estar ligado por sangue é **perder parte de si e ser absorvido pelo domitor**. Mecanicamente:
+
+
+[Como funciona na ficha]
+
+
+• Apague um dos seus aspectos (menos o Conceito Principal e o Problema do clã)
+
+• Substitua por "Ligado(a) a [Nome do domitor]"
+
+• Este aspecto conta como uma consequência que o domitor pode invocar sem gastar Pontos de Destino
+
+• Fora isso, funciona como qualquer outro aspecto — principalmente para compels
+
+
+--------------------------------------------------
+Quebrando o laço
+--------------------------------------------------
+
+
+Se você conseguir quebrar o laço (por distância prolongada, morte do domitor, ritual Tremere, etc.), pode substituir o aspecto por um novo.
+
+
+--------------------------------------------------
+Os 3 "goles" (adaptação narrativa)
+--------------------------------------------------
+
+[Adaptação minha]
+
+Tradicionalmente no VtM, são 3 goles em noites diferentes para formar laço completo. No Fate, trate assim:
+
+
+• 1 gole: Você começa a se afeiçoar. Narrativo, sem mecânica.
+
+• 2 goles: Obtém aspecto temporário "Fascinado por X", compelível apenas em situações com o domitor.
+
+• 3 goles: Aplique a regra acima — aspecto permanente substitui um seu.
+
+
+[Uso dramático]
+
+
+Um personagem pode permitir voluntariamente ser blood-bound para ganhar proteção política — isso geralmente vira ponto-chave da crônica, não uma decisão casual.
+
+
+<section class="page"
+
+
+############################################################
+
+RECUPERAÇÃO
+
+############################################################
+
+
+id="page-recuperacao" data-page="recuperacao">
+
+
+============================================================
+Recuperação & Regeneração
+============================================================
+
+
+Como vampiros curam — e quando precisam de sangue para isso
+
+
+[Original]
+
+
+Vampiros estão sempre, lentamente, regenerando tecido morto e curando ferimentos. Sangue costuma ser necessário para "tratar" consequências físicas, e também ajuda com consequências mentais ligadas à fome.
+
+
+--------------------------------------------------
+Regras simplificadas
+--------------------------------------------------
+
+
+Momento | Efeito
+--- | ---
+
+
+Fim de cena de conflito | Limpa todas as caixas de estresse |
+
+Fim de qualquer cena | Consequências leves já tratadas desaparecem |
+
+Fim da sessão | Consequências severas tratadas viram moderadas; moderadas tratadas viram leves |
+
+Consequência não tratada | Permanece até ser tratada |
+
+
+--------------------------------------------------
+Tratar com sangue
+--------------------------------------------------
+
+
+Consequência | Obstáculo para tratar (caçando)
+--- | ---
+
+
+Leve | +2 |
+
+Moderada | +4 |
+
+Severa | +6 |
+
+
+--------------------------------------------------
+Tratar com outros meios
+--------------------------------------------------
+
+
+Como nas regras-base do Fate Core, algumas consequências podem ser tratadas por outras vias:
+
+
+• Consequência de trauma: Empatia (um amigo conversa com você)
+
+• Consequência de enigma/frustração: Conhecimento
+
+• Consequência de ira: uma cena de catarse/desabafo
+
+
+O que fizer sentido narrativo, conforme a consequência.
+
+
+<section class="page"
+
+
+############################################################
+
+TORPOR E ESTACA
+
+############################################################
+
+
+id="page-torpor" data-page="torpor">
+
+
+============================================================
+Torpor & Estaca
+============================================================
+
+
+As saídas alternativas para combate entre vampiros
+
+
+[Original]
+
+
+--------------------------------------------------
+Torpor
+--------------------------------------------------
+
+
+Torpor é uma das opções para "derrubado" em conflito entre vampiros — e pode ocorrer com mais frequência do que o normal. Um vampiro que é **alimentado com sangue vampírico** sai do torpor relativamente rápido — mas fica **um passo de laço de sangue** com quem o acordou.
+
+
+Sem isso, quanto mais alta a **Vontade** do vampiro, mais cedo ele acorda.
+
+
+Vontade | Tempo em torpor (sem intervenção)
+--- | ---
+
+
++0 | Décadas/séculos — basicamente perdido na ficção |
+
++1 | Anos |
+
++2 | Meses |
+
++3 | Semanas |
+
++4 | Dias |
+
++5+ | Horas, com esforço |
+
+
+--------------------------------------------------
+Estacar
+--------------------------------------------------
+
+
+Como o torpor, estacar é uma opção de "derrubado" em combate entre vampiros — **desde que o atacante tenha uma estaca**. Se o jogador não mencionou que trouxe uma, pode **gastar 1 PD para declarar** que lembrou de pegar uma antes.
+
+
+Duas abordagens:
+
+
+• Usar a estaca como arma — causa estresse físico até a vítima ser derrubada (+0 de dano; é desajeitada)
+
+• Subjugar primeiro — derrotar o vampiro primeiro, depois estacar para derrubá-lo definitivamente
+
+
+[Efeito da estaca]
+
+
+Estaca não mata — paralisa. A vítima fica congelada até a estaca ser removida. Pode ser levada, torturada, queimada ao amanhecer, ou guardada como troféu. É o movimento clássico do jogo político Kindred.
+
+
+<section class="page"
+
+
+############################################################
+
+A MÁSCARA
+
+############################################################
+
+
+id="page-mascara" data-page="mascara">
+
+
+============================================================
+A Máscara
+============================================================
+
+
+A Primeira Tradição, e o que acontece quando cai
+
+
+[Nota de autoria]
+
+
+O documento original **não cobriu mecânicas específicas para quebra da Máscara**. Esta página é adaptação minha, alinhada com o espírito do V20.
+
+
+--------------------------------------------------
+O que é quebrar a Máscara
+--------------------------------------------------
+
+
+Ato público presenciado por mortais que revela:
+
+
+• Existência de vampiros
+
+• Poderes sobrenaturais explícitos (Celeridade em velocidade óbvia, Chama de Vontade, etc.)
+
+• Anatomia vampírica (feridas que fecham na hora, sem pulso óbvio em situação íntima)
+
+• Rituais de sangue, presas, morte e reanimação
+
+
+--------------------------------------------------
+Níveis de exposição
+--------------------------------------------------
+
+
+Nível | Descrição | Consequência mecânica
+--- | --- | ---
+
+
+1 — Suspeita isolada | Uma testemunha mortal vê algo estranho mas pode racionalizar | Aspecto de cena: "Alguém notou"; Narrador pode compelir mais tarde |
+
+2 — Evidência física | Câmera captou; sangue deixado para trás; corpo com marcas inexplicáveis | Aspecto persistente na crônica: "Pistas deixadas para os Caçadores" |
+
+3 — Revelação pública | Vários testemunharam; imprensa está envolvida; viralizou | Aspecto de cidade ativa; atrai intervenção da Camarilla (Flagelo, Xerife) |
+
+4 — Catastrófico | Vampirismo vira discussão social | Julgamento pelo Príncipe; sanção formal do Sabbat; consequência severa pessoal "Marcado pela Massa" |
+
+
+--------------------------------------------------
+Limpar a quebra
+--------------------------------------------------
+
+
+Testemunhas podem ser tratadas com:
+
+
+• Dominação (Mente Esquecida é clássica para isso)
+
+• Quimerismo (plantar explicação alternativa)
+
+• Ritual Tremere (por exemplo o adaptado "Selo da Máscara")
+
+• Eliminação (ugly mas clássico; piora a Trilha)
+
+• Cobertura política (a Camarilla tem recursos — por um preço)
+
+
+[Consequência política]
+
+
+A Camarilla **julga** quebras graves. Em jogo: o Príncipe chama você. Seu destino depende de política, alianças e o grau da quebra. Finais possíveis: multa em Status, tarefa perigosa (caçar alguém, proteger alguém), exílio temporário, morte final.
+
+
+<section class="page"
+
+
+############################################################
+
+DIABOLERIE
+
+############################################################
+
+
+id="page-diablerie" data-page="diablerie">
+
+
+============================================================
+Diabolerie
+============================================================
+
+
+O pecado mais negro dos Kindred — beber outro vampiro até a alma
+
+
+[Nota de autoria]
+
+
+O documento original **não cobriu Diabolerie**. Esta página é minha adaptação.
+
+
+--------------------------------------------------
+O que é
+--------------------------------------------------
+
+
+Drenar completamente outro vampiro — não apenas o sangue, mas **a própria essência**. A vítima morre definitivamente, sua alma destruída. O diablerista absorve força dela.
+
+
+--------------------------------------------------
+Como fazer
+--------------------------------------------------
+
+
+• A vítima precisa estar derrubada ou em torpor
+
+• Requer uma cena inteira de drenagem (sem interrupção)
+
+• O diablerista acumula dano mental severo durante o processo (aceita consequência severa "Consumido pela Besta")
+
+• Ao fim, ganha os benefícios abaixo
+
+
+--------------------------------------------------
+Benefícios
+--------------------------------------------------
+
+
+• Se a vítima era de geração mais baixa que o diablerista, ele reduz sua geração em 1 (ver Gerações)
+
+• Ganha um dos aspectos da vítima como aspecto extra permanente (até o 6º) — reflete que parte dela vive em você
+
+• Se a vítima tinha uma Disciplina que você não possui: pode escolher ganhar o nível 1 dela gratuitamente (ou subir 1 nível numa que já tem)
+
+
+--------------------------------------------------
+Custos
+--------------------------------------------------
+
+
+• Consequência severa mental "Consumido pela Besta" (cura longa; só tratável após múltiplas sessões e introspecção)
+
+• Marca Negra na Aura: qualquer vampiro com Auspícios 2+ vê imediatamente que você diablerizou. Dura pelo menos 1 década na ficção.
+
+• Diabolerie é crime capital na Camarilla. Se descoberto, execução é o destino.
+
+• Teste de Trilha +6 — quase impossível passar ileso.
+
+
+[Uso dramático]
+
+
+Diabolerie é ferramenta narrativa poderosa e deve ser rara. Grande parte das crônicas _gira em torno_ de uma diabolerie — investigando-a, ameaçando-a, prevenindo-a. Não é item de lista de ações num turno — é virada de ato.
+
+
+<section class="page"
+
+
+############################################################
+
+AVANÇO
+
+############################################################
+
+
+id="page-avanco" data-page="avanco">
+
+
+============================================================
+Avanço
+============================================================
+
+
+Como personagens crescem sessão a sessão
+
+
+[Original]
+
+
+--------------------------------------------------
+Fim de sessão
+--------------------------------------------------
+
+
+No fim de cada sessão, PJs podem escolher **uma** das opções:
+
+
+• Adicionar ou mudar um aspecto (exceto o Conceito Principal, que exige aprovação do Narrador)
+
+• Trocar a posição de duas perícias adjacentes na pirâmide
+
+
+--------------------------------------------------
+Marcos menores
+--------------------------------------------------
+
+
+Quando uma **Questão** (issue) da crônica é resolvida na história, isso marca um **Marco Menor**:
+
+
+• Todo PJ ganha uma perícia bônus em +1
+
+• Se já tiver o máximo de perícias em +1, pode mover uma de +1 para +2 — e assim por diante
+
+• Após 5 Marcos Menores isso pode resultar numa perícia passando de +4 para +5
+
+
+--------------------------------------------------
+Outras conquistas [Adaptação minha]
+--------------------------------------------------
+
+
+Em crônicas longas, podem acontecer Marcos maiores, adicionando mais opções:
+
+
+• Marco Significativo (fim de arco): ganhar +1 de recarga ou trocar uma Façanha
+
+• Marco Maior (fim de crônica): avançar para nível superior (Neonato → Ancião, por exemplo) se a ficção justificar, redefinir aspectos pesadamente
+
+
+<section class="page"
+
+
+############################################################
+
+OS CLÃS DE CAIM
+
+############################################################
+
+
+id="page-clas" data-page="clas">
+
+
+============================================================
+Os Clãs de Caim
+============================================================
+
+
+As 13 linhagens fundamentais que moldam o mundo das trevas
+
+
+Camarilla
+
+
+Sabá
+
+
+Independentes
+
+
+Brujah
+
+
+**Os Rebeldes:** Filósofos guerreiros e punks anarquistas. Conhecidos por seu temperamento explosivo e paixão por ideais.
+
+
+**Disciplinas:** Celeridade, Potência, Presença.
+
+
+**Fraqueza:** Fúria Incontrolável — sofrem -2 em testes para resistir ao Frenesi de Ira.
+
+
+Gangrel
+
+
+**Os Animais:** Nômades e solitários, mais próximos da Besta do que qualquer outro clã. Mestres da sobrevivência e da mudança de forma.
+
+
+**Disciplinas:** Animalismo, Fortitude, Proteu.
+
+
+**Fraqueza:** Traços Animais — a cada frenesi, ganham um traço físico animal temporário que dificulta interações sociais.
+
+
+Malkaviano
+
+
+**Os Lunáticos:** Marcados por uma loucura incurável que lhes concede visões proféticas e percepções além do véu da realidade.
+
+
+**Disciplinas:** Auspícios, Ofuscação, Dementação.
+
+
+**Fraqueza:** Derangement — possuem uma perturbação mental incurável que o Narrador pode compelir frequentemente.
+
+
+Nosferatu
+
+
+**Os Ratos de Esgoto:** Amaldiçoados com deformidades monstruosas. Mestres da furtividade e corretores de segredos nas sombras.
+
+
+**Disciplinas:** Animalismo, Ofuscação, Potência.
+
+
+**Fraqueza:** Repulsivos — sua aparência é automaticamente 0 ou negativa; falham automaticamente em testes de beleza/aparência.
+
+
+Toreador
+
+
+**Os Artistas:** Hedonistas apaixonados pela beleza e arte. Buscam o sentido da existência através das paixões humanas.
+
+
+**Disciplinas:** Auspícios, Celeridade, Presença.
+
+
+**Fraqueza:** Fascínio — ao ver algo de beleza extrema, ficam paralisados em transe por minutos ou até serem interrompidos.
+
+
+Tremere
+
+
+**Os Usurpadores:** Magos de sangue hierárquicos e secretos. Transformaram sua magia hermética em taumaturgia vampírica.
+
+
+**Disciplinas:** Auspícios, Dominação, Taumaturgia.
+
+
+**Fraqueza:** Vínculo de Sangue — são mais suscetíveis ao laço de sangue; apenas 2 goles de um superior já criam o laço completo.
+
+
+Ventrue
+
+
+**Os Reis:** A aristocracia de sangue azul. Políticos, líderes e CEOs que acreditam ser o destino de sua linhagem governar.
+
+
+**Disciplinas:** Dominação, Fortitude, Presença.
+
+
+**Fraqueza:** Paladar Exigente — só podem se alimentar de um tipo específico de sangue humano (ex: virgens, loiros, músicos).
+
+
+Lasombra
+
+
+**Os Guardiões das Sombras:** Líderes implacáveis do Sabá e mestres das trevas abissais. Valorizam o poder acima de tudo.
+
+
+**Disciplinas:** Dominação, Obtenebração, Potência.
+
+
+**Fraqueza:** Sem Reflexo — não aparecem em espelhos ou fotos; sofrem dano extra de luz solar.
+
+
+Tzimisce
+
+
+**Os Demônios:** Mestres da transformação da carne e do osso. Estudiosos da evolução através do horror e da dor.
+
+
+**Disciplinas:** Animalismo, Auspícios, Vicissitude.
+
+
+**Fraqueza:** Terra Natal — precisam dormir cercados por terra de um lugar importante de sua vida mortal para descansar plenamente.
+
+
+Assamita (Banu Haqim)
+
+
+**Os Assassinos:** Juízes e carrascos sagrados que operam a partir de sua fortaleza em Alamut. Temidos por sua maestria no abate.
+
+
+**Disciplinas:** Celeridade, Ofuscação, Quietus.
+
+
+**Fraqueza:** Vício em Sangue — sofrem uma fome incontrolável por sangue de outros vampiros após prová-lo.
+
+
+Giovanni
+
+
+**Os Necromantes:** Uma família insular que mistura negócios bancários com o controle dos mortos e dos espíritos.
+
+
+**Disciplinas:** Dominação, Necromancia, Potência.
+
+
+**Fraqueza:** O Beijo Doloroso — sua mordida causa dor agonizante em vez de prazer, tornando a alimentação difícil e traumática.
+
+
+Ravnos
+
+
+**Os Charlatães:** Mestres da ilusão e viajantes eternos. Possuem uma conexão mística com o caos e a decepção.
+
+
+**Disciplinas:** Animalismo, Fortitude, Quimerismo.
+
+
+**Fraqueza:** Vício Moral — cada Ravnos possui um vício específico (roubo, mentira, etc.) que devem realizar para não sofrerem penalidades.
+
+
+Seguidores de Set
+
+
+**As Serpentes:** Cultistas dedicados a libertar o deus Set através da corrupção e da queda dos impérios.
+
+
+**Disciplinas:** Ofuscação, Presença, Serpentis.
+
+
+**Fraqueza:** Fraqueza à Luz — sofrem o dobro de dano por luz solar e penalidades em ambientes muito iluminados.
+
+
+<section class="page"
+
+
+############################################################
+
+SOCIEDADE KINDRED
+
+############################################################
+
+
+id="page-sociedade" data-page="sociedade">
+
+
+============================================================
+Sociedade Kindred
+============================================================
+
+
+Política, Elysium, Sabbat, dificuldades de Contatos
+
+
+[Original]
+
+
+--------------------------------------------------
+Elysium
+--------------------------------------------------
+
+
+Qualquer Elysium deve ter pelo menos **2 aspectos**:
+
+
+• Um ligado a quem é o Keeper
+
+• Um ligado ao lugar em si
+
+
+Exemplos: "O Ópera Decadente", "Sob o Olhar do Keeper Ancião", "Neutralidade Sagrada", "Salão dos Sussurros".
+
+
+--------------------------------------------------
+Matilhas Sabbat
+--------------------------------------------------
+
+
+Toda matilha Sabbat tem um **aspecto de reputação** que se aplica a outros Sabbat _e_ a qualquer não-Sabbat que tenha ouvido sobre eles. Exemplos: "Os Abutres da Cathedral", "Matilha que Queimou um Primogen Tremere".
+
+
+--------------------------------------------------
+Obstáculos de Contatos por tipo de alvo
+--------------------------------------------------
+
+
+Dificuldade | Alvo
+--- | ---
+
+
++2 | Senescal do Príncipe, Bispo local do Sabbat, Harpia fora do Elysium, Whip do seu Clã, célula da Mão Negra local, Anarca ou Independente, qualquer vampiro de outra Seita na cidade |
+
++3 | Líder de célula da Mão Negra, Assamita mercenário, membro da matilha do Arcebispo, Primogen do seu Clã |
+
++4 | Príncipe, Arcebispo, Primogen fora do seu Clã |
+
+
+[Cláusula da inimizade]
+
+
+Se você falha na rolagem de Contatos, pode acabar encontrando exatamente o tipo certo de pessoa — mas essa pessoa **não gosta de você**.
+
+
+--------------------------------------------------
+Ritae Sabbat
+--------------------------------------------------
+
+
+Funcionam como rituais necromânticos ou taumatúrgicos. Sacerdotes de matilha do Sabbat devem gastar **1 de recarga** para um Extra representando seu conhecimento dos Ritae básicos.
+
+
+>> Lista breve de Ritae [Adaptação minha]
+
+
+• Vaulderie — formar a Vínculo Vitae na matilha (substitui o aspecto de laço individual por "Membro da Matilha X"); rito anual
+
+• Caça do Sangue — declarar alvo proscrito; todo Sabbat ganha invoke grátis contra ele durante a cena
+
+• Confissão Fogueira — matilha compartilha pecados; limpa consequências leves de Trilha de todos envolvidos
+
+• Renovação do Monstro — ritual de Abraço Sabbat; cria ghoulificação permanente com aspectos distorcidos
+
+
+<section class="page"
+
+
+############################################################
+
+GERAÇÕES
+
+############################################################
+
+
+id="page-geracoes" data-page="geracoes">
+
+
+============================================================
+Gerações
+============================================================
+
+
+A distância da semente de Caim — e o que ela significa nas regras
+
+
+[Nota de autoria]
+
+
+O documento original **não cobriu sistema de Gerações** — apenas o ritual _Caminhada Sanguínea_, que revela linhagem. A página inteira é minha adaptação, agora reescrita para integrar a tabela canônica do V20 (Atributo/Perícia Máx, Reservatório, Pontos por Turno, Disciplina Máx, Potência do Sangue) e traduzir cada coluna para o vocabulário do Fate Core.
+
+
+--------------------------------------------------
+O que é Geração
+--------------------------------------------------
+
+
+Caim é a **1ª Geração**. Seus filhos diretos são a 2ª; os Antediluvianos (fundadores dos clãs) são a 3ª; e assim por diante. Quanto mais distante de Caim — quanto _maior_ o número da Geração — mais **diluído** está o sangue, e **menor** o potencial vampírico. Neonatos modernos típicos pertencem à 12ª ou 13ª Geração.
+
+
+Geração é a **medida bruta de potencial** de um vampiro. Ela não diz _quão poderoso o personagem é hoje_ — diz _quão poderoso ele pode chegar a ser_. Um Antediluviano da 3ª pode ter perícias mais altas, mais Disciplinas, e gastar muito mais sangue por cena do que qualquer Neonato — é por isso que Anciões aterrorizam Anarcas e Caitiff.
+
+
+--------------------------------------------------
+Geração como aspecto
+--------------------------------------------------
+
+
+Antes de qualquer mecânica, a Geração de cada PJ **deve aparecer em um aspecto** — geralmente embutida no Conceito Principal ou em um aspecto livre. Sem isso, fica invisível na ficção. Exemplos:
+
+
+• "Tremere da 11ª Geração — corro atrás do prestígio que meu sangue não me dá"
+
+• "Anciã Ventrue da 8ª — sinto o peso da coroa antes mesmo de pegá-la"
+
+• "Brujah da 13ª — Sangue Fraco, mas o que sobra é fúria"
+
+• "Matusalém escondido (5ª) — ninguém sabe o que eu realmente sou"
+
+
+--------------------------------------------------
+Tabela de Geração — adaptação para Fate Core
+--------------------------------------------------
+
+
+A tabela abaixo é o coração desta página. A coluna esquerda é a Geração canônica do V20, e cada coluna seguinte traduz o limite original em uma equivalência funcional dentro do Fate.
+
+
+[Como ler a tabela]
+
+
+• Pirâmide máx: o teto da pirâmide de perícias do personagem (substitui "Atributo/Perícia Máx 5/10/15" do V20).
+
+• Disciplinas máx (níveis totais): a quantidade total de níveis de Disciplina que o personagem pode ter somando tudo.
+
+• Pool (Caixas): a quantidade de caixas de estresse de sangue (Pool) que o personagem possui. Todos têm 3 consequências de Sede.
+
+• Potência do Sangue: bônus passivo místico — armadura contra Dominação/Presença vinda de geração superior, e bônus em testes opostos contra geração superior.
+
+
+Geração | Pirâmide máx | Disc. máx (níveis totais) | Pool (Caixas) | Potência do Sangue
+--- | --- | --- | --- | ---
+
+
+3ª (Antediluviano) | +8 | 20+ | 8 | 10 |
+
+4ª (Matusalém) | +7 | 16 | 7 | 9 |
+
+5ª (Matusalém) | +7 | 14 | 6 | 8 |
+
+6ª (Antigo) | +6 | 12 | 5 | 7 |
+
+7ª (Antigo) | +6 | 10 | 5 | 6 |
+
+8ª (Ancião) | +5 | 9 | 4 | 5 |
+
+9ª (Ancião) | +5 | 8 | 4 | 5 |
+
+10ª (Ancilla) | +5 | 7 | 4 | 4 |
+
+11ª (Ancilla/Neonato) | +4 | 6 | 3 | 3 |
+
+12ª (Neonato) | +4 | 5 | 3 | 2 |
+
+13ª (Neonato) | +4 | 5 | 3 | 1 |
+
+14ª–16ª (Sangue Fraco) | +3 | 3 | 2 | 0 |
+
+
+[Importante: Geração modula, não substitui]
+
+
+O tipo de personagem (Mortal, Ghoul, Neonato, Ancião, Antigo) ainda determina **recarga, estresse e construção inicial**. A Geração só impõe os **tetos máximos**: um Ancião da 9ª construído como "Ancião" tem 3 de recarga e pirâmide +5, mas um Ancião da 7ª construído como "Antigo" pode ir até pirâmide +6. Use a categoria de tipo para o ponto de partida; a Geração para o teto.
+
+
+--------------------------------------------------
+O bônus de Geração baixa em testes opostos
+--------------------------------------------------
+
+
+[Adaptação minha — sugestão do usuário]
+
+
+Quando dois vampiros se confrontam diretamente — Dominação contra Vontade, Presença contra Vontade, Auspícios sondando aura, Quietus contra Fisiologia, leitura de mente contra mente — **o de Geração mais baixa recebe +1 por degrau de diferença, até o máximo de +3**.
+
+
+>> Como funciona
+
+
+Em qualquer rolagem oposta entre vampiros, calcule a diferença de Geração e aplique:
+
+
+Diferença de Geração | Bônus para o de geração mais baixa
+--- | ---
+
+
+0 (mesma geração) | — |
+
+1 geração | +1 |
+
+2 gerações | +2 |
+
+3+ gerações | +3 (teto) |
+
+
+>> Exemplo
+
+
+[Príncipe (8ª) tenta dominar Neonato (12ª)]
+
+
+Diferença de 4 gerações → bônus máximo de **+3**. O Príncipe rola Manipulação +3 (perícia) +3 (Geração) = **+6 base** antes dos dados, contra a Vontade do Neonato. Vira batalha quase impossível para o Neonato, exatamente como deve ser quando um pirralho desafia um Ancião.
+
+
+>> Quando o bônus se aplica
+
+
+Use sempre que houver **conflito direto entre vampiros** envolvendo:
+
+
+• Disciplinas mentais (Dominação, Auspícios, Dementação)
+
+• Disciplinas sociais (Presença, Encantamento)
+
+• Magia ou ritual (Taumaturgia/Necromancia contra outro vampiro como alvo)
+
+• Resistir ao Laço de Sangue de geração superior (a vítima rola Vontade com o bônus se sua geração for menor)
+
+• Combate físico em geral (Lutar, Atletismo defensivo) — o sangue antigo dá vantagem natural
+
+
+Não se aplica para:
+
+
+• Rolagens contra mortais (eles não estão na escala)
+
+• Rolagens contra obstáculo passivo (apenas oposições ativas)
+
+• Rolagens cooperativas (não há "lado mais baixo")
+
+
+--------------------------------------------------
+O limite duro da Dominação
+--------------------------------------------------
+
+
+[Regra inquebrável do V20]
+
+
+Dominação **não funciona em vampiros de Geração inferior à do conjurador**, ponto. Não há rolagem, não há teste — a Disciplina simplesmente falha. Esta é uma das razões pelas quais Geração baixa é cobiçada politicamente: imunidade automática contra a manipulação mental dos rivais "menores".
+
+
+--------------------------------------------------
+Potência do Sangue — uso prático
+--------------------------------------------------
+
+[Adaptação minha]
+
+O valor de "Potência do Sangue" da tabela tem três usos práticos no Fate:
+
+
+• Armadura contra magias mentais e sociais: reduz em 1 ponto de estresse (até o limite da Potência) qualquer dano mental causado por outro vampiro de Potência inferior. Um Ancião com Potência 5 atacado mentalmente por um Neonato (Potência 1) reduz até 4 de dano.
+
+• Sabor distinto na aura: Auspícios 2+ revela a Potência do Sangue de um vampiro, mesmo sem revelar a Geração exata. É assim que Anciões "se reconhecem" sem precisar declarar.
+
+• Custo de Diabolerie: aumentar a própria Geração via diabolerie funciona uma vez se a vítima tinha Potência maior que a do diablerista. Cada ponto de diferença é um obstáculo extra na rolagem (ver Diabolerie).
+
+
+--------------------------------------------------
+Tipo de personagem &times; Geração — pareamento típico
+--------------------------------------------------
+
+
+Use como guia ao montar fichas. Não é regra rígida; conceitos especiais (Ancião jovem por diabolerie, Neonato de geração estranha, Caitiff sem origem clara) podem furar a tabela.
+
+
+Tipo mecânico | Geração típica | Observação
+--- | --- | ---
+
+
+Mortal / Ghoul | — | Ghoul opera sob a Geração do domitor para limites de Disciplinas aprendidas |
+
+Neonato (recarga 5) | 13ª – 11ª | Padrão. 13ª pega "Sangue Fraco" como aspecto-problema |
+
+Ancião (recarga 3) | 10ª – 8ª | Primogens, Bispos, Whips antigos |
+
+Antigo (recarga 1) | 7ª – 5ª | Príncipes seculares, Justicars, raríssimos Matusaléns "ativos" |
+
+Antediluviano | 3ª | Apenas NPCs míticos. A mesa não joga com isto |
+
+
+--------------------------------------------------
+Sangue Fraco (14ª, 15ª, 16ª)
+--------------------------------------------------
+
+[Adaptação minha]
+
+Personagens das gerações finais são oficialmente **Sangue Fraco**. Construa-os como Neonato com pirâmide reduzida (+3) e marque obrigatoriamente:
+
+
+• Aspecto-problema: "Sangue Fraco" (Narrador pode compelir para falhar gastos de sangue, sentir fome mais rápido, etc.)
+
+• Não pode aprender Disciplinas avançadas (3+) sem ritual ou diabolerie
+
+• Em compensação: recarga +1 (6 em vez de 5) — porque a maldição ainda lhes deixou alguma sorte
+
+
+--------------------------------------------------
+Como descobrir a Geração de alguém
+--------------------------------------------------
+
+
+• Ritual Caminhada Sanguínea (Taumaturgia básico): revela uma geração para trás por grau de sucesso
+
+• Auspícios 2 (Sintonia da Aura): revela a Potência do Sangue (não a Geração exata, mas dá um intervalo)
+
+• Diabolerie consumada: ao terminar de drenar a vítima, a Geração dela fica óbvia para o diablerista
+
+• Saber acumulado: rolagem de Ocultismo +4 contra Anciões conhecidos da cidade — a Camarilla mantém registros (ainda que mentirosos)
+
+
+--------------------------------------------------
+Mudar de Geração
+--------------------------------------------------
+
+
+Há essencialmente **uma forma**: Diabolerie. Drenar um vampiro de Geração inferior à sua reduz sua própria Geração em 1 (ou mais, se a vítima for muito poderosa). Outras formas existem na ficção (rituais Taumatúrgicos perdidos, intervenção de Antediluvianos), mas são **tramas inteiras de crônica**, não opções de avanço normal.
+
+
+<section class="page"
+
+
+############################################################
+
+GUIA DO NARRADOR
+
+############################################################
+
+
+id="page-narrador" data-page="narrador">
+
+
+============================================================
+Guia do Narrador
+============================================================
+
+
+Conduzir Vampiro: a Máscara em Fate Core
+
+
+--------------------------------------------------
+Os primeiros 5 minutos da sessão
+--------------------------------------------------
+
+
+[Ritual de abertura]
+
+
+Sempre comece com a mesma fala: **"Vocês acordam com fome."** Em seguida, descreva o haven, o estado da Fome de cada um (eles já marcaram nas fichas), e dê um _gancho_ imediato — uma mensagem, um cheiro, uma visita inesperada. Não deixe a sessão começar com "e aí, o que vocês fazem?".
+
+
+--------------------------------------------------
+Tom e atmosfera
+--------------------------------------------------
+
+
+• Sons: sussurros, pingar de água, motor distante, sirene. Use 2 sons descritivos por cena de exteriores noturnos.
+
+• Cheiros: sangue não é só vermelho — é cheiro de cobre, de medo, de perfume + suor. Vampiros sentem isso de longe.
+
+• Presença das presas: mortais devem soar frágeis e quentes. Use isso ao descrevê-los.
+
+• Política em camadas: ninguém diz o que quer diretamente. Sempre há subtexto. Modele isso nos PNJs.
+
+
+--------------------------------------------------
+Preparando uma crônica
+--------------------------------------------------
+
+
+• Defina 2-3 Questões da Crônica — perguntas centrais que vão se desenrolar (ex.: "Quem matou o Príncipe?", "O Sabbat tomará a cidade?"). Resolução de cada uma é Marco Menor.
+
+• Escolha um cenário-cidade com 4-6 aspectos — locais, facções, tensões.
+
+• Crie 5-10 PNJs centrais com Conceito, Aspecto, 2-3 perícias notáveis, e um desejo.
+
+• Não planeje a trama linear — planeje os atores, deixe os jogadores serem o catalisador.
+
+
+--------------------------------------------------
+Gerenciando frenesi na mesa
+--------------------------------------------------
+
+
+Frenesi é momento dramático, não punição. Quando ocorrer:
+
+
+• Pause. Descreva a transformação interior em uma frase poética.
+
+• Pergunte ao jogador como sua Besta agiria — ele participa da narração.
+
+• Se possível, vire frenesi numa cena fechada que termina com decisão moral, não numa fuga.
+
+• Ao final, dê espaço para o jogador processar o que aconteceu (compels de remorso valem PD).
+
+
+--------------------------------------------------
+Equilibrando spotlight
+--------------------------------------------------
+
+
+Em mesa com 4-5 jogadores, é fácil um deles dominar. Use:
+
+
+• Cenas de abertura individuais — antes da reunião do grupo, 5 minutos com cada PJ no haven dele
+
+• Compels direcionados — ofereça PDs para PJs mais quietos com aspectos que tragam complicação pessoal
+
+• NPCs ligados a cada PJ — cada um tem seu sire, seu retentor, seu inimigo
+
+
+--------------------------------------------------
+Política entre PJs
+--------------------------------------------------
+
+
+[Combine antes]
+
+
+VtM tem tradição de PJs traindo PJs. **Discuta na sessão zero** se isso é bem-vindo. Se for, defina _limites_: nunca PvP letal sem aceite explícito; conflitos políticos são incentivados; manipulação não-consensual fora de cena precisa de check-in.
+
+
+--------------------------------------------------
+Dificuldades — guia rápido
+--------------------------------------------------
+
+
+Cena | Dificuldade típica
+--- | ---
+
+
+Caçar mortal médio | +2 |
+
+Caçar mortal cuidadoso | +4 |
+
+Convencer Primogen | +4 |
+
+Bater em capanga | Lutar +1 a +2 |
+
+Escapar de Garou | +5 |
+
+Resistir a Dominação de Ancião | +4 com Vontade |
+
+Ler aura de Antigo | +5 |
+
+
+--------------------------------------------------
+Erros comuns a evitar
+--------------------------------------------------
+
+
+• Não esquecer da Fome. Se eles não falaram em caçar há 2 sessões, agrave a Fome de todos.
+
+• Não negar Disciplinas. Os jogadores compraram esses Extras — deixe brilhar. O sistema é "super-heróis com presas", lembra?
+
+• Não tratar combate como D&D. 3-4 rodadas é o máximo. Use consequências para encerrar.
+
+• Não esconder a quebra da Máscara. Quando acontece, dê eco — Harpias ficam sabendo, Príncipe convoca.
+
+
+<section class="page"
+
+
+############################################################
+
+PARA JOGADORES
+
+############################################################
+
+
+id="page-jogadores" data-page="jogadores">
+
+
+============================================================
+Para Jogadores
+============================================================
+
+
+Como tirar o máximo da sua personagem morta-viva
+
+
+--------------------------------------------------
+Escrevendo bons aspectos
+--------------------------------------------------
+
+
+Aspecto bom é aquele que **cabe nas duas mãos** — pode ser invocado para benefício _e_ compelido para complicação. Teste:
+
+
+• "Brujah forte" — fraco. Genérico. Quase só serve para invocar bônus em Lutar.
+
+• "Brujah que jurou nunca tocar uma mulher de novo" — forte. Bônus contra ataques de mulheres, complicação quando uma precisa de proteção.
+
+• "Toreador apaixonado por arte" — ok. Compelível só em museus.
+
+• "Toreador escravizada pela coleção do meu sire" — forte. Sire é PNJ explorável, coleção é gancho.
+
+
+--------------------------------------------------
+Quando gastar Pontos de Destino
+--------------------------------------------------
+
+
+• Em rolagens críticas. Caça que vai impactar a Fome a noite toda. Conflito político decisivo.
+
+• Para declarar fato narrativo. "Conheço esse bartender. Já o ajudei numa fria." — 1 PD bem investido.
+
+• Para resistir a um compel. Quando aceitar a complicação atrapalharia demais a sessão.
+
+• Não acumule. No fim da sessão, PDs não usados acima da recarga inicial são perdidos.
+
+
+--------------------------------------------------
+Aceitar compels
+--------------------------------------------------
+
+
+Compels são presente do Narrador — você ganha um PD para que a história fique mais interessante. Recusas devem ser raras. Algumas dicas:
+
+
+• Aceite quando a complicação for divertida narrativamente, mesmo que ruim para o personagem
+
+• Aceite quando você está com 0-1 PDs — você precisa do recurso
+
+• Recuse só quando aceitar inviabilizaria a sessão para os outros
+
+• Negocie: "E se em vez de eu atacar o Príncipe, eu fizer um insulto público?" — Narradores costumam aceitar variações
+
+
+--------------------------------------------------
+Roleplay vampírico
+--------------------------------------------------
+
+
+• Pense em décadas, não em horas. O ressentimento que você nutriu por 50 anos é real.
+
+• Use a respiração consciente. Vampiros não respiram automaticamente — quando você "respira", é encenação. Pode usar isso como tique do personagem.
+
+• Saudades dos vivos. Comida, sol, sexo (dependendo do clã), filhos — coisas que você não tem mais. Mencione.
+
+• Hierarquia importa. Você é Neonato. Anciões te tratam como criança. Aceite e jogue dentro disso.
+
+
+--------------------------------------------------
+Colaborando com o Narrador
+--------------------------------------------------
+
+
+• Compartilhe seus ganchos pessoais. Aspectos não exploram-se sozinhos.
+
+• Sinalize quando quiser cenas pesadas — frenesi público, descida moral, traição
+
+• Sinalize seus limites — temas que você não quer ver na mesa
+
+• Crie ganchos para outros PJs — aspectos compartilhados são ouro
+
+
+--------------------------------------------------
+Cuidado com sua Fome
+--------------------------------------------------
+
+
+[Regra de bolso]
+
+
+Se você está em Fome leve no início da noite, **não comece a sessão usando sangue para feitos**. Resolva a Fome primeiro. Se não, vai chegar Severa rápido — e quando isso ocorre, frenesis viram quase certeza.
+
+
+<section class="page"
+
+
+############################################################
+
+TABELAS DE REFERÊNCIA
+
+############################################################
+
+
+id="page-referencia" data-page="referencia">
+
+
+============================================================
+Tabelas de Referência
+============================================================
+
+
+Tudo o que importa em uma tela — para usar na mesa
+
+
+--------------------------------------------------
+Escala de bônus / dificuldade
+--------------------------------------------------
+
+
+Valor | Nome | Quando aparece
+--- | --- | ---
+
+
++0 | Medíocre | Sem treino / trivial |
+
++1 | Razoável | Treino básico / fácil |
+
++2 | Bom | Competente / Fome leve |
+
++3 | Ótimo | Profissional / desafio sério |
+
++4 | Excelente | Expert / Fome moderada |
+
++5 | Fantástico | Mestre / quase impossível |
+
++6 | Épico | Lendário / Fome severa |
+
++8 | Lendário | Sobre-humano |
+
+
+--------------------------------------------------
+Tipos de personagem (resumo)
+--------------------------------------------------
+
+
+Tipo | Perícia máx | Disc. | Recarga | Estresse
+--- | --- | --- | --- | ---
+
+
+Mortal | +3 | 0 | — | 2/2 |
+
+Ghoul | +3 | Potência 1 grátis | — | 3/2 |
+
+Neonato | +4 | 3 níveis | 5 | 3/3 |
+
+Ancião | +5 | 6 níveis | 3 | 3/3 |
+
+Antigo | +6 | 9 níveis | 1 | 3/3 |
+
+
+--------------------------------------------------
+Fluxo de Caça
+--------------------------------------------------
+
+
+Fome | Obstáculo | Falha vira
+--- | --- | ---
+
+
+Leve | +2 | Moderada |
+
+Moderada | +4 | Severa |
+
+Severa | +6 | Quase certo: matar |
+
+
+--------------------------------------------------
+Armas
+--------------------------------------------------
+
+
+Arma | Dano + | Notas
+--- | --- | ---
+
+
+Punho | +0 | — |
+
+Mordida | +1 | Após agarrar |
+
+Faca | +1 | — |
+
+Espada | +2 | — |
+
+Pistola | +2 | — |
+
+Rifle | +3 | — |
+
+Assalto | +2 | Atinge zona |
+
+Estaca | +0 | Paralisa em derrubado |
+
+
+--------------------------------------------------
+Custos de Recarga
+--------------------------------------------------
+
+
+Item | Custo
+--- | ---
+
+
+Façanha | 1 |
+
+Nível de Disciplina | 2 |
+
+Extra (Background típico) | 1-2 |
+
+Refúgio Compartilhado | 1 por PJ envolvido |
+
+Inligável (Tremere) | 2 (custo dobrado) |
+
+
+--------------------------------------------------
+Dificuldades de Contatos (vampiros)
+--------------------------------------------------
+
+
+Dif. | Alvo
+--- | ---
+
+
++2 | Senescal, Bispo, Harpia, Whip do clã, célula da Mão Negra, Anarca |
+
++3 | Líder Mão Negra, Assamita, matilha do Arcebispo, Primogen do clã |
+
++4 | Príncipe, Arcebispo, Primogen fora do clã |
+
+
+--------------------------------------------------
+Tempo de Torpor (sem intervenção)
+--------------------------------------------------
+
+
+Vontade | Tempo
+--- | ---
+
+
++0 | Décadas/séculos |
+
++1 | Anos |
+
++2 | Meses |
+
++3 | Semanas |
+
++4 | Dias |
+
++5+ | Horas |
+
+
+--------------------------------------------------
+Quebra da Máscara
+--------------------------------------------------
+
+
+Nível | Descrição | Eco
+--- | --- | ---
+
+
+1 | Suspeita isolada | Aspecto de cena |
+
+2 | Evidência física | Aspecto persistente |
+
+3 | Revelação pública | Cidade reage; intervenção da Camarilla |
+
+4 | Catastrófica | Julgamento; consequência severa pessoal |
+
+
+--------------------------------------------------
+Geração — limites & bônus
+--------------------------------------------------
+
+
+Geração | Pirâmide | Disc. máx | Sangue/cena | Reserva | Pot. Sangue
+--- | --- | --- | --- | --- | ---
+
+
+3ª | +8 | 20+ | 10 | +10 | 10 |
+
+4ª | +7 | 16 | 8 | +8 | 9 |
+
+5ª | +7 | 14 | 7 | +7 | 8 |
+
+6ª | +6 | 12 | 6 | +6 | 7 |
+
+7ª | +6 | 10 | 5 | +5 | 6 |
+
+8ª | +5 | 9 | 4 | +4 | 5 |
+
+9ª | +5 | 8 | 3 | +3 | 5 |
+
+10ª | +5 | 7 | 3 | +2 | 4 |
+
+11ª | +4 | 6 | 2 | +2 | 3 |
+
+12ª | +4 | 5 | 2 | +1 | 2 |
+
+13ª | +4 | 5 | 2 | +1 | 1 |
+
+14ª–16ª | +3 | 3 | 1 | +0 | 0 |
+
+
+[Bônus em testes opostos por Geração]
+
+
+Em qualquer teste oposto entre vampiros, o de geração mais baixa ganha **+1 por degrau**, máximo **+3**. _Dominação não funciona contra geração inferior._ Ver Gerações.
+
+
+--------------------------------------------------
+Tabela rápida: Clãs e suas 3 Disciplinas nativas
+--------------------------------------------------
+
+
+_Use esta na hora de montar personagem — são as 3 Disciplinas entre as quais você distribui os níveis grátis._
+
+
+Clã | Nativas | Seita
+--- | --- | ---
+
+
+Brujah | Celeridade · Potência · Presença | Camarilla |
+
+Gangrel | Animalismo · Fortitude · Proteu | Camarilla |
+
+Malkaviano | Auspícios · Dementação · Ofuscação | Camarilla |
+
+Nosferatu | Animalismo · Ofuscação · Potência | Camarilla |
+
+Toreador | Auspícios · Celeridade · Presença | Camarilla |
+
+Tremere | Auspícios · Dominação · Taumaturgia | Camarilla |
+
+Ventrue | Dominação · Fortitude · Presença | Camarilla |
+
+Lasombra | Dominação · Obtenebração · Potência | Sabbat |
+
+Tzimisce | Animalismo · Auspícios · Vicissitude | Sabbat |
+
+Assamita | Celeridade · Ofuscação · Quietus | Independente |
+
+Followers of Set | Ofuscação · Presença · Serpentis | Independente |
+
+Giovanni | Dominação · Potência · Necromancia | Independente |
+
+Ravnos | Animalismo · Ofuscação · Quimerismo | Independente |
+
+Gárgulas | Fortitude · Potência · Visceratika | Linhagem |
+
+Salubri | Auspícios · Fortitude · Valeren | Linhagem (caçada) |
+
+True Brujah | Potência · Presença · Temporis | Linhagem |
+
+Caitiff / Pander | Qualquer — 3 níveis livres | Sem clã |
+
+
+--------------------------------------------------
+Tabela rápida: Disciplinas e seus clãs
+--------------------------------------------------
+
+
+_Inversa da tabela acima — útil quando você quer saber "quem tem Ofuscação?"._
+
+
+Disciplina | Clã
+--- | ---
+
+
+Animalismo | Gangrel, Nosferatu, Ravnos, Tzimisce |
+
+Auspícios | Malkaviano, Toreador, Tremere, Tzimisce, Salubri |
+
+Celeridade | Assamita, Brujah, Toreador, Followers of Set |
+
+Dementação | Malkaviano |
+
+Dominação | Lasombra, Tremere, Tzimisce, Ventrue |
+
+Fortitude | Gangrel, Giovanni, Nosferatu, Ravnos, Ventrue |
+
+Necromancia | Giovanni, Cappadocian (extinto) |
+
+Obtenebração | Lasombra |
+
+Ofuscação | Assamita, Followers of Set, Lasombra, Malkaviano, Nosferatu, Ravnos |
+
+Potência | Brujah, Giovanni, Lasombra, Nosferatu |
+
+Presença | Brujah, Followers of Set, Toreador, Ventrue |
+
+Proteu | Gangrel |
+
+Quietus | Assamita |
+
+Quimerismo | Ravnos |
+
+Serpentis | Followers of Set |
+
+Taumaturgia | Tremere |
+
+Temporis | True Brujah |
+
+Vicissitude | Tzimisce |
+
+Visceratika | Gárgulas |
+
+
+--------------------------------------------------
+Atalhos de mesa
+--------------------------------------------------
+
+
+[Combos úteis]
+
+
+• Conflito político? → Sociedade Kindred
+
+• PJ quer caçar? → Fome & Caça
+
+• PJ quer gastar sangue? → Gastar Sangue
+
+• Combate começou? → Combate
+
+• PJ frenesiou? → Frenesi
+
+• Quebra de Máscara? → A Máscara
+
+• Ato moralmente pesado? → Humanidade & Trilhas
+
+
+<div
+
