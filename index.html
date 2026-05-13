@@ -1262,6 +1262,62 @@ mark{
     .btn-export { display: none; }
     .brand-text-desktop { display: none; }
   }
+
+  /* Modal de Download de Personagens */
+  .cd-modal-overlay {
+    display: none;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); z-index: 9999;
+    justify-content: center; align-items: center;
+  }
+  .cd-modal-overlay.active { display: flex; }
+  .cd-modal {
+    background: linear-gradient(180deg, #0a0216, #050110);
+    border: 1px solid var(--blood); border-radius: 12px;
+    padding: 30px; max-width: 700px; width: 90%; max-height: 80vh;
+    overflow-y: auto; box-shadow: 0 0 40px rgba(255,0,170,0.3);
+  }
+  .cd-modal h2 {
+    color: var(--gold); font-family: 'Cinzel Decorative', serif;
+    font-size: 22px; margin: 0 0 8px;
+  }
+  .cd-modal p.sub { color: var(--ink-soft); font-size: 12px; margin: 0 0 20px; }
+  .cd-char-list { display: flex; flex-direction: column; gap: 8px; }
+  .cd-char-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px; border: 1px solid rgba(0,255,255,0.12);
+    border-radius: 6px; background: rgba(0,255,255,0.03);
+    transition: border-color 0.2s;
+  }
+  .cd-char-row:hover { border-color: var(--gold); }
+  .cd-char-info { display: flex; flex-direction: column; gap: 2px; }
+  .cd-char-name { color: #fff; font-size: 15px; font-weight: 600; }
+  .cd-char-tags { color: var(--ink-soft); font-size: 11px; display: flex; gap: 8px; }
+  .cd-char-tags span { padding: 1px 8px; border: 1px solid var(--blood); border-radius: 10px; }
+  .cd-btn-download {
+    background: rgba(255,0,170,0.15); border: 1px solid var(--blood);
+    color: #fff; padding: 6px 16px; border-radius: 4px;
+    cursor: pointer; font-family: 'Montserrat', sans-serif;
+    font-size: 12px; font-weight: 600; text-transform: uppercase;
+    transition: all 0.3s; white-space: nowrap;
+  }
+  .cd-btn-download:hover { background: var(--blood); box-shadow: 0 0 15px var(--blood); }
+  .cd-btn-download-all {
+    background: var(--gold); border: 1px solid var(--gold);
+    color: #0a0216; padding: 8px 20px; border-radius: 4px;
+    cursor: pointer; font-family: 'Montserrat', sans-serif;
+    font-size: 13px; font-weight: 700; text-transform: uppercase;
+    margin-bottom: 16px; transition: all 0.3s;
+  }
+  .cd-btn-download-all:hover { box-shadow: 0 0 20px var(--gold); }
+  .cd-btn-close {
+    position: absolute; top: 12px; right: 16px;
+    background: none; border: none; color: var(--ink-soft);
+    font-size: 24px; cursor: pointer; transition: color 0.2s;
+  }
+  .cd-btn-close:hover { color: var(--blood); }
+  .cd-modal-header { position: relative; margin-bottom: 16px; }
+  .cd-char-empty { color: var(--ink-soft); font-size: 14px; text-align: center; padding: 30px; }
 </style>
 </head>
 <body>
@@ -1282,7 +1338,7 @@ mark{
   </nav>
 
   <div style="display: flex; gap: 10px;" class="desktop-only">
-    <button class="btn-export" onclick="downloadCharacterData()">Baixar Dados</button>
+    <button class="btn-export" onclick="cdOpenModal()">Baixar Fichas</button>
   </div>
 
   <div id="mobileDropdown" class="mobile-nav-dropdown">
@@ -4303,37 +4359,103 @@ function loadDraft() {
 }
 
 
-async function downloadCharacterData() {
-  let fullData = [];
+async function cdOpenModal() {
+  const overlay = document.getElementById('cd-modal-overlay');
+  const list = document.getElementById('cd-char-list');
+  const empty = document.getElementById('cd-char-empty');
+  if (!overlay || !list) return;
+
+  overlay.classList.add('active');
+  list.innerHTML = '';
+  empty.style.display = 'none';
+
+  const seen = new Set();
+  const allChars = [];
+
+  // Supabase
   if (supabaseClient) {
     try {
       const { data, error } = await supabaseClient.from('characters').select('*');
       if (!error && data) {
-        fullData = data;
-      } else {
-        alert("Erro ao buscar dados do servidor para o backup.");
+        data.forEach(c => {
+          const key = `${c.name || 'sem-nome'}_${c.clan || ''}_${c.player_name || ''}`;
+          if (!seen.has(key)) { seen.add(key); allChars.push({...c, source:'supabase'}); }
+        });
       }
-    } catch (e) {
-      alert("Erro de conexão ao tentar fazer o backup.");
-    }
+    } catch (e) {}
   }
 
-  // Fallback caso não consiga do Supabase ou para juntar com localStorage antigo
-  let localArchive = [];
-  try { localArchive = JSON.parse(localStorage.getItem('cc_character_archive_v1') || '[]'); } catch (e) {}
-  
-  const payload = {
-    supabase_characters: fullData,
-    local_archive_v1: localArchive
-  };
+  // localStorage
+  try {
+    const local = JSON.parse(localStorage.getItem('cc_character_archive_v1') || '[]');
+    local.forEach(c => {
+      const key = `${c.name || 'sem-nome'}_${c.clan || ''}_${c.playerName || c.player_name || ''}`;
+      if (!seen.has(key)) { seen.add(key); allChars.push({...c, source:'local'}); }
+    });
+  } catch (e) {}
 
-  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 2));
-  const downloadAnchorNode = document.createElement('a');
-  downloadAnchorNode.setAttribute("href", dataStr);
-  downloadAnchorNode.setAttribute("download", "backup_personagens_vampiro_global.json");
-  document.body.appendChild(downloadAnchorNode);
-  downloadAnchorNode.click();
-  downloadAnchorNode.remove();
+  // ccState atual
+  if (ccState && ccState.name) {
+    const key = `${ccState.name}_${ccState.clan || ''}_${ccState.playerName || ''}`;
+    if (!seen.has(key)) { seen.add(key); allChars.push({...ccState, source:'current'}); }
+  }
+
+  if (allChars.length === 0) {
+    empty.style.display = 'block';
+    return;
+  }
+
+  allChars.forEach((c, i) => {
+    const name = c.name || 'Personagem sem nome';
+    const playerName = c.playerName || c.player_name || '';
+    const clan = c.clan || 'Clã desconhecido';
+    const typeLabel = c.creator?.name ? 'Criador' : 'Jogador';
+
+    const row = document.createElement('div');
+    row.className = 'cd-char-row';
+    row.innerHTML = `
+      <div class="cd-char-info">
+        <div class="cd-char-name">${ccEscapeHtml(name)}</div>
+        <div class="cd-char-tags">
+          <span>${ccEscapeHtml(clan)}</span>
+          <span>${typeLabel}</span>
+          ${playerName ? '<span style="border-color:var(--gold);color:var(--gold)">' + ccEscapeHtml(playerName) + '</span>' : ''}
+        </div>
+      </div>
+      <button class="cd-btn-download" onclick="cdDownloadChar(${i})">Baixar JSON</button>
+    `;
+    list.appendChild(row);
+  });
+
+  window._cd_allChars = allChars;
+}
+
+function cdCloseModal(e) {
+  if (e && e.target !== document.getElementById('cd-modal-overlay')) return;
+  document.getElementById('cd-modal-overlay').classList.remove('active');
+}
+
+function cdDownloadChar(index) {
+  const all = window._cd_allChars || [];
+  const c = all[index];
+  if (!c) return;
+  const name = (c.name || 'personagem').replace(/[^a-zA-Z0-9_-\u00C0-\u00FF]/g, '_');
+  const json = JSON.stringify(c, null, 2);
+  const blob = new Blob([json], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${name}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function cdDownloadAll() {
+  const all = window._cd_allChars || [];
+  if (all.length === 0) return;
+  all.forEach((c, i) => {
+    setTimeout(() => cdDownloadChar(i), i * 300);
+  });
 }
 
 
@@ -5849,6 +5971,20 @@ if (window.supabase && typeof window.supabase.createClient === 'function') {
 
 // ============ INICIALIZAÇÃO DA PÁGINA ============
 </script>
+
+<!-- Modal de Download de Personagens -->
+<div class="cd-modal-overlay" id="cd-modal-overlay" onclick="cdCloseModal(event)">
+  <div class="cd-modal" onclick="event.stopPropagation()">
+    <div class="cd-modal-header">
+      <h2>Baixar Fichas</h2>
+      <p class="sub">Selecione um personagem para baixar sua ficha individual em JSON</p>
+      <button class="cd-btn-close" onclick="cdCloseModal()">&times;</button>
+    </div>
+    <button class="cd-btn-download-all" onclick="cdDownloadAll()">Baixar Todos</button>
+    <div class="cd-char-list" id="cd-char-list"></div>
+    <div class="cd-char-empty" id="cd-char-empty" style="display:none">Nenhum personagem encontrado.</div>
+  </div>
+</div>
 
 </body>
 </html>
