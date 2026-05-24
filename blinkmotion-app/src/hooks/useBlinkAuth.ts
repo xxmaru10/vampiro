@@ -26,6 +26,25 @@ export function useBlinkAuth() {
     return `${identifier.toLowerCase().replace(/[^a-z0-9]/g, '')}@blinkmotion.com`;
   };
 
+  const ensureIdentityExists = async (identifier: string) => {
+    const name = identifier.toUpperCase();
+    try {
+      const { data: existing } = await supabase
+        .from('blink_identities')
+        .select('id')
+        .eq('name', name)
+        .maybeSingle();
+
+      if (!existing) {
+        await supabase
+          .from('blink_identities')
+          .insert([{ name, is_npc: false }]);
+      }
+    } catch (dbErr) {
+      console.error('Erro ao verificar/registrar identidade no banco:', dbErr);
+    }
+  };
+
   const login = async (identifier: string, password: string) => {
     setError(null);
     setLoading(true);
@@ -33,6 +52,9 @@ export function useBlinkAuth() {
       const email = formatEmail(identifier);
       const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password });
       if (authError) throw authError;
+
+      await ensureIdentityExists(identifier);
+
       setLoading(false);
       return data;
     } catch (err: any) {
@@ -49,6 +71,9 @@ export function useBlinkAuth() {
       const email = formatEmail(identifier);
       const { data, error: authError } = await supabase.auth.signUp({ email, password });
       if (authError) throw authError;
+
+      await ensureIdentityExists(identifier);
+
       setLoading(false);
       return data;
     } catch (err: any) {
