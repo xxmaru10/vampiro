@@ -31,16 +31,21 @@ export function useMessages(myName: string) {
     const { data, error: err } = await supabase
       .from('blink_messages')
       .select('sender_name, receiver_name, content, created_at')
-      .or(`sender_name.eq.${name},receiver_name.eq.${name}`)
+      .or(`sender_name.ilike.${name},receiver_name.ilike.${name}`)
       .order('created_at', { ascending: false });
 
     if (err) { setError(err.message); setLoading(false); return; }
 
+    // Merge conversations with different casings (e.g. "Echo" and "ECHO" become one)
     const seen = new Map<string, Conversation>();
+    const nameUpper = name.toUpperCase();
     for (const msg of data ?? []) {
-      const other = msg.sender_name === name ? msg.receiver_name : msg.sender_name;
-      if (!seen.has(other)) {
-        seen.set(other, { otherName: other, lastMessage: msg.content, lastAt: msg.created_at });
+      const senderUpper = msg.sender_name.toUpperCase();
+      const receiverUpper = msg.receiver_name.toUpperCase();
+      const otherRaw = senderUpper === nameUpper ? msg.receiver_name : msg.sender_name;
+      const otherKey = otherRaw.toUpperCase();
+      if (!seen.has(otherKey)) {
+        seen.set(otherKey, { otherName: otherKey, lastMessage: msg.content, lastAt: msg.created_at });
       }
     }
     setConversations(Array.from(seen.values()));
@@ -49,11 +54,11 @@ export function useMessages(myName: string) {
 
   const fetchChat = async (nameA: string, nameB: string) => {
     setChatLoading(true);
-    activeChatRef.current = { a: nameA, b: nameB };
+    activeChatRef.current = { a: nameA.toUpperCase(), b: nameB.toUpperCase() };
     const { data, error: err } = await supabase
       .from('blink_messages')
       .select('*')
-      .or(`and(sender_name.eq.${nameA},receiver_name.eq.${nameB}),and(sender_name.eq.${nameB},receiver_name.eq.${nameA})`)
+      .or(`and(sender_name.ilike.${nameA},receiver_name.ilike.${nameB}),and(sender_name.ilike.${nameB},receiver_name.ilike.${nameA})`)
       .order('created_at', { ascending: true });
 
     if (err) { setError(err.message); }
@@ -67,14 +72,17 @@ export function useMessages(myName: string) {
     content: string,
     isNpc: boolean = false
   ) => {
+    // Normalize names to UPPERCASE on insert to prevent future case mismatches
+    const normalizedSender = senderName.toUpperCase();
+    const normalizedReceiver = receiverName.toUpperCase();
     const { error: err } = await supabase
       .from('blink_messages')
-      .insert([{ sender_name: senderName, receiver_name: receiverName, content, is_npc_sender: isNpc }]);
+      .insert([{ sender_name: normalizedSender, receiver_name: normalizedReceiver, content, is_npc_sender: isNpc }]);
     if (err) throw err;
     // Refresh both chat and conversations
     await Promise.all([
-      fetchChat(senderName, receiverName),
-      fetchConversations(senderName),
+      fetchChat(normalizedSender, normalizedReceiver),
+      fetchConversations(normalizedSender),
     ]);
   };
 
@@ -97,24 +105,31 @@ export function useMessages(myName: string) {
     return Array.from(names).slice(0, 15);
   };
 
-  // Realtime: escuta novas mensagens que chegam para myName
+  // Realtime: escuta novas mensagens (sem filtro case-sensitive no receiver_name,
+  // filtramos client-side para capturar qualquer variação de case)
   useEffect(() => {
     if (!myName) return;
+    const myNameUpper = myName.toUpperCase();
 
     const channel = supabase
-      .channel(`messages_${myName}`)
+      .channel(`messages_${myNameUpper}`)
       .on('postgres_changes', {
         event: 'INSERT',
         schema: 'public',
         table: 'blink_messages',
-        filter: `receiver_name=eq.${myName}`,
       }, (payload) => {
         const msg = payload.new as Message;
+        const receiverUpper = (msg.receiver_name || '').toUpperCase();
+        const senderUpper = (msg.sender_name || '').toUpperCase();
+
+        // Só processa se a mensagem envolve este usuário
+        if (receiverUpper !== myNameUpper && senderUpper !== myNameUpper) return;
+
         // Atualiza o chat aberto se for desta conversa
         if (activeChatRef.current) {
           const { a, b } = activeChatRef.current;
-          const involves = (msg.sender_name === a || msg.sender_name === b) &&
-                           (msg.receiver_name === a || msg.receiver_name === b);
+          const involves = (senderUpper === a || senderUpper === b) &&
+                           (receiverUpper === a || receiverUpper === b);
           if (involves) setChat(prev => [...prev, msg]);
         }
         // Atualiza lista de conversas

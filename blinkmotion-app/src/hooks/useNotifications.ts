@@ -105,7 +105,7 @@ export const useNotifications = (userId?: string, isAdminParam: boolean = false,
         const { data: directMessages, error: messageErr } = await supabase
           .from('blink_messages')
           .select('id, sender_name, receiver_name, content, is_npc_sender, created_at')
-          .eq('receiver_name', playerName)
+          .ilike('receiver_name', playerName)
           .order('created_at', { ascending: false })
           .limit(10);
 
