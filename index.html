@@ -1323,7 +1323,7 @@ mark{
 <body>
 
 <header class="top-header">
-  <div class="header-logo" style="display: flex; align-items: center; gap: 12px; cursor: pointer; flex-shrink: 0;" onclick="switchMainSection('trailer')">
+  <div class="header-logo" style="display: flex; align-items: center; gap: 12px; cursor: pointer; flex-shrink: 0;" onclick="openBlinkSection()">
     <img src="logo.png" alt="Logo" style="height: 40px; width: auto; filter: drop-shadow(0 0 5px var(--blood));">
     <span class="brand-text-desktop" style="font-family: 'Damion', cursive; font-size: 24px; color: #fff; text-shadow: 0 0 5px var(--blood); margin-top: -5px; transform: skewX(-10deg);">Miami Nights</span>
   </div>
@@ -1331,9 +1331,8 @@ mark{
   <button class="mobile-nav-toggle" onclick="toggleMobileDropdown()" style="margin-left: 10px;">☰ MENU</button>
 
   <nav class="top-nav">
-    <div class="top-nav-item active" onclick="switchMainSection('trailer')">Trailer</div>
+    <div class="top-nav-item active" onclick="openBlinkSection()">BLiNKMOTiON</div>
     <div class="top-nav-item" onclick="switchMainSection('lore')">Geral</div>
-    <div class="top-nav-item" onclick="openBlinkSection()">BLiNKMOTiON</div>
     <div class="top-nav-item" onclick="switchMainSection('char-creator')">Criar Personagem</div>
   </nav>
 
@@ -1342,34 +1341,13 @@ mark{
   </div>
 
   <div id="mobileDropdown" class="mobile-nav-dropdown">
-    <a href="#" class="mobile-nav-item-link" onclick="switchMainSection('trailer'); toggleMobileDropdown(); return false;">Trailer</a>
-    <a href="#" class="mobile-nav-item-link" onclick="switchMainSection('lore'); toggleMobileDropdown(); return false;">Geral</a>
     <a href="#" class="mobile-nav-item-link" onclick="openBlinkSection(); toggleMobileDropdown(); return false;">BLiNKMOTiON</a>
+    <a href="#" class="mobile-nav-item-link" onclick="switchMainSection('lore'); toggleMobileDropdown(); return false;">Geral</a>
     <a href="#" class="mobile-nav-item-link" onclick="switchMainSection('char-creator'); toggleMobileDropdown(); return false;">Criar Personagem</a>
   </div>
 </header>
 
 <button class="menu-toggle" id="sidebar-toggle" style="display: none;" onclick="toggleMenu()">☰ Menu</button>
-
-<div id="section-trailer" class="main-section active">
-  <div class="trailer-container">
-    <!-- Background Glow -->
-    <div style="position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(255, 0, 170, 0.15) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; z-index: 1;"></div>
-    
-    <div class="video-wrapper">
-      <iframe src="https://drive.google.com/file/d/1ntIUwZV649X-8svwVF34zwGmerSoNQDS/preview" width="100%" height="100%" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="display: block; border: none;"></iframe>
-    </div>
-    
-    <div style="margin-top: 40px; text-align: center; position: relative; z-index: 2;">
-      <img src="logo.png" alt="Vampiro Logo" style="width: 400px; max-width: 90vw; height: auto; filter: drop-shadow(0 0 20px var(--blood)); margin-bottom: 20px;">
-      <p style="color: var(--gold); letter-spacing: 6px; text-transform: uppercase; font-size: 1.2rem; font-weight: 600; text-shadow: 0 0 10px var(--gold);">Adaptação para Fate Core</p>
-    </div>
-    
-    <div style="margin-top: 50px; display: flex; gap: 20px; z-index: 2;">
-      <button class="cc-btn-next" onclick="switchMainSection('lore')" style="padding: 15px 40px; font-size: 1.1rem;">ENTRAR NO SISTEMA</button>
-    </div>
-  </div>
-</div>
 
 <div id="section-lore" class="main-section">
   <div class="app">
@@ -4174,10 +4152,6 @@ mark{
         <textarea class="cc-input cc-textarea" id="cc-obj-3" rows="3" oninput="ccSave()"></textarea>
       </div>
       <div class="cc-field">
-        <label class="cc-label">4 - Quais são as consequências se você falhar nesses objetivos para seu personagem?</label>
-        <textarea class="cc-input cc-textarea" id="cc-obj-4" rows="3" oninput="ccSave()"></textarea>
-      </div>
-      <div class="cc-field">
         <label class="cc-label">5 - Quais obstáculos imediatos impedem seu personagem de conseguir isso agora?</label>
         <textarea class="cc-input cc-textarea" id="cc-obj-5" rows="3" oninput="ccSave()"></textarea>
       </div>
@@ -4241,7 +4215,7 @@ mark{
 </div>
 
 <!-- ============ SEÇÃO: BLiNKMOTiON ============ -->
-<div id="section-social" class="main-section">
+<div id="section-social" class="main-section active">
   <div class="terminal-container">
     <div class="terminal-box">
       <div class="ascii-logo">
@@ -4292,7 +4266,8 @@ function switchMainSection(sectionId) {
   // Update nav items
   document.querySelectorAll('.top-nav-item').forEach(item => {
     item.classList.remove('active');
-    if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(sectionId)) {
+    const onclickStr = item.getAttribute('onclick') || '';
+    if (onclickStr.includes(sectionId) || (sectionId === 'social' && onclickStr.includes('openBlinkSection'))) {
       item.classList.add('active');
     }
   });
@@ -5970,6 +5945,9 @@ if (window.supabase && typeof window.supabase.createClient === 'function') {
 }
 
 // ============ INICIALIZAÇÃO DA PÁGINA ============
+document.addEventListener('DOMContentLoaded', () => {
+  openBlinkSection();
+});
 </script>
 
 <!-- Modal de Download de Personagens -->

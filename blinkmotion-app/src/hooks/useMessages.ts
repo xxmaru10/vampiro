@@ -41,7 +41,6 @@ export function useMessages(myName: string) {
     const nameUpper = name.toUpperCase();
     for (const msg of data ?? []) {
       const senderUpper = msg.sender_name.toUpperCase();
-      const receiverUpper = msg.receiver_name.toUpperCase();
       const otherRaw = senderUpper === nameUpper ? msg.receiver_name : msg.sender_name;
       const otherKey = otherRaw.toUpperCase();
       if (!seen.has(otherKey)) {
