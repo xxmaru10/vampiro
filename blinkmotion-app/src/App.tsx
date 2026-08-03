@@ -79,6 +79,19 @@ function App() {
   if (isAuthenticated) {
     return (
       <div className="social-terminal-layout">
+        <div style={{
+          backgroundColor: '#b30000',
+          color: '#ffffff',
+          textAlign: 'center',
+          padding: '6px 12px',
+          fontFamily: "'VT323', monospace",
+          fontSize: '0.9rem',
+          letterSpacing: '2px',
+          fontWeight: 'bold',
+          boxShadow: '0 0 10px rgba(179,0,0,0.6)'
+        }}>
+          🚨 AVISO OFICIAL: NÓDULO SOCIAL DESATIVADO PELO GOVERNO DA FLÓRIDA 🚨
+        </div>
         <StatusHeader />
         <NavigationMenu items={commands} unreadCount={unreadCount} onSelect={executeCommand} />
         <CommandConsole 
@@ -114,8 +127,24 @@ function App() {
         </div>
         
         <h2 className="terminal-title">{isRegistering ? 'REGISTRO DE ACESSO' : 'TERMINAL DE ACESSO'}</h2>
-        <div style={{ color: '#00ff00', fontSize: '0.9rem', marginBottom: '20px', fontFamily: "'VT323', monospace", opacity: 0.6, textAlign: 'center' }}>
-          LOCAL_NODE: MIAMI_&_REGIÃO // SOUTH_FLORIDA_BROADCAST
+        <div style={{ color: '#00ff00', fontSize: '0.9rem', marginBottom: '15px', fontFamily: "'VT323', monospace", opacity: 0.6, textAlign: 'center' }}>
+          LOCAL_NODE: REGIÃO // FLORIDA_BROADCAST
+        </div>
+
+        <div style={{
+          backgroundColor: 'rgba(255, 34, 34, 0.15)',
+          border: '1px solid #ff4444',
+          color: '#ff4444',
+          padding: '12px 16px',
+          borderRadius: '4px',
+          marginBottom: '20px',
+          textAlign: 'center',
+          fontFamily: "'VT323', monospace",
+          fontSize: '1rem',
+          letterSpacing: '1px',
+          boxShadow: '0 0 12px rgba(255, 68, 68, 0.4)'
+        }}>
+          ⚠️ SERVIÇO DESATIVADO PELO GOVERNO DA FLÓRIDA
         </div>
         
         <form onSubmit={handleSubmit}>
