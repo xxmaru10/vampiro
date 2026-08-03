@@ -11,7 +11,7 @@ export const StatusHeader: React.FC = () => {
         {message.toUpperCase()}
       </div>
       <div className="status-location">
-        [ NODE: MIAMI_&_REGIÃO ]
+        [ NODE: FLÓRIDA // DESATIVADO ]
       </div>
       <style>{`
         .status-header {
