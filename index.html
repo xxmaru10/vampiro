@@ -4152,19 +4152,19 @@ mark{
         <textarea class="cc-input cc-textarea" id="cc-obj-3" rows="3" oninput="ccSave()"></textarea>
       </div>
       <div class="cc-field">
-        <label class="cc-label">5 - Quais obstáculos imediatos impedem seu personagem de conseguir isso agora?</label>
+        <label class="cc-label">4 - Quais obstáculos imediatos impedem seu personagem de conseguir isso agora?</label>
         <textarea class="cc-input cc-textarea" id="cc-obj-5" rows="3" oninput="ccSave()"></textarea>
       </div>
       <div class="cc-field">
-        <label class="cc-label">6 - Por que o seu personagem precisa da ajuda desse grupo para alcançar isso? Ou ele não precisa?</label>
+        <label class="cc-label">5 - Por que o seu personagem precisa da ajuda desse grupo para alcançar isso? Ou ele não precisa?</label>
         <textarea class="cc-input cc-textarea" id="cc-obj-6" rows="3" oninput="ccSave()"></textarea>
       </div>
       <div class="cc-field">
-        <label class="cc-label">7 - Existe algum personagem no mundo que você acha que quer acabar com você? Quem é ele?</label>
+        <label class="cc-label">6 - Existe algum personagem no mundo que você acha que quer acabar com você? Quem é ele?</label>
         <textarea class="cc-input cc-textarea" id="cc-obj-7" rows="3" oninput="ccSave()"></textarea>
       </div>
       <div class="cc-field">
-        <label class="cc-label">8 - Existe algum personagem no mundo que te deve um grande favor? Quem?</label>
+        <label class="cc-label">7 - Existe algum personagem no mundo que te deve um grande favor? Quem?</label>
         <textarea class="cc-input cc-textarea" id="cc-obj-8" rows="3" oninput="ccSave()"></textarea>
       </div>
 
@@ -4280,6 +4280,11 @@ function switchMainSection(sectionId) {
     } else {
       menuToggle.style.display = 'none';
     }
+  }
+
+  if (sectionId === 'char-creator') {
+    ccRenderArchive();
+    ccUpdateRoleAvailability();
   }
 
   scrollToTop();
@@ -4764,45 +4769,56 @@ async function ccUpdateRoleAvailability() {
   });
 }
 
-async function ccReadArchive() { console.log("DIAGNOSTICO: Busca iniciada no Supabase");
+async function ccReadArchive() {
   if (supabaseClient) {
     try {
       const { data, error } = await supabaseClient.from('characters').select('*');
-      console.log("Retorno Supabase:", JSON.stringify({ error: error?.message, dataLength: Array.isArray(data) ? data.length : data }));
-      if (!error && data) {
-        console.log("Dados brutos do Supabase:", data.map(d => ({ id: d.id, name: d.name, data_keys: d.data ? Object.keys(d.data) : 'SEM DATA', creatorName: d.data?.creatorName })));
-        return data.map(d => ({
-          id: d.id,
-          name: d.name,
-          playerName: d.player_name,
-          clan: d.clan,
-          bandRole: d.band_role,
-          concept: d.concept,
-          photo: d.data?.photo || '',
-          creator: {
-            name: d.data?.creatorName || d.data?.creator?.name || '',
-            photo: d.data?.creatorPhoto || d.data?.creator?.photo || '',
-            lore: d.data?.creatorLore || d.data?.creator?.lore || '',
-            personality: d.data?.creatorPersonality || d.data?.creator?.personality || '',
-            relation: d.data?.creatorRelation || d.data?.creator?.relation || ''
-          },
-          objectives: d.data?.objectives || {},
-          lore: d.data?.lore || '',
-          mortalSelf: d.data?.mortalSelf || '',
-          updatedAt: d.created_at
-        }));
+      if (!error && Array.isArray(data)) {
+        return data
+          .filter(d => d && d.name && d.name !== 'Sem nome' && (d.clan || d.player_name || d.band_role || d.concept))
+          .map(d => ({
+            id: d.id,
+            name: d.name,
+            playerName: d.player_name || '',
+            clan: d.clan || '',
+            bandRole: d.band_role || '',
+            concept: d.concept || '',
+            photo: d.data?.photo || '',
+            creator: {
+              name: d.data?.creatorName || d.data?.creator?.name || '',
+              photo: d.data?.creatorPhoto || d.data?.creator?.photo || '',
+              lore: d.data?.creatorLore || d.data?.creator?.lore || '',
+              personality: d.data?.creatorPersonality || d.data?.creator?.personality || '',
+              relation: d.data?.creatorRelation || d.data?.creator?.relation || ''
+            },
+            objectives: d.data?.objectives || {
+              q1: d.data?.obj1 || '',
+              q2: d.data?.obj2 || '',
+              q3: d.data?.obj3 || '',
+              q5: d.data?.obj5 || '',
+              q6: d.data?.obj6 || '',
+              q7: d.data?.obj7 || '',
+              q8: d.data?.obj8 || ''
+            },
+            lore: d.data?.lore || '',
+            mortalSelf: d.data?.mortalSelf || '',
+            updatedAt: d.created_at
+          }));
       } else {
-        console.error("Falha na leitura do Supabase:", error?.message, "| Código:", error?.code, "| Data:", data);
+        console.error("Falha na leitura do Supabase:", error?.message);
       }
     } catch(e) { console.error("Erro ao ler Supabase:", e); }
   }
   const raw = localStorage.getItem(CC_ARCHIVE_KEY);
-  try { return JSON.parse(raw || '[]'); } catch (e) { return []; }
+  try {
+    const list = JSON.parse(raw || '[]');
+    return Array.isArray(list) ? list.filter(d => d && d.name && d.name !== 'Sem nome') : [];
+  } catch (e) { return []; }
 }
 
-function ccWriteArchive(archive) {
+function ccWriteArchive(archive = ccArchive) {
   try {
-    localStorage.setItem(CC_ARCHIVE_KEY, JSON.stringify(archive));
+    localStorage.setItem(CC_ARCHIVE_KEY, JSON.stringify(archive || []));
   } catch (e) {
     if (e.name === 'QuotaExceededError') {
       console.warn("LocalStorage lotado. Falha ao persistir arquivo completo.");
@@ -4848,7 +4864,14 @@ function ccRenderArchive() {
   const empty = document.getElementById('cc-archive-empty');
   if (!grid || !empty) return;
 
-  if (!ccArchive.length) {
+  const validArchive = (ccArchive || []).filter(entry => {
+    if (!entry) return false;
+    const hasName = entry.name && entry.name.trim() !== '' && entry.name !== 'Sem nome';
+    const hasInfo = entry.clan || entry.concept || entry.bandRole || entry.playerName;
+    return hasName || hasInfo;
+  });
+
+  if (!validArchive.length) {
     grid.innerHTML = '';
     empty.style.display = 'block';
     return;
@@ -4859,13 +4882,20 @@ function ccRenderArchive() {
   const treeData = {};
   const orphans = [];
 
-  ccArchive.forEach((entry, index) => {
-    const creatorName = (entry.creator && entry.creator.name) ? entry.creator.name : null;
+  validArchive.forEach(entry => {
+    const creatorName = (entry.creator && entry.creator.name && entry.creator.name.trim() !== '') ? entry.creator.name.trim() : null;
     if (creatorName) {
-      if (!treeData[creatorName]) treeData[creatorName] = { name: creatorName, clan: entry.clan, children: [] };
-      treeData[creatorName].children.push({ entry, index });
+      if (!treeData[creatorName]) {
+        treeData[creatorName] = {
+          name: creatorName,
+          clan: entry.clan || '',
+          firstChildId: entry.id,
+          children: []
+        };
+      }
+      treeData[creatorName].children.push(entry);
     } else {
-      orphans.push({ entry, index });
+      orphans.push(entry);
     }
   });
 
@@ -4873,25 +4903,25 @@ function ccRenderArchive() {
 
   for (const creatorKey in treeData) {
     const group = treeData[creatorKey];
-    const firstChildIndex = group.children[0].index;
     html += `
       <div class="cc-tree-item">
-        <div class="cc-tree-node" style="border-color:var(--gold);opacity:0.9" onclick="ccSelectArchiveByIndex(${firstChildIndex}, true)">
+        <div class="cc-tree-node" style="border-color:var(--gold);opacity:0.9" onclick="ccSelectArchiveById('${group.firstChildId}', true)">
           <div class="cc-tree-info">
             <span class="cc-tree-name" style="color:var(--gold)">${ccEscapeHtml(group.name)}</span>
             <span class="cc-tree-clan" style="color:var(--gold);font-size:9px">Ancestral / Criador</span>
           </div>
         </div>
         <div class="cc-tree-children">
-          ${group.children.map(item => {
-            const isActive = String(item.entry.id) === String(ccSelectedArchiveId);
+          ${group.children.map(entry => {
+            const isActive = String(entry.id) === String(ccSelectedArchiveId);
             return `
-              <div class="cc-tree-node ${isActive ? 'active' : ''}" onclick="ccSelectArchiveByIndex(${item.index}, false)">
+              <div class="cc-tree-node ${isActive ? 'active' : ''}" onclick="ccSelectArchiveById('${entry.id}', false)">
                 <div class="cc-tree-info">
-                  <span class="cc-tree-name">${ccEscapeHtml(item.entry.name || 'Vampiro')}</span>
+                  <span class="cc-tree-name">${ccEscapeHtml(entry.name || 'Vampiro')}</span>
                   <span class="cc-tree-clan">
-                    <span style="color:var(--blood)">${ccEscapeHtml(item.entry.clan || 'Sem Cla')}</span>
-                    ${item.entry.bandRole ? `<span style="color:var(--gold); margin-left:5px">✦ ${ccEscapeHtml(item.entry.bandRole)}</span>` : ''}
+                    <span style="color:var(--blood)">${ccEscapeHtml(entry.clan || 'Sem Clã')}</span>
+                    ${entry.bandRole ? `<span style="color:var(--gold); margin-left:5px">✦ ${ccEscapeHtml(entry.bandRole)}</span>` : ''}
+                    ${entry.playerName ? `<span style="color:var(--ink-soft); margin-left:6px; font-size:10px">(${ccEscapeHtml(entry.playerName)})</span>` : ''}
                   </span>
                 </div>
               </div>
@@ -4903,16 +4933,17 @@ function ccRenderArchive() {
   }
 
   if (orphans.length) {
-    html += orphans.map(item => {
-      const isActive = String(item.entry.id) === String(ccSelectedArchiveId);
+    html += orphans.map(entry => {
+      const isActive = String(entry.id) === String(ccSelectedArchiveId);
       return `
         <div class="cc-tree-item">
-          <div class="cc-tree-node ${isActive ? 'active' : ''}" onclick="ccSelectArchiveByIndex(${item.index}, false)">
+          <div class="cc-tree-node ${isActive ? 'active' : ''}" onclick="ccSelectArchiveById('${entry.id}', false)">
             <div class="cc-tree-info">
-              <span class="cc-tree-name">${ccEscapeHtml(item.entry.name || 'Vampiro')}</span>
+              <span class="cc-tree-name">${ccEscapeHtml(entry.name || 'Vampiro')}</span>
               <span class="cc-tree-clan">
-                <span style="color:var(--blood)">${ccEscapeHtml(item.entry.clan || 'Sem Cla')}</span>
-                ${item.entry.bandRole ? `<span style="color:var(--gold); margin-left:5px">✦ ${ccEscapeHtml(item.entry.bandRole)}</span>` : ''}
+                <span style="color:var(--blood)">${ccEscapeHtml(entry.clan || 'Sem Clã')}</span>
+                ${entry.bandRole ? `<span style="color:var(--gold); margin-left:5px">✦ ${ccEscapeHtml(entry.bandRole)}</span>` : ''}
+                ${entry.playerName ? `<span style="color:var(--ink-soft); margin-left:6px; font-size:10px">(${ccEscapeHtml(entry.playerName)})</span>` : ''}
               </span>
             </div>
           </div>
@@ -4924,8 +4955,8 @@ function ccRenderArchive() {
   grid.innerHTML = html;
 }
 
-function ccSelectArchiveByIndex(index, isCreator = false) {
-  const entry = ccArchive[index];
+function ccSelectArchiveById(id, isCreator = false) {
+  const entry = (ccArchive || []).find(e => String(e.id) === String(id));
   if (!entry) return;
   
   ccSelectedArchiveId = entry.id;
@@ -4944,7 +4975,7 @@ function ccSelectArchiveByIndex(index, isCreator = false) {
       <div>
         <div class="cc-label" style="color:var(--gold);margin-bottom:5px">Ficha do Ancestral</div>
         <div class="cc-archive-detail-title" style="color:var(--gold)">${ccEscapeHtml(entry.creator.name || 'Criador')}</div>
-        <div class="cc-archive-detail-clan">${ccEscapeHtml(entry.clan || 'Sem Cla')}</div>
+        <div class="cc-archive-detail-clan">${ccEscapeHtml(entry.clan || 'Sem Clã')}</div>
         <div style="margin-top:15px">
           <div class="cc-label">Personalidade</div>
           <p style="font-size:14px;color:var(--ink);margin-bottom:15px">${ccEscapeHtml(entry.creator.personality || 'Não descrita')}</p>
@@ -4961,8 +4992,9 @@ function ccSelectArchiveByIndex(index, isCreator = false) {
       <div>
         <div class="cc-archive-detail-title">${ccEscapeHtml(entry.name || 'Sem Nome')}</div>
         <div class="cc-archive-detail-clan">
-          <span style="color:var(--blood)">${ccEscapeHtml(entry.clan || 'Sem Cla')}</span> 
+          <span style="color:var(--blood)">${ccEscapeHtml(entry.clan || 'Sem Clã')}</span> 
           <span style="color:var(--gold); margin-left:5px">✦ ${ccEscapeHtml(entry.bandRole || 'Sem Cargo')}</span>
+          ${entry.playerName ? `<span style="color:var(--ink-soft); margin-left:8px; font-size:11px">(${ccEscapeHtml(entry.playerName)})</span>` : ''}
         </div>
         
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:20px">
@@ -4972,7 +5004,6 @@ function ccSelectArchiveByIndex(index, isCreator = false) {
 
         <div class="cc-label">História (Lore)</div>
         <div class="cc-archive-detail-lore">${entry.lore ? ccFormatHtml(entry.lore) : 'Sem lore registrada.'}</div>
-
       </div>
     `;
   }
@@ -4987,6 +5018,11 @@ function ccSelectArchiveByIndex(index, isCreator = false) {
   setTimeout(() => {
     detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 50);
+}
+
+function ccSelectArchiveByIndex(index, isCreator = false) {
+  const entry = (ccArchive || [])[index];
+  if (entry) ccSelectArchiveById(entry.id, isCreator);
 }
 
 function ccCloseDetail() {
@@ -5346,8 +5382,11 @@ function ccNext(step) {
   }
   if(step===3 && !ccIsPyramidComplete()){ if(err) err.classList.add('visible'); return; }
   if(step===6){
-    const req = ['cc-obj-1','cc-obj-2','cc-obj-3','cc-obj-4','cc-obj-5','cc-obj-6','cc-obj-7','cc-obj-8'];
-    const ok = req.every(id => document.getElementById(id).value.trim() !== '');
+    const req = ['cc-obj-1','cc-obj-2','cc-obj-3','cc-obj-5','cc-obj-6','cc-obj-7','cc-obj-8'];
+    const ok = req.every(id => {
+      const el = document.getElementById(id);
+      return el && el.value.trim() !== '';
+    });
     if(!ok) { if(err) err.classList.add('visible'); return; }
   }
   ccSave(); ccGoToStep(step+1);
@@ -5768,13 +5807,17 @@ async function ccFinish() {
     finishMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
-  // 1. Try to offload images to Supabase if available to save space
+  // 1. Tentar upload de imagens para Supabase Storage se disponível
   if (supabaseClient) {
-    if (ccState.photo && ccState.photo.startsWith('data:')) {
-      ccState.photo = await ccUploadImageToSupabase(ccState.photo, 'portraits');
-    }
-    if (ccState.creatorPhoto && ccState.creatorPhoto.startsWith('data:')) {
-      ccState.creatorPhoto = await ccUploadImageToSupabase(ccState.creatorPhoto, 'creators');
+    try {
+      if (ccState.photo && ccState.photo.startsWith('data:')) {
+        ccState.photo = await ccUploadImageToSupabase(ccState.photo, 'portraits');
+      }
+      if (ccState.creatorPhoto && ccState.creatorPhoto.startsWith('data:')) {
+        ccState.creatorPhoto = await ccUploadImageToSupabase(ccState.creatorPhoto, 'creators');
+      }
+    } catch(e) {
+      console.warn("Upload de fotos falhou, mantendo dados locais:", e);
     }
     ccSave();
   }
@@ -5783,21 +5826,21 @@ async function ccFinish() {
     ccSave();
     const record = ccPersistArchiveRecord();
     
-    // 2. Try to save data to Supabase table
-    await ccSaveToSupabase(record);
+    // 2. Salvar na tabela characters do Supabase
+    if (supabaseClient) {
+      try {
+        await ccSaveToSupabase(record);
+      } catch (e) {
+        console.warn("Falha ao salvar no Supabase, mantido no localStorage:", e);
+      }
+    }
 
-    // 3. Registrar no Supabase Auth para a rede social (Obrigatório)
-    const blinkUser = document.getElementById('cc-blink-user').value.trim();
-    const blinkPass = document.getElementById('cc-blink-pass').value.trim();
+    // 3. Registrar no Supabase Auth para a rede social se preenchido
+    const blinkUser = document.getElementById('cc-blink-user')?.value.trim() || ccState.blinkUsername;
+    const blinkPass = document.getElementById('cc-blink-pass')?.value.trim() || ccState.blinkPassword;
     const authStatus = document.getElementById('blink-auth-status');
 
-    if (supabaseClient) {
-      if (!blinkUser || !blinkPass) {
-        if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:#ff4444">ERRO: PREENCHA LOGIN E SENHA DA REDE.</span>';
-        if (finishMsg) finishMsg.innerHTML = '';
-        return; // Interrompe
-      }
-
+    if (supabaseClient && blinkUser && blinkPass) {
       if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:var(--gold)">SINCRONIZANDO CREDENCIAIS...</span>';
       
       try {
@@ -5815,23 +5858,26 @@ async function ccFinish() {
         });
 
         if (authError) {
-          console.warn("Falha no registro Auth:", authError.message);
-          let errorMsg = 'FALHA NO REGISTRO';
-          if (authError.message.includes('already registered')) errorMsg = 'USUÁRIO JÁ EXISTENTE';
-          if (authError.message.includes('should be at least')) errorMsg = 'SENHA MUITO CURTA';
-          
-          if (authStatus) authStatus.innerHTML = `STATUS: <span style="color:#ff4444">${errorMsg}</span>`;
-          if (finishMsg) finishMsg.innerHTML = `<div class="cc-neonato-box" style="border-left-color:#ff4444"><h4>Erro de Acesso</h4><p>${authError.message}</p></div>`;
-          return; // Interrompe a finalização
+          console.warn("Aviso no registro Auth:", authError.message);
+          let errorMsg = 'REDE SOCIAL: NÃO VINCULADA';
+          if (authError.message.includes('already registered')) {
+            errorMsg = 'CONTA JÁ EXISTENTE (VINCULADA)';
+            if (authStatus) authStatus.innerHTML = `STATUS: <span style="color:var(--gold)">${errorMsg}</span>`;
+          } else if (authError.message.includes('should be at least')) {
+            errorMsg = 'AVISO: SENHA DEVE TER NO MÍNIMO 6 DÍGITOS';
+            if (authStatus) authStatus.innerHTML = `STATUS: <span style="color:#ff8888">${errorMsg}</span>`;
+          } else {
+            if (authStatus) authStatus.innerHTML = `STATUS: <span style="color:#ff8888">${errorMsg}</span>`;
+          }
         } else {
           if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:#00ff00">ACESSO VINCULADO COM SUCESSO.</span>';
         }
       } catch (e) {
-        console.error("Erro fatal no registro:", e);
-        if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:#ff4444">ERRO DE CONEXÃO.</span>';
-        if (finishMsg) finishMsg.innerHTML = '';
-        return; // Interrompe
+        console.warn("Erro no registro Auth:", e);
+        if (authStatus) authStatus.innerHTML = 'STATUS: <span style="color:#ff8888">AVISO: REDE SOCIAL NÃO VINCULADA.</span>';
       }
+    } else if (authStatus) {
+      authStatus.innerHTML = 'STATUS: <span style="color:var(--ink-soft)">ACESSO À REDE SOCIAL NÃO DEFINIDO (OPCIONAL).</span>';
     }
 
     const name = ccState.name || 'Personagem';
@@ -5839,24 +5885,28 @@ async function ccFinish() {
     // Limpa apenas o rascunho da criação para o próximo personagem
     localStorage.removeItem('cc_draft_v2'); 
     
-    // Sincroniza com o arquivo global do Supabase
-    ccReadArchive().then(arch => {
-      ccArchive = arch;
-      ccRenderArchive();
-      ccUpdateRoleAvailability();
-    });
+    // Sincroniza com o arquivo global do Supabase e atualiza a interface acima
+    if (supabaseClient) {
+      try {
+        const arch = await ccReadArchive();
+        if (arch && arch.length) ccArchive = arch;
+      } catch(e) {}
+    }
+    ccRenderArchive();
+    ccUpdateRoleAvailability();
 
     if (finishMsg) {
       finishMsg.innerHTML = `
         <div class="cc-neonato-box" style="margin-top:24px;border-left-color:var(--gold);background:rgba(0,255,255,0.05);animation:fadeIn 0.5s ease">
           <h4 style="color:var(--gold)">✦ ${ccEscapeHtml(name)} foi imortalizado!</h4>
-          <p>Sua ficha foi salva com sucesso e seu acesso à rede social foi criado.</p>
-          <div style="display:flex;gap:10px;margin-top:15px">
-            <button class="cc-btn-next" onclick="ccResetState(); switchMainSection('lore')" style="width:auto;padding:8px 20px">Ir para Geral →</button>
-            <button class="cc-btn-prev" onclick="ccResetState(); location.reload();" style="width:auto;padding:8px 20px">Novo Personagem</button>
+          <p>Sua ficha foi salva com sucesso e já aparece na lista da Coterie acima.</p>
+          <div style="display:flex;gap:10px;margin-top:15px;flex-wrap:wrap">
+            <button class="cc-btn-next" onclick="ccResetState(); scrollToTop();" style="width:auto;padding:8px 20px">Criar Outro Personagem</button>
+            <button class="cc-btn-prev" onclick="switchMainSection('lore')" style="width:auto;padding:8px 20px">Ir para Regras & Lore →</button>
           </div>
         </div>
       `;
+      finishMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   } catch (err) {
     console.error("Erro ao finalizar personagem:", err);
@@ -5909,6 +5959,12 @@ function ccResetState() {
   if(cp) cp.style.display = 'none';
   const cph = document.getElementById('cc-creator-photo-ph');
   if(cph) cph.style.display = 'flex';
+
+  const finishMsg = document.getElementById('cc-finish-message');
+  if(finishMsg) finishMsg.innerHTML = '';
+  const authStatus = document.getElementById('blink-auth-status');
+  if(authStatus) authStatus.innerHTML = 'STATUS: AGUARDANDO COMANDO...';
+  document.querySelectorAll('.cc-error').forEach(e => e.classList.remove('visible'));
 
   ccUpdateClan(false);
   ccGoToStep(1);
