@@ -3921,22 +3921,6 @@ mark{
               <option>Ventrue</option><option>Assamita</option><option>Giovanni</option><option>Ravnos</option>
             </select>
           </div>
-          <div class="cc-field">
-            <label class="cc-label">Cargo na Banda</label>
-            <select class="cc-input cc-select" id="cc-band-role" onchange="ccSave(); ccSyncBandRoleToAspect()">
-              <option value="">— Escolha seu Cargo —</option>
-              <option value="Vocalista">Vocalista</option>
-              <option value="Co-vocalista">Co-vocalista</option>
-              <option value="Guitarrista">Guitarrista</option>
-              <option value="Baixista">Baixista</option>
-              <option value="Tecladista">Tecladista</option>
-              <option value="Baterista">Baterista</option>
-              <option value="Percussionista">Percussionista</option>
-              <option value="Engenheiro de Som">Engenheiro de Som</option>
-              <option value="Empresário">Empresário / Roadie</option>
-            </select>
-            <div id="cc-role-warning" style="color:var(--gold); font-size:10px; margin-top:5px; display:none">Este cargo já foi ocupado por outro jogador.</div>
-          </div>
         </div>
       </div>
 
@@ -4008,8 +3992,8 @@ mark{
       <div class="cc-divider"></div>
       <div class="cc-section-title">Aspectos Livres</div>
       <div class="cc-field">
-        <label class="cc-label">Aspecto Livre 1 <span style="color:var(--gold);font-size:9px">(Cargo na Banda — fixo)</span></label>
-        <input type="text" class="cc-input" id="cc-aspect-1" readonly style="opacity:0.7;cursor:not-allowed" placeholder="Definido pelo Cargo na Banda...">
+        <label class="cc-label">Aspecto Livre 1</label>
+        <input type="text" class="cc-input" id="cc-aspect-1" placeholder="Aspecto livre que define seu personagem..." oninput="ccSave()">
       </div>
       <div class="cc-field">
         <label class="cc-label">Aspecto Livre 2</label>
@@ -4284,7 +4268,6 @@ function switchMainSection(sectionId) {
 
   if (sectionId === 'char-creator') {
     ccRenderArchive();
-    ccUpdateRoleAvailability();
   }
 
   scrollToTop();
@@ -4339,6 +4322,138 @@ function loadDraft() {
 }
 
 
+function generateVampireJsonSheet(c) {
+  if (!c) c = {};
+  const data = c.data || {};
+
+  const name = c.name || data.name || 'Nome do Vampiro';
+
+  let ownerUserId = c.ownerUserId || data.ownerUserId;
+  if (!ownerUserId && typeof supabaseClient !== 'undefined' && supabaseClient && supabaseClient.auth) {
+    try {
+      const session = supabaseClient.auth.session ? supabaseClient.auth.session() : null;
+      if (session && session.user && session.user.id) ownerUserId = session.user.id;
+    } catch(e) {}
+  }
+  if (!ownerUserId) {
+    ownerUserId = 'user_2xyz456';
+  }
+
+  const concept = c.concept || data.concept || 'Conceito Principal';
+  const difficulty = c.difficulty || data.difficulty || 'Problema';
+  const creatorRelation = c.creatorRelation || (c.creator && c.creator.relation) || data.creatorRelation || (data.creator && data.creator.relation) || 'Relação';
+  const aspect1 = c.aspect1 || data.aspect1 || 'Aspecto Livre';
+  const aspect2 = c.aspect2 || data.aspect2 || '';
+
+  const sheetAspects = [concept, difficulty, creatorRelation, aspect1, aspect2];
+
+  const stress = {
+    physical: [false, false],
+    mental: [false, false],
+    blood: [false, false, false]
+  };
+  if (c.stress && Array.isArray(c.stress.physical)) stress.physical = c.stress.physical;
+  if (c.stress && Array.isArray(c.stress.mental)) stress.mental = c.stress.mental;
+  if (c.stress && Array.isArray(c.stress.blood)) stress.blood = c.stress.blood;
+
+  const stressValues = {
+    physical: [1, 2],
+    mental: [1, 2],
+    blood: [1, 2, 3]
+  };
+  if (c.stressValues && Array.isArray(c.stressValues.physical)) stressValues.physical = c.stressValues.physical;
+  if (c.stressValues && Array.isArray(c.stressValues.mental)) stressValues.mental = c.stressValues.mental;
+  if (c.stressValues && Array.isArray(c.stressValues.blood)) stressValues.blood = c.stressValues.blood;
+
+  const consequences = {
+    mild: { text: (c.consequences && c.consequences.mild && c.consequences.mild.text) || '' },
+    moderate: { text: (c.consequences && c.consequences.moderate && c.consequences.moderate.text) || '' },
+    severe: { text: (c.consequences && c.consequences.severe && c.consequences.severe.text) || '' }
+  };
+
+  const allSkillsList = [
+    'Atletismo', 'Carisma', 'Contatos', 'Dirigir', 'Empatia',
+    'Expressão', 'Lutar', 'Investigar', 'Conhecimento', 'Manipulação',
+    'Percepção', 'Ocultismo', 'Fisiologia', 'Recursos', 'Atirar',
+    'Furtividade', 'Ruídos', 'Sobrevivência', 'Tecnologia', 'Vontade'
+  ];
+  const sourceSkills = c.skills || data.skills || {};
+  const skills = {};
+  for (const skill of allSkillsList) {
+    skills[skill] = typeof sourceSkills[skill] === 'number' ? sourceSkills[skill] : 0;
+  }
+
+  const sourceStunts = c.stunts || data.stunts || [];
+  const stunts = Array.isArray(sourceStunts) ? sourceStunts.map(s => {
+    if (typeof s === 'string') return s;
+    return {
+      name: s.name || '',
+      desc: s.desc || s.description || ''
+    };
+  }) : [];
+
+  const inventory = Array.isArray(c.inventory) ? c.inventory : (Array.isArray(data.inventory) ? data.inventory : []);
+
+  const rawDiscFree = c.discFree || data.discFree || {};
+  const rawDiscExtra = c.discExtra || data.discExtra || [];
+  const discMap = {};
+  for (const [dName, lvl] of Object.entries(rawDiscFree)) {
+    if (dName && lvl > 0) discMap[dName] = (discMap[dName] || 0) + lvl;
+  }
+  if (Array.isArray(rawDiscExtra)) {
+    for (const d of rawDiscExtra) {
+      if (d && d.disc && d.levels > 0) {
+        discMap[d.disc] = (discMap[d.disc] || 0) + d.levels;
+      }
+    }
+  }
+
+  let disciplinesList = [];
+  if (c.systemData && Array.isArray(c.systemData.disciplines)) {
+    disciplinesList = c.systemData.disciplines;
+  } else if (data.systemData && Array.isArray(data.systemData.disciplines)) {
+    disciplinesList = data.systemData.disciplines;
+  } else if (Object.keys(discMap).length > 0) {
+    disciplinesList = Object.entries(discMap).map(([dName, lvl]) => ({ name: dName, level: lvl }));
+  } else if (c.disciplines && Array.isArray(c.disciplines)) {
+    disciplinesList = c.disciplines;
+  } else {
+    disciplinesList = [
+      {
+        name: 'Nome da Disciplina',
+        level: 1
+      }
+    ];
+  }
+
+  const generation = (c.systemData && c.systemData.generation) || (data.systemData && data.systemData.generation) || c.generation || data.generation || 13;
+
+  const systemData = {
+    generation: generation,
+    disciplines: disciplinesList,
+    hungerConsequences: (c.systemData && c.systemData.hungerConsequences) || (data.systemData && data.systemData.hungerConsequences) || {},
+    removedDefaultHungerSlots: (c.systemData && c.systemData.removedDefaultHungerSlots) || (data.systemData && data.systemData.removedDefaultHungerSlots) || [],
+    extraHungerSlots: (c.systemData && c.systemData.extraHungerSlots) || (data.systemData && data.systemData.extraHungerSlots) || []
+  };
+
+  return {
+    name: name,
+    ownerUserId: ownerUserId,
+    isNPC: false,
+    npcType: null,
+    fatePoints: typeof c.fatePoints === 'number' ? c.fatePoints : 3,
+    refresh: typeof c.refresh === 'number' ? c.refresh : 3,
+    sheetAspects: sheetAspects,
+    stress: stress,
+    stressValues: stressValues,
+    consequences: consequences,
+    skills: skills,
+    stunts: stunts,
+    inventory: inventory,
+    systemData: systemData
+  };
+}
+
 async function cdOpenModal() {
   const overlay = document.getElementById('cd-modal-overlay');
   const list = document.getElementById('cd-char-list');
@@ -4389,7 +4504,7 @@ async function cdOpenModal() {
     const name = c.name || 'Personagem sem nome';
     const playerName = c.playerName || c.player_name || '';
     const clan = c.clan || 'Clã desconhecido';
-    const typeLabel = c.creator?.name ? 'Criador' : 'Jogador';
+    const typeLabel = (c.creator && c.creator.name) ? 'Criador' : 'Jogador';
 
     const row = document.createElement('div');
     row.className = 'cd-char-row';
@@ -4419,8 +4534,24 @@ function cdDownloadChar(index) {
   const all = window._cd_allChars || [];
   const c = all[index];
   if (!c) return;
-  const name = (c.name || 'personagem').replace(/[^a-zA-Z0-9_-\u00C0-\u00FF]/g, '_');
-  const json = JSON.stringify(c, null, 2);
+  const jsonModel = generateVampireJsonSheet(c);
+  const name = (jsonModel.name || 'personagem').replace(/[^a-zA-Z0-9_-\u00C0-\u00FF]/g, '_');
+  const json = JSON.stringify(jsonModel, null, 2);
+  const blob = new Blob([json], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${name}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function cdDownloadCharById(id) {
+  const entry = (ccArchive || []).find(e => String(e.id) === String(id));
+  if (!entry) return;
+  const jsonModel = generateVampireJsonSheet(entry);
+  const name = (jsonModel.name || 'personagem').replace(/[^a-zA-Z0-9_-\u00C0-\u00FF]/g, '_');
+  const json = JSON.stringify(jsonModel, null, 2);
   const blob = new Blob([json], {type: 'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -4717,7 +4848,7 @@ let ccSelectedArchiveId = null;
 
 let ccState = {
   recordId:null,
-  photo:null, name:'', playerName:'', clan:'', bandRole:'', lore:'', concept:'', difficulty:'', mortalSelf:'',
+  photo:null, name:'', playerName:'', clan:'', lore:'', concept:'', difficulty:'', mortalSelf:'',
   aspect1:'', aspect2:'', skills:{}, discFree:{}, discExtra:[], stunts:[],
   creatorPhoto:null, creatorName:'', creatorLore:'', creatorPersonality:'', creatorRelation:'',
   creatorSourceId:null,
@@ -4740,34 +4871,7 @@ function ccFormatHtml(value) {
   return ccEscapeHtml(value || '').replace(/\n/g, '<br>');
 }
 
-async function ccFetchOccupiedRoles() {
-  if (!supabaseClient) return [];
-  try {
-    const { data, error } = await supabaseClient
-      .from('characters')
-      .select('band_role');
-    if (error) return [];
-    return data.map(d => d.band_role).filter(Boolean);
-  } catch (e) { return []; }
-}
-
-async function ccUpdateRoleAvailability() {
-  const occupied = await ccFetchOccupiedRoles();
-  const select = document.getElementById('cc-band-role');
-  if (!select) return;
-  Array.from(select.options).forEach(opt => {
-    if (opt.value === "" || opt.value === ccState.bandRole) {
-      opt.disabled = false;
-      opt.style.display = "block";
-    } else if (occupied.includes(opt.value)) {
-      opt.disabled = true;
-      opt.style.display = "none";
-    } else {
-      opt.disabled = false;
-      opt.style.display = "block";
-    }
-  });
-}
+function ccUpdateRoleAvailability() {}
 
 async function ccReadArchive() {
   if (supabaseClient) {
@@ -4775,13 +4879,12 @@ async function ccReadArchive() {
       const { data, error } = await supabaseClient.from('characters').select('*');
       if (!error && Array.isArray(data)) {
         return data
-          .filter(d => d && d.name && d.name !== 'Sem nome' && (d.clan || d.player_name || d.band_role || d.concept))
+          .filter(d => d && d.name && d.name !== 'Sem nome' && (d.clan || d.player_name || d.concept))
           .map(d => ({
             id: d.id,
             name: d.name,
             playerName: d.player_name || '',
             clan: d.clan || '',
-            bandRole: d.band_role || '',
             concept: d.concept || '',
             photo: d.data?.photo || '',
             creator: {
@@ -4828,12 +4931,13 @@ function ccWriteArchive(archive = ccArchive) {
 }
 
 function ccRescueCharacter() {
-  const data = JSON.stringify(ccState, null, 2);
+  const jsonModel = generateVampireJsonSheet(ccState);
+  const data = JSON.stringify(jsonModel, null, 2);
   const blob = new Blob([data], {type: 'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `backup_${ccState.name || 'personagem'}_${Date.now()}.json`;
+  a.download = `backup_${(jsonModel.name || 'personagem').replace(/[^a-zA-Z0-9_-\u00C0-\u00FF]/g, '_')}_${Date.now()}.json`;
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -4867,7 +4971,7 @@ function ccRenderArchive() {
   const validArchive = (ccArchive || []).filter(entry => {
     if (!entry) return false;
     const hasName = entry.name && entry.name.trim() !== '' && entry.name !== 'Sem nome';
-    const hasInfo = entry.clan || entry.concept || entry.bandRole || entry.playerName;
+    const hasInfo = entry.clan || entry.concept || entry.playerName;
     return hasName || hasInfo;
   });
 
@@ -4920,7 +5024,6 @@ function ccRenderArchive() {
                   <span class="cc-tree-name">${ccEscapeHtml(entry.name || 'Vampiro')}</span>
                   <span class="cc-tree-clan">
                     <span style="color:var(--blood)">${ccEscapeHtml(entry.clan || 'Sem Clã')}</span>
-                    ${entry.bandRole ? `<span style="color:var(--gold); margin-left:5px">✦ ${ccEscapeHtml(entry.bandRole)}</span>` : ''}
                     ${entry.playerName ? `<span style="color:var(--ink-soft); margin-left:6px; font-size:10px">(${ccEscapeHtml(entry.playerName)})</span>` : ''}
                   </span>
                 </div>
@@ -4942,7 +5045,6 @@ function ccRenderArchive() {
               <span class="cc-tree-name">${ccEscapeHtml(entry.name || 'Vampiro')}</span>
               <span class="cc-tree-clan">
                 <span style="color:var(--blood)">${ccEscapeHtml(entry.clan || 'Sem Clã')}</span>
-                ${entry.bandRole ? `<span style="color:var(--gold); margin-left:5px">✦ ${ccEscapeHtml(entry.bandRole)}</span>` : ''}
                 ${entry.playerName ? `<span style="color:var(--ink-soft); margin-left:6px; font-size:10px">(${ccEscapeHtml(entry.playerName)})</span>` : ''}
               </span>
             </div>
@@ -4992,8 +5094,7 @@ function ccSelectArchiveById(id, isCreator = false) {
       <div>
         <div class="cc-archive-detail-title">${ccEscapeHtml(entry.name || 'Sem Nome')}</div>
         <div class="cc-archive-detail-clan">
-          <span style="color:var(--blood)">${ccEscapeHtml(entry.clan || 'Sem Clã')}</span> 
-          <span style="color:var(--gold); margin-left:5px">✦ ${ccEscapeHtml(entry.bandRole || 'Sem Cargo')}</span>
+          <span style="color:var(--blood)">${ccEscapeHtml(entry.clan || 'Sem Clã')}</span>
           ${entry.playerName ? `<span style="color:var(--ink-soft); margin-left:8px; font-size:11px">(${ccEscapeHtml(entry.playerName)})</span>` : ''}
         </div>
         
@@ -5004,6 +5105,10 @@ function ccSelectArchiveById(id, isCreator = false) {
 
         <div class="cc-label">História (Lore)</div>
         <div class="cc-archive-detail-lore">${entry.lore ? ccFormatHtml(entry.lore) : 'Sem lore registrada.'}</div>
+
+        <div style="margin-top:15px">
+          <button class="cc-btn-next" onclick="cdDownloadCharById('${entry.id}')" style="width:auto;padding:6px 16px;font-size:11px;background:var(--gold);color:#0a0216;border:none">Baixar Ficha (JSON)</button>
+        </div>
       </div>
     `;
   }
@@ -5156,9 +5261,16 @@ function ccBuildArchiveRecord() {
     name: ccState.name || 'Sem nome',
     playerName: ccState.playerName || '',
     clan: ccState.clan || '',
-    bandRole: ccState.bandRole || '',
     lore: ccState.lore || '',
     concept: ccState.concept || '',
+    difficulty: ccState.difficulty || '',
+    mortalSelf: ccState.mortalSelf || '',
+    aspect1: ccState.aspect1 || '',
+    aspect2: ccState.aspect2 || '',
+    skills: ccState.skills || {},
+    discFree: ccState.discFree || {},
+    discExtra: ccState.discExtra || [],
+    stunts: ccState.stunts || [],
     creator: {
       photo: ccState.creatorPhoto || '',
       name: ccState.creatorName || '',
@@ -5193,6 +5305,17 @@ function ccPersistArchiveRecord() {
 }
 
 async function ccInit() {
+  // Limpeza de legado
+  try {
+    if (!localStorage.getItem('cc_cleaned_v3')) {
+      localStorage.removeItem('cc_character_archive_v1');
+      localStorage.removeItem('cc_draft_v2');
+      localStorage.removeItem('vampiro_chars');
+      localStorage.removeItem('char_draft');
+      localStorage.setItem('cc_cleaned_v3', 'true');
+    }
+  } catch(e) {}
+
   ccArchive = await ccReadArchive();
   if (ccArchive.length) ccSelectedArchiveId = ccArchive[0].id;
   ccRenderSkillsGrid();
@@ -5202,22 +5325,12 @@ async function ccInit() {
   }
   ccRestoreForm();
   ccRenderArchive();
-  ccUpdateRoleAvailability();
   if (!ccState.creatorName && !ccState.creatorLore && !ccState.creatorPersonality && !ccState.creatorPhoto && ccState.clan) {
     ccAutoSelectCreatorForClan();
     ccSave();
   } else {
     ccRenderCreatorMatch(ccFindArchiveRecordById(ccState.creatorSourceId) || ccGetCreatorRecordForClan(ccState.clan));
   }
-  // Atualiza cargos a cada 20 segundos
-  setInterval(ccUpdateRoleAvailability, 20000);
-}
-
-function ccSyncBandRoleToAspect() {
-  var role = document.getElementById('cc-band-role') ? document.getElementById('cc-band-role').value : '';
-  var asp = document.getElementById('cc-aspect-1');
-  if (asp) asp.value = role ? 'Cargo na Banda: ' + role : '';
-  ccState.aspect1 = asp ? asp.value : '';
 }
 
 function ccSave() {
@@ -5225,7 +5338,6 @@ function ccSave() {
   ccState.name = g('cc-name')?.value||'';
   ccState.playerName = g('cc-player-name')?.value||'';
   ccState.clan = g('cc-clan')?.value||'';
-  ccState.bandRole = g('cc-band-role')?.value||'';
   ccState.lore = g('cc-lore')?.value||'';
   ccState.concept = g('cc-concept')?.value||'';
   ccState.difficulty = g('cc-difficulty')?.value||'';
@@ -5259,7 +5371,6 @@ function ccRestoreForm() {
   set('cc-obj-1',ccState.obj1); set('cc-obj-2',ccState.obj2); set('cc-obj-3',ccState.obj3); set('cc-obj-4',ccState.obj4);
   set('cc-obj-5',ccState.obj5); set('cc-obj-6',ccState.obj6); set('cc-obj-7',ccState.obj7); set('cc-obj-8',ccState.obj8);
   set('cc-blink-user', ccState.blinkUsername); set('cc-blink-pass', ccState.blinkPassword);
-  if(ccState.bandRole){ const el=document.getElementById('cc-band-role'); if(el){ el.value=ccState.bandRole; ccSyncBandRoleToAspect(); } }
   if(ccState.clan){ const el=document.getElementById('cc-clan'); if(el){el.value=ccState.clan;ccUpdateClan(false);} }
   if(ccState.photo){ const p=document.getElementById('cc-photo-preview'); if(p){p.src=ccState.photo;p.style.display='block';document.getElementById('cc-photo-placeholder').style.display='none';} }
   ccSyncCreatorPreview();
@@ -5674,13 +5785,12 @@ async function ccSaveToSupabase(record) {
         name: record.name,
         player_name: record.playerName,
         clan: record.clan,
-        band_role: record.bandRole,
         concept: record.concept,
         data: safeState
       }, { onConflict: 'id' });
       
     if (error) throw error;
-    console.log("Salvo no Supabase:", record.name, record.bandRole);
+    console.log("Salvo no Supabase:", record.name);
     return data;
   } catch (err) {
     console.error("Erro ao salvar na tabela characters:", err);
@@ -5893,7 +6003,6 @@ async function ccFinish() {
       } catch(e) {}
     }
     ccRenderArchive();
-    ccUpdateRoleAvailability();
 
     if (finishMsg) {
       finishMsg.innerHTML = `
@@ -5901,6 +6010,7 @@ async function ccFinish() {
           <h4 style="color:var(--gold)">✦ ${ccEscapeHtml(name)} foi imortalizado!</h4>
           <p>Sua ficha foi salva com sucesso e já aparece na lista da Coterie acima.</p>
           <div style="display:flex;gap:10px;margin-top:15px;flex-wrap:wrap">
+            <button class="cc-btn-next" onclick="cdDownloadCharById('${record.id}')" style="width:auto;padding:8px 20px;background:var(--gold);color:#0a0216;border:none">Baixar Ficha (JSON)</button>
             <button class="cc-btn-next" onclick="ccResetState(); scrollToTop();" style="width:auto;padding:8px 20px">Criar Outro Personagem</button>
             <button class="cc-btn-prev" onclick="switchMainSection('lore')" style="width:auto;padding:8px 20px">Ir para Regras & Lore →</button>
           </div>
@@ -5933,7 +6043,7 @@ async function ccFinish() {
 function ccResetState() {
   ccState = {
     recordId:null,
-    photo:null, name:'', playerName:'', clan:'', bandRole:'', lore:'', concept:'', difficulty:'', mortalSelf:'',
+    photo:null, name:'', playerName:'', clan:'', lore:'', concept:'', difficulty:'', mortalSelf:'',
     aspect1:'', aspect2:'', skills:{}, discFree:{}, discExtra:[], stunts:[],
     creatorPhoto:null, creatorName:'', creatorLore:'', creatorPersonality:'', creatorRelation:'',
     creatorSourceId:null,
